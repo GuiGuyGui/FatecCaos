@@ -1360,6 +1360,13 @@ const zombiesHtml = `<!DOCTYPE html>
 				progressContainer.style.display = "none";
 			}
 		}
+
+		// Inicia automaticamente o download e carregamento ao abrir a página
+		window.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				startGodotEngine();
+			}, 300);
+		});
 	</script>
 </body>
 </html>`;
@@ -1433,7 +1440,7 @@ const skyrushHtml = `<!DOCTYPE html>
 		</div>
 
 		<div id="skyrush-frame-wrap">
-			<iframe id="skyrush-iframe" src="skyrush/index.html" allow="autoplay; fullscreen; gamepad"></iframe>
+			<iframe id="skyrush-iframe" src="skyrush/index.html?v=10" allow="autoplay; fullscreen; gamepad"></iframe>
 		</div>
 
 		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">

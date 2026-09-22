@@ -1097,6 +1097,13 @@ document.addEventListener("DOMContentLoaded", () => {
 				progressContainer.style.display = "none";
 			}
 		}
+
+		// Inicia automaticamente o download e carregamento ao abrir a página
+		window.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				startGodotEngine();
+			}, 300);
+		});
 	</script>
 </body>
 </html>
