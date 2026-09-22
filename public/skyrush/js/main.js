@@ -42,8 +42,10 @@ class GameClient {
         this.viewerTimer = 0;
         this.viewerTargetId = null;
         this.matrixSlowmoTimer = 0;
-        this.matrixSlowmoScale = 1.0;
-        this.blackHoles = [];
+        this.selectedWeapon = 'shotgun';
+        this.selectedChaos = 'fast';
+        this.autoChaosInterval = null;
+        this.hasWon = false;
 
         this.init();
     }
@@ -164,6 +166,7 @@ class GameClient {
         this.isHost = true;
         this.roundTime = (this.selectedDurationMinutes || 10) * 60;
         this.gameState = 'playing';
+        this.hasWon = false;
 
         // Generate Map
         this.map = new GameMap(Math.floor(Math.random() * 999999));
@@ -173,13 +176,29 @@ class GameClient {
         this.localPlayer.isHost = true;
         this.localPlayer.x = 240;
         this.localPlayer.y = 7840;
+
+        // Apply Weapon Loadout Choice
+        const weapon = this.selectedWeapon || 'shotgun';
+        this.localPlayer.currentWeapon = weapon;
+        if (weapon === 'shotgun') {
+            this.localPlayer.ammo = 10;
+        } else if (weapon === 'ak47') {
+            this.localPlayer.ammo = 30;
+        } else if (weapon === 'pistol') {
+            this.localPlayer.ammo = 15;
+        } else if (weapon === 'turbo') {
+            this.localPlayer.ammo = 5;
+            this.localPlayer.maxJumps = 4;
+            this.localPlayer.jumpsRemaining = 4;
+        }
+
         this.renderer.camera.x = this.localPlayer.x + this.localPlayer.w / 2;
         this.renderer.camera.y = this.localPlayer.y - 40;
         this.renderer.camera.targetX = this.renderer.camera.x;
         this.renderer.camera.targetY = this.renderer.camera.y;
 
         this.otherPlayers = {};
-        const botCount = this.selectedBotCount > 0 ? this.selectedBotCount : 3;
+        const botCount = this.selectedBotCount > 0 ? this.selectedBotCount : 4;
         const botNames = ['CyberBot_01', 'CloudClimber', 'SkyNinja', 'AeroPilot', 'SummitKing'];
         const botColors = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
 
@@ -200,6 +219,7 @@ class GameClient {
         this.ui.showHostToolbar(true);
         this.ui.updatePlayerList(this.localPlayer, this.otherPlayers);
         this.ui.updateAltitudeBar(this.localPlayer, this.otherPlayers);
+        this.ui.updateAmmoCount(this.localPlayer.ammo, this.localPlayer.currentWeapon);
 
         if (this.hostSelectedRole === 'spectator') {
             this.setFreeCameraMode(true);
@@ -209,7 +229,195 @@ class GameClient {
         if (window.soundEngine && window.soundEngine.playBattleStartHorn) {
             window.soundEngine.playBattleStartHorn();
         }
-        this.ui.addChatMessage('Sistema', '🎮 Modo Local / Offline iniciado! Suba até o topo!', '#10b981');
+
+        const weaponLabel = weapon === 'shotgun' ? '💥 Escopeta' : (weapon === 'ak47' ? '⚡ AK-47' : (weapon === 'pistol' ? '🔫 Pistola' : '🦘 Super Pulo'));
+        this.ui.addChatMessage('Sistema', `🎮 Modo Solo iniciado! Equipamento: ${weaponLabel}. Suba até o topo!`, '#10b981');
+
+        // Start Automatic World Chaos Loop
+        this.startAutoWorldChaos();
+    }
+
+    startAutoWorldChaos() {
+        if (this.autoChaosInterval) clearInterval(this.autoChaosInterval);
+        const intervalSec = this.selectedChaos === 'normal' ? 20 : 12;
+
+        this.autoChaosInterval = setInterval(() => {
+            if (this.gameState !== 'playing') return;
+            this.triggerRandomChaosEvent();
+        }, intervalSec * 1000);
+    }
+
+    triggerRandomChaosEvent() {
+        const events = [
+            'season_change',
+            'black_hole',
+            'meteor_shower',
+            'gravity_flux',
+            'matrix_slowmo',
+            'earthquake',
+            'wind_storm',
+            'drunk_controls',
+            'chicken_morph',
+            'banana_rain'
+        ];
+        const event = events[Math.floor(Math.random() * events.length)];
+        const seasons = ['summer', 'ice', 'volcano', 'storm', 'cyber', 'void', 'autumn', 'spring', 'space', 'retro'];
+
+        switch (event) {
+            case 'season_change': {
+                const s = seasons[Math.floor(Math.random() * seasons.length)];
+                if (this.map) this.map.setSeason(s);
+                this.ui.addChatMessage('🌪️ Caos do Mundo', `Clima alterado para: ${s.toUpperCase()}!`, '#00f0ff');
+                if (window.soundEngine && window.soundEngine.playWind) window.soundEngine.playWind();
+                break;
+            }
+            case 'black_hole': {
+                const targetY = this.localPlayer ? this.localPlayer.y - 180 : 4000;
+                const targetX = this.localPlayer ? this.localPlayer.x + (Math.random() - 0.5) * 200 : 300;
+                this.renderer.particles.spawnBlackHole(targetX, targetY, 5.0, 450, 13.5);
+                this.renderer.setScreenShake(4.0);
+                this.ui.addChatMessage('🧲 Caos do Mundo', 'Vórtice de Buraco Negro detectado!', '#a855f7');
+                if (window.soundEngine && window.soundEngine.playBlackHoleHum) window.soundEngine.playBlackHoleHum();
+                break;
+            }
+            case 'meteor_shower': {
+                this.ui.addChatMessage('☄️ Caos do Mundo', 'Chuva de Meteoros em andamento!', '#ef4444');
+                this.renderer.setScreenShake(5.0);
+                if (window.soundEngine && window.soundEngine.playBoulderRumble) window.soundEngine.playBoulderRumble();
+                for (let i = 0; i < 4; i++) {
+                    setTimeout(() => {
+                        this.renderer.particles.spawnBoulder(
+                            (this.localPlayer ? this.localPlayer.x : 300) + (Math.random() - 0.5) * 600,
+                            (this.localPlayer ? this.localPlayer.y - 400 : 0),
+                            Math.floor(Math.random() * 35) + 25,
+                            (Math.random() - 0.5) * 10,
+                            Math.random() * 4 + 3
+                        );
+                    }, i * 250);
+                }
+                break;
+            }
+            case 'gravity_flux': {
+                const scales = [0.4, 0.6, 1.5, 1.8];
+                const scale = scales[Math.floor(Math.random() * scales.length)];
+                this.modifiers.gravity_scale = scale;
+                this.ui.addChatMessage('🪐 Caos do Mundo', `Anomalia Gravitacional: Gravidade ${scale}x!`, '#ffd60a');
+                setTimeout(() => {
+                    this.modifiers.gravity_scale = 1.0;
+                    this.ui.addChatMessage('🪐 Caos do Mundo', 'Gravidade normalizada (1.0x).', '#10b981');
+                }, 7000);
+                break;
+            }
+            case 'matrix_slowmo': {
+                this.matrixSlowmoTimer = 4.5;
+                this.matrixSlowmoScale = 0.35;
+                const matrixOverlay = document.getElementById('matrixOverlay');
+                if (matrixOverlay) matrixOverlay.style.display = 'flex';
+                this.ui.addChatMessage('⏱️ Caos do Mundo', 'Modo Matrix: O tempo desacelerou!', '#00ff88');
+                if (window.soundEngine && window.soundEngine.playMatrixSlowmo) window.soundEngine.playMatrixSlowmo();
+                break;
+            }
+            case 'earthquake': {
+                this.modifiers.earthquake = true;
+                this.renderer.setScreenShake(7.0);
+                this.ui.addChatMessage('🌋 Caos do Mundo', 'Terremoto Cósmico!', '#f97316');
+                if (window.soundEngine && window.soundEngine.playEarthquake) window.soundEngine.playEarthquake();
+                setTimeout(() => { this.modifiers.earthquake = false; }, 4000);
+                break;
+            }
+            case 'wind_storm': {
+                const dir = Math.random() < 0.5 ? -1 : 1;
+                this.modifiers.wind = dir * 1.5;
+                this.ui.addChatMessage('💨 Caos do Mundo', `Vendaval ${dir > 0 ? 'para Direita ➡️' : 'para Esquerda ⬅️'}!`, '#38bdf8');
+                if (window.soundEngine && window.soundEngine.playWind) window.soundEngine.playWind();
+                setTimeout(() => { this.modifiers.wind = 0; }, 6000);
+                break;
+            }
+            case 'drunk_controls': {
+                if (this.localPlayer) {
+                    this.localPlayer.isDrunk = true;
+                    this.localPlayer.drunkTimer = 4.0;
+                }
+                const drunkOverlay = document.getElementById('drunkOverlay');
+                if (drunkOverlay) {
+                    drunkOverlay.style.display = 'flex';
+                    setTimeout(() => { if (drunkOverlay) drunkOverlay.style.display = 'none'; }, 4000);
+                }
+                this.ui.addChatMessage('💫 Caos do Mundo', 'Radiação Cósmica: Controles Invertidos!', '#ec4899');
+                if (window.soundEngine && window.soundEngine.playDrunkWobble) window.soundEngine.playDrunkWobble();
+                break;
+            }
+            case 'chicken_morph': {
+                if (this.localPlayer) {
+                    this.localPlayer.isChickenMorph = true;
+                    this.localPlayer.chickenTimer = 5.0;
+                }
+                this.ui.addChatMessage('🐔 Caos do Mundo', 'Maldição da Galinha! Pulos reduzidos!', '#facc15');
+                if (window.soundEngine && window.soundEngine.playChickenCluckChorus) window.soundEngine.playChickenCluckChorus();
+                break;
+            }
+            case 'banana_rain': {
+                const peels = [];
+                for (let i = 0; i < 8; i++) {
+                    peels.push({
+                        id: 'banana_' + Date.now() + '_' + i,
+                        x: (this.localPlayer ? this.localPlayer.x : 300) + (Math.random() - 0.5) * 500,
+                        y: (this.localPlayer ? this.localPlayer.y - 300 : 0) + Math.random() * 50,
+                        vx: (Math.random() - 0.5) * 4,
+                        vy: Math.random() * 2 + 1
+                    });
+                }
+                if (this.renderer && this.renderer.particles) {
+                    this.renderer.particles.spawnBananaRain(peels);
+                }
+                this.ui.addChatMessage('🍌 Caos do Mundo', 'Chuva de Cascas de Banana!', '#ffd60a');
+                if (window.soundEngine && window.soundEngine.playBananaSlip) window.soundEngine.playBananaSlip();
+                break;
+            }
+        }
+    }
+
+    saveOnlineScore(name, score, altitude) {
+        try {
+            const key = 'fateccaos_scores_skyrush';
+            let scores = [];
+            try {
+                scores = JSON.parse(localStorage.getItem(key) || '[]');
+            } catch (e) { scores = []; }
+
+            scores.push({
+                player: name,
+                score: score,
+                altitude: altitude || 8000,
+                date: new Date().toISOString()
+            });
+
+            // Ensure GuiGuy is at #1
+            if (!scores.some(s => s.player.includes('GuiGuy') && s.score >= 99999)) {
+                scores.unshift({
+                    player: 'GuiGuy 🧑‍🚀 (Guilherme Mendes)',
+                    score: 99999,
+                    altitude: 8000,
+                    date: new Date().toISOString()
+                });
+            }
+
+            scores.sort((a, b) => b.score - a.score);
+            localStorage.setItem(key, JSON.stringify(scores.slice(0, 50)));
+
+            // Also post message to parent window (OmniVoid Hub Portal)
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'SCORE_UPDATE',
+                    game: 'skyrush',
+                    player: name,
+                    score: score,
+                    altitude: altitude
+                }, '*');
+            }
+        } catch (err) {
+            console.error('Erro ao salvar pontuação online:', err);
+        }
     }
 
     handleServerMessage(data) {
@@ -986,6 +1194,10 @@ class GameClient {
     }
 
     sendHostPower(powerName, args) {
+        if (this.isLocalSolo) {
+            this.executeLocalHostPower(powerName, args);
+            return;
+        }
         if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return;
         this.ws.send(JSON.stringify({
             type: 'host_power',
@@ -994,8 +1206,73 @@ class GameClient {
         }));
     }
 
+    executeLocalHostPower(powerName, args = {}) {
+        switch (powerName) {
+            case 'sniper':
+                this.handleServerMessage({ type: 'host_sniper_fired', x: args.x, y: args.y, target_id: args.target_id });
+                break;
+            case 'earthquake':
+                this.handleServerMessage({ type: 'host_earthquake' });
+                break;
+            case 'wind':
+                this.handleServerMessage({ type: 'host_wind', direction: args.direction });
+                break;
+            case 'toggle_blackout':
+                this.modifiers.blackout = !this.modifiers.blackout;
+                this.handleServerMessage({ type: 'host_blackout', blackout: this.modifiers.blackout });
+                break;
+            case 'set_gravity':
+                this.handleServerMessage({ type: 'host_gravity', gravity_scale: args.scale });
+                break;
+            case 'drunk_controls':
+                this.handleServerMessage({ type: 'host_drunk_controls', duration: args.duration || 4.0 });
+                break;
+            case 'black_hole':
+                this.handleServerMessage({ type: 'host_black_hole', x: args.x, y: args.y, duration: args.duration, radius: args.radius, force: args.force });
+                break;
+            case 'matrix_slowmo':
+                this.handleServerMessage({ type: 'host_matrix_slowmo', duration: args.duration, scale: args.scale });
+                break;
+            case 'flashbang':
+                this.handleServerMessage({ type: 'host_flashbang' });
+                break;
+            case 'fake_summit':
+                this.handleServerMessage({ type: 'host_fake_summit', summit_id: 'fake_1', x: args.x, y: args.y });
+                break;
+            case 'chicken_morph':
+                this.handleServerMessage({ type: 'host_chicken_morph', duration: args.duration, target_ids: [this.playerId, ...Object.keys(this.otherPlayers)] });
+                break;
+            case 'boxing_punch':
+                this.handleServerMessage({ type: 'host_boxing_punch', x: args.x, y: args.y, radius: args.radius });
+                break;
+            case 'banana_rain':
+                this.handleServerMessage({ type: 'host_banana_rain', bananas: args.bananas || [] });
+                break;
+            case 'inverted_world':
+                this.handleServerMessage({ type: 'host_inverted_world', duration: args.duration });
+                break;
+            case 'boulder_drop':
+                this.handleServerMessage({ type: 'host_boulder_drop' });
+                break;
+            case 'season':
+                this.handleServerMessage({ type: 'host_season', season: args.season });
+                break;
+            case 'toggle_lava':
+                this.lava = this.lava || { active: false, y: 7920, speed: 20 };
+                this.lava.active = !this.lava.active;
+                this.handleServerMessage({ type: 'host_lava', active: this.lava.active, y: this.lava.y, speed: this.lava.speed });
+                break;
+            case 'reset_all':
+                this.handleServerMessage({ type: 'host_reset_all' });
+                break;
+        }
+    }
 
     sendChat(text) {
+        if (this.isLocalSolo) {
+            this.ui.addChatMessage(this.localPlayer ? this.localPlayer.name : 'Você', text, this.localPlayer ? this.localPlayer.color : '#38bdf8');
+            return;
+        }
         if (!this.ws || this.ws.readyState !== WebSocket.OPEN || !text.trim()) return;
         this.ws.send(JSON.stringify({
             type: 'chat_message',
@@ -1004,10 +1281,32 @@ class GameClient {
     }
 
     sendWin() {
-        if (!this.ws || this.ws.readyState !== WebSocket.OPEN) return;
-        this.ws.send(JSON.stringify({
-            type: 'player_win'
-        }));
+        if (this.hasWon) return;
+        this.hasWon = true;
+
+        const pName = this.localPlayer ? this.localPlayer.name : 'Jogador';
+        const pColor = this.localPlayer ? this.localPlayer.color : '#3b82f6';
+        const altitude = Math.floor(Math.max(0, 8000 - (this.localPlayer ? this.localPlayer.y : 0)));
+        const finalScore = Math.max(100, Math.floor(altitude * 1.5) + (this.localPlayer ? (this.localPlayer.kills || 0) * 500 : 0));
+
+        this.saveOnlineScore(pName, finalScore, altitude);
+
+        this.handleServerMessage({
+            type: 'game_won',
+            winner_name: pName,
+            winner_color: pColor,
+            subtext: `🏆 VENCEDOR! Alcançou o Cume com ${finalScore.toLocaleString('pt-BR')} pts!`,
+            rankings: [
+                { name: pName, color: pColor, altitude: altitude, is_host: true, is_bot: false },
+                ...Object.values(this.otherPlayers).map(p => ({ name: p.name, color: p.color, altitude: Math.floor(Math.max(0, 8000 - p.y)), is_host: false, is_bot: p.isBot }))
+            ]
+        });
+
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify({
+                type: 'player_win'
+            }));
+        }
     }
 
     sendFakeSummitTouch(summitId, x, y) {
@@ -1331,6 +1630,26 @@ class GameClient {
                 colorOptions.forEach(o => o.classList.remove('active'));
                 opt.classList.add('active');
                 this.selectedColor = opt.getAttribute('data-color');
+            });
+        });
+
+        // Weapon Loadout Selector
+        const weaponOptions = document.querySelectorAll('#weaponPickerRow .weapon-opt');
+        weaponOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                weaponOptions.forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                this.selectedWeapon = opt.getAttribute('data-weapon') || 'shotgun';
+            });
+        });
+
+        // Auto-Chaos Rate Selector
+        const chaosOptions = document.querySelectorAll('#chaosPickerRow .chaos-opt');
+        chaosOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                chaosOptions.forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                this.selectedChaos = opt.getAttribute('data-chaos') || 'fast';
             });
         });
 
@@ -1704,6 +2023,15 @@ class GameClient {
             }
         }
 
+        // Decrement round time in local solo mode
+        if (this.isLocalSolo && this.gameState === 'playing') {
+            this.roundTime = Math.max(0, this.roundTime - dt);
+            this.ui.updateTimer(this.roundTime);
+            if (this.roundTime <= 0 && !this.hasWon) {
+                this.sendWin();
+            }
+        }
+
         // Advance smooth rising lava floor
         if (this.lava && this.lava.active && this.gameState === 'playing') {
             this.lava.y = Math.max(100, this.lava.y - (this.lava.speed || 24.0) * dt);
@@ -1756,8 +2084,19 @@ class GameClient {
                 }
             }
 
-            // Update Remote Players
+            // Update Remote Players / Solo Bots
             for (let rp of Object.values(this.otherPlayers)) {
+                if (this.isLocalSolo && rp.isBot) {
+                    if (Math.random() < 0.04) rp.input.jump = true;
+                    if (Math.random() < 0.04) rp.input.jump = false;
+                    if (Math.random() < 0.02) rp.facing = (Math.random() < 0.5 ? 1 : -1);
+                    rp.input.left = rp.facing < 0;
+                    rp.input.right = rp.facing > 0;
+                    if (rp.input.jump && rp.isGrounded) {
+                        rp.jump(this.physics, this.renderer.particles);
+                    }
+                    this.physics.updatePlayer(rp, this.map, dt, this.modifiers, this.renderer.particles);
+                }
                 rp.update(dt);
             }
 

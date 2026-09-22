@@ -255,12 +255,12 @@
 
         <!-- Initial Lobby Modal (Create / Join Room) -->
         <div id="lobbyModal" class="modal-overlay">
-            <div class="modal-card">
-                <div class="modal-title">☁️ SKY RUSH</div>
+            <div class="modal-card" style="max-width: 440px;">
+                <div class="modal-title">☁️ SKY RUSH ARCADE</div>
                 
                 <div class="input-group">
-                    <label class="input-label">Seu Nome / Apelido:</label>
-                    <input type="text" id="nicknameInput" class="modal-input" placeholder="Ex: Lucas, Luna..." maxlength="14" value="Jogador">
+                    <label class="input-label">Seu Nome / Apelido no Ranking:</label>
+                    <input type="text" id="nicknameInput" class="modal-input" placeholder="Ex: GuiGuy, Piloto..." maxlength="14" value="GuiGuy">
                 </div>
 
                 <div class="input-group">
@@ -279,41 +279,39 @@
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">👑 Modo de Entrada do Host:</label>
-                    <div class="bots-picker-row" id="hostRolePickerRow">
-                        <button type="button" class="bot-opt-btn host-role-opt active" data-role="player">🎮 Jogador Ativo</button>
-                        <button type="button" class="bot-opt-btn host-role-opt" data-role="spectator">👁️ Câmera Livre (Espectador)</button>
+                    <label class="input-label">🔫 Equipamento Inicial do Jogador:</label>
+                    <div class="bots-picker-row" id="weaponPickerRow" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                        <button type="button" class="bot-opt-btn weapon-opt active" data-weapon="shotgun" style="font-size: 11px;">💥 Escopeta (10 Tiros)</button>
+                        <button type="button" class="bot-opt-btn weapon-opt" data-weapon="ak47" style="font-size: 11px;">⚡ AK-47 (30 Tiros)</button>
+                        <button type="button" class="bot-opt-btn weapon-opt" data-weapon="pistol" style="font-size: 11px;">🔫 Pistola (15 Tiros)</button>
+                        <button type="button" class="bot-opt-btn weapon-opt" data-weapon="turbo" style="font-size: 11px;">🦘 Super Pulo Cósmico</button>
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">⏱️ Duração da Partida:</label>
-                    <div class="bots-picker-row" id="durationPickerRow">
-                        <button type="button" class="bot-opt-btn duration-opt" data-duration="3">3 Min</button>
-                        <button type="button" class="bot-opt-btn duration-opt" data-duration="5">5 Min</button>
-                        <button type="button" class="bot-opt-btn duration-opt active" data-duration="10">10 Min</button>
-                        <button type="button" class="bot-opt-btn duration-opt" data-duration="15">15 Min</button>
-                        <button type="button" class="bot-opt-btn duration-opt" data-duration="20">20 Min</button>
+                    <label class="input-label">🌪️ Caos Automático & Mutações de Mundo:</label>
+                    <div class="bots-picker-row" id="chaosPickerRow">
+                        <button type="button" class="bot-opt-btn chaos-opt active" data-chaos="fast" style="font-size: 11px;">🔥 Caos Total (Eventos a cada 12s)</button>
+                        <button type="button" class="bot-opt-btn chaos-opt" data-chaos="normal" style="font-size: 11px;">⚡ Moderado (20s)</button>
                     </div>
                 </div>
 
-                <div class="input-group">
-                    <label class="input-label">🎯 Bot Caçador (Especialista em caçar o líder com Sniper):</label>
-                    <div class="bots-picker-row" id="hunterPickerRow">
-                        <button type="button" class="bot-opt-btn hunter-opt-btn active" data-hunter="0">Sem Caçador</button>
-                        <button type="button" class="bot-opt-btn hunter-opt-btn" data-hunter="1">🎯 Ativar Caçador 🔫</button>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-label">Código da Sala (para entrar):</label>
-                    <input type="text" id="roomCodeInput" class="modal-input" placeholder="Ex: 7K3Q" maxlength="6" style="text-transform: uppercase;">
-                </div>
-
-                <div class="modal-btn-row" style="flex-wrap: wrap; gap: 8px;">
-                    <button id="btnQuickPlay" class="btn-primary" style="flex: 1 1 100%; background: linear-gradient(135deg, #16a34a, #15803d); border-color: #4ade80; font-size: 15px; padding: 12px 16px;">🚀 Jogar Solo / Testar Agora (Host)</button>
-                    <button id="btnCreateRoom" class="btn-primary" style="flex: 1;">👑 Criar Sala (Host)</button>
-                    <button id="btnJoinRoom" class="btn-secondary" style="flex: 1;">🚪 Entrar na Sala</button>
+                <div class="modal-btn-row" style="flex-direction: column; gap: 10px; margin-top: 14px;">
+                    <button id="btnQuickPlay" class="btn-primary" style="width: 100%; background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%); color: #05050a !important; font-size: 16px; font-weight: 900; padding: 14px 20px; box-shadow: 0 4px 20px rgba(0,240,255,0.4); text-transform: uppercase;">
+                        🚀 JOGAR SOLO AGORA
+                    </button>
+                    
+                    <!-- Collapsible Multiplayer Options -->
+                    <details style="width: 100%; font-size: 12px; color: #94a3b8; text-align: left; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 8px 12px;">
+                        <summary style="cursor: pointer; font-weight: 700; color: #38bdf8;">🌐 Opções Avançadas / Multiplayer (Opcional)</summary>
+                        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                            <input type="text" id="roomCodeInput" class="modal-input" placeholder="Código da Sala (Ex: 7K3Q)" maxlength="6" style="text-transform: uppercase;">
+                            <div style="display: flex; gap: 8px;">
+                                <button id="btnCreateRoom" class="btn-secondary" style="flex: 1; font-size: 11px;">👑 Criar Sala</button>
+                                <button id="btnJoinRoom" class="btn-secondary" style="flex: 1; font-size: 11px;">🚪 Entrar na Sala</button>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
