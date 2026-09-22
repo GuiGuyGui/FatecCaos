@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<title>FatecCaos | OmniVoid Studios</title>
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			html, body {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				background: #0d0d12;
+				color: #e2e8f0;
+				font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* Top Navbar */
+			#header {
+				height: 44px;
+				background: rgba(18, 18, 26, 0.95);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 16px;
+				z-index: 100;
+				flex-shrink: 0;
+			}
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				font-weight: 700;
+				font-size: 15px;
+				letter-spacing: 0.5px;
+				color: #67e8f9;
+			}
+			.brand-badge {
+				background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+				color: #fff;
+				font-size: 10px;
+				padding: 2px 7px;
+				border-radius: 4px;
+				font-weight: 800;
+				text-transform: uppercase;
+			}
+			.game-title {
+				color: #f8fafc;
+				font-weight: 600;
+				font-size: 13px;
+			}
+			.fullscreen-btn {
+				background: #1e293b;
+				color: #38bdf8;
+				border: 1px solid #334155;
+				padding: 5px 12px;
+				border-radius: 6px;
+				font-size: 12px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.fullscreen-btn:hover {
+				background: #38bdf8;
+				color: #0f172a;
+				border-color: #38bdf8;
+			}
+
+			/* Main Game Container */
+			#game-container {
+				flex: 1;
+				position: relative;
+				width: 100%;
+				height: calc(100% - 78px);
+				background: #000;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			#canvas {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+			#canvas:focus {
+				outline: none;
+			}
+
+			/* Status / Loading Overlay */
+			#status, #status-splash, #status-progress {
+				position: absolute;
+				left: 0;
+				right: 0;
+			}
+			#status, #status-splash {
+				top: 0;
+				bottom: 0;
+			}
+			#status {
+				background: #090a0f radial-gradient(circle at center, #1e1b4b 0%, #090a0f 80%);
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				visibility: hidden;
+				z-index: 50;
+			}
+			#status-splash {
+				max-height: 80%;
+				max-width: 80%;
+				margin: auto;
+				object-fit: contain;
+			}
+			#status-progress {
+				bottom: 12%;
+				width: 45%;
+				max-width: 480px;
+				height: 8px;
+				margin: 0 auto;
+				border-radius: 4px;
+				overflow: hidden;
+				appearance: none;
+				border: none;
+				background: rgba(255, 255, 255, 0.1);
+			}
+			#status-progress::-webkit-progress-bar {
+				background: rgba(255, 255, 255, 0.1);
+			}
+			#status-progress::-webkit-progress-value {
+				background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+			}
+			#status-progress::-moz-progress-bar {
+				background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+			}
+			#status-notice {
+				background-color: #5b3943;
+				border-radius: 0.5rem;
+				border: 1px solid #9b3943;
+				color: #e0e0e0;
+				font-family: inherit;
+				line-height: 1.4;
+				margin: 0 2rem;
+				padding: 1rem;
+				text-align: center;
+				z-index: 51;
+				display: none;
+			}
+
+			/* Bottom Controls Footer */
+			#footer {
+				height: 34px;
+				background: #090a0f;
+				border-top: 1px solid rgba(255, 255, 255, 0.05);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 0 14px;
+				font-size: 11px;
+				color: #94a3b8;
+				flex-shrink: 0;
+			}
+			.controls-list {
+				display: flex;
+				gap: 14px;
+				align-items: center;
+			}
+			.key {
+				background: #1e293b;
+				color: #cbd5e1;
+				padding: 1px 5px;
+				border-radius: 3px;
+				border: 1px solid #334155;
+				font-size: 10px;
+				font-weight: 700;
+			}
+			.coop-badge {
+				color: #10b981;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 4px;
+			}
+		</style>
+		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
+		<link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+		<script src="coi-serviceworker.js"></script>
+	</head>
+	<body>
+		<!-- Header -->
+		<header id="header">
+			<div class="brand">
+				<span>🌌 OmniVoid Studios</span>
+				<span class="brand-badge">Official</span>
+			</div>
+			<div class="game-title">
+				🧟‍♂️ <strong>FatecCaos</strong> — Sobrevivência Cooperativa
+			</div>
+			<button class="fullscreen-btn" onclick="toggleFullScreen()">
+				⛶ Tela Cheia
+			</button>
+		</header>
+
+		<!-- Game Frame -->
+		<main id="game-container">
+			<canvas id="canvas">
+				Seu navegador não suporta HTML5 Canvas.
+			</canvas>
+
+			<noscript>
+				JavaScript é necessário para executar o FatecCaos.
+			</noscript>
+
+			<div id="status">
+				<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="index.png" alt="FatecCaos">
+				<progress id="status-progress"></progress>
+				<div id="status-notice"></div>
+			</div>
+		</main>
+
+		<!-- Footer / Quick Controls -->
+		<footer id="footer">
+			<div class="controls-list">
+				<span><span class="key">W A S D</span> Mover / Pular</span>
+				<span><span class="key">Mouse</span> Mirar & Atirar</span>
+				<span><span class="key">R</span> Recarregar</span>
+				<span><span class="key">1 2 3</span> Trocar Arma</span>
+				<span><span class="key">E</span> Interagir / Salvar Amigo</span>
+				<span><span class="key">G / F / C</span> Granadas & Minas</span>
+			</div>
+			<div class="coop-badge">
+				● Co-op até 7 Jogadores Online
+			</div>
+		</footer>
+
+		<script src="index.js"></script>
+		<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":27532016,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+function toggleFullScreen() {
+	const elem = document.getElementById("game-container");
+	if (!document.fullscreenElement) {
+		if (elem.requestFullscreen) {
+			elem.requestFullscreen();
+		} else if (elem.webkitRequestFullscreen) {
+			elem.webkitRequestFullscreen();
+		}
+	} else {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		}
+	}
+}
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice('Ocorreu um erro ao inicializar o jogo.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Falha no service worker.'));
+			}
+			Promise.race([
+				serviceWorkerRegistrationPromise.then((registration) => {
+					if (registration != null) {
+						return Promise.reject(new Error('Service worker já existente.'));
+					}
+					return registration;
+				}).then(() => engine.installServiceWorker()),
+				new Promise((resolve) => {
+					setTimeout(() => resolve(), 2000);
+				}),
+			]).then(() => {
+				window.location.reload();
+			}).catch((err) => {
+				console.error('Service worker erro:', err);
+			});
+		} else {
+			const missingMsg = 'Erro: Requisitos do navegador ausentes:\n';
+			displayFailureNotice(missingMsg + missing.join('\n'));
+		}
+	} else {
+		setStatusMode('progress');
+		engine.startGame({
+			'onProgress': function (current, total) {
+				if (current > 0 && total > 0) {
+					statusProgress.value = current;
+					statusProgress.max = total;
+				} else {
+					statusProgress.removeAttribute('value');
+					statusProgress.removeAttribute('max');
+				}
+			},
+		}).then(() => {
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+		</script>
+	</body>
+</html>
