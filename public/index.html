@@ -23,38 +23,41 @@
 
 			/* Top Navbar */
 			#header {
-				height: 44px;
-				background: rgba(18, 18, 26, 0.95);
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				height: 48px;
+				background: rgba(13, 13, 18, 0.98);
+				border-bottom: 1px solid rgba(139, 92, 246, 0.25);
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 0 16px;
+				padding: 0 18px;
 				z-index: 100;
 				flex-shrink: 0;
+				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 			}
 			.brand {
 				display: flex;
 				align-items: center;
-				gap: 10px;
-				font-weight: 700;
-				font-size: 15px;
-				letter-spacing: 0.5px;
-				color: #67e8f9;
+				gap: 12px;
 			}
-			.brand-badge {
-				background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
-				color: #fff;
-				font-size: 10px;
-				padding: 2px 7px;
-				border-radius: 4px;
-				font-weight: 800;
-				text-transform: uppercase;
+			.brand-logo {
+				height: 38px;
+				width: auto;
+				object-fit: contain;
+				filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.45));
+				transition: transform 0.2s ease, filter 0.2s ease;
+				cursor: pointer;
+			}
+			.brand-logo:hover {
+				transform: scale(1.03);
+				filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.7));
 			}
 			.game-title {
 				color: #f8fafc;
 				font-weight: 600;
 				font-size: 13px;
+				display: flex;
+				align-items: center;
+				gap: 6px;
 			}
 			.fullscreen-btn {
 				background: #1e293b;
@@ -201,11 +204,10 @@
 		<!-- Header -->
 		<header id="header">
 			<div class="brand">
-				<span>🌌 OmniVoid Studios</span>
-				<span class="brand-badge">Official</span>
+				<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="brand-logo">
 			</div>
 			<div class="game-title">
-				🧟‍♂️ <strong>FatecCaos</strong> — Sobrevivência Cooperativa
+				🧟‍♂️ <strong>FatecCaos</strong> — Sobrevivência Cooperativa (Até 7 Jogadores)
 			</div>
 			<button class="fullscreen-btn" onclick="toggleFullScreen()">
 				⛶ Tela Cheia
