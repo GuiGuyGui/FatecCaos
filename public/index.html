@@ -491,101 +491,12 @@
 	</header>
 
 	<main class="container">
-		<!-- Developer Profile & Bio Section with Photo Slot & Special Dedication to Rita -->
-		<section class="card" style="margin: 30px 0 50px 0; border: 1px solid var(--border-bright); background: linear-gradient(135deg, rgba(21,21,34,0.95) 0%, rgba(13,13,20,0.98) 100%);">
-			<div style="display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: flex-start;">
-				<!-- Photo Slot with upload option -->
-				<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 6px;">
-					<div class="profile-avatar-frame" style="width: 175px; height: 175px;">
-						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
-					</div>
-					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 6px 14px; cursor: pointer; text-align: center;">
-						📷 Alterar Minha Foto
-					</label>
-					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
-					<span style="font-size: 11px; opacity: 0.75; text-align: center;">Arquivo: guilherme_mendes.jpg</span>
-				</div>
-
-				<!-- Bio, Pillars & Dedication to Rita -->
-				<div>
-					<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-						<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary);">⚡ Desenvolvedor Full-Stack</span>
-						<span class="badge" style="background: rgba(157, 78, 221, 0.15); border-color: var(--accent-purple);">🎓 Educação Tecnológica</span>
-						<span class="badge" style="background: rgba(0, 255, 136, 0.15); border-color: var(--accent-emerald);">🛡️ Segurança da Informação</span>
-					</div>
-
-					<h1 style="font-size: 36px; margin-bottom: 14px; line-height: 1.2;">
-						Guilherme Mendes
-					</h1>
-
-					<p style="font-size: 17px; line-height: 1.7; margin-bottom: 20px; opacity: 0.95;">
-						Sempre fui apaixonado por criar projetos e desafios cada vez maiores e mais ambiciosos que os anteriores, superando limites técnicos e transformando ideias complexas em experiências interativas reais. Minha jornada une a paixão pelo desenvolvimento de software de alta performance, a educação através da tecnologia e o compromisso rigoroso com a segurança da informação.
-					</p>
-
-					<!-- 3 Pilares em Cards -->
-					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
-						<div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-primary) !important;">
-								💻 Desenvolvimento & Games
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Arquitetura de sistemas, engines de jogos (Godot 4, C++, WebAssembly), netcode em tempo real e interfaces fluidas.
-							</p>
-						</div>
-
-						<div style="background: rgba(157, 78, 221, 0.05); border: 1px solid rgba(157, 78, 221, 0.2); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-purple) !important;">
-								🎓 Educação & Inclusão Tech
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Criação de quizzes vocacionais, simuladores didáticos e experiências que engajam e capacitam futuros desenvolvedores.
-							</p>
-						</div>
-
-						<div style="background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-emerald) !important;">
-								🛡️ Segurança da Informação
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Proteção de dados, integridade de arquiteturas, isolamento de processos (COOP/COEP) e desenvolvimento seguro (DevSecOps).
-							</p>
-						</div>
-					</div>
-
-					<!-- Special Dedication to Rita -->
-					<div style="background: linear-gradient(135deg, rgba(255, 0, 85, 0.12) 0%, rgba(157, 78, 221, 0.12) 100%); border: 1px solid rgba(255, 0, 85, 0.4); border-left: 5px solid var(--accent-danger); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(255, 0, 85, 0.15);">
-						<div style="font-weight: 800; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-							<span>❤️ Dedicatória & Agradecimento Especial para Minha Rita</span>
-						</div>
-						<p style="font-size: 14px; line-height: 1.6; opacity: 0.95;">
-							Um agradecimento de todo o coração para a minha amada <b>Rita</b>, que é meu porto seguro, me incentiva incansavelmente a sonhar mais alto, acredita na minha capacidade e está sempre ao meu lado me apoiando em cada projeto, código e desafio!
-						</p>
-					</div>
-
-					<div style="display: flex; gap: 14px; flex-wrap: wrap;">
-						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
-							🧟‍♂️ Jogar Zombies Survive
-						</a>
-						<a href="skyrush.html" class="btn-primary">
-							☁️ Jogar SkyRush
-						</a>
-						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-							🧠 Teste de Programação
-						</a>
-						<a href="projetos.html" class="btn-secondary">
-							🚀 Ver Projetos
-						</a>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Highlight Games Grid -->
-		<section style="margin-bottom: 60px;">
+		<!-- 1. Highlight Games Grid -->
+		<section style="margin: 30px 0 50px 0;">
 			<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
 				<div>
-					<h2 style="font-size: 26px;">🎮 Jogos em Destaque</h2>
-					<p style="font-size: 14px; opacity: 0.8;">Engines de ponta, renderização sem recortes e alta performance</p>
+					<h2 style="font-size: 28px;">🎮 Jogos & Experiências em Destaque</h2>
+					<p style="font-size: 15px; opacity: 0.85;">Projetos com renderização fluida, sem recortes e arquitetura de ponta</p>
 				</div>
 			</div>
 
@@ -643,7 +554,117 @@
 			</div>
 		</section>
 
-		<!-- Hall da Fama Global / Ranking -->
+		<!-- 2. Stack de Tecnologias & Engenharia -->
+		<section class="card" style="margin-bottom: 50px; background: linear-gradient(180deg, var(--bg-card) 0%, rgba(18,18,26,0.9) 100%);">
+			<h2 style="font-size: 24px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+				<span>🛠️ Stack de Tecnologias & Engenharia</span>
+			</h2>
+			<p style="font-size: 14px; margin-bottom: 22px; opacity: 0.85;">
+				Ecossistemas e tecnologias que utilizo para construir soluções robustas, desde motores de jogos até arquiteturas de nuvem seguras:
+			</p>
+			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🕹️ Godot Engine 4 (GDScript / C#)</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🌐 WebAssembly / Emscripten</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">⚡ TypeScript & Node.js</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐍 Python (AI / Data Science / Automação)</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🦀 Rust & C++ (Engines & Baixo Nível)</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🛡️ Cibersegurança & Criptografia</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">☁️ Docker & CI/CD Pipelines</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🔥 WebSockets & Netcode em Tempo Real</span>
+			</div>
+		</section>
+
+		<!-- 3. Developer Profile, Description & Dedication to Rita (ABAIXO DO STACK DE TECNOLOGIA) -->
+		<section class="card" style="margin-bottom: 60px; border: 2px solid var(--accent-primary); box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15); background: linear-gradient(135deg, rgba(21,21,34,0.98) 0%, rgba(13,13,20,0.98) 100%);">
+			<div style="display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: flex-start;">
+				<!-- Photo Slot with upload option -->
+				<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 6px;">
+					<div class="profile-avatar-frame" style="width: 180px; height: 180px; border: 3px solid var(--accent-primary); box-shadow: 0 0 30px rgba(0,240,255,0.5);">
+						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
+					</div>
+					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 6px 14px; cursor: pointer; text-align: center;">
+						📷 Alterar Minha Foto
+					</label>
+					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+					<span style="font-size: 11px; opacity: 0.75; text-align: center;">Arquivo: guilherme_mendes.jpg</span>
+				</div>
+
+				<!-- Bio, 3 Pillars & Dedication to Rita -->
+				<div>
+					<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); font-size: 12px;">⚡ Desenvolvedor Full-Stack</span>
+						<span class="badge" style="background: rgba(157, 78, 221, 0.15); border-color: var(--accent-purple); font-size: 12px;">🎓 Educação Tecnológica</span>
+						<span class="badge" style="background: rgba(0, 255, 136, 0.15); border-color: var(--accent-emerald); font-size: 12px;">🛡️ Segurança da Informação</span>
+					</div>
+
+					<h2 style="font-size: 34px; margin-bottom: 14px; line-height: 1.2;">
+						Guilherme Mendes
+					</h2>
+
+					<!-- A descrição completa solicitada -->
+					<p style="font-size: 17px; line-height: 1.7; margin-bottom: 22px; opacity: 0.95;">
+						Sempre fui apaixonado por criar coisas cada vez mais desafiadoras que as outras, buscando superar limites técnicos e transformar ideias de alta complexidade em realidade. Minha trajetória é guiada por três grandes pilares: <b>Desenvolvimento de Software de Alta Performance</b>, <b>Educação Tecnológica para Capacitação de Novos Talentos</b> e <b>Segurança da Informação</b>.
+					</p>
+
+					<!-- 3 Pilares em Cards -->
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
+						<div style="background: rgba(0, 240, 255, 0.06); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-primary) !important;">
+								💻 Desenvolvimento & Engenharia
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Criação de soluções complexas, engines de jogos (Godot 4, C++, WebAssembly), netcode em tempo real e arquiteturas escaláveis.
+							</p>
+						</div>
+
+						<div style="background: rgba(157, 78, 221, 0.06); border: 1px solid rgba(157, 78, 221, 0.25); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-purple) !important;">
+								🎓 Educação Tecnológica
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Desenvolvimento de quizzes vocacionais, simuladores interativos e recursos didáticos para incentivar estudantes e abrir portas na programação.
+							</p>
+						</div>
+
+						<div style="background: rgba(0, 255, 136, 0.06); border: 1px solid rgba(0, 255, 136, 0.25); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-emerald) !important;">
+								🛡️ Segurança da Informação
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Compromisso com integridade de dados, arquiteturas seguras, isolamento cruzado (COOP/COEP), criptografia e proteção cibernética.
+							</p>
+						</div>
+					</div>
+
+					<!-- Special Dedication to Rita -->
+					<div style="background: linear-gradient(135deg, rgba(255, 0, 85, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%); border: 1px solid rgba(255, 0, 85, 0.45); border-left: 5px solid var(--accent-danger); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(255, 0, 85, 0.18);">
+						<div style="font-weight: 800; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+							<span>❤️ Dedicatória & Agradecimento Especial para Minha Rita</span>
+						</div>
+						<p style="font-size: 14px; line-height: 1.6; opacity: 0.95;">
+							Um agradecimento de todo o coração para a minha amada <b>Rita</b>, que é meu porto seguro, me incentiva incansavelmente a sonhar mais alto, acredita no meu potencial e está sempre ao meu lado me apoiando em cada projeto, código e desafio!
+						</p>
+					</div>
+
+					<div style="display: flex; gap: 14px; flex-wrap: wrap;">
+						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
+							🧟‍♂️ Jogar Zombies Survive
+						</a>
+						<a href="skyrush.html" class="btn-primary">
+							☁️ Jogar SkyRush
+						</a>
+						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
+							🧠 Teste de Programação
+						</a>
+						<a href="projetos.html" class="btn-secondary">
+							🚀 Ver Todos os Projetos
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 4. Hall da Fama Global / Ranking -->
 		<section class="card" style="margin-bottom: 60px;">
 			<h2 style="font-size: 24px; margin-bottom: 16px;">🏆 Hall da Fama Global - Top Players</h2>
 			<div style="overflow-x: auto;">
