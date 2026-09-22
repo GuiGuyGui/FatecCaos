@@ -14,12 +14,12 @@
 	<script src="coi-serviceworker.js"></script>
 	<style>
 		:root {
-			--bg-base: #0a0a0f;
-			--bg-surface: #12121a;
-			--bg-card: #181824;
-			--bg-card-hover: #222233;
-			--border-color: rgba(255, 255, 255, 0.15);
-			--border-bright: rgba(255, 255, 255, 0.35);
+			--bg-base: #07070c;
+			--bg-surface: #101018;
+			--bg-card: #151522;
+			--bg-card-hover: #1e1e30;
+			--border-color: rgba(255, 255, 255, 0.12);
+			--border-bright: rgba(255, 255, 255, 0.3);
 			--accent-primary: #00f0ff;
 			--accent-danger: #ff0055;
 			--accent-purple: #9d4edd;
@@ -43,11 +43,11 @@
 		body {
 			background-color: var(--bg-base);
 			background-image: 
-				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.08) 0%, transparent 40%),
-				linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-			background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%),
+				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.07) 0%, transparent 40%),
+				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
@@ -74,7 +74,7 @@
 			position: sticky;
 			top: 0;
 			z-index: 1000;
-			background: rgba(10, 10, 15, 0.92);
+			background: rgba(7, 7, 12, 0.94);
 			backdrop-filter: blur(14px);
 			-webkit-backdrop-filter: blur(14px);
 			border-bottom: 1px solid var(--border-color);
@@ -82,7 +82,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
 		}
 
 		.nav-brand {
@@ -95,7 +95,7 @@
 			height: 44px;
 			width: auto;
 			object-fit: contain;
-			filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+			filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
 			transition: transform 0.3s ease;
 		}
 
@@ -234,9 +234,9 @@
 		}
 
 		.container {
-			max-width: 1280px;
+			max-width: 1380px;
 			margin: 0 auto;
-			padding: 30px 20px;
+			padding: 30px 24px;
 			width: 100%;
 			flex: 1;
 		}
@@ -286,6 +286,62 @@
 			box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
 		}
 
+		/* Full-Width Hero Banner */
+		.logo-hero-container {
+			width: 100vw;
+			position: relative;
+			left: 50%;
+			right: 50%;
+			margin-left: -50vw;
+			margin-right: -50vw;
+			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			border-bottom: 1px solid var(--border-color);
+			padding: 30px 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			box-shadow: inset 0 -20px 40px rgba(0,0,0,0.6);
+			overflow: hidden;
+		}
+
+		.logo-hero-img {
+			width: 100%;
+			max-width: 900px;
+			height: auto;
+			max-height: 180px;
+			object-fit: contain;
+			filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.6));
+			transition: transform 0.3s ease;
+		}
+
+		.logo-hero-img:hover {
+			transform: scale(1.02);
+		}
+
+		/* Profile / Photo Container */
+		.profile-avatar-frame {
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			border: 3px solid var(--accent-primary);
+			box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+			overflow: hidden;
+			background: #151522;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			flex-shrink: 0;
+		}
+
+		.profile-avatar-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		/* Modal styling */
 		.modal-backdrop {
 			position: fixed;
 			top: 0;
@@ -352,7 +408,7 @@
 		}
 
 		footer {
-			background: #07070a;
+			background: #050508;
 			border-top: 1px solid var(--border-color);
 			padding: 30px 20px;
 			text-align: center;

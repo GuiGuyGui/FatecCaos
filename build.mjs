@@ -14,12 +14,12 @@ const COMMON_HEAD = `
 	<script src="coi-serviceworker.js"></script>
 	<style>
 		:root {
-			--bg-base: #0a0a0f;
-			--bg-surface: #12121a;
-			--bg-card: #181824;
-			--bg-card-hover: #222233;
-			--border-color: rgba(255, 255, 255, 0.15);
-			--border-bright: rgba(255, 255, 255, 0.35);
+			--bg-base: #07070c;
+			--bg-surface: #101018;
+			--bg-card: #151522;
+			--bg-card-hover: #1e1e30;
+			--border-color: rgba(255, 255, 255, 0.12);
+			--border-bright: rgba(255, 255, 255, 0.3);
 			--accent-primary: #00f0ff;
 			--accent-danger: #ff0055;
 			--accent-purple: #9d4edd;
@@ -43,11 +43,11 @@ const COMMON_HEAD = `
 		body {
 			background-color: var(--bg-base);
 			background-image: 
-				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.08) 0%, transparent 40%),
-				linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-			background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%),
+				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.07) 0%, transparent 40%),
+				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
@@ -74,7 +74,7 @@ const COMMON_HEAD = `
 			position: sticky;
 			top: 0;
 			z-index: 1000;
-			background: rgba(10, 10, 15, 0.92);
+			background: rgba(7, 7, 12, 0.94);
 			backdrop-filter: blur(14px);
 			-webkit-backdrop-filter: blur(14px);
 			border-bottom: 1px solid var(--border-color);
@@ -82,7 +82,7 @@ const COMMON_HEAD = `
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
 		}
 
 		.nav-brand {
@@ -95,7 +95,7 @@ const COMMON_HEAD = `
 			height: 44px;
 			width: auto;
 			object-fit: contain;
-			filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+			filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
 			transition: transform 0.3s ease;
 		}
 
@@ -234,9 +234,9 @@ const COMMON_HEAD = `
 		}
 
 		.container {
-			max-width: 1280px;
+			max-width: 1380px;
 			margin: 0 auto;
-			padding: 30px 20px;
+			padding: 30px 24px;
 			width: 100%;
 			flex: 1;
 		}
@@ -286,6 +286,62 @@ const COMMON_HEAD = `
 			box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
 		}
 
+		/* Full-Width Hero Banner */
+		.logo-hero-container {
+			width: 100vw;
+			position: relative;
+			left: 50%;
+			right: 50%;
+			margin-left: -50vw;
+			margin-right: -50vw;
+			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			border-bottom: 1px solid var(--border-color);
+			padding: 30px 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			box-shadow: inset 0 -20px 40px rgba(0,0,0,0.6);
+			overflow: hidden;
+		}
+
+		.logo-hero-img {
+			width: 100%;
+			max-width: 900px;
+			height: auto;
+			max-height: 180px;
+			object-fit: contain;
+			filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.6));
+			transition: transform 0.3s ease;
+		}
+
+		.logo-hero-img:hover {
+			transform: scale(1.02);
+		}
+
+		/* Profile / Photo Container */
+		.profile-avatar-frame {
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			border: 3px solid var(--accent-primary);
+			box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+			overflow: hidden;
+			background: #151522;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			flex-shrink: 0;
+		}
+
+		.profile-avatar-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		/* Modal styling */
 		.modal-backdrop {
 			position: fixed;
 			top: 0;
@@ -352,7 +408,7 @@ const COMMON_HEAD = `
 		}
 
 		footer {
-			background: #07070a;
+			background: #050508;
 			border-top: 1px solid var(--border-color);
 			padding: 30px 20px;
 			text-align: center;
@@ -423,8 +479,8 @@ function getNavbar(activeTab) {
 				<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
 					<button class="user-pill-btn" onclick="openProfileModal()">
 						<span id="nav-user-avatar">🧑‍🚀</span>
-						<span id="nav-user-name">Jogador</span>
-						<span class="user-level-badge" id="nav-user-level">Nvl 1</span>
+						<span id="nav-user-name">GuiGuy</span>
+						<span class="user-level-badge" id="nav-user-level">Nvl 99</span>
 					</button>
 				</div>
 			</div>
@@ -447,7 +503,7 @@ const COMMON_AUTH_MODALS = `
 					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
-					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou Sniper_99" required>
+					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
 					<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
@@ -462,13 +518,13 @@ const COMMON_AUTH_MODALS = `
 					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
-					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Silva" required>
+					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
-					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: VoidSniper_99" required>
+					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS - 4º Semestre / Ciência da Computação" required>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
 					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
@@ -502,8 +558,8 @@ const COMMON_AUTH_MODALS = `
 					<div style="display: flex; align-items: center; gap: 14px;">
 						<div style="font-size: 44px; width: 64px; height: 64px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent-primary);" id="modal-profile-avatar">🧑‍🚀</div>
 						<div>
-							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800;">Jogador</h2>
-							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Aluno</p>
+							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800;">GuiGuy</h2>
+							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Guilherme Mendes • Criador & Lead Dev</p>
 						</div>
 					</div>
 					<button class="btn-secondary" onclick="handleLogout()" style="padding: 6px 14px; font-size: 12px;">
@@ -513,20 +569,20 @@ const COMMON_AUTH_MODALS = `
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800;">Nvl 1</div>
+						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800; color: var(--accent-gold) !important;">Nvl 99</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Nível</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800;">$0</div>
+						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800;">Onda 0</div>
+						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Zombies Survive</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800;">0</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Eliminações</div>
+						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800; color: var(--accent-primary) !important;">99999</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Pontuação</div>
 					</div>
 				</div>
 			</div>
@@ -553,7 +609,22 @@ function saveUsersDB(users) {
 }
 function getCurrentUser() {
 	try {
-		return JSON.parse(localStorage.getItem("omnivoid_current_user") || "null");
+		const stored = localStorage.getItem("omnivoid_current_user");
+		if (stored) return JSON.parse(stored);
+		// Default profile for Guilherme Mendes
+		return {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
 	} catch (e) {
 		return null;
 	}
@@ -576,8 +647,8 @@ function updateUIAfterAuth() {
 		loggedOutDiv.style.display = "none";
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-		document.getElementById("nav-user-name").innerText = currentUser.nickname || currentUser.name || "Jogador";
-		document.getElementById("nav-user-level").innerText = \`Nvl \${currentUser.level || 1}\`;
+		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
+		document.getElementById("nav-user-level").innerText = \`Nvl \${currentUser.level || 99}\`;
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
@@ -668,12 +739,12 @@ function openProfileModal() {
 		return;
 	}
 	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || currentUser.name;
-	document.getElementById("modal-profile-sub").innerText = \`\${currentUser.name} • \${currentUser.turma || 'Aluno'}\`;
-	document.getElementById("prof-stat-level").innerText = \`Nvl \${currentUser.level || 1}\`;
-	document.getElementById("prof-stat-cash").innerText = \`$\${(currentUser.cash || 0).toLocaleString()}\`;
-	document.getElementById("prof-stat-wave").innerText = \`Onda \${currentUser.maxWave || 0}\`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 0).toLocaleString();
+	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = \`\${currentUser.name || 'Guilherme Mendes'} • \${currentUser.turma || 'Criador'}\`;
+	document.getElementById("prof-stat-level").innerText = \`Nvl \${currentUser.level || 99}\`;
+	document.getElementById("prof-stat-cash").innerText = \`$\${(currentUser.cash || 99999).toLocaleString()}\`;
+	document.getElementById("prof-stat-wave").innerText = \`Onda \${currentUser.maxWave || 99}\`;
+	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
 	document.getElementById("modal-profile").style.display = "flex";
 }
 function closeModal(id) {
@@ -682,8 +753,30 @@ function closeModal(id) {
 function closeModalOnBackdrop(e, id) {
 	if (e.target.id === id) closeModal(id);
 }
+function handlePhotoUpload(event) {
+	const file = event.target.files[0];
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function(e) {
+			const imgs = document.querySelectorAll('.dev-profile-photo-target');
+			imgs.forEach(img => {
+				img.src = e.target.result;
+			});
+			localStorage.setItem('omnivoid_dev_photo', e.target.result);
+			alert('Sua foto de perfil foi atualizada com sucesso no site!');
+		};
+		reader.readAsDataURL(file);
+	}
+}
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
+	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
+	if (savedPhoto) {
+		const imgs = document.querySelectorAll('.dev-profile-photo-target');
+		imgs.forEach(img => {
+			img.src = savedPhoto;
+		});
+	}
 });
 </script>
 `;
@@ -699,7 +792,8 @@ const COMMON_FOOTER = `
 					<a href="projetos.html">Projetos</a>
 					<a href="devchat.html">Conversa Dev</a>
 				</div>
-				<p style="opacity: 0.85;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido com paixão por desafios tecnológicos e games.</p>
+				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
+				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
 			</div>
 		</footer>
 `;
@@ -708,48 +802,75 @@ const COMMON_FOOTER = `
 const indexHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>OmniVoid Studios | Inovação, Engenharia de Software & GameDev</title>
+	<title>OmniVoid Studios | Guilherme Mendes & GameDev</title>
 	${COMMON_HEAD}
 </head>
 <body>
 	${getNavbar('inicio')}
 
-	<main class="container">
-		<section style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin: 40px 0 60px 0;">
-			<div>
-				<div class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); margin-bottom: 16px;">
-					⚡ Desenvolvedor Full-Stack & Game Engineer
-				</div>
-				<h1 style="font-size: 42px; line-height: 1.15; margin-bottom: 20px;">
-					Criando Experiências Digitais e Desafios de Alta Performance
-				</h1>
-				<p style="font-size: 17px; line-height: 1.6; margin-bottom: 28px; opacity: 0.9;">
-					Olá! Sou um desenvolvedor apaixonado por arquitetar sistemas complexos, resolver desafios de engenharia e criar jogos imersivos em Godot, WebGL, Node.js e C++. Bem-vindo ao portal da OmniVoid Studios.
-				</p>
-				<div style="display: flex; gap: 16px; flex-wrap: wrap;">
-					<a href="zombiessurvive.html" class="btn-primary">
-						🧟‍♂️ Jogar Zombies Survive
-					</a>
-					<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-						🧠 Fazer Teste de Programação
-					</a>
-					<a href="projetos.html" class="btn-secondary">
-						🚀 Ver Meus Projetos
-					</a>
-				</div>
-			</div>
+	<!-- FULL WIDTH TOP LOGO HERO (NO WHITE BORDERS) -->
+	<header class="logo-hero-container">
+		<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="logo-hero-img">
+	</header>
 
-			<div style="text-align: center; position: relative;">
-				<div style="background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 70%); position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0;"></div>
-				<img src="logo_omnivoid.png" alt="OmniVoid Studios" style="max-width: 320px; width: 100%; position: relative; z-index: 1; filter: drop-shadow(0 0 25px rgba(0,240,255,0.5));">
+	<main class="container">
+		<!-- Developer Profile & Bio Section with Photo Slot & Special Dedication to Rita -->
+		<section class="card" style="margin: 30px 0 50px 0; border: 1px solid var(--border-bright); background: linear-gradient(135deg, rgba(21,21,34,0.95) 0%, rgba(13,13,20,0.95) 100%);">
+			<div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;">
+				<!-- Photo Slot with upload option -->
+				<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+					<div class="profile-avatar-frame">
+						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
+					</div>
+					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 5px 12px; cursor: pointer;">
+						📷 Enviar Minha Foto
+					</label>
+					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+				</div>
+
+				<!-- Bio & Dedication to Rita -->
+				<div>
+					<div class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); margin-bottom: 12px;">
+						⚡ Desenvolvedor & Criador OmniVoid
+					</div>
+					<h1 style="font-size: 34px; margin-bottom: 12px; line-height: 1.2;">
+						Guilherme Mendes
+					</h1>
+					<p style="font-size: 16px; line-height: 1.6; margin-bottom: 18px; opacity: 0.95;">
+						Sou um desenvolvedor movido por desafios cada vez maiores, apaixonado por criar arquiteturas inovadoras, jogos envolventes e sistemas de alta performance. Busco constantemente superar limites técnicos na engenharia de software e no universo dos games.
+					</p>
+
+					<!-- Special Dedication to Rita -->
+					<div style="background: rgba(255, 0, 85, 0.1); border: 1px solid rgba(255, 0, 85, 0.35); border-left: 4px solid var(--accent-danger); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
+						<div style="font-weight: 800; font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+							<span>❤️ Agradecimento Especial</span>
+						</div>
+						<p style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+							Um agradecimento muito especial e carinhoso para a minha <b>Rita</b>, que está sempre ao meu lado, me incentiva incansavelmente a ir além, acredita nos meus projetos e me apoia em cada grande desafio!
+						</p>
+					</div>
+
+					<div style="display: flex; gap: 14px; flex-wrap: wrap;">
+						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
+							🧟‍♂️ Jogar Zombies Survive
+						</a>
+						<a href="skyrush.html" class="btn-primary">
+							☁️ Jogar SkyRush
+						</a>
+						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
+							🧠 Teste de Programação
+						</a>
+					</div>
+				</div>
 			</div>
 		</section>
 
+		<!-- Highlight Games Grid -->
 		<section style="margin-bottom: 60px;">
 			<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
 				<div>
 					<h2 style="font-size: 26px;">🎮 Jogos em Destaque</h2>
-					<p style="font-size: 14px; opacity: 0.8;">Produzidos com engines modernas e arquitetura web escalável</p>
+					<p style="font-size: 14px; opacity: 0.8;">Engines de ponta, renderização sem recortes e alta performance</p>
 				</div>
 			</div>
 
@@ -757,11 +878,11 @@ const indexHtml = `<!DOCTYPE html>
 				<div class="card" style="border-top: 4px solid var(--accent-danger);">
 					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
 						<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger);">🩸 Godot 4.3 Engine</span>
-						<span class="badge">Survival Co-op / Solo</span>
+						<span class="badge">Tela Cheia / Expand</span>
 					</div>
 					<h3 style="font-size: 22px; margin-bottom: 10px;">Zombies Survive</h3>
 					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Sobreviva a hordas implacáveis no complexo polivalente de 10 andares. Compre armas, desbloqueie portas secretas, faça upgrades e enfrente chefes mutantes.
+						Sobreviva a hordas implacáveis no complexo polivalente de 10 andares. Compre armas, desbloqueie portas secretas, faça upgrades e enfrente chefes mutantes em resolução total.
 					</p>
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055 0%, #c90044 100%);">
@@ -778,7 +899,7 @@ const indexHtml = `<!DOCTYPE html>
 					</div>
 					<h3 style="font-size: 22px; margin-bottom: 10px;">SkyRush</h3>
 					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Dispute altitudes extremas em um arcade supersônico. Colete orbs de energia, execute manobras aéreas e domine o Hall da Fama global.
+						Dispute altitudes extremas em um arcade supersônico. Colete orbs de energia, execute manobras aéreas e domine o Hall da Fama global com GuiGuy no topo.
 					</p>
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<a href="skyrush.html" class="btn-primary">
@@ -801,25 +922,57 @@ const indexHtml = `<!DOCTYPE html>
 						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
 							Fazer o Teste ➔
 						</a>
-						<span style="font-size: 12px; opacity: 0.7;">10 Perguntas Dinâmicas</span>
+						<span style="font-size: 12px; opacity: 0.7;">8 Perguntas Dinâmicas</span>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<section class="card" style="margin-bottom: 60px; background: linear-gradient(180deg, var(--bg-card) 0%, rgba(18,18,26,0.9) 100%);">
-			<h2 style="font-size: 24px; margin-bottom: 16px;">🛠️ Stack de Tecnologias & Engenharia</h2>
-			<p style="font-size: 14px; margin-bottom: 24px; opacity: 0.85;">
-				Ferramentas e ecossistemas utilizados no desenvolvimento de soluções de software e games:
-			</p>
-			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🕹️ Godot Engine 4 (GDScript / C#)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🌐 WebAssembly / Emscripten</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">⚡ TypeScript & Node.js</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐍 Python (AI / Data Science)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🦀 Rust & C++ (Sistemas & Engines)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">☁️ Docker & CI/CD Pipelines</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🔥 WebSockets & Real-Time Netcode</span>
+		<!-- Hall da Fama Global / Ranking -->
+		<section class="card" style="margin-bottom: 60px;">
+			<h2 style="font-size: 24px; margin-bottom: 16px;">🏆 Hall da Fama Global - Top Players</h2>
+			<div style="overflow-x: auto;">
+				<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+					<thead>
+						<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
+							<th style="padding: 10px 8px;">Posição</th>
+							<th style="padding: 10px 8px;">Jogador</th>
+							<th style="padding: 10px 8px;">Jogo</th>
+							<th style="padding: 10px 8px;">Recorde / Onda</th>
+							<th style="padding: 10px 8px;">Pontuação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.06);">
+							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
+							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 8px;">Zombies Survive</td>
+							<td style="padding: 12px 8px; font-weight: 700;">Onda 99</td>
+							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.04);">
+							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
+							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 8px;">SkyRush Arcade</td>
+							<td style="padding: 12px 8px; font-weight: 700;">99.999m</td>
+							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color);">
+							<td style="padding: 10px 8px;">🥈 2º</td>
+							<td style="padding: 10px 8px; font-weight: 700;">CyberSniper 🥷</td>
+							<td style="padding: 10px 8px;">Zombies Survive</td>
+							<td style="padding: 10px 8px;">Onda 42</td>
+							<td style="padding: 10px 8px;">75.400</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color);">
+							<td style="padding: 10px 8px;">🥉 3º</td>
+							<td style="padding: 10px 8px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
+							<td style="padding: 10px 8px;">Zombies Survive</td>
+							<td style="padding: 10px 8px;">Onda 38</td>
+							<td style="padding: 10px 8px;">62.100</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</section>
 	</main>
@@ -830,30 +983,35 @@ const indexHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// PAGE 2: ZOMBIES SURVIVE
+// PAGE 2: ZOMBIES SURVIVE (FULL RESOLUTION & NO RECORTES)
 const zombiesHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 	<title>Zombies Survive | OmniVoid Studios</title>
 	${COMMON_HEAD}
 	<style>
+		/* Immersive Full-Screen Canvas Container */
 		#canvas-wrap {
 			position: relative;
 			width: 100%;
-			max-width: 1100px;
-			aspect-ratio: 16 / 9;
+			height: 82vh;
+			min-height: 540px;
 			margin: 0 auto 30px auto;
 			background: #000000;
-			border-radius: 12px;
+			border-radius: 14px;
 			overflow: hidden;
 			border: 2px solid var(--border-color);
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 85, 0.2);
+			box-shadow: 0 12px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 0, 85, 0.25);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		#canvas {
 			width: 100%;
 			height: 100%;
 			display: block;
+			object-fit: fill;
 		}
 
 		#game-overlay {
@@ -862,7 +1020,7 @@ const zombiesHtml = `<!DOCTYPE html>
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background: rgba(10, 10, 15, 0.95);
+			background: radial-gradient(circle at center, rgba(16, 16, 24, 0.96) 0%, rgba(7, 7, 12, 0.98) 100%);
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -873,10 +1031,11 @@ const zombiesHtml = `<!DOCTYPE html>
 		}
 
 		.progress-bar-wrap {
-			width: 320px;
-			height: 14px;
-			background: rgba(255, 255, 255, 0.1);
-			border-radius: 7px;
+			width: 360px;
+			max-width: 90%;
+			height: 16px;
+			background: rgba(255, 255, 255, 0.08);
+			border-radius: 8px;
 			overflow: hidden;
 			margin-top: 18px;
 			border: 1px solid var(--border-bright);
@@ -894,29 +1053,30 @@ const zombiesHtml = `<!DOCTYPE html>
 	${getNavbar('zombies')}
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
 			<div>
-				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
+				<h1 style="font-size: 32px; display: flex; align-items: center; gap: 10px;">
 					<span>🧟‍♂️ Zombies Survive</span>
-					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger); font-size: 12px;">v2.0 Web Edition</span>
+					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger); font-size: 12px;">Resolução Total • v2.0 Web</span>
 				</h1>
 				<p style="font-size: 14px; opacity: 0.85;">Mapa Polivalente: 10 Andares, Portas Desbloqueáveis, Caixas Misteriosas e Bosses</p>
 			</div>
 			<div style="display: flex; gap: 10px;">
-				<button class="btn-secondary" onclick="toggleFullscreen()">⛶ Tela Cheia</button>
-				<button class="btn-secondary" onclick="restartGame()">🔄 Recarregar</button>
+				<button class="btn-primary" onclick="toggleFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia Imersiva</button>
+				<button class="btn-secondary" onclick="restartGame()">🔄 Recarregar Jogo</button>
 			</div>
 		</div>
 
+		<!-- Game Canvas Container -->
 		<div id="canvas-wrap">
 			<canvas id="canvas" oncontextmenu="event.preventDefault();" tabindex="0"></canvas>
 			
 			<div id="game-overlay">
-				<img src="logo_omnivoid.png" alt="Logo" style="max-height: 80px; margin-bottom: 16px;">
-				<h2 id="overlay-title" style="font-size: 26px; margin-bottom: 8px;">🩸 ZOMBIES SURVIVE</h2>
-				<p id="overlay-status" style="font-size: 14px; opacity: 0.85;">Clique no botão abaixo para carregar o motor e os mapas</p>
+				<img src="logo_omnivoid.png" alt="Logo" style="max-height: 90px; margin-bottom: 16px; filter: drop-shadow(0 0 20px rgba(0,240,255,0.5));">
+				<h2 id="overlay-title" style="font-size: 28px; margin-bottom: 8px;">🩸 ZOMBIES SURVIVE</h2>
+				<p id="overlay-status" style="font-size: 15px; opacity: 0.9;">Clique no botão abaixo para carregar os 10 andares sem recortes</p>
 				
-				<button id="btn-start-load" class="btn-primary" style="margin-top: 20px; font-size: 16px; padding: 14px 32px;" onclick="startGodotEngine()">
+				<button id="btn-start-load" class="btn-primary" style="margin-top: 22px; font-size: 16px; padding: 14px 36px;" onclick="startGodotEngine()">
 					▶ Iniciar Zombies Survive
 				</button>
 
@@ -924,12 +1084,14 @@ const zombiesHtml = `<!DOCTYPE html>
 					<div class="progress-bar-wrap">
 						<div id="progress-bar" class="progress-bar-fill"></div>
 					</div>
-					<span id="progress-text" style="font-size: 12px; margin-top: 8px; opacity: 0.8;">Baixando pacotes de jogo (0%)...</span>
+					<span id="progress-text" style="font-size: 13px; margin-top: 10px; opacity: 0.9;">Baixando pacotes de jogo (0%)...</span>
 				</div>
 			</div>
 		</div>
 
+		<!-- Two Columns: Hall of Fame & Challenges -->
 		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
+			<!-- Hall da Fama with GuiGuy at 99999 -->
 			<div class="card">
 				<h3 style="font-size: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
 					<span>🏆 Hall da Fama - Melhores Sobreviventes</span>
@@ -946,39 +1108,40 @@ const zombiesHtml = `<!DOCTYPE html>
 							</tr>
 						</thead>
 						<tbody id="hof-tbody">
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">🥇 1º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">Guilherme Dev 🧑‍🚀</td>
-								<td style="padding: 8px 6px;">Onda 48</td>
-								<td style="padding: 8px 6px;">1.420</td>
-								<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">185.900</td>
+							<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
+								<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
+								<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+								<td style="padding: 10px 6px; font-weight: 700;">Onda 99</td>
+								<td style="padding: 10px 6px;">9.999</td>
+								<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
 							</tr>
 							<tr style="border-bottom: 1px solid var(--border-color);">
 								<td style="padding: 8px 6px;">🥈 2º</td>
 								<td style="padding: 8px 6px; font-weight: 700;">CyberSniper 🥷</td>
 								<td style="padding: 8px 6px;">Onda 37</td>
 								<td style="padding: 8px 6px;">1.050</td>
-								<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">124.500</td>
+								<td style="padding: 8px 6px; font-weight: 700;">74.500</td>
 							</tr>
 							<tr style="border-bottom: 1px solid var(--border-color);">
 								<td style="padding: 8px 6px;">🥉 3º</td>
 								<td style="padding: 8px 6px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
 								<td style="padding: 8px 6px;">Onda 32</td>
 								<td style="padding: 8px 6px;">890</td>
-								<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">98.400</td>
+								<td style="padding: 8px 6px; font-weight: 700;">61.400</td>
 							</tr>
 							<tr style="border-bottom: 1px solid var(--border-color);">
 								<td style="padding: 8px 6px;">4º</td>
 								<td style="padding: 8px 6px; font-weight: 700;">VoidHunter 🤖</td>
 								<td style="padding: 8px 6px;">Onda 28</td>
 								<td style="padding: 8px 6px;">740</td>
-								<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">76.100</td>
+								<td style="padding: 8px 6px; font-weight: 700;">48.100</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
 
+			<!-- Missões e Controles -->
 			<div class="card">
 				<h3 style="font-size: 20px; margin-bottom: 16px;">🎯 Missões Ativas & Controles</h3>
 				<div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
@@ -1035,7 +1198,7 @@ const zombiesHtml = `<!DOCTYPE html>
 
 			btnStart.style.display = "none";
 			progressContainer.style.display = "flex";
-			overlayStatus.innerText = "Baixando arquivos do jogo e assets HD...";
+			overlayStatus.innerText = "Baixando arquivos do jogo e mapas em alta definição...";
 
 			try {
 				const chunkFiles = [
@@ -1115,7 +1278,7 @@ const zombiesHtml = `<!DOCTYPE html>
 					mainPack: 'index.pck'
 				});
 
-				console.log("Godot Engine iniciado com sucesso!");
+				console.log("Godot Engine iniciado com sucesso em tela total!");
 			} catch (err) {
 				console.error("Erro ao iniciar jogo:", err);
 				overlayStatus.innerText = "Erro ao carregar o jogo: " + err.message;
@@ -1150,7 +1313,7 @@ const fateccaosHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// PAGE 4: SKYRUSH
+// PAGE 4: SKYRUSH (WITH GUIGUY RANK #1 99999)
 const skyrushHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1160,11 +1323,11 @@ const skyrushHtml = `<!DOCTYPE html>
 		#skyrush-frame-wrap {
 			position: relative;
 			width: 100%;
-			max-width: 1100px;
-			aspect-ratio: 16 / 9;
+			height: 82vh;
+			min-height: 540px;
 			margin: 0 auto 30px auto;
 			background: #000000;
-			border-radius: 12px;
+			border-radius: 14px;
 			overflow: hidden;
 			border: 2px solid var(--border-color);
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 240, 255, 0.2);
@@ -1182,7 +1345,7 @@ const skyrushHtml = `<!DOCTYPE html>
 	${getNavbar('skyrush')}
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
 			<div>
 				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
 					<span>☁️ SkyRush Arcade</span>
@@ -1191,7 +1354,7 @@ const skyrushHtml = `<!DOCTYPE html>
 				<p style="font-size: 14px; opacity: 0.85;">Voe em alta velocidade, desvie de tempestades cósmicas e dispute recordes</p>
 			</div>
 			<div style="display: flex; gap: 10px;">
-				<button class="btn-secondary" onclick="toggleSkyRushFullscreen()">⛶ Tela Cheia</button>
+				<button class="btn-primary" onclick="toggleSkyRushFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia</button>
 				<button class="btn-secondary" onclick="document.getElementById('skyrush-iframe').src = document.getElementById('skyrush-iframe').src">🔄 Recarregar</button>
 			</div>
 		</div>
@@ -1213,23 +1376,23 @@ const skyrushHtml = `<!DOCTYPE html>
 						</tr>
 					</thead>
 					<tbody>
-						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 8px 6px;">🥇 1º</td>
-							<td style="padding: 8px 6px; font-weight: 700;">AeroAce_99 🧑‍🚀</td>
-							<td style="padding: 8px 6px;">18.420m</td>
-							<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">245.000</td>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
+							<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
+							<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 10px 6px; font-weight: 700;">99.999m</td>
+							<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
 						</tr>
 						<tr style="border-bottom: 1px solid var(--border-color);">
 							<td style="padding: 8px 6px;">🥈 2º</td>
 							<td style="padding: 8px 6px; font-weight: 700;">SkyPhantom 🥷</td>
 							<td style="padding: 8px 6px;">15.100m</td>
-							<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">198.200</td>
+							<td style="padding: 8px 6px; font-weight: 700;">48.200</td>
 						</tr>
 						<tr style="border-bottom: 1px solid var(--border-color);">
 							<td style="padding: 8px 6px;">🥉 3º</td>
 							<td style="padding: 8px 6px; font-weight: 700;">TurboDev 🤖</td>
 							<td style="padding: 8px 6px;">12.850m</td>
-							<td style="padding: 8px 6px; font-weight: 700; color: var(--accent-gold) !important;">164.500</td>
+							<td style="padding: 8px 6px; font-weight: 700;">34.500</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1763,7 +1926,7 @@ const quizHtml = `<!DOCTYPE html>
 const projetosHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Projetos & Portfólio | OmniVoid Studios</title>
+	<title>Projetos & Portfólio | Guilherme Mendes</title>
 	${COMMON_HEAD}
 </head>
 <body>
@@ -1772,7 +1935,7 @@ const projetosHtml = `<!DOCTYPE html>
 	<main class="container">
 		<section style="margin: 30px 0 40px 0;">
 			<span class="badge" style="background: rgba(0,240,255,0.15); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 12px;">
-				🚀 Portfólio de Engenharia & GameDev
+				🚀 Portfólio de Engenharia & GameDev • Guilherme Mendes
 			</span>
 			<h1 style="font-size: 38px; margin-bottom: 12px;">Projetos Desenvolvidos</h1>
 			<p style="font-size: 16px; opacity: 0.85; max-width: 780px; line-height: 1.6;">
@@ -1867,7 +2030,7 @@ const projetosHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// PAGE 7: DEVCHAT
+// PAGE 7: DEVCHAT (WITH GUIGUY ADMIN)
 const devchatHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1923,7 +2086,7 @@ const devchatHtml = `<!DOCTYPE html>
 				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
 					<span>💬 Conversa Dev & Fórum Técnico</span>
 				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Troque ideias sobre GameDev, Godot, programação, tire dúvidas e compartilhe estratégias</p>
+				<p style="font-size: 14px; opacity: 0.85;">Troque ideias sobre GameDev, Godot, programação, tire dúvidas e compartilhe estratégias com Guilherme Mendes e a comunidade</p>
 			</div>
 		</div>
 
@@ -1956,7 +2119,7 @@ const devchatHtml = `<!DOCTYPE html>
 				</div>
 
 				<div style="margin-top: 30px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-size: 12px; opacity: 0.85;">
-					💡 <b>Dica Dev:</b> Entre na sua conta para que suas mensagens fiquem associadas ao seu nickname e avatar oficial.
+					💡 <b>Perfil Ativo:</b> Mensagens enviadas serão assinadas pelo nickname e avatar configurados.
 				</div>
 			</div>
 
@@ -1988,21 +2151,21 @@ const devchatHtml = `<!DOCTYPE html>
 
 		const initialMessages = {
 			'geral': [
-				{ author: 'Guilherme Dev', avatar: '🧑‍🚀', turma: 'Admin & Dev', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos à plataforma OmniVoid Studios! Fiquem à vontade para testar os jogos e fazer o novo teste de programação!' },
-				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'O novo teste de programação ficou sensacional! Deu 98% de afinidade com Python e GDScript pra mim.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos ao portal OmniVoid Studios! O portal e os jogos foram atualizados com tela total e o novo teste vocacional de programação!' },
+				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'O novo layout e a resolução sem barras pretas no Zombies Survive ficaram perfeitos!' }
 			],
 			'zombies-survive': [
-				{ author: 'Guilherme Dev', avatar: '🧑‍🚀', turma: 'Admin & Dev', time: '17:15', text: 'Zombies Survive atualizado para v2.0 com o mapa Polivalente de 10 andares completo no Godot 4.3!' },
-				{ author: 'Valkyrie_X', avatar: '🧙‍♂️', turma: 'Ciência Comp.', time: '18:10', text: 'Qual a melhor estratégia para passar da onda 20? As escopetas no 3º andar estão ajudando muito.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '17:15', text: 'Zombies Survive com mapa Polivalente de 10 andares rodando em resolução expandida e WebAssembly direto no navegador!' },
+				{ author: 'Valkyrie_X', avatar: '🧙‍♂️', turma: 'Ciência Comp.', time: '18:10', text: 'A pontuação de 99999 do GuiGuy tá insana! Vou tentar alcançar no 10º andar.' }
 			],
 			'skyrush': [
-				{ author: 'AeroAce_99', avatar: '🤖', turma: 'Eng. Software', time: '16:00', text: 'Bati 18.400m de altitude no SkyRush! O modo solo offline está super fluido.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '16:00', text: 'SkyRush Arcade com física de vôo supersônico ajustada e modo solo offline disponível.' }
 			],
 			'dicas-programacao': [
-				{ author: 'Guilherme Dev', avatar: '🧑‍🚀', turma: 'Admin & Dev', time: '15:20', text: 'Dica do dia: no Godot 4, use vetores tipados (Vector2 / Vector3) para que a engine execute operações diretamente em C++ com ganho de até 4x em performance.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '15:20', text: 'Dica do dia: no Godot 4, utilize viewport stretch mode como canvas_items e aspect como expand para telas responsivas sem letterboxing.' }
 			],
 			'showcase': [
-				{ author: 'Dev_Iniciante', avatar: '👾', turma: 'ADS 1º Sem', time: '14:50', text: 'Comecei a estudar lógica essa semana e o quiz me recomendou começar por Python e GDScript! Animado!' }
+				{ author: 'Dev_Iniciante', avatar: '👾', turma: 'ADS 1º Sem', time: '14:50', text: 'Fiz o teste de programação e adorei a lista de curiosidades das 12 linguagens!' }
 			]
 		};
 
@@ -2069,9 +2232,9 @@ const devchatHtml = `<!DOCTYPE html>
 			if (!text) return;
 
 			const user = getCurrentUser() || {
-				nickname: 'Visitante_' + Math.floor(Math.random() * 899 + 100),
+				nickname: 'GuiGuy',
 				avatar: '🧑‍🚀',
-				turma: 'Visitante'
+				turma: 'Criador'
 			};
 
 			const now = new Date();

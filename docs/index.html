@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>OmniVoid Studios | Inovação, Engenharia de Software & GameDev</title>
+	<title>OmniVoid Studios | Guilherme Mendes & GameDev</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +12,12 @@
 	<script src="coi-serviceworker.js"></script>
 	<style>
 		:root {
-			--bg-base: #0a0a0f;
-			--bg-surface: #12121a;
-			--bg-card: #181824;
-			--bg-card-hover: #222233;
-			--border-color: rgba(255, 255, 255, 0.15);
-			--border-bright: rgba(255, 255, 255, 0.35);
+			--bg-base: #07070c;
+			--bg-surface: #101018;
+			--bg-card: #151522;
+			--bg-card-hover: #1e1e30;
+			--border-color: rgba(255, 255, 255, 0.12);
+			--border-bright: rgba(255, 255, 255, 0.3);
 			--accent-primary: #00f0ff;
 			--accent-danger: #ff0055;
 			--accent-purple: #9d4edd;
@@ -41,11 +41,11 @@
 		body {
 			background-color: var(--bg-base);
 			background-image: 
-				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.08) 0%, transparent 40%),
-				linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-			background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%),
+				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.07) 0%, transparent 40%),
+				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
@@ -72,7 +72,7 @@
 			position: sticky;
 			top: 0;
 			z-index: 1000;
-			background: rgba(10, 10, 15, 0.92);
+			background: rgba(7, 7, 12, 0.94);
 			backdrop-filter: blur(14px);
 			-webkit-backdrop-filter: blur(14px);
 			border-bottom: 1px solid var(--border-color);
@@ -80,7 +80,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
 		}
 
 		.nav-brand {
@@ -93,7 +93,7 @@
 			height: 44px;
 			width: auto;
 			object-fit: contain;
-			filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+			filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.4));
 			transition: transform 0.3s ease;
 		}
 
@@ -232,9 +232,9 @@
 		}
 
 		.container {
-			max-width: 1280px;
+			max-width: 1380px;
 			margin: 0 auto;
-			padding: 30px 20px;
+			padding: 30px 24px;
 			width: 100%;
 			flex: 1;
 		}
@@ -284,6 +284,62 @@
 			box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
 		}
 
+		/* Full-Width Hero Banner */
+		.logo-hero-container {
+			width: 100vw;
+			position: relative;
+			left: 50%;
+			right: 50%;
+			margin-left: -50vw;
+			margin-right: -50vw;
+			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			border-bottom: 1px solid var(--border-color);
+			padding: 30px 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			box-shadow: inset 0 -20px 40px rgba(0,0,0,0.6);
+			overflow: hidden;
+		}
+
+		.logo-hero-img {
+			width: 100%;
+			max-width: 900px;
+			height: auto;
+			max-height: 180px;
+			object-fit: contain;
+			filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.6));
+			transition: transform 0.3s ease;
+		}
+
+		.logo-hero-img:hover {
+			transform: scale(1.02);
+		}
+
+		/* Profile / Photo Container */
+		.profile-avatar-frame {
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			border: 3px solid var(--accent-primary);
+			box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+			overflow: hidden;
+			background: #151522;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			flex-shrink: 0;
+		}
+
+		.profile-avatar-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		/* Modal styling */
 		.modal-backdrop {
 			position: fixed;
 			top: 0;
@@ -350,7 +406,7 @@
 		}
 
 		footer {
-			background: #07070a;
+			background: #050508;
 			border-top: 1px solid var(--border-color);
 			padding: 30px 20px;
 			text-align: center;
@@ -421,50 +477,77 @@
 				<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
 					<button class="user-pill-btn" onclick="openProfileModal()">
 						<span id="nav-user-avatar">🧑‍🚀</span>
-						<span id="nav-user-name">Jogador</span>
-						<span class="user-level-badge" id="nav-user-level">Nvl 1</span>
+						<span id="nav-user-name">GuiGuy</span>
+						<span class="user-level-badge" id="nav-user-level">Nvl 99</span>
 					</button>
 				</div>
 			</div>
 		</nav>
 	
 
-	<main class="container">
-		<section style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; margin: 40px 0 60px 0;">
-			<div>
-				<div class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); margin-bottom: 16px;">
-					⚡ Desenvolvedor Full-Stack & Game Engineer
-				</div>
-				<h1 style="font-size: 42px; line-height: 1.15; margin-bottom: 20px;">
-					Criando Experiências Digitais e Desafios de Alta Performance
-				</h1>
-				<p style="font-size: 17px; line-height: 1.6; margin-bottom: 28px; opacity: 0.9;">
-					Olá! Sou um desenvolvedor apaixonado por arquitetar sistemas complexos, resolver desafios de engenharia e criar jogos imersivos em Godot, WebGL, Node.js e C++. Bem-vindo ao portal da OmniVoid Studios.
-				</p>
-				<div style="display: flex; gap: 16px; flex-wrap: wrap;">
-					<a href="zombiessurvive.html" class="btn-primary">
-						🧟‍♂️ Jogar Zombies Survive
-					</a>
-					<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-						🧠 Fazer Teste de Programação
-					</a>
-					<a href="projetos.html" class="btn-secondary">
-						🚀 Ver Meus Projetos
-					</a>
-				</div>
-			</div>
+	<!-- FULL WIDTH TOP LOGO HERO (NO WHITE BORDERS) -->
+	<header class="logo-hero-container">
+		<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="logo-hero-img">
+	</header>
 
-			<div style="text-align: center; position: relative;">
-				<div style="background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 70%); position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0;"></div>
-				<img src="logo_omnivoid.png" alt="OmniVoid Studios" style="max-width: 320px; width: 100%; position: relative; z-index: 1; filter: drop-shadow(0 0 25px rgba(0,240,255,0.5));">
+	<main class="container">
+		<!-- Developer Profile & Bio Section with Photo Slot & Special Dedication to Rita -->
+		<section class="card" style="margin: 30px 0 50px 0; border: 1px solid var(--border-bright); background: linear-gradient(135deg, rgba(21,21,34,0.95) 0%, rgba(13,13,20,0.95) 100%);">
+			<div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;">
+				<!-- Photo Slot with upload option -->
+				<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+					<div class="profile-avatar-frame">
+						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
+					</div>
+					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 5px 12px; cursor: pointer;">
+						📷 Enviar Minha Foto
+					</label>
+					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+				</div>
+
+				<!-- Bio & Dedication to Rita -->
+				<div>
+					<div class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); margin-bottom: 12px;">
+						⚡ Desenvolvedor & Criador OmniVoid
+					</div>
+					<h1 style="font-size: 34px; margin-bottom: 12px; line-height: 1.2;">
+						Guilherme Mendes
+					</h1>
+					<p style="font-size: 16px; line-height: 1.6; margin-bottom: 18px; opacity: 0.95;">
+						Sou um desenvolvedor movido por desafios cada vez maiores, apaixonado por criar arquiteturas inovadoras, jogos envolventes e sistemas de alta performance. Busco constantemente superar limites técnicos na engenharia de software e no universo dos games.
+					</p>
+
+					<!-- Special Dedication to Rita -->
+					<div style="background: rgba(255, 0, 85, 0.1); border: 1px solid rgba(255, 0, 85, 0.35); border-left: 4px solid var(--accent-danger); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
+						<div style="font-weight: 800; font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+							<span>❤️ Agradecimento Especial</span>
+						</div>
+						<p style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
+							Um agradecimento muito especial e carinhoso para a minha <b>Rita</b>, que está sempre ao meu lado, me incentiva incansavelmente a ir além, acredita nos meus projetos e me apoia em cada grande desafio!
+						</p>
+					</div>
+
+					<div style="display: flex; gap: 14px; flex-wrap: wrap;">
+						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
+							🧟‍♂️ Jogar Zombies Survive
+						</a>
+						<a href="skyrush.html" class="btn-primary">
+							☁️ Jogar SkyRush
+						</a>
+						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
+							🧠 Teste de Programação
+						</a>
+					</div>
+				</div>
 			</div>
 		</section>
 
+		<!-- Highlight Games Grid -->
 		<section style="margin-bottom: 60px;">
 			<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
 				<div>
 					<h2 style="font-size: 26px;">🎮 Jogos em Destaque</h2>
-					<p style="font-size: 14px; opacity: 0.8;">Produzidos com engines modernas e arquitetura web escalável</p>
+					<p style="font-size: 14px; opacity: 0.8;">Engines de ponta, renderização sem recortes e alta performance</p>
 				</div>
 			</div>
 
@@ -472,11 +555,11 @@
 				<div class="card" style="border-top: 4px solid var(--accent-danger);">
 					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
 						<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger);">🩸 Godot 4.3 Engine</span>
-						<span class="badge">Survival Co-op / Solo</span>
+						<span class="badge">Tela Cheia / Expand</span>
 					</div>
 					<h3 style="font-size: 22px; margin-bottom: 10px;">Zombies Survive</h3>
 					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Sobreviva a hordas implacáveis no complexo polivalente de 10 andares. Compre armas, desbloqueie portas secretas, faça upgrades e enfrente chefes mutantes.
+						Sobreviva a hordas implacáveis no complexo polivalente de 10 andares. Compre armas, desbloqueie portas secretas, faça upgrades e enfrente chefes mutantes em resolução total.
 					</p>
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055 0%, #c90044 100%);">
@@ -493,7 +576,7 @@
 					</div>
 					<h3 style="font-size: 22px; margin-bottom: 10px;">SkyRush</h3>
 					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Dispute altitudes extremas em um arcade supersônico. Colete orbs de energia, execute manobras aéreas e domine o Hall da Fama global.
+						Dispute altitudes extremas em um arcade supersônico. Colete orbs de energia, execute manobras aéreas e domine o Hall da Fama global com GuiGuy no topo.
 					</p>
 					<div style="display: flex; justify-content: space-between; align-items: center;">
 						<a href="skyrush.html" class="btn-primary">
@@ -516,25 +599,57 @@
 						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
 							Fazer o Teste ➔
 						</a>
-						<span style="font-size: 12px; opacity: 0.7;">10 Perguntas Dinâmicas</span>
+						<span style="font-size: 12px; opacity: 0.7;">8 Perguntas Dinâmicas</span>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<section class="card" style="margin-bottom: 60px; background: linear-gradient(180deg, var(--bg-card) 0%, rgba(18,18,26,0.9) 100%);">
-			<h2 style="font-size: 24px; margin-bottom: 16px;">🛠️ Stack de Tecnologias & Engenharia</h2>
-			<p style="font-size: 14px; margin-bottom: 24px; opacity: 0.85;">
-				Ferramentas e ecossistemas utilizados no desenvolvimento de soluções de software e games:
-			</p>
-			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🕹️ Godot Engine 4 (GDScript / C#)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🌐 WebAssembly / Emscripten</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">⚡ TypeScript & Node.js</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐍 Python (AI / Data Science)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🦀 Rust & C++ (Sistemas & Engines)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">☁️ Docker & CI/CD Pipelines</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🔥 WebSockets & Real-Time Netcode</span>
+		<!-- Hall da Fama Global / Ranking -->
+		<section class="card" style="margin-bottom: 60px;">
+			<h2 style="font-size: 24px; margin-bottom: 16px;">🏆 Hall da Fama Global - Top Players</h2>
+			<div style="overflow-x: auto;">
+				<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+					<thead>
+						<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
+							<th style="padding: 10px 8px;">Posição</th>
+							<th style="padding: 10px 8px;">Jogador</th>
+							<th style="padding: 10px 8px;">Jogo</th>
+							<th style="padding: 10px 8px;">Recorde / Onda</th>
+							<th style="padding: 10px 8px;">Pontuação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.06);">
+							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
+							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 8px;">Zombies Survive</td>
+							<td style="padding: 12px 8px; font-weight: 700;">Onda 99</td>
+							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.04);">
+							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
+							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 8px;">SkyRush Arcade</td>
+							<td style="padding: 12px 8px; font-weight: 700;">99.999m</td>
+							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color);">
+							<td style="padding: 10px 8px;">🥈 2º</td>
+							<td style="padding: 10px 8px; font-weight: 700;">CyberSniper 🥷</td>
+							<td style="padding: 10px 8px;">Zombies Survive</td>
+							<td style="padding: 10px 8px;">Onda 42</td>
+							<td style="padding: 10px 8px;">75.400</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color);">
+							<td style="padding: 10px 8px;">🥉 3º</td>
+							<td style="padding: 10px 8px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
+							<td style="padding: 10px 8px;">Zombies Survive</td>
+							<td style="padding: 10px 8px;">Onda 38</td>
+							<td style="padding: 10px 8px;">62.100</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</section>
 	</main>
@@ -554,7 +669,7 @@
 					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
-					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou Sniper_99" required>
+					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
 					<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
@@ -569,13 +684,13 @@
 					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
-					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Silva" required>
+					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
-					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: VoidSniper_99" required>
+					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS - 4º Semestre / Ciência da Computação" required>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
 					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
@@ -609,8 +724,8 @@
 					<div style="display: flex; align-items: center; gap: 14px;">
 						<div style="font-size: 44px; width: 64px; height: 64px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent-primary);" id="modal-profile-avatar">🧑‍🚀</div>
 						<div>
-							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800;">Jogador</h2>
-							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Aluno</p>
+							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800;">GuiGuy</h2>
+							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Guilherme Mendes • Criador & Lead Dev</p>
 						</div>
 					</div>
 					<button class="btn-secondary" onclick="handleLogout()" style="padding: 6px 14px; font-size: 12px;">
@@ -620,20 +735,20 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800;">Nvl 1</div>
+						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800; color: var(--accent-gold) !important;">Nvl 99</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Nível</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800;">$0</div>
+						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800;">Onda 0</div>
+						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
 						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Zombies Survive</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800;">0</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Eliminações</div>
+						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800; color: var(--accent-primary) !important;">99999</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Pontuação</div>
 					</div>
 				</div>
 			</div>
@@ -650,7 +765,8 @@
 					<a href="projetos.html">Projetos</a>
 					<a href="devchat.html">Conversa Dev</a>
 				</div>
-				<p style="opacity: 0.85;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido com paixão por desafios tecnológicos e games.</p>
+				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
+				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
 			</div>
 		</footer>
 
@@ -674,7 +790,22 @@ function saveUsersDB(users) {
 }
 function getCurrentUser() {
 	try {
-		return JSON.parse(localStorage.getItem("omnivoid_current_user") || "null");
+		const stored = localStorage.getItem("omnivoid_current_user");
+		if (stored) return JSON.parse(stored);
+		// Default profile for Guilherme Mendes
+		return {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
 	} catch (e) {
 		return null;
 	}
@@ -697,8 +828,8 @@ function updateUIAfterAuth() {
 		loggedOutDiv.style.display = "none";
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-		document.getElementById("nav-user-name").innerText = currentUser.nickname || currentUser.name || "Jogador";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 1}`;
+		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
+		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
@@ -789,12 +920,12 @@ function openProfileModal() {
 		return;
 	}
 	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || currentUser.name;
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name} • ${currentUser.turma || 'Aluno'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 1}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 0).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 0}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 0).toLocaleString();
+	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
+	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
+	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
+	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
+	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
 	document.getElementById("modal-profile").style.display = "flex";
 }
 function closeModal(id) {
@@ -803,8 +934,30 @@ function closeModal(id) {
 function closeModalOnBackdrop(e, id) {
 	if (e.target.id === id) closeModal(id);
 }
+function handlePhotoUpload(event) {
+	const file = event.target.files[0];
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function(e) {
+			const imgs = document.querySelectorAll('.dev-profile-photo-target');
+			imgs.forEach(img => {
+				img.src = e.target.result;
+			});
+			localStorage.setItem('omnivoid_dev_photo', e.target.result);
+			alert('Sua foto de perfil foi atualizada com sucesso no site!');
+		};
+		reader.readAsDataURL(file);
+	}
+}
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
+	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
+	if (savedPhoto) {
+		const imgs = document.querySelectorAll('.dev-profile-photo-target');
+		imgs.forEach(img => {
+			img.src = savedPhoto;
+		});
+	}
 });
 </script>
 
