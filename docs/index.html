@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>OmniVoid Studios | Desenvolvedor & Criador de Experiências Desafiadoras</title>
-		<meta name="description" content="Portal oficial de desenvolvimento de jogos e tecnologia da OmniVoid Studios. Criamos projetos, desafios complexos e experiências multiplayer online.">
+		<meta name="description" content="Portal oficial da OmniVoid Studios. Conheça nossos jogos, projetos de sala de aula e desafios interativos de programação.">
 		<meta property="og:title" content="OmniVoid Studios | Desenvolvedor & Projetos">
 		<meta property="og:image" content="logo_omnivoid.png">
 		<style>
@@ -56,6 +56,7 @@
 				z-index: 0;
 			}
 
+			/* Shared Navbar */
 			#navbar {
 				position: sticky;
 				top: 0;
@@ -80,10 +81,10 @@
 			}
 
 			.nav-logo {
-				height: 44px;
+				height: 42px;
 				width: auto;
 				object-fit: contain;
-				filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+				filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 				transition: transform 0.25s ease;
 			}
 
@@ -184,6 +185,30 @@
 				width: 100%;
 			}
 
+			/* Prominent Logo Banner */
+			.hero-logo-container {
+				text-align: center;
+				margin: 20px auto 14px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.hero-brand-logo {
+				max-width: 480px;
+				width: 90%;
+				height: auto;
+				object-fit: contain;
+				filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.28));
+				transition: transform 0.3s ease, filter 0.3s ease;
+			}
+
+			.hero-brand-logo:hover {
+				transform: scale(1.02);
+				filter: drop-shadow(0 0 36px rgba(255, 255, 255, 0.45));
+			}
+
+			/* Buttons */
 			.btn-primary {
 				background: #ffffff;
 				color: #000000 !important;
@@ -487,7 +512,7 @@
 
 			/* Hero Home */
 			.home-hero {
-				padding: 70px 0 50px;
+				padding: 40px 0 50px;
 				text-align: center;
 			}
 
@@ -502,26 +527,26 @@
 				border-radius: 50px;
 				font-size: 12.5px;
 				font-weight: 700;
-				margin-bottom: 24px;
+				margin-bottom: 20px;
 				letter-spacing: 0.5px;
 			}
 
 			.home-title {
-				font-size: 52px;
+				font-size: 48px;
 				font-weight: 900;
 				letter-spacing: -1px;
 				line-height: 1.15;
-				margin-bottom: 20px;
+				margin-bottom: 18px;
 				background: linear-gradient(180deg, #ffffff 40%, #a1a1aa 100%);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
 
 			.home-desc {
-				font-size: 18px;
+				font-size: 17.5px;
 				color: var(--text-muted);
 				max-width: 820px;
-				margin: 0 auto 36px;
+				margin: 0 auto 34px;
 				line-height: 1.7;
 			}
 
@@ -534,7 +559,7 @@
 
 			/* Games Split Showcase */
 			.games-split-section {
-				padding: 50px 0 70px;
+				padding: 40px 0 70px;
 			}
 
 			.games-grid {
@@ -620,7 +645,7 @@
 				border-radius: 20px;
 				padding: 44px;
 				display: grid;
-				grid-template-columns: 260px 1fr;
+				grid-template-columns: 240px 1fr;
 				gap: 40px;
 				align-items: center;
 				box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
@@ -634,15 +659,15 @@
 			}
 
 			.dev-avatar-box {
-				width: 200px;
-				height: 200px;
+				width: 190px;
+				height: 190px;
 				border-radius: 50%;
 				background: #121218;
 				border: 3px solid #ffffff;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				font-size: 72px;
+				font-size: 68px;
 				margin: 0 auto;
 				box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 			}
@@ -685,12 +710,11 @@
 				font-weight: 700;
 			}
 
-			/* Metrics row */
 			.metrics-row {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 				gap: 18px;
-				margin: 50px 0;
+				margin: 40px 0 20px;
 			}
 
 			.metric-box {
@@ -757,17 +781,22 @@
 		</nav>
     
 
-		<!-- Hero Presentation -->
+		<!-- Hero Section with Prominent Logo -->
 		<section class="home-hero">
 			<div class="container">
+				<!-- Big Clear Logo Banner -->
+				<div class="hero-logo-container">
+					<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="hero-brand-logo">
+				</div>
+
 				<div class="home-badge">
-					<span>✨ OmniVoid Studios &bull; Criando Projetos e Desafios sem Limites</span>
+					<span>✨ Estúdio de Jogos & Laboratório Interativo de Tecnologia</span>
 				</div>
 				<h1 class="home-title">
 					Desenvolvimento de Jogos,<br>Tecnologia & Desafios de Alto Nível
 				</h1>
 				<p class="home-desc">
-					Bem-vindo ao portal oficial da <strong>OmniVoid Studios</strong>. Um espaço dedicado a criar sistemas complexos, arquiteturas multiplayer inovadoras, jogos autorais e desafios cada vez mais ambiciosos para testar a habilidade e lógica de alunos e desenvolvedores.
+					O ponto de convergência entre pesquisa acadêmica, arquitetura de software e games autorais. Criamos sistemas multiplayer em tempo real, protótipos inovadores e desafios de programação cada vez maiores para alunos e entusiastas.
 				</p>
 				<div class="home-actions">
 					<a href="fateccaos.html" class="btn-primary">🧟‍♂️ Jogar FatecCaos (Godot 4)</a>
@@ -792,7 +821,7 @@
 					</div>
 					<div class="metric-box">
 						<div class="num">100%</div>
-						<div class="lbl">Arquitetura WebAssembly & WebSockets</div>
+						<div class="lbl">WebAssembly & WebSockets</div>
 					</div>
 					<div class="metric-box">
 						<div class="num">∞</div>
@@ -817,13 +846,13 @@
 							<span class="game-badge-top">🧟‍♂️ Godot 4 &bull; Co-op 7 Players</span>
 							<h3>FatecCaos: Apocalipse Cooperativo</h3>
 							<p>
-								Jogo de sobrevivência zumbi cooperativo em ondas intensas com IA de perseguição de horda, 3 slots de armas intercambiáveis, minigames de terminal bélico e sistema de resgate de sobreviventes em equipe.
+								Jogo de sobrevivência zumbi cooperativo em ondas intensas no mapa Polivalente de 10 andares, com IA de perseguição de horda, 3 slots de armas intercambiáveis, minigames de terminal bélico e sistema de resgate de sobreviventes em equipe.
 							</p>
 							<div class="feature-pills">
 								<span class="f-pill">Godot 4 Web</span>
+								<span class="f-pill">Mapa 10 Andares</span>
 								<span class="f-pill">Multiplayer 7p</span>
 								<span class="f-pill">Hall da Fama Exclusivo</span>
-								<span class="f-pill">Mural de Desafios</span>
 							</div>
 						</div>
 						<div style="display: flex; gap: 10px; flex-wrap: wrap;">

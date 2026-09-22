@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>FatecCaos | OmniVoid Studios</title>
-		<meta name="description" content="Jogue FatecCaos online no navegador para até 7 jogadores, cumpra os desafios do professor e veja o Hall da Fama dos sobreviventes.">
+		<meta name="description" content="Jogue FatecCaos online no navegador para até 7 jogadores no mapa Polivalente de 10 andares, cumpra os desafios do professor e veja o Hall da Fama dos sobreviventes.">
 		<meta property="og:title" content="FatecCaos | Apocalipse Cooperativo">
 		<meta property="og:image" content="logo_omnivoid.png">
 		<style>
@@ -56,6 +56,7 @@
 				z-index: 0;
 			}
 
+			/* Shared Navbar */
 			#navbar {
 				position: sticky;
 				top: 0;
@@ -80,10 +81,10 @@
 			}
 
 			.nav-logo {
-				height: 44px;
+				height: 42px;
 				width: auto;
 				object-fit: contain;
-				filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+				filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 				transition: transform 0.25s ease;
 			}
 
@@ -184,6 +185,30 @@
 				width: 100%;
 			}
 
+			/* Prominent Logo Banner */
+			.hero-logo-container {
+				text-align: center;
+				margin: 20px auto 14px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.hero-brand-logo {
+				max-width: 480px;
+				width: 90%;
+				height: auto;
+				object-fit: contain;
+				filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.28));
+				transition: transform 0.3s ease, filter 0.3s ease;
+			}
+
+			.hero-brand-logo:hover {
+				transform: scale(1.02);
+				filter: drop-shadow(0 0 36px rgba(255, 255, 255, 0.45));
+			}
+
+			/* Buttons */
 			.btn-primary {
 				background: #ffffff;
 				color: #000000 !important;
@@ -485,14 +510,13 @@
 			}
 
 
-			/* FatecCaos Canvas Wrapper */
 			.game-frame-wrapper {
 				background: #000;
 				border-radius: 16px;
 				border: 2px solid rgba(255, 255, 255, 0.2);
 				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 255, 255, 0.05);
 				overflow: hidden;
-				margin: 30px auto;
+				margin: 20px auto 30px;
 			}
 
 			.game-bar-top {
@@ -702,10 +726,15 @@
 		</nav>
     
 
-		<div class="container" style="padding-top: 30px;">
+		<div class="container" style="padding-top: 24px;">
+			<!-- Readable Logo Banner -->
+			<div class="hero-logo-container">
+				<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="hero-brand-logo" style="max-width: 360px;">
+			</div>
+
 			<div class="section-header">
 				<h1 class="section-title">🧟‍♂️ FATECCAOS: APOCALIPSE COOPERATIVO</h1>
-				<p class="section-subtitle">Jogo de tiro de sobrevivência em ondas com suporte para até 7 jogadores online, terminais bélicos e IA adaptativa de hordas.</p>
+				<p class="section-subtitle">Mapa Polivalente (10+ Andares). Sobreviva às hordas com até 7 jogadores online, use os 3 terminais bélicos e reviva seus companheiros.</p>
 			</div>
 
 			<!-- Game Viewport Frame -->
@@ -713,7 +742,7 @@
 				<div class="game-bar-top">
 					<div class="game-info-tag">
 						<span class="game-status-online"></span>
-						<span>FATECCAOS ONLINE (GODOT 4 WEB)</span>
+						<span>FATECCAOS ONLINE &bull; MAPA POLIVALENTE</span>
 					</div>
 					<div style="display: flex; gap: 10px;">
 						<button class="ctrl-btn" onclick="toggleFullScreen()">⛶ Tela Cheia</button>
@@ -746,10 +775,10 @@
 			</div>
 
 			<!-- FatecCaos Hall da Fama (Leaderboard) -->
-			<section style="padding: 50px 0;">
+			<section style="padding: 40px 0;">
 				<div class="section-header">
 					<h2 class="section-title">🏆 Hall da Fama do FatecCaos</h2>
-					<p class="section-subtitle">Ranking dos maiores sobreviventes, maiores ondas superadas e total de zumbis eliminados</p>
+					<p class="section-subtitle">Ranking dos maiores sobreviventes do mapa Polivalente de 10 andares</p>
 				</div>
 
 				<div class="leaderboard-table-wrap">
@@ -1068,12 +1097,11 @@ function toggleFullScreen() {
 	}
 }
 
-// FatecCaos Specific Challenges & Leaderboard
 const DEFAULT_FATEC_CHALLENGES = [
-	{ id: 1, title: "Sobrevivência Tática em Equipe", category: "Cooperação", desc: "Sobreviva até a Onda 12 com ao menos 3 jogadores conectados na mesma partida.", xp: 500, cash: 2500, badge: "Irmandade do Vazio" },
+	{ id: 1, title: "Sobrevivência Tática em Equipe", category: "Cooperação", desc: "Sobreviva até a Onda 12 com ao menos 3 jogadores conectados no mapa Polivalente.", xp: 500, cash: 2500, badge: "Irmandade do Vazio" },
 	{ id: 2, title: "Tiroteio de Alta Precisão", category: "Combate", desc: "Consiga 50 Headshots utilizando apenas armas semi-automáticas ou de precisão.", xp: 400, cash: 1800, badge: "Mira Cirúrgica" },
 	{ id: 3, title: "Engenheiro de Defesa & Barricadas", category: "Engenharia", desc: "Conserte e reforce 20 barricadas danificadas durante as invasões da horda.", xp: 350, cash: 1500, badge: "Mestre Barricadeiro" },
-	{ id: 4, title: "Explorador de Terminais Bélicos", category: "Engenharia", desc: "Encontre e compre suprimentos nos 3 terminais de munição do mapa.", xp: 450, cash: 2000, badge: "Mestre da Logística" }
+	{ id: 4, title: "Explorador de Terminais Bélicos", category: "Engenharia", desc: "Encontre e compre suprimentos nos 3 terminais de munição do mapa Polivalente.", xp: 450, cash: 2000, badge: "Mestre da Logística" }
 ];
 
 const DEFAULT_FATEC_LEADERBOARD = [
@@ -1178,7 +1206,6 @@ function claimFatecChallenge(id) {
 	alert("Desafio concluído com sucesso!");
 }
 
-// Engine loader
 (function () {
 	const statusOverlay = document.getElementById('status');
 	const statusProgress = document.getElementById('status-progress');
