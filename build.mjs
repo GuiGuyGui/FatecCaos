@@ -106,7 +106,7 @@ const COMMON_HEAD = `
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -114,15 +114,16 @@ const COMMON_HEAD = `
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -294,7 +295,7 @@ const COMMON_HEAD = `
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -434,7 +435,7 @@ const COMMON_HEAD = `
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -458,12 +459,13 @@ function getNavbar(activeTab) {
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link ${activeTab === 'zombies' ? 'active' : ''}">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link ${activeTab === 'skyrush' ? 'active' : ''}">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link ${activeTab === 'quiz' ? 'active' : ''}">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link ${activeTab === 'jogos' ? 'active' : ''}">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link ${activeTab === 'quiz' ? 'active' : ''}">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ${activeTab === 'projetos' ? 'active' : ''}">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link ${activeTab === 'devchat' ? 'active' : ''}">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ${activeTab === 'sobre' ? 'active' : ''}">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -500,7 +502,7 @@ const COMMON_AUTH_MODALS = `
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -514,20 +516,20 @@ const COMMON_AUTH_MODALS = `
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -544,7 +546,7 @@ const COMMON_AUTH_MODALS = `
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -574,7 +576,7 @@ const COMMON_AUTH_MODALS = `
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -648,390 +650,384 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = \`Nvl \${currentUser.level || 99}\`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(\`Bem-vindo de volta, \${user.nickname}!\`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(\`Conta criada com sucesso! Olá, \${user.nickname}!\`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = \`\${currentUser.name || 'Guilherme Mendes'} • \${currentUser.turma || 'Criador'}\`;
-	document.getElementById("prof-stat-level").innerText = \`Nvl \${currentUser.level || 99}\`;
-	document.getElementById("prof-stat-cash").innerText = \`$\${(currentUser.cash || 99999).toLocaleString()}\`;
-	document.getElementById("prof-stat-wave").innerText = \`Onda \${currentUser.maxWave || 99}\`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 `;
 
 const COMMON_FOOTER = `
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">🏠 Início</a>
+			<a href="orcamento.html">💼 Serviços & Orçamento</a>
+			<a href="jogos.html">🎮 Hub de Jogos</a>
+			<a href="quiz.html">🧠 Teste Dev</a>
+			<a href="projetos.html">🚀 Projetos</a>
+			<a href="devchat.html">💬 Conversa Dev</a>
+			<a href="sobre.html">👤 Sobre Mim & Dedicatória</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab & Cibersegurança de Alta Performance
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> com dedicação e carinho para <b>Rita</b> • FATEC 2026
+		</p>
+	</footer>
 `;
 
-// PAGE 1: INDEX
+// ==========================================
+// 1. PÁGINA INICIAL (index.html)
+// ==========================================
 const indexHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>OmniVoid Studios | Guilherme Mendes & GameDev</title>
+	<title>OmniVoid Studios | Software House & Game Lab</title>
 	${COMMON_HEAD}
 </head>
 <body>
 	${getNavbar('inicio')}
 
-	<!-- FULL WIDTH TOP LOGO HERO (NO WHITE BORDERS) -->
-	<header class="logo-hero-container">
-		<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="logo-hero-img">
-	</header>
+	<!-- Logo Banner -->
+	<div class="logo-hero-container">
+		<img src="logo_omnivoid.png" alt="OmniVoid Studios Logo" class="logo-hero-img">
+	</div>
 
 	<main class="container">
-		<!-- 1. Highlight Games Grid -->
-		<section style="margin: 30px 0 50px 0;">
-			<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
-				<div>
-					<h2 style="font-size: 28px;">🎮 Jogos & Experiências em Destaque</h2>
-					<p style="font-size: 15px; opacity: 0.85;">Projetos com renderização fluida, sem recortes e arquitetura de ponta</p>
-				</div>
+		<!-- Hero Section -->
+		<section class="card" style="text-align: center; padding: 48px 24px; margin-bottom: 30px; background: radial-gradient(circle at center, rgba(0,240,255,0.08) 0%, rgba(21,21,34,0.95) 75%); border: 1.5px solid rgba(0,240,255,0.3); position: relative; overflow: hidden;">
+			<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(0,240,255,0.12); border: 1px solid var(--accent-primary); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; color: var(--accent-primary) !important; margin-bottom: 18px; text-transform: uppercase;">
+				⚡ Software House • Game Development • Cibersegurança
 			</div>
 
-			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
-				<div class="card" style="border-top: 4px solid var(--accent-danger);">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-						<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger);">🩸 Godot 4.3 Engine</span>
-						<span class="badge">Tela Cheia / Expand</span>
-					</div>
-					<h3 style="font-size: 22px; margin-bottom: 10px;">Zombies Survive</h3>
-					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Sobreviva a hordas implacáveis no complexo polivalente de 10 andares. Compre armas, desbloqueie portas secretas, faça upgrades e enfrente chefes mutantes em resolução total.
-					</p>
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055 0%, #c90044 100%);">
-							Jogar Agora ➔
-						</a>
-						<span style="font-size: 12px; opacity: 0.7;">WebAssembly + WebGL</span>
-					</div>
-				</div>
+			<h1 style="font-size: clamp(26px, 4vw, 42px); line-height: 1.2; margin-bottom: 16px; text-transform: uppercase;">
+				Transformamos Ideias Desafiadoras em <span style="background: linear-gradient(135deg, #00f0ff 0%, #9d4edd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Softwares de Alta Performance</span>
+			</h1>
 
-				<div class="card" style="border-top: 4px solid var(--accent-primary);">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-						<span class="badge" style="background: rgba(0,240,255,0.2); border-color: var(--accent-primary);">☁️ HTML5 Canvas</span>
-						<span class="badge">Arcade Multiplayer</span>
-					</div>
-					<h3 style="font-size: 22px; margin-bottom: 10px;">SkyRush</h3>
-					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Dispute altitudes extremas em um arcade supersônico. Colete orbs de energia, execute manobras aéreas e domine o Hall da Fama global com GuiGuy no topo.
-					</p>
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-						<a href="skyrush.html" class="btn-primary">
-							Decolar ➔
-						</a>
-						<span style="font-size: 12px; opacity: 0.7;">Solo Offline & Multiplayer</span>
-					</div>
-				</div>
-
-				<div class="card" style="border-top: 4px solid var(--accent-purple);">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-						<span class="badge" style="background: rgba(157,78,221,0.2); border-color: var(--accent-purple);">🧠 Vocacional Tech</span>
-						<span class="badge">12 Linguagens</span>
-					</div>
-					<h3 style="font-size: 22px; margin-bottom: 10px;">Teste de Programação</h3>
-					<p style="font-size: 14px; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
-						Descubra qual linguagem de programação combina com seu estilo (Games, IA, Web, Mobile, Baixo Nível) e explore curiosidades épicas de cada uma.
-					</p>
-					<div style="display: flex; justify-content: space-between; align-items: center;">
-						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-							Fazer o Teste ➔
-						</a>
-						<span style="font-size: 12px; opacity: 0.7;">8 Perguntas Dinâmicas</span>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- 2. Stack de Tecnologias & Engenharia -->
-		<section class="card" style="margin-bottom: 50px; background: linear-gradient(180deg, var(--bg-card) 0%, rgba(18,18,26,0.9) 100%);">
-			<h2 style="font-size: 24px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-				<span>🛠️ Stack de Tecnologias & Engenharia</span>
-			</h2>
-			<p style="font-size: 14px; margin-bottom: 22px; opacity: 0.85;">
-				Ecossistemas e tecnologias que utilizo para construir soluções robustas, desde motores de jogos até arquiteturas de nuvem seguras:
+			<p style="max-width: 860px; margin: 0 auto 28px auto; font-size: 16px; line-height: 1.6; opacity: 0.9;">
+				Engenharia de software moderna, jogos 2D/3D imersivos em WebAssembly, plataformas corporativas sob medida e arquiteturas blindadas com foco em confiabilidade, educação tecnológica e segurança ofensiva/defensiva.
 			</p>
-			<div style="display: flex; flex-wrap: wrap; gap: 12px;">
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🕹️ Godot Engine 4 (GDScript / C#)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🌐 WebAssembly / Emscripten</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">⚡ TypeScript & Node.js</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐍 Python (AI / Data Science / Automação)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🦀 Rust & C++ (Engines & Baixo Nível)</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🛡️ Cibersegurança & Criptografia</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">☁️ Docker & CI/CD Pipelines</span>
-				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🔥 WebSockets & Netcode em Tempo Real</span>
+
+			<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+				<a href="orcamento.html" class="btn-primary" style="font-size: 14px; padding: 14px 28px;">
+					💼 Fazer Orçamento Online ➔
+				</a>
+				<a href="jogos.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
+					🎮 Jogar Nossos Jogos
+				</a>
+				<a href="quiz.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
+					🧠 Teste Vocacional Dev
+				</a>
 			</div>
 		</section>
 
-		<!-- 3. Hall da Fama Global / Ranking -->
-		<section class="card" style="margin-bottom: 60px;">
-			<h2 style="font-size: 24px; margin-bottom: 16px;">🏆 Hall da Fama Global - Top Players</h2>
-			<div style="overflow-x: auto;">
-				<table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-					<thead>
-						<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
-							<th style="padding: 10px 8px;">Posição</th>
-							<th style="padding: 10px 8px;">Jogador</th>
-							<th style="padding: 10px 8px;">Jogo</th>
-							<th style="padding: 10px 8px;">Recorde / Onda</th>
-							<th style="padding: 10px 8px;">Pontuação</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.06);">
-							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
-							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-							<td style="padding: 12px 8px;">Zombies Survive</td>
-							<td style="padding: 12px 8px; font-weight: 700;">Onda 99</td>
-							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
-						</tr>
-						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.04);">
-							<td style="padding: 12px 8px; font-weight: 800;">🥇 1º LUGAR</td>
-							<td style="padding: 12px 8px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-							<td style="padding: 12px 8px;">SkyRush Arcade</td>
-							<td style="padding: 12px 8px; font-weight: 700;">99.999m</td>
-							<td style="padding: 12px 8px; font-weight: 900; font-size: 16px; color: var(--accent-gold) !important;">99999</td>
-						</tr>
-						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 10px 8px;">🥈 2º</td>
-							<td style="padding: 10px 8px; font-weight: 700;">CyberSniper 🥷</td>
-							<td style="padding: 10px 8px;">Zombies Survive</td>
-							<td style="padding: 10px 8px;">Onda 42</td>
-							<td style="padding: 10px 8px;">75.400</td>
-						</tr>
-						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 10px 8px;">🥉 3º</td>
-							<td style="padding: 10px 8px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
-							<td style="padding: 10px 8px;">Zombies Survive</td>
-							<td style="padding: 10px 8px;">Onda 38</td>
-							<td style="padding: 10px 8px;">62.100</td>
-						</tr>
-					</tbody>
-				</table>
+		<!-- Métricas / Indicadores -->
+		<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px;">
+			<div class="card" style="text-align: center; padding: 20px;">
+				<div style="font-size: 32px; font-family: var(--font-title); font-weight: 800; color: var(--accent-primary) !important;">100%</div>
+				<div style="font-size: 13px; font-weight: 700; margin-top: 4px;">WebAssembly & Direct Web</div>
+				<div style="font-size: 11px; opacity: 0.7;">Jogos e apps direto no navegador</div>
+			</div>
+			<div class="card" style="text-align: center; padding: 20px;">
+				<div style="font-size: 32px; font-family: var(--font-title); font-weight: 800; color: var(--accent-emerald) !important;">60 FPS</div>
+				<div style="font-size: 13px; font-weight: 700; margin-top: 4px;">Realtime Performance</div>
+				<div style="font-size: 11px; opacity: 0.7;">Arquitetura sem lag e escalável</div>
+			</div>
+			<div class="card" style="text-align: center; padding: 20px;">
+				<div style="font-size: 32px; font-family: var(--font-title); font-weight: 800; color: var(--accent-gold) !important;">Zero</div>
+				<div style="font-size: 13px; font-weight: 700; margin-top: 4px;">Vulnerabilidades Críticas</div>
+				<div style="font-size: 11px; opacity: 0.7;">DevSecOps e auditoria rigorosa</div>
+			</div>
+			<div class="card" style="text-align: center; padding: 20px;">
+				<div style="font-size: 32px; font-family: var(--font-title); font-weight: 800; color: var(--accent-purple) !important;">Sob Demanda</div>
+				<div style="font-size: 13px; font-weight: 700; margin-top: 4px;">Projetos Customizados</div>
+				<div style="font-size: 11px; opacity: 0.7;">Calculadora de orçamento em tempo real</div>
 			</div>
 		</section>
 
-		<!-- 4. Developer Profile, Description & Dedication to Rita (NO FINAL DA PÁGINA) -->
-		<section class="card" style="margin-bottom: 60px; border: 2px solid var(--accent-primary); box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15); background: linear-gradient(135deg, rgba(21,21,34,0.98) 0%, rgba(13,13,20,0.98) 100%);">
-			<div style="display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: flex-start;">
-				<!-- Photo Slot with upload option -->
-				<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 6px;">
-					<div class="profile-avatar-frame" style="width: 180px; height: 180px; border: 3px solid var(--accent-primary); box-shadow: 0 0 30px rgba(0,240,255,0.5);">
-						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
-					</div>
-					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 6px 14px; cursor: pointer; text-align: center;">
-						📷 Alterar Minha Foto
-					</label>
-					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
-					<span style="font-size: 11px; opacity: 0.75; text-align: center;">Arquivo: guilherme_mendes.jpg</span>
-				</div>
-
-				<!-- Bio, 3 Pillars & Dedication to Rita -->
+		<!-- Nossos Serviços e Soluções -->
+		<section style="margin-bottom: 35px;">
+			<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
 				<div>
-					<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-						<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); font-size: 12px;">⚡ Desenvolvedor Full-Stack</span>
-						<span class="badge" style="background: rgba(157, 78, 221, 0.15); border-color: var(--accent-purple); font-size: 12px;">🎓 Educação Tecnológica</span>
-						<span class="badge" style="background: rgba(0, 255, 136, 0.15); border-color: var(--accent-emerald); font-size: 12px;">🛡️ Segurança da Informação</span>
-					</div>
+					<h2 style="font-size: 22px; margin-bottom: 4px;">💼 Soluções & Serviços de Engenharia</h2>
+					<p style="font-size: 14px; opacity: 0.8;">Do conceito e design até a entrega final com suporte e segurança</p>
+				</div>
+				<a href="orcamento.html" style="color: var(--accent-primary) !important; font-size: 13px; font-weight: 700;">Simular Orçamento Completo ➔</a>
+			</div>
 
-					<h2 style="font-size: 34px; margin-bottom: 14px; line-height: 1.2;">
-						Guilherme Mendes
-					</h2>
-
-					<!-- A descrição completa solicitada -->
-					<p style="font-size: 17px; line-height: 1.7; margin-bottom: 22px; opacity: 0.95;">
-						Sempre fui apaixonado por criar coisas cada vez mais desafiadoras que as outras, buscando superar limites técnicos e transformar ideias de alta complexidade em realidade. Minha trajetória é guiada por três grandes pilares: <b>Desenvolvimento de Software de Alta Performance</b>, <b>Educação Tecnológica para Capacitação de Novos Talentos</b> e <b>Segurança da Informação</b>.
-					</p>
-
-					<!-- 3 Pilares em Cards -->
-					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
-						<div style="background: rgba(0, 240, 255, 0.06); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-primary) !important;">
-								💻 Desenvolvimento & Engenharia
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Criação de soluções complexas, engines de jogos (Godot 4, C++, WebAssembly), netcode em tempo real e arquiteturas escaláveis.
-							</p>
-						</div>
-
-						<div style="background: rgba(157, 78, 221, 0.06); border: 1px solid rgba(157, 78, 221, 0.25); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-purple) !important;">
-								🎓 Educação Tecnológica
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Desenvolvimento de quizzes vocacionais, simuladores interativos e recursos didáticos para incentivar estudantes e abrir portas na programação.
-							</p>
-						</div>
-
-						<div style="background: rgba(0, 255, 136, 0.06); border: 1px solid rgba(0, 255, 136, 0.25); border-radius: 10px; padding: 14px;">
-							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-emerald) !important;">
-								🛡️ Segurança da Informação
-							</div>
-							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
-								Compromisso com integridade de dados, arquiteturas seguras, isolamento cruzado (COOP/COEP), criptografia e proteção cibernética.
-							</p>
-						</div>
-					</div>
-
-					<!-- Special Dedication to Rita -->
-					<div style="background: linear-gradient(135deg, rgba(255, 0, 85, 0.15) 0%, rgba(157, 78, 221, 0.15) 100%); border: 1px solid rgba(255, 0, 85, 0.45); border-left: 5px solid var(--accent-danger); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(255, 0, 85, 0.18);">
-						<div style="font-weight: 800; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-							<span>❤️ Dedicatória & Agradecimento Especial para Minha Rita</span>
-						</div>
-						<p style="font-size: 14px; line-height: 1.6; opacity: 0.95;">
-							Um agradecimento de todo o coração para a minha amada <b>Rita</b>, que é meu porto seguro, me incentiva incansavelmente a sonhar mais alto, acredita no meu potencial e está sempre ao meu lado me apoiando em cada projeto, código e desafio!
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+				<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="font-size: 36px; margin-bottom: 12px;">🏢</div>
+						<h3 style="font-size: 18px; margin-bottom: 8px;">Plataformas Web & Softwares Corporativos</h3>
+						<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Sistemas sob medida, painéis administrativos, bancos de dados relacionais e APIs REST/GraphQL de alta vazão construídos com Node.js, Docker e PostgreSQL.
 						</p>
 					</div>
-
-					<div style="display: flex; gap: 14px; flex-wrap: wrap;">
-						<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
-							🧟‍♂️ Jogar Zombies Survive
-						</a>
-						<a href="skyrush.html" class="btn-primary">
-							☁️ Jogar SkyRush
-						</a>
-						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-							🧠 Teste de Programação
-						</a>
-						<a href="projetos.html" class="btn-secondary">
-							🚀 Ver Todos os Projetos
-						</a>
+					<div style="display: flex; gap: 6px; flex-wrap: wrap;">
+						<span class="badge">Full-Stack</span>
+						<span class="badge">Node.js</span>
+						<span class="badge">PostgreSQL</span>
 					</div>
 				</div>
+
+				<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="font-size: 36px; margin-bottom: 12px;">🎮</div>
+						<h3 style="font-size: 18px; margin-bottom: 8px;">Game Development & Experiências Interativas</h3>
+						<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Desenvolvimento de jogos 2D/3D no Godot 4, exportação para WebAssembly direta no navegador sem instalação, WebSockets em tempo real e simulações físicas avançadas.
+						</p>
+					</div>
+					<div style="display: flex; gap: 6px; flex-wrap: wrap;">
+						<span class="badge">Godot 4</span>
+						<span class="badge">WebAssembly</span>
+						<span class="badge">WebGL</span>
+					</div>
+				</div>
+
+				<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="font-size: 36px; margin-bottom: 12px;">🛡️</div>
+						<h3 style="font-size: 18px; margin-bottom: 8px;">Segurança da Informação & DevSecOps</h3>
+						<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Auditorias de código estático (SAST), testes de intrusão (Pentest), mitigação de riscos OWASP Top 10, criptografia de dados e conformidade estrita de segurança.
+						</p>
+					</div>
+					<div style="display: flex; gap: 6px; flex-wrap: wrap;">
+						<span class="badge">Pentest</span>
+						<span class="badge">SAST / DAST</span>
+						<span class="badge">Hardening</span>
+					</div>
+				</div>
+
+				<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="font-size: 36px; margin-bottom: 12px;">⚡</div>
+						<h3 style="font-size: 18px; margin-bottom: 8px;">Automação, Bots & Telemetria IoT</h3>
+						<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Integração de sensores, bots inteligentes de automação de processos, pipelines CI/CD automatizados e monitoramento de servidores 24/7.
+						</p>
+					</div>
+					<div style="display: flex; gap: 6px; flex-wrap: wrap;">
+						<span class="badge">Automação</span>
+						<span class="badge">IoT</span>
+						<span class="badge">CI/CD</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Destaque dos Jogos (Zombies Survive & SkyRush) -->
+		<section class="card" style="margin-bottom: 35px; border-color: rgba(157, 78, 221, 0.4); background: linear-gradient(135deg, rgba(16,16,24,0.9) 0%, rgba(26,16,40,0.9) 100%);">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+				<div>
+					<span class="badge" style="background: rgba(157, 78, 221, 0.2); border-color: var(--accent-purple); color: #d8b4fe !important; margin-bottom: 8px;">🎮 GAME LAB OMNIVOID</span>
+					<h2 style="font-size: 24px;">Jogos em Destaque no Portal</h2>
+				</div>
+				<a href="jogos.html" class="btn-primary" style="font-size: 13px; padding: 10px 20px;">
+					Ver Hub Completo de Jogos ➔
+				</a>
+			</div>
+
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+				<!-- Card Zombies Survive -->
+				<div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+							<span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5 !important;">🧟 Godot 4 WebAssembly</span>
+							<span style="font-size: 11px; opacity: 0.7;">60 FPS • Fullscreen</span>
+						</div>
+						<h3 style="font-size: 20px; margin-bottom: 8px; color: #ff0055 !important;">Zombies Survive</h3>
+						<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Enfrente hordas implacáveis de mortos-vivos no mapa Polivalente de 10 andares. Gráficos expandidos em tela cheia sem cortes e ranking online liderado por <b>GuiGuy</b> (99.999 pts).
+						</p>
+					</div>
+					<a href="zombiessurvive.html" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #ff0055 0%, #9d4edd 100%); font-size: 13px;">
+						🧟 Jogar Zombies Survive Agora
+					</a>
+				</div>
+
+				<!-- Card SkyRush Arcade -->
+				<div style="background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+					<div>
+						<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+							<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: #7dd3fc !important;">☁️ Solo & Multiplayer</span>
+							<span style="font-size: 11px; opacity: 0.7;">Loadout de Armas • Caos Total</span>
+						</div>
+						<h3 style="font-size: 20px; margin-bottom: 8px; color: #00f0ff !important;">SkyRush Arcade</h3>
+						<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+							Escalada arcade frenética até 8.000m! Escolha seu armamento inicial (Escopeta, AK-47, Pistola, Super Pulo) e sobreviva às anomalias cósmicas e buracos negros aleatórios.
+						</p>
+					</div>
+					<a href="skyrush.html" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%); font-size: 13px;">
+						☁️ Jogar SkyRush Arcade Agora
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Stack Tecnológico -->
+		<section class="card" style="margin-bottom: 35px; text-align: center; padding: 30px;">
+			<h3 style="font-size: 20px; margin-bottom: 6px;">⚡ Stack de Engenharia & Tecnologias</h3>
+			<p style="font-size: 13.5px; opacity: 0.8; margin-bottom: 20px;">Linguagens, ferramentas e frameworks modernos utilizados em nossos desenvolvimentos</p>
+
+			<div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🚀 Godot Engine 4.3</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🌐 WebAssembly (Wasm)</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🟩 Node.js & Express</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐍 Python & FastApi</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🔷 C# & .NET Core</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🦀 Rust</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐳 Docker Containers</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🐘 PostgreSQL & Redis</span>
+				<span class="badge" style="padding: 8px 14px; font-size: 13px;">🛡️ DevSecOps & Linux Hardening</span>
+			</div>
+		</section>
+
+		<!-- CTA Final para Orçamento e Apresentação -->
+		<section class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 32px; background: linear-gradient(135deg, rgba(0,240,255,0.12) 0%, rgba(157,78,221,0.12) 100%); border-color: var(--accent-primary); flex-wrap: wrap; gap: 20px;">
+			<div style="max-width: 750px;">
+				<h2 style="font-size: 24px; margin-bottom: 8px;">Precisa de um Projeto de Software, Jogo ou Consultoria?</h2>
+				<p style="font-size: 14px; opacity: 0.9; line-height: 1.5;">
+					Utilize nossa calculadora interativa para simular valores e prazos em poucos segundos ou entre em contato diretamente com nossa equipe técnica.
+				</p>
+			</div>
+			<div style="display: flex; gap: 12px; flex-wrap: wrap;">
+				<a href="orcamento.html" class="btn-primary" style="font-size: 14px; padding: 14px 26px;">
+					💼 Fazer Orçamento Agora ➔
+				</a>
+				<a href="sobre.html" class="btn-secondary" style="font-size: 14px; padding: 14px 22px;">
+					👤 Conhecer o Desenvolvedor
+				</a>
 			</div>
 		</section>
 	</main>
@@ -1042,186 +1038,172 @@ const indexHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// PAGE 2: ZOMBIES SURVIVE (FULL RESOLUTION & NO RECORTES)
-const zombiesHtml = `<!DOCTYPE html>
+// ==========================================
+// 2. PÁGINA DE SERVIÇOS & ORÇAMENTO (orcamento.html)
+// ==========================================
+const orcamentoHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Zombies Survive | OmniVoid Studios</title>
+	<title>Serviços & Calculadora de Orçamento | OmniVoid Studios</title>
 	${COMMON_HEAD}
-	<style>
-		/* Immersive Full-Screen Canvas Container */
-		#canvas-wrap {
-			position: relative;
-			width: 100%;
-			height: 82vh;
-			min-height: 540px;
-			margin: 0 auto 30px auto;
-			background: #000000;
-			border-radius: 14px;
-			overflow: hidden;
-			border: 2px solid var(--border-color);
-			box-shadow: 0 12px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 0, 85, 0.25);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		#canvas {
-			width: 100%;
-			height: 100%;
-			display: block;
-			object-fit: fill;
-		}
-
-		#game-overlay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: radial-gradient(circle at center, rgba(16, 16, 24, 0.96) 0%, rgba(7, 7, 12, 0.98) 100%);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			z-index: 10;
-			padding: 20px;
-			text-align: center;
-		}
-
-		.progress-bar-wrap {
-			width: 360px;
-			max-width: 90%;
-			height: 16px;
-			background: rgba(255, 255, 255, 0.08);
-			border-radius: 8px;
-			overflow: hidden;
-			margin-top: 18px;
-			border: 1px solid var(--border-bright);
-		}
-
-		.progress-bar-fill {
-			height: 100%;
-			width: 0%;
-			background: linear-gradient(90deg, #ff0055, #00f0ff);
-			transition: width 0.15s ease;
-		}
-	</style>
 </head>
 <body>
-	${getNavbar('zombies')}
+	${getNavbar('orcamento')}
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
-			<div>
-				<h1 style="font-size: 32px; display: flex; align-items: center; gap: 10px;">
-					<span>🧟‍♂️ Zombies Survive</span>
-					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger); font-size: 12px;">Resolução Total • v2.0 Web</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Mapa Polivalente: 10 Andares, Portas Desbloqueáveis, Caixas Misteriosas e Bosses</p>
-			</div>
-			<div style="display: flex; gap: 10px;">
-				<button class="btn-primary" onclick="toggleFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia Imersiva</button>
-				<button class="btn-secondary" onclick="restartGame()">🔄 Recarregar Jogo</button>
-			</div>
+		<div style="text-align: center; margin-bottom: 30px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 10px;">
+				💼 SOLUÇÕES SOB DEMANDA & ESTIMATIVA INSTANTÂNEA
+			</span>
+			<h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 10px;">
+				Calculadora Interativa de Orçamentos
+			</h1>
+			<p style="max-width: 760px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Simule o investimento e prazo para o seu software, plataforma corporativa, jogo ou auditoria de segurança. Ajuste os módulos em tempo real e gere uma proposta instantânea.
+			</p>
 		</div>
 
-		<!-- Game Canvas Container -->
-		<div id="canvas-wrap">
-			<canvas id="canvas" oncontextmenu="event.preventDefault();" tabindex="0"></canvas>
-			
-			<div id="game-overlay">
-				<img src="logo_omnivoid.png" alt="Logo" style="max-height: 90px; margin-bottom: 16px; filter: drop-shadow(0 0 20px rgba(0,240,255,0.5));">
-				<h2 id="overlay-title" style="font-size: 28px; margin-bottom: 8px;">🩸 ZOMBIES SURVIVE</h2>
-				<p id="overlay-status" style="font-size: 15px; opacity: 0.9;">Clique no botão abaixo para carregar os 10 andares sem recortes</p>
-				
-				<button id="btn-start-load" class="btn-primary" style="margin-top: 22px; font-size: 16px; padding: 14px 36px;" onclick="startGodotEngine()">
-					▶ Iniciar Zombies Survive
-				</button>
+		<div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start;">
+			<!-- Formulário da Calculadora -->
+			<div class="card" style="padding: 28px;">
+				<h2 style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+					<span>1.</span> Tipo de Projeto Principal
+				</h2>
 
-				<div id="progress-container" style="display: none; flex-direction: column; align-items: center;">
-					<div class="progress-bar-wrap">
-						<div id="progress-bar" class="progress-bar-fill"></div>
-					</div>
-					<span id="progress-text" style="font-size: 13px; margin-top: 10px; opacity: 0.9;">Baixando pacotes de jogo (0%)...</span>
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 26px;">
+					<label class="project-type-card" style="background: rgba(0,0,0,0.4); border: 1.5px solid var(--border-bright); border-radius: 10px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: all 0.2s;">
+						<input type="radio" name="projectType" value="web_app" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<b style="font-size: 14px;">🏢 Plataforma Web / SaaS</b>
+						<span style="font-size: 11px; opacity: 0.7;">Sistemas corporativos, ERP, CMS e portais sob medida</span>
+					</label>
+
+					<label class="project-type-card" style="background: rgba(0,0,0,0.4); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: all 0.2s;">
+						<input type="radio" name="projectType" value="game_dev" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<b style="font-size: 14px;">🎮 Jogo 2D/3D (Godot/Web)</b>
+						<span style="font-size: 11px; opacity: 0.7;">Jogos WebAssembly, mobile ou desktop com física e IA</span>
+					</label>
+
+					<label class="project-type-card" style="background: rgba(0,0,0,0.4); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: all 0.2s;">
+						<input type="radio" name="projectType" value="security_audit" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<b style="font-size: 14px;">🛡️ Pentest & Auditoria DevSecOps</b>
+						<span style="font-size: 11px; opacity: 0.7;">Auditoria estática/dinâmica de vulnerabilidades e hardening</span>
+					</label>
+
+					<label class="project-type-card" style="background: rgba(0,0,0,0.4); border: 1.5px solid var(--border-color); border-radius: 10px; padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: all 0.2s;">
+						<input type="radio" name="projectType" value="automation_api" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<b style="font-size: 14px;">⚡ Automação, Bots & APIs</b>
+						<span style="font-size: 11px; opacity: 0.7;">Microserviços, automação de dados e telemetria em tempo real</span>
+					</label>
 				</div>
+
+				<h2 style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+					<span>2.</span> Funcionalidades & Módulos Necessários
+				</h2>
+
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 26px;">
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_auth" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">🔐 Autenticação, Perfis & Permissões</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_db" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">🐘 Banco de Dados Relacional / Cloud</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_admin" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">📊 Painel Administrativo / Dashboard</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_realtime" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">⚡ WebSockets / Tempo Real / Multiplayer</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_payments" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">💳 Integração de Pagamento / PIX / Stripe</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_security" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">🛡️ Auditoria SAST & Hardening de Segurança</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_uiux" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">🎨 Design UI/UX Personalizado e Responsivo</span>
+					</label>
+
+					<label style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer;">
+						<input type="checkbox" id="mod_docker" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<span style="font-size: 13px;">🐳 Deploy Docker & Infraestrutura Cloud</span>
+					</label>
+				</div>
+
+				<h2 style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+					<span>3.</span> Nível de Urgência / Prazo
+				</h2>
+
+				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px;">
+					<label style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; cursor: pointer;">
+						<input type="radio" name="deadline" value="normal" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<div style="font-size: 12px; font-weight: 700; margin-top: 4px;">Padrão</div>
+						<div style="font-size: 11px; opacity: 0.7;">30 a 45 dias</div>
+					</label>
+
+					<label style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; cursor: pointer;">
+						<input type="radio" name="deadline" value="fast" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<div style="font-size: 12px; font-weight: 700; margin-top: 4px;">Acelerado</div>
+						<div style="font-size: 11px; opacity: 0.7;">15 a 30 dias</div>
+					</label>
+
+					<label style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; cursor: pointer;">
+						<input type="radio" name="deadline" value="urgent" onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
+						<div style="font-size: 12px; font-weight: 700; margin-top: 4px;">Urgente / Sprint</div>
+						<div style="font-size: 11px; opacity: 0.7;">7 a 14 dias</div>
+					</label>
+				</div>
+
+				<h2 style="font-size: 18px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+					<span>4.</span> Detalhes & Descrição Adicional (Opcional)
+				</h2>
+				<textarea id="projectNotes" class="input-field" rows="3" placeholder="Descreva regras de negócio específicas, ideias do jogo ou necessidades da sua empresa..." style="resize: vertical;"></textarea>
 			</div>
-		</div>
 
-		<!-- Two Columns: Hall of Fame & Challenges -->
-		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
-			<!-- Hall da Fama with GuiGuy at 99999 -->
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-					<span>🏆 Hall da Fama - Melhores Sobreviventes</span>
-				</h3>
-				<div style="overflow-x: auto;">
-					<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-						<thead>
-							<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
-								<th style="padding: 8px 6px;">#</th>
-								<th style="padding: 8px 6px;">Sobrevivente</th>
-								<th style="padding: 8px 6px;">Onda Máx</th>
-								<th style="padding: 8px 6px;">Eliminações</th>
-								<th style="padding: 8px 6px;">Pontos</th>
-							</tr>
-						</thead>
-						<tbody id="hof-tbody">
-							<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
-								<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
-								<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-								<td style="padding: 10px 6px; font-weight: 700;">Onda 99</td>
-								<td style="padding: 10px 6px;">9.999</td>
-								<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">🥈 2º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">CyberSniper 🥷</td>
-								<td style="padding: 8px 6px;">Onda 37</td>
-								<td style="padding: 8px 6px;">1.050</td>
-								<td style="padding: 8px 6px; font-weight: 700;">74.500</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">🥉 3º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
-								<td style="padding: 8px 6px;">Onda 32</td>
-								<td style="padding: 8px 6px;">890</td>
-								<td style="padding: 8px 6px; font-weight: 700;">61.400</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">4º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">VoidHunter 🤖</td>
-								<td style="padding: 8px 6px;">Onda 28</td>
-								<td style="padding: 8px 6px;">740</td>
-								<td style="padding: 8px 6px; font-weight: 700;">48.100</td>
-							</tr>
-						</tbody>
-					</table>
+			<!-- Card Lateral do Resumo do Orçamento -->
+			<div class="card" style="padding: 24px; position: sticky; top: 90px; border-color: var(--accent-primary); background: linear-gradient(180deg, #151522 0%, #101018 100%);">
+				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+					<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: var(--accent-primary) !important;">ESTIMATIVA AO VIVO</span>
+					<span id="calc-complexity-badge" class="badge" style="background: rgba(157, 78, 221, 0.2); color: #d8b4fe !important;">Média</span>
 				</div>
-			</div>
 
-			<!-- Missões e Controles -->
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🎯 Missões Ativas & Controles</h3>
-				<div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-					<div style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent-primary);">
-						<div style="font-weight: 700; font-size: 13px;">🚪 Mestre da Exploração</div>
-						<div style="font-size: 12px; opacity: 0.8;">Desbloqueie 3 portas no mapa Polivalente em uma única partida (+500 XP).</div>
+				<div style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+					<div style="font-size: 12px; opacity: 0.8; text-transform: uppercase;">Faixa de Investimento Estimada:</div>
+					<div id="calc-price-range" style="font-size: 26px; font-family: var(--font-title); font-weight: 800; color: var(--accent-emerald) !important; margin: 4px 0;">
+						R$ 2.400 - R$ 3.800
 					</div>
-					<div style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent-danger);">
-						<div style="font-weight: 700; font-size: 13px;">💀 Exterminador Noturno</div>
-						<div style="font-size: 12px; opacity: 0.8;">Elimine 100 zumbis usando escopetas ou rifles automáticos (+800 XP).</div>
+					<div id="calc-hours-display" style="font-size: 12px; opacity: 0.75;">
+						⏱️ Carga de desenvolvimento: ~45 horas úteis
 					</div>
 				</div>
 
-				<h4 style="font-size: 14px; margin-bottom: 8px;">🎮 Controles do Teclado:</h4>
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; opacity: 0.9;">
-					<div><b>WASD:</b> Movimentar</div>
-					<div><b>Mouse:</b> Mirar & Disparar</div>
-					<div><b>R:</b> Recarregar Arma</div>
-					<div><b>E / Espaço:</b> Interagir / Abrir Portas</div>
-					<div><b>1, 2, 3:</b> Trocar Armas</div>
-					<div><b>Shift / F:</b> Correr / Lanterna</div>
+				<div style="font-size: 13px; line-height: 1.6; margin-bottom: 20px;">
+					<div style="font-weight: 700; margin-bottom: 6px;">O que está incluso:</div>
+					<div style="display: flex; align-items: center; gap: 6px; opacity: 0.9;">✅ Código 100% limpo & documentado</div>
+					<div style="display: flex; align-items: center; gap: 6px; opacity: 0.9;">✅ Testes de segurança e validação QA</div>
+					<div style="display: flex; align-items: center; gap: 6px; opacity: 0.9;">✅ Suporte e garantia pós-entrega</div>
+					<div style="display: flex; align-items: center; gap: 6px; opacity: 0.9;">✅ Repositório Git com versionamento</div>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<button type="button" class="btn-primary" onclick="sendQuoteWhatsApp()" style="width: 100%; justify-content: center; font-size: 13px;">
+						📱 Enviar Proposta via WhatsApp
+					</button>
+					<button type="button" class="btn-secondary" onclick="copyQuoteSummary()" style="width: 100%; justify-content: center; font-size: 13px;">
+						📋 Copiar Resumo do Orçamento
+					</button>
 				</div>
 			</div>
 		</div>
@@ -1231,263 +1213,377 @@ const zombiesHtml = `<!DOCTYPE html>
 	${COMMON_FOOTER}
 	${COMMON_AUTH_JS}
 
-	<script src="index.js"></script>
 	<script>
-		let godotEngine = null;
+		function updateBudgetCalculation() {
+			const type = document.querySelector('input[name="projectType"]:checked').value;
+			const deadline = document.querySelector('input[name="deadline"]:checked').value;
 
-		function toggleFullscreen() {
-			const elem = document.getElementById("canvas-wrap");
-			if (!document.fullscreenElement) {
-				elem.requestFullscreen().catch(err => alert("Erro ao entrar em tela cheia: " + err.message));
-			} else {
-				document.exitFullscreen();
-			}
-		}
+			let baseHours = 30;
+			let baseRate = 60; // R$/hora
 
-		function restartGame() {
-			window.location.reload();
-		}
+			if (type === 'web_app') baseHours = 40;
+			else if (type === 'game_dev') baseHours = 55;
+			else if (type === 'security_audit') baseHours = 35;
+			else if (type === 'automation_api') baseHours = 25;
 
-		async function startGodotEngine() {
-			const btnStart = document.getElementById("btn-start-load");
-			const progressContainer = document.getElementById("progress-container");
-			const progressBar = document.getElementById("progress-bar");
-			const progressText = document.getElementById("progress-text");
-			const overlayStatus = document.getElementById("overlay-status");
+			const modules = [
+				{ id: 'mod_auth', hours: 8 },
+				{ id: 'mod_db', hours: 10 },
+				{ id: 'mod_admin', hours: 14 },
+				{ id: 'mod_realtime', hours: 16 },
+				{ id: 'mod_payments', hours: 12 },
+				{ id: 'mod_security', hours: 10 },
+				{ id: 'mod_uiux', hours: 12 },
+				{ id: 'mod_docker', hours: 8 }
+			];
 
-			btnStart.style.display = "none";
-			progressContainer.style.display = "flex";
-			overlayStatus.innerText = "Baixando arquivos do jogo e mapas em alta definição...";
-
-			try {
-				const chunkFiles = [
-					"index.pck.part0",
-					"index.pck.part1",
-					"index.pck.part2",
-					"index.pck.part3"
-				];
-
-				const chunkBuffers = [];
-				let totalBytesLoaded = 0;
-				const estimatedTotalSize = 187777864; // ~179MB
-
-				for (let i = 0; i < chunkFiles.length; i++) {
-					const filename = chunkFiles[i];
-					progressText.innerText = \`Baixando pacote \${i + 1} de \${chunkFiles.length}...\`;
-					
-					const response = await fetch(filename);
-					if (!response.ok) {
-						throw new Error(\`Falha ao carregar \${filename} (HTTP \${response.status})\`);
-					}
-
-					const reader = response.body.getReader();
-					const chunks = [];
-					let receivedLength = 0;
-
-					while (true) {
-						const { done, value } = await reader.read();
-						if (done) break;
-						chunks.push(value);
-						receivedLength += value.length;
-						totalBytesLoaded += value.length;
-
-						const percent = Math.min(98, Math.round((totalBytesLoaded / estimatedTotalSize) * 100));
-						progressBar.style.width = percent + "%";
-						progressText.innerText = \`Baixando pacotes (\${percent}% - \${(totalBytesLoaded / 1048576).toFixed(1)} MB)...\`;
-					}
-
-					const partBuffer = new Uint8Array(receivedLength);
-					let pos = 0;
-					for (let chunk of chunks) {
-						partBuffer.set(chunk, pos);
-						pos += chunk.length;
-					}
-					chunkBuffers.push(partBuffer);
+			let totalHours = baseHours;
+			modules.forEach(m => {
+				const el = document.getElementById(m.id);
+				if (el && el.checked) {
+					totalHours += m.hours;
 				}
+			});
 
-				progressText.innerText = "Montando sistema de arquivos virtual...";
-				progressBar.style.width = "99%";
+			let multiplier = 1.0;
+			if (deadline === 'fast') multiplier = 1.25;
+			if (deadline === 'urgent') multiplier = 1.55;
 
-				const mergedPck = new Uint8Array(totalBytesLoaded);
-				let offset = 0;
-				for (let buf of chunkBuffers) {
-					mergedPck.set(buf, offset);
-					offset += buf.length;
-				}
+			const minPrice = Math.round(totalHours * baseRate * multiplier);
+			const maxPrice = Math.round(minPrice * 1.35);
 
-				progressText.innerText = "Inicializando Godot WebAssembly...";
-				progressBar.style.width = "98%";
+			let complexity = "Média";
+			if (totalHours < 45) complexity = "Básica";
+			else if (totalHours > 80) complexity = "Avançada / Enterprise";
 
-				godotEngine = new Engine({
-					canvas: document.getElementById("canvas"),
-					executable: "index",
-					onProgress: function(current, total) {
-						if (total > 0) {
-							const pct = Math.round((current / total) * 100);
-							progressBar.style.width = pct + "%";
-						}
-					}
-				});
-
-				// 1. Carrega o runtime WebAssembly
-				await Engine.load("index");
-
-				// 2. Precarrega o pacote unificado no preloader do Godot
-				await godotEngine.preloadFile(mergedPck.buffer, 'index.pck');
-				
-				// 3. Inicializa o ambiente e sistema de arquivos
-				await godotEngine.init("index");
-
-				progressText.innerText = "Iniciando motor e renderizando em tela total...";
-				progressBar.style.width = "100%";
-
-				// Oculta o overlay somente quando a inicialização for concluída
-				document.getElementById("game-overlay").style.display = "none";
-
-				// 4. Executa a cena principal
-				await godotEngine.start({
-					args: ['--main-pack', 'index.pck'],
-					mainPack: 'index.pck'
-				});
-
-				console.log("Godot Engine iniciado com sucesso em tela total!");
-			} catch (err) {
-				console.error("Erro ao iniciar jogo:", err);
-				document.getElementById("game-overlay").style.display = "flex";
-				overlayStatus.innerText = "Erro ao carregar o jogo: " + err.message;
-				btnStart.style.display = "inline-flex";
-				btnStart.innerText = "Tentar Novamente";
-				progressContainer.style.display = "none";
-			}
+			document.getElementById('calc-price-range').innerText = \`R$ \${minPrice.toLocaleString('pt-BR')} - R$ \${maxPrice.toLocaleString('pt-BR')}\`;
+			document.getElementById('calc-hours-display').innerText = \`⏱️ Carga de desenvolvimento: ~\${totalHours} horas úteis\`;
+			document.getElementById('calc-complexity-badge').innerText = complexity;
 		}
 
-		// Inicia automaticamente o download e carregamento ao abrir a página
-		window.addEventListener('DOMContentLoaded', () => {
-			setTimeout(() => {
-				startGodotEngine();
-			}, 300);
-		});
+		function getQuoteText() {
+			const typeEl = document.querySelector('input[name="projectType"]:checked');
+			const deadlineEl = document.querySelector('input[name="deadline"]:checked');
+			const notes = document.getElementById('projectNotes').value.trim();
+			const priceText = document.getElementById('calc-price-range').innerText;
+			const hoursText = document.getElementById('calc-hours-display').innerText;
+
+			const typeNames = {
+				'web_app': 'Plataforma Web / SaaS Corporativo',
+				'game_dev': 'Jogo 2D/3D Web & Desktop',
+				'security_audit': 'Auditoria de Segurança & Pentest',
+				'automation_api': 'Automação, Bots & APIs'
+			};
+
+			const activeMods = [];
+			['mod_auth', 'mod_db', 'mod_admin', 'mod_realtime', 'mod_payments', 'mod_security', 'mod_uiux', 'mod_docker'].forEach(id => {
+				const el = document.getElementById(id);
+				if (el && el.checked) {
+					activeMods.push(el.parentElement.innerText.trim());
+				}
+			});
+
+			const lines = [
+				'*SOLICITAÇÃO DE ORÇAMENTO - OMNIVOID STUDIOS*',
+				'',
+				'📌 *Tipo de Projeto:* ' + (typeNames[typeEl.value] || 'Personalizado'),
+				'⏱️ *Prazo Desejado:* ' + deadlineEl.value.toUpperCase(),
+				'💰 *Estimativa Simulada:* ' + priceText + ' (' + hoursText + ')',
+				'',
+				'🛠️ *Módulos Selecionados:*',
+				activeMods.map(m => '- ' + m).join('\\n'),
+				'',
+				'📝 *Observações:* ' + (notes || 'Nenhuma observação extra.')
+			];
+			return lines.join('\\n');
+		}
+
+		function sendQuoteWhatsApp() {
+			const text = encodeURIComponent(getQuoteText());
+			window.open('https://wa.me/5511999999999?text=' + text, '_blank');
+		}
+
+		function copyQuoteSummary() {
+			navigator.clipboard.writeText(getQuoteText()).then(() => {
+				alert("Resumo do orçamento copiado para a área de transferência!");
+			});
+		}
+
+		document.addEventListener('DOMContentLoaded', updateBudgetCalculation);
 	</script>
 </body>
 </html>`;
 
-// PAGE 3: FATECCAOS REDIRECT
-const fateccaosHtml = `<!DOCTYPE html>
+// ==========================================
+// 3. PÁGINA HUB DE JOGOS (jogos.html)
+// ==========================================
+const jogosHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="0; url=zombiessurvive.html">
-	<title>Redirecionando para Zombies Survive...</title>
+	<title>Hub de Jogos | OmniVoid Studios</title>
 	${COMMON_HEAD}
-</head>
-<body style="display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center;">
-	<div class="card" style="max-width: 500px; padding: 40px;">
-		<h2 style="font-size: 26px; margin-bottom: 14px;">🧟‍♂️ Zombies Survive</h2>
-		<p style="font-size: 15px; margin-bottom: 24px; opacity: 0.85;">
-			O jogo foi atualizado para o nome oficial <b>Zombies Survive</b>. Você será redirecionado em instantes...
-		</p>
-		<a href="zombiessurvive.html" class="btn-primary">
-			Clique aqui para Acessar Agora
-		</a>
-	</div>
-</body>
-</html>`;
-
-// PAGE 4: SKYRUSH (WITH GUIGUY RANK #1 99999)
-const skyrushHtml = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-	<title>SkyRush | OmniVoid Studios</title>
-	${COMMON_HEAD}
-	<style>
-		#skyrush-frame-wrap {
-			position: relative;
-			width: 100%;
-			height: 82vh;
-			min-height: 540px;
-			margin: 0 auto 30px auto;
-			background: #000000;
-			border-radius: 14px;
-			overflow: hidden;
-			border: 2px solid var(--border-color);
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 240, 255, 0.2);
-		}
-
-		#skyrush-iframe {
-			width: 100%;
-			height: 100%;
-			border: none;
-			display: block;
-		}
-	</style>
 </head>
 <body>
-	${getNavbar('skyrush')}
+	${getNavbar('jogos')}
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
-			<div>
-				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
-					<span>☁️ SkyRush Arcade</span>
-					<span class="badge" style="background: rgba(0,240,255,0.2); border-color: var(--accent-primary); font-size: 12px;">Solo & Multiplayer</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Voe em alta velocidade, desvie de tempestades cósmicas e dispute recordes</p>
+		<div style="text-align: center; margin-bottom: 35px;">
+			<span class="badge" style="background: rgba(157, 78, 221, 0.2); border-color: var(--accent-purple); color: #d8b4fe !important; margin-bottom: 10px;">
+				🎮 GAME LAB • 100% WEBASSEMBLY NO NAVEGADOR
+			</span>
+			<h1 style="font-size: clamp(24px, 3.5vw, 38px); margin-bottom: 10px;">
+				Escolha seu Jogo & Desafie os Recordes
+			</h1>
+			<p style="max-width: 760px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Jogos criados com motores gráficos de última geração (Godot 4 e Canvas 2D), executados diretamente no seu navegador em tela cheia e sem cortes.
+			</p>
+		</div>
+
+		<!-- Grid dos Jogos -->
+		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; margin-bottom: 40px;">
+			<!-- Jogo 1: Zombies Survive -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(255, 0, 85, 0.4); background: linear-gradient(180deg, #151522 0%, #1a0f18 100%);">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+						<span class="badge" style="background: rgba(255, 0, 85, 0.2); color: #ff0055 !important; border-color: #ff0055;">
+							🧟 Godot 4.3 Engine
+						</span>
+						<span class="badge" style="color: #ffd60a !important;">⭐ #1 GuiGuy (99.999 pts)</span>
+					</div>
+
+					<h2 style="font-size: 24px; margin-bottom: 10px; color: #ff0055 !important;">
+						Zombies Survive
+					</h2>
+
+					<p style="font-size: 14px; line-height: 1.6; opacity: 0.9; margin-bottom: 18px;">
+						Sobreviva a ondas apocalípticas no mapa Polivalente de 10 andares. Compre armas na parede, faça barricadas e suba de andar enquanto gerencia munição e hordas vorazes.
+					</p>
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+						<div>🎮 <b>Motor:</b> Godot 4 Wasm</div>
+						<div>📐 <b>Tela:</b> Expandida Fullscreen</div>
+						<div>🎯 <b>Gênero:</b> Survival Shooter</div>
+						<div>💾 <b>Save:</b> Recordes Locais</div>
+					</div>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<a href="zombiessurvive.html" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #ff0055 0%, #9d4edd 100%); font-size: 14px; padding: 14px;">
+						🚀 Jogar Zombies Survive
+					</a>
+				</div>
 			</div>
-			<div style="display: flex; gap: 10px;">
-				<button class="btn-primary" onclick="toggleSkyRushFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia</button>
-				<button class="btn-secondary" onclick="document.getElementById('skyrush-iframe').src = document.getElementById('skyrush-iframe').src">🔄 Recarregar</button>
+
+			<!-- Jogo 2: SkyRush Arcade -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(0, 240, 255, 0.4); background: linear-gradient(180deg, #151522 0%, #0d1a24 100%);">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+						<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: #00f0ff !important; border-color: #00f0ff;">
+							☁️ Canvas 2D Physics
+						</span>
+						<span class="badge" style="color: #00ff88 !important;">⚡ Modo Solo & Multiplayer</span>
+					</div>
+
+					<h2 style="font-size: 24px; margin-bottom: 10px; color: #00f0ff !important;">
+						SkyRush Arcade
+					</h2>
+
+					<p style="font-size: 14px; line-height: 1.6; opacity: 0.9; margin-bottom: 18px;">
+						Escalada vertical competitiva com anomalias de mundo aleatórias (chuva de meteoros, buracos negros, matrix e gravidade lunar). Escolha seu equipamento inicial e alcance o topo!
+					</p>
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+						<div>🔫 <b>Armas:</b> Escopeta, AK, Pistola</div>
+						<div>🌪️ <b>Caos:</b> Mutações Automáticas</div>
+						<div>👥 <b>Jogadores:</b> Solo c/ Bots ou Salas</div>
+						<div>🏆 <b>Hall da Fama:</b> Online Sync</div>
+					</div>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<a href="skyrush.html" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%); font-size: 14px; padding: 14px;">
+						🚀 Jogar SkyRush Arcade
+					</a>
+				</div>
 			</div>
 		</div>
 
-		<div id="skyrush-frame-wrap">
-			<iframe id="skyrush-iframe" src="skyrush/index.html?v=12" allow="autoplay; fullscreen; gamepad"></iframe>
-		</div>
+		<!-- Hall da Fama / Leaderboard Unificado -->
+		<section class="card" style="padding: 28px;">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+				<div>
+					<h3 style="font-size: 20px;">🏆 Hall da Fama OmniVoid</h3>
+					<p style="font-size: 13px; opacity: 0.8;">Os maiores recordes registrados no Zombies Survive e SkyRush Arcade</p>
+				</div>
+				<span class="badge" style="background: rgba(255, 214, 10, 0.2); color: #ffd60a !important;">
+					👑 #1 Recordista Oficial: GuiGuy
+				</span>
+			</div>
 
-		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🏆 Hall da Fama SkyRush</h3>
-				<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+			<div style="overflow-x: auto;">
+				<table style="width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left;">
 					<thead>
-						<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
-							<th style="padding: 8px 6px;">#</th>
-							<th style="padding: 8px 6px;">Piloto</th>
-							<th style="padding: 8px 6px;">Altitude</th>
-							<th style="padding: 8px 6px;">Pontos</th>
+						<tr style="background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--border-bright);">
+							<th style="padding: 10px 14px;">Posição</th>
+							<th style="padding: 10px 14px;">Jogador</th>
+							<th style="padding: 10px 14px;">Jogo</th>
+							<th style="padding: 10px 14px;">Marca / Onda</th>
+							<th style="padding: 10px 14px; text-align: right;">Pontuação</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
-							<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
-							<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-							<td style="padding: 10px 6px; font-weight: 700;">99.999m</td>
-							<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
+						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.05);">
+							<td style="padding: 12px 14px; font-weight: 800; color: #ffd60a !important;">🥇 1º</td>
+							<td style="padding: 12px 14px; font-weight: 700;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 14px;"><span class="badge" style="background: rgba(255,0,85,0.2); color: #ff0055 !important;">Zombies Survive</span></td>
+							<td style="padding: 12px 14px;">Onda 99 (10º Andar)</td>
+							<td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #ffd60a !important;">99.999 pts</td>
 						</tr>
 						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 8px 6px;">🥈 2º</td>
-							<td style="padding: 8px 6px; font-weight: 700;">SkyPhantom 🥷</td>
-							<td style="padding: 8px 6px;">15.100m</td>
-							<td style="padding: 8px 6px; font-weight: 700;">48.200</td>
+							<td style="padding: 12px 14px; font-weight: 800; color: #e2e8f0 !important;">🥈 2º</td>
+							<td style="padding: 12px 14px; font-weight: 700;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
+							<td style="padding: 12px 14px;"><span class="badge" style="background: rgba(0,240,255,0.2); color: #00f0ff !important;">SkyRush Arcade</span></td>
+							<td style="padding: 12px 14px;">Cume 8.000m (Solo Caos)</td>
+							<td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #00f0ff !important;">99.999 pts</td>
 						</tr>
 						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 8px 6px;">🥉 3º</td>
-							<td style="padding: 8px 6px; font-weight: 700;">TurboDev 🤖</td>
-							<td style="padding: 8px 6px;">12.850m</td>
-							<td style="padding: 8px 6px; font-weight: 700;">34.500</td>
+							<td style="padding: 12px 14px; font-weight: 800; color: #cd7f32 !important;">🥉 3º</td>
+							<td style="padding: 12px 14px;">CyberNinja_X</td>
+							<td style="padding: 12px 14px;"><span class="badge">Zombies Survive</span></td>
+							<td style="padding: 12px 14px;">Onda 24</td>
+							<td style="padding: 12px 14px; text-align: right; font-weight: 700;">48.200 pts</td>
+						</tr>
+						<tr style="border-bottom: 1px solid var(--border-color);">
+							<td style="padding: 12px 14px;">4º</td>
+							<td style="padding: 12px 14px;">CloudClimber</td>
+							<td style="padding: 12px 14px;"><span class="badge">SkyRush Arcade</span></td>
+							<td style="padding: 12px 14px;">Altitude 6.420m</td>
+							<td style="padding: 12px 14px; text-align: right; font-weight: 700;">32.100 pts</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+		</section>
+	</main>
 
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🎮 Instruções de Voo</h3>
-				<ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; opacity: 0.9;">
-					<li>⚡ <b>Setas ou WASD:</b> Manobrar e inclinar aeronave no espaço aéreo.</li>
-					<li>🔋 <b>Orbs Azuis:</b> Recarregam o propulsor de turbo (Nitro Boost).</li>
-					<li>🔥 <b>Espaço ou Shift:</b> Ativar Super Nitro para ultrapassar barreiras.</li>
-					<li>⭐ <b>Modo Solo Offline:</b> Jogue instantaneamente no navegador sem necessidade de servidor.</li>
-				</ul>
+	${COMMON_AUTH_MODALS}
+	${COMMON_FOOTER}
+	${COMMON_AUTH_JS}
+</body>
+</html>`;
+
+// ==========================================
+// 4. PÁGINA SOBRE MIM & DEDICATÓRIA (sobre.html)
+// ==========================================
+const sobreHtml = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Sobre Mim & Dedicatória | Guilherme Mendes (GuiGuy)</title>
+	${COMMON_HEAD}
+</head>
+<body>
+	${getNavbar('sobre')}
+
+	<main class="container" style="max-width: 1100px;">
+		<!-- Hero Perfil -->
+		<section class="card" style="padding: 40px; margin-bottom: 30px; background: linear-gradient(135deg, rgba(16,16,24,0.95) 0%, rgba(20,20,35,0.95) 100%); border-color: rgba(0,240,255,0.4);">
+			<div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
+				<!-- Espaço para Foto de Perfil -->
+				<div style="position: relative; margin: 0 auto;">
+					<div class="profile-avatar-frame" id="profileImageSlot">
+						<span style="font-size: 64px;">🧑‍🚀</span>
+					</div>
+					<div style="text-align: center; margin-top: 10px;">
+						<label for="customPhotoInput" style="font-size: 11px; color: var(--accent-primary) !important; cursor: pointer; text-decoration: underline;">
+							📷 Alterar Foto
+						</label>
+						<input type="file" id="customPhotoInput" accept="image/*" style="display: none;" onchange="handleProfilePhotoUpload(event)">
+					</div>
+				</div>
+
+				<div style="flex: 1; min-width: 280px;">
+					<div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(0,240,255,0.15); border: 1px solid var(--accent-primary); padding: 4px 12px; border-radius: 16px; font-size: 11px; font-weight: 800; color: var(--accent-primary) !important; margin-bottom: 10px;">
+						LEAD ENGINEER & GAME DEVELOPER
+					</div>
+					<h1 style="font-size: clamp(26px, 3.5vw, 36px); margin-bottom: 6px;">Guilherme Mendes</h1>
+					<p style="font-size: 15px; color: var(--accent-gold) !important; font-weight: 700; margin-bottom: 16px;">
+						Conhecido no mundo dev e gamer como <b>GuiGuy</b>
+					</p>
+					<p style="font-size: 14.5px; line-height: 1.6; opacity: 0.9; margin-bottom: 18px;">
+						Sempre fui apaixonado por criar coisas mais desafiadoras e inovadoras que as outras. Movido pela curiosidade incansável e rigor técnico, tenho como foco o <b>Desenvolvimento de Software de Alta Performance</b>, a <b>Educação Tecnológica</b> para empoderar novos desenvolvedores e a <b>Segurança da Informação</b> para construir arquiteturas confiáveis e resilientes.
+					</p>
+
+					<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+						<span class="badge">🧠 Engenharia de Software</span>
+						<span class="badge">🎮 Godot 4 & Game Dev</span>
+						<span class="badge">🛡️ Segurança da Informação</span>
+						<span class="badge">🌐 WebAssembly & C#</span>
+						<span class="badge">🎓 Educação Tech</span>
+					</div>
+				</div>
 			</div>
-		</div>
+		</section>
+
+		<!-- Card de Dedicatória Especial para Rita -->
+		<section class="card" style="padding: 36px; margin-bottom: 30px; background: linear-gradient(135deg, rgba(30,15,35,0.95) 0%, rgba(20,15,30,0.95) 100%); border: 2px solid #ffd60a; box-shadow: 0 10px 40px rgba(255, 214, 10, 0.15);">
+			<div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+				<div style="font-size: 54px; line-height: 1;">💖</div>
+				<div style="flex: 1; min-width: 260px;">
+					<h2 style="font-size: 22px; color: #ffd60a !important; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+						Dedicatória Especial de Gratidão & Amor
+					</h2>
+					<p style="font-size: 15.5px; line-height: 1.7; opacity: 0.95; font-style: italic;">
+						"Gostaria de deixar um agradecimento mais do que especial para a minha <b>Rita</b>, que sempre me incentiva, apoia incondicionalmente cada um dos meus passos e acredita nos meus sonhos mesmo nos desafios mais complexos. Este projeto e cada linha de código carregam sua inspiração e carinho."
+					</p>
+					<div style="margin-top: 12px; font-size: 13px; font-weight: 700; color: #ffd60a !important;">
+						— Com todo amor e admiração, Guilherme Mendes (GuiGuy)
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Pilares de Atuação -->
+		<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 35px;">
+			<div class="card" style="padding: 24px;">
+				<div style="font-size: 32px; margin-bottom: 10px;">💻</div>
+				<h3 style="font-size: 18px; margin-bottom: 8px;">Desenvolvimento de Software</h3>
+				<p style="font-size: 13.5px; line-height: 1.6; opacity: 0.85;">
+					Criação de arquiteturas modulares, microserviços, motores de jogos em WebAssembly e plataformas com altíssima disponibilidade e código limpo.
+				</p>
+			</div>
+
+			<div class="card" style="padding: 24px;">
+				<div style="font-size: 32px; margin-bottom: 10px;">🎓</div>
+				<h3 style="font-size: 18px; margin-bottom: 8px;">Educação Tecnológica</h3>
+				<p style="font-size: 13.5px; line-height: 1.6; opacity: 0.85;">
+					Criação de testes vocacionais, materiais educativos e suporte à comunidade de estudantes para acelerar a entrada de novos talentos no mercado tech.
+				</p>
+			</div>
+
+			<div class="card" style="padding: 24px;">
+				<div style="font-size: 32px; margin-bottom: 10px;">🛡️</div>
+				<h3 style="font-size: 18px; margin-bottom: 8px;">Segurança da Informação</h3>
+				<p style="font-size: 13.5px; line-height: 1.6; opacity: 0.85;">
+					Pesquisa contínua em segurança defensiva e ofensiva, análise de vulnerabilidades em código fonte (SAST) e blindagem de infraestruturas cloud.
+				</p>
+			</div>
+		</section>
+
+		<!-- Contato Direto -->
+		<section class="card" style="text-align: center; padding: 32px;">
+			<h3 style="font-size: 20px; margin-bottom: 8px;">Vamos Conversar ou Desenvolver Juntos?</h3>
+			<p style="font-size: 14px; opacity: 0.85; margin-bottom: 20px;">
+				Disponível para projetos corporativos, parcerias de game dev, consultorias e palestras técnicas.
+			</p>
+			<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+				<a href="orcamento.html" class="btn-primary" style="font-size: 13px;">
+					💼 Fazer um Orçamento ➔
+				</a>
+				<a href="devchat.html" class="btn-secondary" style="font-size: 13px;">
+					💬 Bater Papo na Conversa Dev
+				</a>
+			</div>
+		</section>
 	</main>
 
 	${COMMON_AUTH_MODALS}
@@ -1495,251 +1591,123 @@ const skyrushHtml = `<!DOCTYPE html>
 	${COMMON_AUTH_JS}
 
 	<script>
-		function toggleSkyRushFullscreen() {
-			const elem = document.getElementById("skyrush-frame-wrap");
-			if (!document.fullscreenElement) {
-				elem.requestFullscreen().catch(err => alert("Erro ao entrar em tela cheia: " + err.message));
-			} else {
-				document.exitFullscreen();
+		function handleProfilePhotoUpload(e) {
+			const file = e.target.files[0];
+			if (!file) return;
+			const reader = new FileReader();
+			reader.onload = function(evt) {
+				const base64 = evt.target.result;
+				localStorage.setItem('omnivoid_custom_profile_photo', base64);
+				renderProfilePhoto();
+			};
+			reader.readAsDataURL(file);
+		}
+
+		function renderProfilePhoto() {
+			const slot = document.getElementById('profileImageSlot');
+			const saved = localStorage.getItem('omnivoid_custom_profile_photo');
+			if (slot) {
+				if (saved) {
+					slot.innerHTML = \`<img src="\${saved}" class="profile-avatar-img" alt="Guilherme Mendes">\`;
+				} else {
+					slot.innerHTML = \`<span style="font-size: 64px;">🧑‍🚀</span>\`;
+				}
 			}
 		}
+
+		document.addEventListener('DOMContentLoaded', renderProfilePhoto);
 	</script>
 </body>
 </html>`;
 
-// PAGE 5: QUIZ
+// ==========================================
+// 5. PÁGINA DO QUIZ / TESTE DEV (quiz.html)
+// ==========================================
+// Let's import or define the full quiz page
 const quizHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Teste de Programação & Vocacional Tech | OmniVoid Studios</title>
+	<title>Teste Dev & Orientação Vocacional | OmniVoid Studios</title>
 	${COMMON_HEAD}
-	<style>
-		.quiz-option {
-			background: var(--bg-card);
-			border: 1px solid var(--border-color);
-			border-radius: 12px;
-			padding: 16px 20px;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			gap: 16px;
-			transition: all 0.25s ease;
-			margin-bottom: 12px;
-		}
-
-		.quiz-option:hover {
-			border-color: var(--accent-primary);
-			background: rgba(0, 240, 255, 0.08);
-			transform: translateX(4px);
-		}
-
-		.quiz-option.selected {
-			border-color: var(--accent-primary);
-			background: rgba(0, 240, 255, 0.18);
-			box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-		}
-
-		.lang-card {
-			background: var(--bg-card);
-			border: 1px solid var(--border-color);
-			border-radius: 14px;
-			padding: 24px;
-			transition: all 0.25s ease;
-		}
-
-		.lang-card:hover {
-			border-color: var(--border-bright);
-			transform: translateY(-3px);
-		}
-
-		.code-box {
-			background: #0d0d14;
-			border: 1px solid rgba(255, 255, 255, 0.15);
-			border-radius: 8px;
-			padding: 14px;
-			font-family: var(--font-code);
-			font-size: 13px;
-			overflow-x: auto;
-			margin: 12px 0;
-			color: #00f0ff !important;
-		}
-
-		.code-box * {
-			font-family: var(--font-code);
-			color: #00f0ff !important;
-		}
-	</style>
 </head>
 <body>
 	${getNavbar('quiz')}
 
-	<main class="container">
-		<section style="text-align: center; margin: 30px 0 40px 0;">
-			<span class="badge" style="background: rgba(157,78,221,0.2); border-color: var(--accent-purple); font-size: 13px; margin-bottom: 12px;">
-				🧠 Teste Vocacional de Desenvolvimento
+	<main class="container" style="max-width: 1000px;">
+		<div style="text-align: center; margin-bottom: 30px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 10px;">
+				🧠 ORIENTAÇÃO VOCACIONAL & QUIZ TECNOLÓGICO
 			</span>
-			<h1 style="font-size: 38px; margin-bottom: 12px;">
-				Qual Linguagem de Programação Combina com Você?
+			<h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 10px;">
+				Descubra sua Linguagem de Programação Ideal
 			</h1>
-			<p style="font-size: 16px; max-width: 750px; margin: 0 auto; opacity: 0.9; line-height: 1.6;">
-				Responda ao questionário interativo para mapear seus interesses (Games, Inteligência Artificial, Web, Mobile, Sistemas, Segurança ou Robótica) e descubra sua linguagem ideal com curiosidades e guias de início!
+			<p style="max-width: 720px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Responda ao teste baseado nos seus interesses e descubra a linguagem que mais combina com você, acompanhada de curiosidades fascinantes de cada ecossistema.
 			</p>
-		</section>
+		</div>
 
-		<section id="quiz-section" class="card" style="max-width: 820px; margin: 0 auto 60px auto; border-top: 4px solid var(--accent-primary);">
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-				<span id="quiz-question-num" style="font-weight: 700; font-size: 14px; color: var(--accent-primary) !important;">Pergunta 1 de 8</span>
-				<div style="width: 200px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-					<div id="quiz-bar" style="height: 100%; width: 12.5%; background: linear-gradient(90deg, #00f0ff, #9d4edd);"></div>
-				</div>
+		<!-- Quiz Container Card -->
+		<div id="quiz-box" class="card" style="padding: 32px; margin-bottom: 30px;">
+			<div id="quiz-progress-bar" style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 24px; overflow: hidden;">
+				<div id="quiz-progress-fill" style="width: 16%; height: 100%; background: linear-gradient(90deg, #00f0ff, #9d4edd); transition: width 0.3s ease;"></div>
 			</div>
 
-			<h2 id="quiz-question-title" style="font-size: 22px; margin-bottom: 24px; min-height: 56px;">
-				Carregando pergunta...
-			</h2>
-
-			<div id="quiz-options-list"></div>
-
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px;">
-				<button id="btn-quiz-prev" class="btn-secondary" onclick="prevQuizQuestion()" style="visibility: hidden;">
-					⬅ Anterior
-				</button>
-				<button id="btn-quiz-next" class="btn-primary" onclick="nextQuizQuestion()" disabled style="opacity: 0.5;">
-					Próxima ➔
-				</button>
+			<div id="quiz-question-container">
+				<!-- Injetado dinamicamente via JS -->
 			</div>
-		</section>
+		</div>
 
-		<section id="result-section" style="display: none; max-width: 900px; margin: 0 auto 60px auto;">
-			<div class="card" style="border-top: 5px solid var(--accent-primary); margin-bottom: 30px; text-align: center; padding: 40px 30px;">
-				<div style="font-size: 64px; margin-bottom: 10px;" id="res-icon">🐍</div>
-				<span class="badge" style="background: rgba(0, 240, 255, 0.2); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 14px;">
-					Match de Afinidade: <b id="res-match-pct" style="color: var(--accent-gold) !important;">98%</b>
-				</span>
-				<h2 id="res-lang-name" style="font-size: 36px; margin-bottom: 14px;">Python</h2>
-				<p id="res-lang-tagline" style="font-size: 16px; max-width: 650px; margin: 0 auto 24px auto; opacity: 0.9; line-height: 1.6;">
-					A linguagem perfeita para quem busca clareza, poder analítico, Inteligência Artificial e automação rápida.
-				</p>
+		<!-- Resultado do Quiz (Oculto inicialmente) -->
+		<div id="quiz-result-box" class="card" style="display: none; padding: 36px; border-color: var(--accent-primary); margin-bottom: 30px;">
+			<!-- Injetado dinamicamente via JS -->
+		</div>
 
-				<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-					<button class="btn-primary" onclick="restartQuiz()">
-						🔄 Refazer Teste
-					</button>
-					<button class="btn-secondary" onclick="document.getElementById('encyclopedia-section').scrollIntoView({ behavior: 'smooth' })">
-						📚 Ver Todas as 12 Linguagens
-					</button>
-				</div>
-			</div>
+		<!-- Catálogo com Curiosidades das 12 Linguagens -->
+		<section class="card" style="padding: 28px;">
+			<h2 style="font-size: 20px; margin-bottom: 8px;">📚 Curiosidades de 12 Grandes Linguagens de Programação</h2>
+			<p style="font-size: 13.5px; opacity: 0.8; margin-bottom: 24px;">Fatos históricos, arquiteturas e curiosidades para expandir seu repertório técnico.</p>
 
-			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px;">
-				<div class="card">
-					<h3 style="font-size: 18px; margin-bottom: 14px;">✨ Por que é perfeita para você?</h3>
-					<p id="res-why-match" style="font-size: 14px; line-height: 1.6; opacity: 0.9;">
-						Com base nas suas escolhas por inteligência artificial e facilidade de prototipagem, Python oferece um dos maiores ecossistemas do planeta.
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #ffd60a !important; font-size: 15px;">🐍 Python</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						O nome não veio da serpente, mas sim do grupo de humor britânico <i>Monty Python</i>! Criada por Guido van Rossum em 1991 como projeto de férias de Natal.
 					</p>
-					<h4 style="font-size: 14px; margin-top: 18px; margin-bottom: 8px;">🔥 Projetos Famosos Feitos com Ela:</h4>
-					<div id="res-famous-projects" style="font-size: 13px; opacity: 0.9; line-height: 1.5;"></div>
 				</div>
 
-				<div class="card">
-					<h3 style="font-size: 18px; margin-bottom: 14px;">💡 Curiosidades Incríveis</h3>
-					<p id="res-trivia" style="font-size: 14px; line-height: 1.6; opacity: 0.9; margin-bottom: 14px;"></p>
-					
-					<h4 style="font-size: 14px; margin-bottom: 6px;">⚡ Código de Exemplo:</h4>
-					<div id="res-code-snippet" class="code-box"></div>
-				</div>
-			</div>
-		</section>
-
-		<section id="encyclopedia-section" style="margin-top: 40px;">
-			<div style="text-align: center; margin-bottom: 30px;">
-				<h2 style="font-size: 28px; margin-bottom: 10px;">📚 Enciclopédia & Curiosidades das Linguagens</h2>
-				<p style="font-size: 14px; opacity: 0.85;">Explore o histórico, casos de uso e fatos marcantes das principais tecnologias mundiais</p>
-			</div>
-
-			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px;">
-				<div class="lang-card" style="border-top: 3px solid #00f0ff;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🕹️ GDScript</h3>
-						<span class="badge">Godot Engine</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Linguagem de altíssimo desempenho projetada especificamente para criação de jogos no motor Godot. Sintaxe intuitiva similar ao Python.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #00f0ff !important; font-size: 15px;">🌐 JavaScript</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Foi criada em apenas <b>10 dias</b> por Brendan Eich na Netscape em 1995. Hoje roda desde o navegador até foguetes espaciais e servidores com Node.js.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> Criada pelo argentino Juan Linietsky após testes frustrados integrando Lua e Python no motor Godot. Otimizada para garbage collector de baixo custo!
-					</div>
-					<div class="code-box">func _process(delta):<br>&nbsp;&nbsp;position += velocity * delta</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #ffd60a;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🐍 Python</h3>
-						<span class="badge">IA & Ciência de Dados</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Líder absoluta em Inteligência Artificial, Machine Learning, automação e back-end rápido.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #ff0055 !important; font-size: 15px;">🦀 Rust</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Criada por Graydon Hoare após o elevador do seu prédio quebrar constantemente por bugs de memória em C++. Rust garante segurança de memória sem garbage collector!
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O criador Guido van Rossum batizou a linguagem em homenagem ao grupo de comédia britânico Monty Python, e não à cobra!
-					</div>
-					<div class="code-box">import torch<br>model = torch.nn.Linear(10, 2)<br>print("AI Model Ready!")</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #0088ff;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🌐 TypeScript / JS</h3>
-						<span class="badge">Web & Full-Stack</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						A espinha dorsal da web mundial. Roda em qualquer navegador do mundo e também em servidores ultra-rápidos com Node.js/Bun.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #9d4edd !important; font-size: 15px;">🎮 GDScript & C#</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						GDScript foi desenhada sob medida para a Godot Engine, otimizada para compilação instantânea e manipulação fluida de nós e vetores matemáticos.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O JavaScript original foi criado por Brendan Eich em apenas 10 dias em maio de 1995 para a Netscape!
-					</div>
-					<div class="code-box">const player: Player = { name: 'Dev', score: 100 };<br>console.log(\`Score: \${player.score}\`);</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #9d4edd;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">⚡ C# (.NET)</h3>
-						<span class="badge">Unity, Godot & Enterprise</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Poderosa, tipada e extremamente elegante. Usada em jogos de grande escala na Unity e Godot, e em bancos corporativos globais.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #00ff88 !important; font-size: 15px;">⚡ Go (Golang)</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Desenvolvida no Google por lendas da computação (Ken Thompson e Rob Pike) enquanto esperavam compilações gigantescas de C++ terminarem.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O símbolo "#" no nome foi inspirado no sustenido musical, indicando que é uma nota acima de C++!
-					</div>
-					<div class="code-box">public record Player(string Name, int Level);<br>var hero = new Player("Arthur", 99);</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #ff0055;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🏎️ C++</h3>
-						<span class="badge">AAA Games & Engines</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Desempenho bruto no metal. O motor do Unreal Engine, Godot C++, sistemas aeroespaciais da NASA e navegadores web são forjados em C++.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #38bdf8 !important; font-size: 15px;">⚙️ C / C++</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						A espinha dorsal de quase todos os sistemas operacionais (Windows, Linux, macOS), navegadores e engines de jogos AAA (Unreal Engine).
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> Originalmente chamada de "C with Classes" por Bjarne Stroustrup em 1979 no Bell Labs.
-					</div>
-					<div class="code-box">std::vector&lt;int&gt; scores = {100, 250, 400};<br>for(auto s : scores) std::cout &lt;&lt; s &lt;&lt; "\\n";</div>
-				</div>
-
-				<div class="lang-card" style="border-top: 3px solid #ff7700;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🦀 Rust</h3>
-						<span class="badge">Segurança & Alta Performance</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						A linguagem mais amada pelos desenvolvedores no mundo por 8 anos consecutivos. Concorrência segura e zero memory leaks.
-					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O criador Graydon Hoare começou o projeto após o elevador do seu prédio quebrar repetidamente por falhas de memória no software em C++!
-					</div>
-					<div class="code-box">fn main() {<br>&nbsp;&nbsp;println!("Zero-cost abstractions & Safety!");<br>}</div>
 				</div>
 			</div>
 		</section>
@@ -1750,358 +1718,249 @@ const quizHtml = `<!DOCTYPE html>
 	${COMMON_AUTH_JS}
 
 	<script>
-		const quizQuestions = [
+		const quizData = [
 			{
-				title: "1. O que mais te empolga quando você pensa em criar com tecnologia?",
+				q: "1. O que mais te desperta interesse ao pensar em tecnologia?",
 				options: [
-					{ text: "🎮 Criar jogos eletrizantes com física, gráficos 2D/3D e combates intensos", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🤖 Treinar Inteligências Artificiais, chatbots inteligentes e visão computacional", tags: ["python"] },
-					{ text: "🌐 Construir sites dinâmicos, portais web interativos e aplicativos globais", tags: ["typescript", "javascript"] },
-					{ text: "🛡️ Explorar cibersegurança, criptografia, redes e engenharia de baixo nível", tags: ["rust", "cpp", "c", "python"] }
+					{ text: "Criar jogos 2D/3D envolventes com física e jogabilidade épica", lang: "GDScript / C#" },
+					{ text: "Construir sites, portais visuais dinâmicos e apps modernos", lang: "JavaScript / TypeScript" },
+					{ text: "Inteligência Artificial, Data Science e automações inteligentes", lang: "Python" },
+					{ text: "Segurança cibernética, sistemas de baixo nível e máxima velocidade", lang: "Rust / C++" }
 				]
 			},
 			{
-				title: "2. Como você prefere lidar com regras de código e erros?",
+				q: "2. Como você prefere que seu código seja estruturado?",
 				options: [
-					{ text: "🚀 Quero rapidez máxima! Escrever poucas linhas e ver o resultado na tela imediatamente", tags: ["python", "gdscript", "javascript"] },
-					{ text: "🛡️ Quero rigor total! Se houver qualquer erro de tipo ou memória, o compilador deve me avisar antes de rodar", tags: ["rust", "typescript", "csharp", "cpp"] },
-					{ text: "🏎️ Quero controle absoluto sobre cada byte de memória RAM e ciclo de clock do processador", tags: ["cpp", "c", "rust"] },
-					{ text: "📱 Quero criar interfaces elegantes para smartphones Android e iOS", tags: ["kotlin", "swift", "typescript"] }
+					{ text: "Sintaxe super limpa e legível que parece inglês falado", lang: "Python" },
+					{ text: "Orientação a objetos robusta com tipagem forte e segura", lang: "C# / Java" },
+					{ text: "Flexibilidade total para prototipar rápido e ver na tela", lang: "JavaScript" },
+					{ text: "Controle estrito de memória e compilador que previne falhas", lang: "Rust" }
 				]
 			},
 			{
-				title: "3. Se você fosse chamado para um projeto épico amanhã, qual escolheria?",
+				q: "3. Qual desafio de engenharia parece mais empolgante para você?",
 				options: [
-					{ text: "🧟 Desenvolver a sequência do Zombies Survive com novos chefes e multiplayer", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🧠 Criar uma IA neural que aprende a jogar videogames sozinha por reforço", tags: ["python"] },
-					{ text: "🌐 Lançar uma plataforma web moderna com milhões de acessos simultâneos", tags: ["typescript", "go", "rust"] },
-					{ text: "🚀 Escrever o software de telemetria e navegação de um satélite espacial", tags: ["c", "cpp", "rust"] }
+					{ text: "Otimizar uma renderização de gráficos a 60 FPS", lang: "C++ / GDScript" },
+					{ text: "Treinar um modelo neural para reconhecer padrões complexos", lang: "Python" },
+					{ text: "Conectar milhares de usuários simultâneos em tempo real", lang: "Go / Node.js" },
+					{ text: "Encontrar e fechar brechas de segurança antes dos hackers", lang: "Rust / C" }
 				]
 			},
 			{
-				title: "4. Qual é a sua relação com a matemática e lógica pura?",
+				q: "4. Onde você sonha em ver seu software rodando?",
 				options: [
-					{ text: "📊 Adoro estatística, matrizes, probabilidade e visualização gráfica de dados", tags: ["python", "sql"] },
-					{ text: "📐 Gosto de vetores, trigonometria, física de colisões e geometria espacial", tags: ["gdscript", "cpp", "csharp"] },
-					{ text: "🧩 Prefiro lógica de negócios, rotas de API, bancos de dados e interfaces de usuário", tags: ["typescript", "sql", "csharp"] },
-					{ text: "⚡ Gosto de álgebra booleana, registradores, ponteiros e algoritmos de ordenação extrema", tags: ["c", "cpp", "rust"] }
-				]
-			},
-			{
-				title: "5. Em qual ambiente você mais gostaria de ver suas criações rodando?",
-				options: [
-					{ text: "🎮 Em consoles (PlayStation/Xbox/Switch), Steam e WebGL para gamers", tags: ["cpp", "csharp", "gdscript"] },
-					{ text: "☁️ Em servidores de nuvem de alta escala processando bilhões de dados por segundo", tags: ["go", "rust", "python"] },
-					{ text: "📱 Nos celulares de milhares de pessoas na Google Play e App Store", tags: ["kotlin", "swift", "typescript"] },
-					{ text: "🤖 Em robôs físicos, placas Arduino, microcontroladores e drones", tags: ["c", "cpp", "rust", "python"] }
-				]
-			},
-			{
-				title: "6. Qual frase mais define sua mentalidade como desenvolvedor?",
-				options: [
-					{ text: '"Simplicidade é a sofisticação máxima. Código legível supera código complexo."', tags: ["python", "go"] },
-					{ text: '"Velocidade e controle são inegociáveis. Quero espremer 100% da máquina."', tags: ["cpp", "rust", "c"] },
-					{ text: '"O jogo precisa ser divertido e responsivo acima de qualquer burocracia."', tags: ["gdscript", "csharp"] },
-					{ text: '"Qualquer coisa que possa ser escrita em JS, um dia será escrita em JS."', tags: ["typescript", "javascript"] }
-				]
-			},
-			{
-				title: "7. Quando você estuda um novo assunto, o que mais te motiva?",
-				options: [
-					{ text: "🎨 Criar visuais, animações, efeitos de partículas e ver a mágica visual acontecer", tags: ["gdscript", "typescript", "csharp"] },
-					{ text: "🔬 Resolver problemas de raciocínio lógico e quebra-cabeças analíticos", tags: ["python", "rust"] },
-					{ text: "💼 Criar soluções práticas que as empresas usam no dia a dia para gerar valor", tags: ["csharp", "typescript", "sql"] },
-					{ text: "⚙️ Entender as entranhas dos sistemas operacionais e como o hardware funciona", tags: ["c", "cpp", "rust"] }
-				]
-			},
-			{
-				title: "8. Qual formato de produto final te dá mais orgulho de apresentar?",
-				options: [
-					{ text: "🕹️ Um jogo publicado na Steam ou na Web onde amigos passam horas jogando", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🤖 Um modelo de IA respondendo perguntas ou gerando imagens incríveis", tags: ["python"] },
-					{ text: "📱 Um aplicativo moderno publicado com visual limpo e design responsivo", tags: ["typescript", "kotlin", "swift"] },
-					{ text: "⚡ Um sistema super otimizado que nunca trava e processa tudo instantaneamente", tags: ["rust", "go", "cpp"] }
+					{ text: "Direto no navegador de qualquer pessoa no mundo sem instalar nada", lang: "JavaScript / WebAssembly" },
+					{ text: "Nas lojas Steam, consoles e dispositivos móveis", lang: "C# / GDScript" },
+					{ text: "Em supercomputadores de nuvem e servidores de alta escala", lang: "Go / Python" },
+					{ text: "Em sistemas embarcados, satélites ou sistemas operacionais", lang: "Rust / C++" }
 				]
 			}
 		];
 
-		const langDatabase = {
-			"gdscript": {
-				name: "GDScript (Godot Engine)",
-				icon: "🕹️",
-				tagline: "A linguagem feita sob medida para criadores de games dinâmicos e rápidos!",
-				whyMatch: "Você demonstra paixão visceral por jogos, efeitos visuais e iteração rápida. O GDScript no Godot 4 te permite transformar ideias de gameplay em realidade em questão de minutos.",
-				trivia: "O GDScript foi concebido dentro do próprio motor Godot com tipagem gradual opcional para garantir taxa de quadros estável a 60 FPS sem pausas de Garbage Collector!",
-				famous: "Zombies Survive, Brotato, Dome Keeper, Cassette Beasts, Halls of Torment.",
-				snippet: "extends CharacterBody2D\\n\\nfunc _physics_process(delta):\\n    velocity = Input.get_vector('ui_left', 'ui_right', 'ui_up', 'ui_down') * 250\\n    move_and_slide()"
-			},
-			"python": {
-				name: "Python",
-				icon: "🐍",
-				tagline: "A superpotência da Inteligência Artificial, Ciência de Dados e Automação global.",
-				whyMatch: "Suas escolhas revelam alto interesse por Machine Learning, clareza lógica e soluções inteligentes. Python é a linguagem oficial do futuro da IA.",
-				trivia: "Criada pelo holandês Guido van Rossum em 1991. O nome homenageia o grupo cômico Monty Python! O software do telescópio espacial James Webb usa scripts em Python para calibrar seus espelhos.",
-				famous: "ChatGPT (APIs & Treinamento), Instagram Backend, YouTube, Blender Scripts, TensorFlow.",
-				snippet: "import openai\\n\\ndef ask_ai(prompt):\\n    return openai.chat.completions.create(model='gpt-4', messages=[{'role': 'user', 'content': prompt}])"
-			},
-			"typescript": {
-				name: "TypeScript / JavaScript",
-				icon: "🌐",
-				tagline: "O motor universal da Web moderna, aplicativos móveis e APIs em tempo real.",
-				whyMatch: "Você busca criar plataformas acessíveis por qualquer dispositivo no mundo, unindo interfaces atraentes e servidores modernos em tempo real.",
-				trivia: "O JavaScript foi escrito em apenas 10 dias em 1995. Hoje, com TypeScript criado pela Microsoft, tornou-se uma das linguagens tipadas mais produtivas do planeta.",
-				famous: "Netflix Web, Spotify Desktop, VS Code, SkyRush Web Portal, Discord Frontend.",
-				snippet: "interface Hero { name: string; health: number; }\\nconst hero: Hero = { name: 'Sniper', health: 100 };\\nconsole.log(\`Hero Ready: \${hero.name}\`);"
-			},
-			"csharp": {
-				name: "C# (.NET)",
-				icon: "⚡",
-				tagline: "Elegância, poder multiplataforma e a escolha de peso para grandes jogos e corporações.",
-				whyMatch: "Você gosta de robustez, orientação a objetos clássica e flexibilidade para criar tanto jogos avançados (Unity/Godot) quanto grandes sistemas corporativos.",
-				trivia: "Desenhada pelo lendário Anders Hejlsberg na Microsoft. O nome C# ('C Sharp') simboliza um sustenido musical sobre o C, significando evolução harmônica.",
-				famous: "Hollow Knight, Cuphead, Terraria, Forza Horizon (UI), Sistemas Bancários Globais.",
-				snippet: "public class Player : IEntity\\n{\\n    public string Nickname { get; set; } = 'VoidPlayer';\\n    public void LevelUp() => Console.WriteLine('Level Up!');\\n}"
-			},
-			"cpp": {
-				name: "C++",
-				icon: "🏎️",
-				tagline: "O ápice do desempenho bruto, motores gráficos AAA e computação de alta precisão.",
-				whyMatch: "Você quer entender o funcionamento do hardware, física pesada e ter controle milimétrico sobre alocação de memória e pipelines gráficos.",
-				trivia: "Criada por Bjarne Stroustrup no Bell Labs em 1979. Praticamente todos os sistemas operacionais modernos (Windows, macOS, Linux) têm seus núcleos e drivers em C e C++.",
-				famous: "Unreal Engine 5, Godot Core, GTA V, Counter-Strike 2, Adobe Photoshop.",
-				snippet: "#include <iostream>\\nint main() {\\n    std::cout << 'Zero Overhead AAA Game Loop!' << std::endl;\\n    return 0;\\n}"
-			},
-			"rust": {
-				name: "Rust",
-				icon: "🦀",
-				tagline: "Segurança de memória revolucionária aliada a desempenho idêntico ao C++.",
-				whyMatch: "Você valoriza arquiteturas seguras, confiabilidade máxima e sistemas modernos que nunca sofrem com brechas de segurança ou memory leaks.",
-				trivia: "Eleita a linguagem mais admirada do mundo pelos desenvolvedores do Stack Overflow por 8 anos consecutivos. O Linux Kernel agora aceita código oficial em Rust!",
-				famous: "Discord Backend, Ferramentas do Linux Kernel, Cloudflare Workers, 1Password, Bevy Game Engine.",
-				snippet: "fn main() {\\n    let mut health: i32 = 100;\\n    println!('Safe memory without garbage collector! Health: {}', health);\\n}"
-			}
-		};
+		let currentQ = 0;
+		const answers = [];
 
-		let currentQuestionIndex = 0;
-		let userAnswers = [];
+		function renderQuestion() {
+			const container = document.getElementById('quiz-question-container');
+			const progressFill = document.getElementById('quiz-progress-fill');
+			if (!container) return;
 
-		function loadQuestion(index) {
-			const q = quizQuestions[index];
-			document.getElementById("quiz-question-num").innerText = \`Pergunta \${index + 1} de \${quizQuestions.length}\`;
-			document.getElementById("quiz-bar").style.width = \`\${((index + 1) / quizQuestions.length) * 100}%\`;
-			document.getElementById("quiz-question-title").innerText = q.title;
+			const total = quizData.length;
+			const percent = ((currentQ + 1) / total) * 100;
+			if (progressFill) progressFill.style.width = percent + '%';
 
-			const optionsDiv = document.getElementById("quiz-options-list");
-			optionsDiv.innerHTML = "";
+			const q = quizData[currentQ];
+			let html = \`
+				<h2 style="font-size: 20px; margin-bottom: 20px;">\${q.q}</h2>
+				<div style="display: flex; flex-direction: column; gap: 12px;">
+			\`;
 
-			const selectedOption = userAnswers[index];
-
-			q.options.forEach((opt, optIdx) => {
-				const optEl = document.createElement("div");
-				optEl.className = \`quiz-option \${selectedOption === optIdx ? 'selected' : ''}\`;
-				optEl.innerHTML = \`
-					<div style="font-size: 18px; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;">\${String.fromCharCode(65 + optIdx)}</div>
-					<div style="font-size: 14px; font-weight: 600; line-height: 1.4;">\${opt.text}</div>
+			q.options.forEach((opt, idx) => {
+				html += \`
+					<button class="btn-secondary" onclick="handleAnswer('\${opt.lang}')" style="justify-content: flex-start; text-align: left; padding: 14px 20px; font-size: 14px; font-weight: 600; line-height: 1.4;">
+						\${opt.text}
+					</button>
 				\`;
-				optEl.onclick = () => selectOption(optIdx);
-				optionsDiv.appendChild(optEl);
 			});
 
-			document.getElementById("btn-quiz-prev").style.visibility = index > 0 ? "visible" : "hidden";
-			const nextBtn = document.getElementById("btn-quiz-next");
-			if (selectedOption !== undefined) {
-				nextBtn.disabled = false;
-				nextBtn.style.opacity = "1";
-				nextBtn.innerText = index === quizQuestions.length - 1 ? "Ver Meu Resultado 🏆" : "Próxima ➔";
+			html += '</div>';
+			container.innerHTML = html;
+		}
+
+		function handleAnswer(lang) {
+			answers.push(lang);
+			currentQ++;
+			if (currentQ < quizData.length) {
+				renderQuestion();
 			} else {
-				nextBtn.disabled = true;
-				nextBtn.style.opacity = "0.5";
-				nextBtn.innerText = index === quizQuestions.length - 1 ? "Ver Meu Resultado 🏆" : "Próxima ➔";
+				showQuizResult();
 			}
 		}
 
-		function selectOption(optIdx) {
-			userAnswers[currentQuestionIndex] = optIdx;
-			loadQuestion(currentQuestionIndex);
+		function showQuizResult() {
+			document.getElementById('quiz-box').style.display = 'none';
+			const resBox = document.getElementById('quiz-result-box');
+			resBox.style.display = 'block';
+
+			// Calculate primary language
+			const counts = {};
+			answers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+			const topLang = Object.keys(counts).sort((a,b) => counts[b] - counts[a])[0] || "Python / JavaScript";
+
+			resBox.innerHTML = \`
+				<div style="text-align: center;">
+					<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: var(--accent-primary) !important; font-size: 13px; margin-bottom: 12px;">
+						🎉 SEU RESULTADO VOCACIONAL
+					</span>
+					<h2 style="font-size: 28px; margin-bottom: 12px; color: var(--accent-primary) !important;">
+						Sua Linguagem Ideal: \${topLang}
+					</h2>
+					<p style="max-width: 680px; margin: 0 auto 24px auto; font-size: 15px; line-height: 1.6; opacity: 0.9;">
+						Com base nas suas preferências, seu perfil tem forte sinergia com o ecossistema <b>\${topLang}</b>. Esta tecnologia lhe proporcionará as melhores ferramentas para construir os projetos que você mais ama!
+					</p>
+
+					<div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+						<a href="orcamento.html" class="btn-primary" style="font-size: 13px;">
+							💼 Criar Projeto com essa Stack ➔
+						</a>
+						<button class="btn-secondary" onclick="location.reload()" style="font-size: 13px;">
+							🔄 Refazer o Teste
+						</button>
+					</div>
+				</div>
+			\`;
 		}
 
-		function nextQuizQuestion() {
-			if (currentQuestionIndex < quizQuestions.length - 1) {
-				currentQuestionIndex++;
-				loadQuestion(currentQuestionIndex);
-			} else {
-				calculateAndShowResult();
-			}
-		}
-
-		function prevQuizQuestion() {
-			if (currentQuestionIndex > 0) {
-				currentQuestionIndex--;
-				loadQuestion(currentQuestionIndex);
-			}
-		}
-
-		function calculateAndShowResult() {
-			const scores = {
-				"gdscript": 0,
-				"python": 0,
-				"typescript": 0,
-				"csharp": 0,
-				"cpp": 0,
-				"rust": 0
-			};
-
-			userAnswers.forEach((ansIdx, qIdx) => {
-				const tags = quizQuestions[qIdx].options[ansIdx].tags;
-				tags.forEach(tag => {
-					if (scores[tag] !== undefined) {
-						scores[tag] += 1;
-					}
-				});
-			});
-
-			let bestLang = "python";
-			let maxScore = -1;
-			for (let lang in scores) {
-				if (scores[lang] > maxScore) {
-					maxScore = scores[lang];
-					bestLang = lang;
-				}
-			}
-
-			const langData = langDatabase[bestLang] || langDatabase["python"];
-			
-			document.getElementById("quiz-section").style.display = "none";
-			const resSec = document.getElementById("result-section");
-			resSec.style.display = "block";
-
-			document.getElementById("res-icon").innerText = langData.icon;
-			document.getElementById("res-lang-name").innerText = langData.name;
-			document.getElementById("res-lang-tagline").innerText = langData.tagline;
-			document.getElementById("res-why-match").innerText = langData.whyMatch;
-			document.getElementById("res-trivia").innerText = langData.trivia;
-			document.getElementById("res-famous-projects").innerText = langData.famous;
-			document.getElementById("res-code-snippet").innerHTML = langData.snippet.replace(/\\n/g, '<br>').replace(/ /g, '&nbsp;');
-
-			resSec.scrollIntoView({ behavior: 'smooth' });
-		}
-
-		function restartQuiz() {
-			currentQuestionIndex = 0;
-			userAnswers = [];
-			document.getElementById("result-section").style.display = "none";
-			document.getElementById("quiz-section").style.display = "block";
-			loadQuestion(0);
-			document.getElementById("quiz-section").scrollIntoView({ behavior: 'smooth' });
-		}
-
-		document.addEventListener("DOMContentLoaded", () => {
-			loadQuestion(0);
-		});
+		document.addEventListener('DOMContentLoaded', renderQuestion);
 	</script>
 </body>
 </html>`;
 
-// PAGE 6: PROJETOS
+// ==========================================
+// 6. PÁGINA DE PROJETOS (projetos.html)
+// ==========================================
 const projetosHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Projetos & Portfólio | Guilherme Mendes</title>
+	<title>Projetos & Portfólio | OmniVoid Studios</title>
 	${COMMON_HEAD}
 </head>
 <body>
 	${getNavbar('projetos')}
 
 	<main class="container">
-		<section style="margin: 30px 0 40px 0;">
-			<div class="badge" style="background: rgba(0,240,255,0.15); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 12px;">
-				🚀 Portfólio de Engenharia, Games & Segurança • Guilherme Mendes
-			</div>
-			<h1 style="font-size: 38px; margin-bottom: 14px;">Projetos & Criações Técnicas</h1>
-			<p style="font-size: 16px; opacity: 0.95; max-width: 880px; line-height: 1.7; margin-bottom: 18px;">
-				Sempre busquei criar projetos cada vez mais desafiadores, unindo <b>Desenvolvimento de Software</b>, <b>Educação Tecnológica</b> e <b>Segurança da Informação</b>. Cada projeto abaixo reflete a busca contínua por inovação, desempenho extremo e robustez técnica.
+		<div style="text-align: center; margin-bottom: 35px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 10px;">
+				🚀 PORTFÓLIO TÉCNICO & INOVAÇÃO
+			</span>
+			<h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 10px;">
+				Projetos Desenvolvidos & Em Produção
+			</h1>
+			<p style="max-width: 760px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Conheça alguns dos softwares, engines, simuladores e plataformas construídos com as melhores práticas de engenharia de software e cibersegurança.
 			</p>
-			<p style="font-size: 14px; color: var(--accent-primary) !important;">
-				❤️ Dedicado com carinho à minha parceira e incentivadora <b>Rita</b>.
-			</p>
-		</section>
+		</div>
 
-		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 28px; margin-bottom: 60px;">
-			<div class="card" style="border-top: 4px solid var(--accent-danger);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger);">Godot 4.3 Web</span>
-					<span class="badge">Ativo & Online</span>
+		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 35px;">
+			<!-- Projeto 1: Zombies Survive -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Live em Produção</span>
+						<span class="badge">Godot 4 Wasm</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px; color: #ff0055 !important;">Zombies Survive</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Jogo de tiro e sobrevivência zumbi com mapa Polivalente de 10 andares. Gráficos expandidos sem tarjas pretas e WebAssembly nativo rodando a 60 FPS.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">Zombies Survive (v2.0)</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Jogo de sobrevivência em ondas com mapa polivalente de 10 andares. Implementa portas desbloqueáveis, compra de armamento, IA de pathfinding adaptativa e renderização WebAssembly multichunk ultra rápida.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">GDScript</span>
-					<span class="badge" style="font-size: 11px;">WebAssembly</span>
-					<span class="badge" style="font-size: 11px;">WebGL 2.0</span>
-					<span class="badge" style="font-size: 11px;">AudioWorklet</span>
-				</div>
-				<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
-					Abrir Jogo ➔
+				<a href="zombiessurvive.html" class="btn-primary" style="justify-content: center; font-size: 13px;">
+					Jogar Agora ➔
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-primary);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(0,240,255,0.2); border-color: var(--accent-primary);">HTML5 Canvas & Netcode</span>
-					<span class="badge">Online & Solo</span>
+			<!-- Projeto 2: SkyRush Arcade -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Live em Produção</span>
+						<span class="badge">Realtime Physics</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px; color: #00f0ff !important;">SkyRush Arcade</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Engine física vetorial de escalada vertical com loadouts de armas, mutações climáticas dinâmicas, anomalias cósmicas e ranking sincronizado online.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">SkyRush Supersonic Arcade</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Arcade espacial em 2D com física de impulso, coleta de orbs de nitro, ranking em tempo real e modo offline instantâneo com simulação client-side.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">JavaScript ES6</span>
-					<span class="badge" style="font-size: 11px;">HTML5 Canvas</span>
-					<span class="badge" style="font-size: 11px;">WebSockets</span>
-					<span class="badge" style="font-size: 11px;">LocalStorage API</span>
-				</div>
-				<a href="skyrush.html" class="btn-primary">
-					Decolar no SkyRush ➔
+				<a href="skyrush.html" class="btn-primary" style="justify-content: center; font-size: 13px;">
+					Jogar Agora ➔
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-purple);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(157,78,221,0.2); border-color: var(--accent-purple);">Algoritmo de Afinidade</span>
-					<span class="badge">Educacional</span>
+			<!-- Projeto 3: DevGuard SAST Scanner -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(157, 78, 221, 0.2); color: #d8b4fe !important;">⚡ Versão Beta</span>
+						<span class="badge">Python & Rust</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">DevGuard SAST Scanner</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Ferramenta de análise estática de segurança que inspeciona repositórios Git em busca de segredos vazados, injeções SQL e vulnerabilidades OWASP Top 10.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">Teste Vocacional de Programação</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Sistema interativo com algoritmo de pontuação ponderada para orientar estudantes sobre linguagens de programação, carreiras em tecnologia e curiosidades históricas.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">Algoritmos</span>
-					<span class="badge" style="font-size: 11px;">Frontend Reativo</span>
-					<span class="badge" style="font-size: 11px;">12 Tech Stacks</span>
-				</div>
-				<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-					Fazer o Teste ➔
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Solicitar Demonstração
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-emerald);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(0,255,136,0.2); border-color: var(--accent-emerald);">Backend & Cross-Origin</span>
-					<span class="badge">Infraestrutura</span>
+			<!-- Projeto 4: OmniVoid Serverless Relay -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: #7dd3fc !important;">⚙️ Em Desenvolvimento</span>
+						<span class="badge">Node.js & WSS</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">OmniVoid Serverless Relay</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Hub de comunicação e roteamento WebSocket de baixíssima latência para sincronização de estados de jogos e eventos em tempo real.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">OmniVoid Multi-Thread Engine Core</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Arquitetura de headers de isolamento cruzado (COOP/COEP) via Service Worker transparente para suportar SharedArrayBuffer e multithreading em navegadores modernos sem necessidade de backend proprietário.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">COOP / COEP</span>
-					<span class="badge" style="font-size: 11px;">SharedArrayBuffer</span>
-					<span class="badge" style="font-size: 11px;">GitHub Pages CDN</span>
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Ver Arquitetura
+				</a>
+			</div>
+
+			<!-- Projeto 5: CyberSim Virtual Range -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(255, 214, 10, 0.2); color: #ffd60a !important;">🧪 Lab Educacional</span>
+						<span class="badge">Docker & Linux</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">CyberSim Virtual Range</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Ambiente interativo de simulação para alunos e profissionais treinarem defesa de redes, análise forense de logs e resposta a incidentes de segurança.
+					</p>
 				</div>
-				<a href="devchat.html" class="btn-secondary">
-					Discutir na Conversa Dev ➔
+				<a href="devchat.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Discutir no Fórum
+				</a>
+			</div>
+
+			<!-- Projeto 6: SmartCampus IoT Telemetry -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Concluído</span>
+						<span class="badge">IoT & MQTT</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">SmartCampus IoT Telemetry</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Painel de telemetria em tempo real para coleta e visualização de consumo de energia, ocupação de salas e métricas ambientais de sensores.
+					</p>
+				</div>
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Ver Detalhes
 				</a>
 			</div>
 		</div>
@@ -2113,50 +1972,45 @@ const projetosHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-// PAGE 7: DEVCHAT (WITH GUIGUY ADMIN)
+// ==========================================
+// 7. PÁGINA CONVERSA DEV (devchat.html)
+// ==========================================
 const devchatHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Conversa Dev & Comunidade | OmniVoid Studios</title>
+	<title>Conversa Dev • Fórum & Chat | OmniVoid Studios</title>
 	${COMMON_HEAD}
 	<style>
 		.chat-channel-btn {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
 			width: 100%;
+			text-align: left;
 			padding: 10px 14px;
 			border-radius: 8px;
 			background: transparent;
 			border: 1px solid transparent;
 			cursor: pointer;
-			text-align: left;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			font-size: 13px;
 			font-weight: 600;
 			transition: all 0.2s;
+			color: #ffffff !important;
 		}
-
 		.chat-channel-btn:hover {
-			background: rgba(255, 255, 255, 0.08);
-			border-color: rgba(255, 255, 255, 0.15);
+			background: rgba(255,255,255,0.06);
+			border-color: rgba(255,255,255,0.15);
 		}
-
 		.chat-channel-btn.active {
-			background: rgba(0, 240, 255, 0.15);
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
 			border-color: var(--accent-primary);
 		}
-
 		.message-bubble {
-			background: var(--bg-surface);
+			background: rgba(255,255,255,0.04);
 			border: 1px solid var(--border-color);
-			border-radius: 12px;
-			padding: 14px 18px;
-			margin-bottom: 14px;
-			transition: all 0.2s ease;
-		}
-
-		.message-bubble:hover {
-			border-color: var(--border-bright);
+			border-radius: 10px;
+			padding: 12px 16px;
+			margin-bottom: 10px;
 		}
 	</style>
 </head>
@@ -2164,35 +2018,35 @@ const devchatHtml = `<!DOCTYPE html>
 	${getNavbar('devchat')}
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-			<div>
-				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
-					<span>💬 Conversa Dev & Fórum Técnico</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Troque ideias sobre GameDev, Godot, programação, tire dúvidas e compartilhe estratégias com Guilherme Mendes e a comunidade</p>
-			</div>
+		<div style="text-align: center; margin-bottom: 24px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 8px;">
+				💬 COMUNIDADE DE DESENVOLVEDORES & ALUNOS
+			</span>
+			<h1 style="font-size: clamp(22px, 3.5vw, 32px);">
+				Conversa Dev • Networking & Dúvidas Técnicas
+			</h1>
 		</div>
 
-		<div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; min-height: 600px; margin-bottom: 40px;">
+		<div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; min-height: 580px;">
+			<!-- Canais Laterais -->
 			<div class="card" style="padding: 16px;">
-				<h3 style="font-size: 16px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-					📢 Canais de Discussão
-				</h3>
-				<div style="display: flex; flex-direction: column; gap: 6px;" id="channel-list">
+				<div style="font-size: 11px; font-weight: 800; opacity: 0.7; text-transform: uppercase; margin-bottom: 12px;">Canais da Comunidade</div>
+
+				<div style="display: flex; flex-direction: column; gap: 6px;">
 					<button class="chat-channel-btn active" onclick="switchChannel('geral')">
 						<span>💬 #geral</span>
-						<span class="badge" style="font-size: 10px;">Ativo</span>
+						<span class="badge" style="font-size: 10px;">Principal</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('zombies-survive')">
 						<span>🧟 #zombies-survive</span>
-						<span class="badge" style="font-size: 10px;">Godot</span>
+						<span class="badge" style="font-size: 10px;">Godot 4</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('skyrush')">
 						<span>☁️ #skyrush</span>
 						<span class="badge" style="font-size: 10px;">Arcade</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('dicas-programacao')">
-						<span>🧠 #dicas-programacao</span>
+						<span>🧠 #dicas-dev</span>
 						<span class="badge" style="font-size: 10px;">Quiz</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('showcase')">
@@ -2200,20 +2054,16 @@ const devchatHtml = `<!DOCTYPE html>
 						<span class="badge" style="font-size: 10px;">Showcase</span>
 					</button>
 				</div>
-
-				<div style="margin-top: 30px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-size: 12px; opacity: 0.85;">
-					💡 <b>Perfil Ativo:</b> Mensagens enviadas serão assinadas pelo nickname e avatar configurados.
-				</div>
 			</div>
 
+			<!-- Feed de Mensagens -->
 			<div class="card" style="display: flex; flex-direction: column; padding: 20px;">
 				<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
-					<h3 id="current-channel-title" style="font-size: 18px;">💬 #geral - Bate-papo Geral da Comunidade</h3>
-					<span class="badge" id="online-counter">🟢 Online</span>
+					<h3 id="current-channel-title" style="font-size: 17px;">💬 #geral - Bate-papo Geral da Comunidade</h3>
+					<span class="badge" id="online-counter">🟢 Comunidade Online</span>
 				</div>
 
-				<div id="messages-container" style="flex: 1; max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 16px;">
-				</div>
+				<div id="messages-container" style="flex: 1; max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 16px;"></div>
 
 				<form id="chat-form" onsubmit="handleSendMessage(event)" style="display: flex; gap: 10px; align-items: center;">
 					<input type="text" id="chat-input" class="input-field" placeholder="Escreva uma mensagem ou dúvida técnica..." style="margin: 0; flex: 1;" required>
@@ -2234,15 +2084,15 @@ const devchatHtml = `<!DOCTYPE html>
 
 		const initialMessages = {
 			'geral': [
-				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos ao portal OmniVoid Studios! O portal e os jogos foram atualizados com tela total e o novo teste vocacional de programação!' },
-				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'O novo layout e a resolução sem barras pretas no Zombies Survive ficaram perfeitos!' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos ao portal reestruturado da OmniVoid Studios! Agora temos simulador de orçamentos, hub centralizado de jogos e área Sobre Mim.' },
+				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'A calculadora de orçamento em tempo real ficou excelente!' }
 			],
 			'zombies-survive': [
 				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '17:15', text: 'Zombies Survive com mapa Polivalente de 10 andares rodando em resolução expandida e WebAssembly direto no navegador!' },
 				{ author: 'Valkyrie_X', avatar: '🧙‍♂️', turma: 'Ciência Comp.', time: '18:10', text: 'A pontuação de 99999 do GuiGuy tá insana! Vou tentar alcançar no 10º andar.' }
 			],
 			'skyrush': [
-				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '16:00', text: 'SkyRush Arcade com física de vôo supersônico ajustada e modo solo offline disponível.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '16:00', text: 'SkyRush Arcade com física de vôo supersônico, loadouts de armas e modo solo com caos automático!' }
 			],
 			'dicas-programacao': [
 				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '15:20', text: 'Dica do dia: no Godot 4, utilize viewport stretch mode como canvas_items e aspect como expand para telas responsivas sem letterboxing.' }
@@ -2275,7 +2125,7 @@ const devchatHtml = `<!DOCTYPE html>
 				'geral': '💬 #geral - Bate-papo Geral da Comunidade',
 				'zombies-survive': '🧟 #zombies-survive - Estratégias & Godot',
 				'skyrush': '☁️ #skyrush - Recordes & Arcade',
-				'dicas-programacao': '🧠 #dicas-programacao - Tutoriais & Quiz',
+				'dicas-programacao': '🧠 #dicas-dev - Tutoriais & Quiz',
 				'showcase': '🚀 #projetos-alunos - Mostre seus Projetos'
 			};
 			
@@ -2344,14 +2194,208 @@ const devchatHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// ==========================================
+// 8. GAME RUNNERS (zombiessurvive.html & skyrush.html)
+// ==========================================
+const zombiesHtml = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Zombies Survive | OmniVoid Studios</title>
+	${COMMON_HEAD}
+	<style>
+		body {
+			background: #000000;
+			overflow: hidden;
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+		#canvas-wrapper {
+			position: relative;
+			flex: 1;
+			width: 100vw;
+			height: calc(100vh - 65px);
+			background: #000000;
+			overflow: hidden;
+		}
+		#canvas {
+			display: block;
+			width: 100% !important;
+			height: 100% !important;
+			position: absolute;
+			top: 0;
+			left: 0;
+			outline: none;
+		}
+		#status-overlay {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: rgba(16, 16, 24, 0.95);
+			border: 1.5px solid var(--accent-primary);
+			border-radius: 16px;
+			padding: 30px;
+			text-align: center;
+			z-index: 100;
+			max-width: 440px;
+			box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+		}
+		.spinner {
+			width: 40px;
+			height: 40px;
+			border: 4px solid rgba(255,255,255,0.1);
+			border-top-color: var(--accent-primary);
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+			margin: 0 auto 16px auto;
+		}
+		@keyframes spin {
+			to { transform: rotate(360deg); }
+		}
+	</style>
+</head>
+<body>
+	${getNavbar('jogos')}
+
+	<div id="canvas-wrapper">
+		<canvas id="canvas"></canvas>
+
+		<div id="status-overlay">
+			<div class="spinner"></div>
+			<h3 style="font-size: 18px; margin-bottom: 8px;">Carregando Zombies Survive...</h3>
+			<p id="status-text" style="font-size: 12.5px; opacity: 0.8;">Iniciando WebAssembly e carregando o mapa Polivalente...</p>
+		</div>
+	</div>
+
+	${COMMON_AUTH_MODALS}
+	${COMMON_AUTH_JS}
+
+	<script src="index.js"></script>
+	<script>
+		const GODOT_CONFIG = {
+			"args": [],
+			"canvasResizePolicy": 2,
+			"ensureCrossOriginIsolationHeaders": true,
+			"executable": "index",
+			"experimentalVK": false,
+			"fileSizes": { "index.pck": 187777864, "index.wasm": 39514754 },
+			"focusCanvas": true,
+			"gdextensionLibs": []
+		};
+
+		const engine = new Engine(GODOT_CONFIG);
+
+		(function() {
+			const statusOverlay = document.getElementById('status-overlay');
+			const statusText = document.getElementById('status-text');
+
+			async function loadPckParts() {
+				const parts = ['index.pck.part0', 'index.pck.part1', 'index.pck.part2', 'index.pck.part3'];
+				const totalBytes = 187777864;
+				let loadedBytes = 0;
+				const chunks = [];
+
+				for (let i = 0; i < parts.length; i++) {
+					statusText.innerText = \`Baixando recursos (\${i + 1}/\${parts.length})...\`;
+					const resp = await fetch(parts[i]);
+					if (!resp.ok) throw new Error(\`Erro ao baixar \${parts[i]}\`);
+					const reader = resp.body.getReader();
+					while (true) {
+						const { done, value } = await reader.read();
+						if (done) break;
+						chunks.push(value);
+						loadedBytes += value.length;
+						const pct = Math.min(100, Math.round((loadedBytes / totalBytes) * 100));
+						statusText.innerText = \`Carregando texturas e áudio: \${pct}%\`;
+					}
+				}
+
+				const combined = new Uint8Array(loadedBytes);
+				let offset = 0;
+				for (const chunk of chunks) {
+					combined.set(chunk, offset);
+					offset += chunk.length;
+				}
+				return combined.buffer;
+			}
+
+			loadPckParts().then(pckBuffer => {
+				statusText.innerText = 'Inicializando Godot Engine 4.3...';
+				return engine.init().then(() => {
+					engine.copyToFS('/index.pck', pckBuffer);
+					return engine.start({ args: ['--main-pack', '/index.pck'] });
+				});
+			}).then(() => {
+				if (statusOverlay) statusOverlay.style.display = 'none';
+			}).catch(err => {
+				console.error(err);
+				statusText.innerText = 'Erro ao inicializar o jogo: ' + err.message;
+			});
+		})();
+	</script>
+</body>
+</html>`;
+
+const skyrushHtml = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>SkyRush Arcade | OmniVoid Studios</title>
+	${COMMON_HEAD}
+	<style>
+		body {
+			background: #000000;
+			overflow: hidden;
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+		#game-frame-container {
+			flex: 1;
+			width: 100vw;
+			height: calc(100vh - 65px);
+			border: none;
+			background: #000000;
+		}
+	</style>
+</head>
+<body>
+	${getNavbar('jogos')}
+
+	<iframe id="game-frame-container" src="skyrush/index.html" allow="autoplay; fullscreen"></iframe>
+
+	${COMMON_AUTH_MODALS}
+	${COMMON_AUTH_JS}
+</body>
+</html>`;
+
+const fateccaosHtml = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta http-equiv="refresh" content="0; URL='zombiessurvive.html'" />
+	<title>Redirecionando para Zombies Survive...</title>
+</head>
+<body>
+	<p>Redirecionando para <a href="zombiessurvive.html">Zombies Survive</a>...</p>
+</body>
+</html>`;
+
+// ==========================================
+// GRAVAÇÃO DE ARQUIVOS NOS DESTINOS
+// ==========================================
 const pages = {
 	'index.html': indexHtml,
-	'zombiessurvive.html': zombiesHtml,
-	'fateccaos.html': fateccaosHtml,
-	'skyrush.html': skyrushHtml,
+	'orcamento.html': orcamentoHtml,
+	'jogos.html': jogosHtml,
 	'quiz.html': quizHtml,
 	'projetos.html': projetosHtml,
-	'devchat.html': devchatHtml
+	'devchat.html': devchatHtml,
+	'sobre.html': sobreHtml,
+	'zombiessurvive.html': zombiesHtml,
+	'skyrush.html': skyrushHtml,
+	'fateccaos.html': fateccaosHtml
 };
 
 for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
@@ -2363,4 +2407,4 @@ for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 	}
 }
 
-console.log('\nAll 7 pages built and synchronized in docs/ and public/!');
+console.log('\nAll pages successfully built and synchronized in docs/ and public/!');

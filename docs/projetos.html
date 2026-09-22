@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Projetos & Portfólio | Guilherme Mendes</title>
+	<title>Projetos & Portfólio | OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +104,7 @@
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -112,15 +112,16 @@
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -292,7 +293,7 @@
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -432,7 +433,7 @@
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -456,12 +457,13 @@
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link ">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link ">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link ">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link ">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link ">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link active">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link ">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -486,95 +488,118 @@
 	
 
 	<main class="container">
-		<section style="margin: 30px 0 40px 0;">
-			<div class="badge" style="background: rgba(0,240,255,0.15); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 12px;">
-				🚀 Portfólio de Engenharia, Games & Segurança • Guilherme Mendes
-			</div>
-			<h1 style="font-size: 38px; margin-bottom: 14px;">Projetos & Criações Técnicas</h1>
-			<p style="font-size: 16px; opacity: 0.95; max-width: 880px; line-height: 1.7; margin-bottom: 18px;">
-				Sempre busquei criar projetos cada vez mais desafiadores, unindo <b>Desenvolvimento de Software</b>, <b>Educação Tecnológica</b> e <b>Segurança da Informação</b>. Cada projeto abaixo reflete a busca contínua por inovação, desempenho extremo e robustez técnica.
+		<div style="text-align: center; margin-bottom: 35px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 10px;">
+				🚀 PORTFÓLIO TÉCNICO & INOVAÇÃO
+			</span>
+			<h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 10px;">
+				Projetos Desenvolvidos & Em Produção
+			</h1>
+			<p style="max-width: 760px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Conheça alguns dos softwares, engines, simuladores e plataformas construídos com as melhores práticas de engenharia de software e cibersegurança.
 			</p>
-			<p style="font-size: 14px; color: var(--accent-primary) !important;">
-				❤️ Dedicado com carinho à minha parceira e incentivadora <b>Rita</b>.
-			</p>
-		</section>
+		</div>
 
-		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 28px; margin-bottom: 60px;">
-			<div class="card" style="border-top: 4px solid var(--accent-danger);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger);">Godot 4.3 Web</span>
-					<span class="badge">Ativo & Online</span>
+		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 35px;">
+			<!-- Projeto 1: Zombies Survive -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Live em Produção</span>
+						<span class="badge">Godot 4 Wasm</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px; color: #ff0055 !important;">Zombies Survive</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Jogo de tiro e sobrevivência zumbi com mapa Polivalente de 10 andares. Gráficos expandidos sem tarjas pretas e WebAssembly nativo rodando a 60 FPS.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">Zombies Survive (v2.0)</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Jogo de sobrevivência em ondas com mapa polivalente de 10 andares. Implementa portas desbloqueáveis, compra de armamento, IA de pathfinding adaptativa e renderização WebAssembly multichunk ultra rápida.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">GDScript</span>
-					<span class="badge" style="font-size: 11px;">WebAssembly</span>
-					<span class="badge" style="font-size: 11px;">WebGL 2.0</span>
-					<span class="badge" style="font-size: 11px;">AudioWorklet</span>
-				</div>
-				<a href="zombiessurvive.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055, #c90044);">
-					Abrir Jogo ➔
+				<a href="zombiessurvive.html" class="btn-primary" style="justify-content: center; font-size: 13px;">
+					Jogar Agora ➔
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-primary);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(0,240,255,0.2); border-color: var(--accent-primary);">HTML5 Canvas & Netcode</span>
-					<span class="badge">Online & Solo</span>
+			<!-- Projeto 2: SkyRush Arcade -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Live em Produção</span>
+						<span class="badge">Realtime Physics</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px; color: #00f0ff !important;">SkyRush Arcade</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Engine física vetorial de escalada vertical com loadouts de armas, mutações climáticas dinâmicas, anomalias cósmicas e ranking sincronizado online.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">SkyRush Supersonic Arcade</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Arcade espacial em 2D com física de impulso, coleta de orbs de nitro, ranking em tempo real e modo offline instantâneo com simulação client-side.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">JavaScript ES6</span>
-					<span class="badge" style="font-size: 11px;">HTML5 Canvas</span>
-					<span class="badge" style="font-size: 11px;">WebSockets</span>
-					<span class="badge" style="font-size: 11px;">LocalStorage API</span>
-				</div>
-				<a href="skyrush.html" class="btn-primary">
-					Decolar no SkyRush ➔
+				<a href="skyrush.html" class="btn-primary" style="justify-content: center; font-size: 13px;">
+					Jogar Agora ➔
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-purple);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(157,78,221,0.2); border-color: var(--accent-purple);">Algoritmo de Afinidade</span>
-					<span class="badge">Educacional</span>
+			<!-- Projeto 3: DevGuard SAST Scanner -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(157, 78, 221, 0.2); color: #d8b4fe !important;">⚡ Versão Beta</span>
+						<span class="badge">Python & Rust</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">DevGuard SAST Scanner</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Ferramenta de análise estática de segurança que inspeciona repositórios Git em busca de segredos vazados, injeções SQL e vulnerabilidades OWASP Top 10.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">Teste Vocacional de Programação</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Sistema interativo com algoritmo de pontuação ponderada para orientar estudantes sobre linguagens de programação, carreiras em tecnologia e curiosidades históricas.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">Algoritmos</span>
-					<span class="badge" style="font-size: 11px;">Frontend Reativo</span>
-					<span class="badge" style="font-size: 11px;">12 Tech Stacks</span>
-				</div>
-				<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
-					Fazer o Teste ➔
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Solicitar Demonstração
 				</a>
 			</div>
 
-			<div class="card" style="border-top: 4px solid var(--accent-emerald);">
-				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-					<span class="badge" style="background: rgba(0,255,136,0.2); border-color: var(--accent-emerald);">Backend & Cross-Origin</span>
-					<span class="badge">Infraestrutura</span>
+			<!-- Projeto 4: OmniVoid Serverless Relay -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: #7dd3fc !important;">⚙️ Em Desenvolvimento</span>
+						<span class="badge">Node.js & WSS</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">OmniVoid Serverless Relay</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Hub de comunicação e roteamento WebSocket de baixíssima latência para sincronização de estados de jogos e eventos em tempo real.
+					</p>
 				</div>
-				<h3 style="font-size: 22px; margin-bottom: 10px;">OmniVoid Multi-Thread Engine Core</h3>
-				<p style="font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 18px;">
-					Arquitetura de headers de isolamento cruzado (COOP/COEP) via Service Worker transparente para suportar SharedArrayBuffer e multithreading em navegadores modernos sem necessidade de backend proprietário.
-				</p>
-				<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-					<span class="badge" style="font-size: 11px;">COOP / COEP</span>
-					<span class="badge" style="font-size: 11px;">SharedArrayBuffer</span>
-					<span class="badge" style="font-size: 11px;">GitHub Pages CDN</span>
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Ver Arquitetura
+				</a>
+			</div>
+
+			<!-- Projeto 5: CyberSim Virtual Range -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(255, 214, 10, 0.2); color: #ffd60a !important;">🧪 Lab Educacional</span>
+						<span class="badge">Docker & Linux</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">CyberSim Virtual Range</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Ambiente interativo de simulação para alunos e profissionais treinarem defesa de redes, análise forense de logs e resposta a incidentes de segurança.
+					</p>
 				</div>
-				<a href="devchat.html" class="btn-secondary">
-					Discutir na Conversa Dev ➔
+				<a href="devchat.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Discutir no Fórum
+				</a>
+			</div>
+
+			<!-- Projeto 6: SmartCampus IoT Telemetry -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 255, 136, 0.2); color: #00ff88 !important;">🟢 Concluído</span>
+						<span class="badge">IoT & MQTT</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px;">SmartCampus IoT Telemetry</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Painel de telemetria em tempo real para coleta e visualização de consumo de energia, ocupação de salas e métricas ambientais de sensores.
+					</p>
+				</div>
+				<a href="orcamento.html" class="btn-secondary" style="justify-content: center; font-size: 13px;">
+					Ver Detalhes
 				</a>
 			</div>
 		</div>
@@ -592,7 +617,7 @@
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -606,20 +631,20 @@
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -636,7 +661,7 @@
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -666,7 +691,7 @@
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -681,20 +706,23 @@
 		</div>
 
 	
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">🏠 Início</a>
+			<a href="orcamento.html">💼 Serviços & Orçamento</a>
+			<a href="jogos.html">🎮 Hub de Jogos</a>
+			<a href="quiz.html">🧠 Teste Dev</a>
+			<a href="projetos.html">🚀 Projetos</a>
+			<a href="devchat.html">💬 Conversa Dev</a>
+			<a href="sobre.html">👤 Sobre Mim & Dedicatória</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab & Cibersegurança de Alta Performance
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> com dedicação e carinho para <b>Rita</b> • FATEC 2026
+		</p>
+	</footer>
 
 	
 <script>
@@ -755,135 +783,136 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Bem-vindo de volta, ${user.nickname}!`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Conta criada com sucesso! Olá, ${user.nickname}!`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 

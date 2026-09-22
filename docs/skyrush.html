@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>SkyRush | OmniVoid Studios</title>
+	<title>SkyRush Arcade | OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +104,7 @@
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -112,15 +112,16 @@
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -292,7 +293,7 @@
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -432,7 +433,7 @@
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -448,24 +449,20 @@
 	</style>
 
 	<style>
-		#skyrush-frame-wrap {
-			position: relative;
-			width: 100%;
-			height: 82vh;
-			min-height: 540px;
-			margin: 0 auto 30px auto;
+		body {
 			background: #000000;
-			border-radius: 14px;
 			overflow: hidden;
-			border: 2px solid var(--border-color);
-			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 240, 255, 0.2);
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
 		}
-
-		#skyrush-iframe {
-			width: 100%;
-			height: 100%;
+		#game-frame-container {
+			flex: 1;
+			width: 100vw;
+			height: calc(100vh - 65px);
 			border: none;
-			display: block;
+			background: #000000;
 		}
 	</style>
 </head>
@@ -477,12 +474,13 @@
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link ">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link active">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link ">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link active">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link ">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link ">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -506,71 +504,7 @@
 		</nav>
 	
 
-	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
-			<div>
-				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
-					<span>☁️ SkyRush Arcade</span>
-					<span class="badge" style="background: rgba(0,240,255,0.2); border-color: var(--accent-primary); font-size: 12px;">Solo & Multiplayer</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Voe em alta velocidade, desvie de tempestades cósmicas e dispute recordes</p>
-			</div>
-			<div style="display: flex; gap: 10px;">
-				<button class="btn-primary" onclick="toggleSkyRushFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia</button>
-				<button class="btn-secondary" onclick="document.getElementById('skyrush-iframe').src = document.getElementById('skyrush-iframe').src">🔄 Recarregar</button>
-			</div>
-		</div>
-
-		<div id="skyrush-frame-wrap">
-			<iframe id="skyrush-iframe" src="skyrush/index.html?v=12" allow="autoplay; fullscreen; gamepad"></iframe>
-		</div>
-
-		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🏆 Hall da Fama SkyRush</h3>
-				<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-					<thead>
-						<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
-							<th style="padding: 8px 6px;">#</th>
-							<th style="padding: 8px 6px;">Piloto</th>
-							<th style="padding: 8px 6px;">Altitude</th>
-							<th style="padding: 8px 6px;">Pontos</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
-							<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
-							<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-							<td style="padding: 10px 6px; font-weight: 700;">99.999m</td>
-							<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
-						</tr>
-						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 8px 6px;">🥈 2º</td>
-							<td style="padding: 8px 6px; font-weight: 700;">SkyPhantom 🥷</td>
-							<td style="padding: 8px 6px;">15.100m</td>
-							<td style="padding: 8px 6px; font-weight: 700;">48.200</td>
-						</tr>
-						<tr style="border-bottom: 1px solid var(--border-color);">
-							<td style="padding: 8px 6px;">🥉 3º</td>
-							<td style="padding: 8px 6px; font-weight: 700;">TurboDev 🤖</td>
-							<td style="padding: 8px 6px;">12.850m</td>
-							<td style="padding: 8px 6px; font-weight: 700;">34.500</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🎮 Instruções de Voo</h3>
-				<ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; opacity: 0.9;">
-					<li>⚡ <b>Setas ou WASD:</b> Manobrar e inclinar aeronave no espaço aéreo.</li>
-					<li>🔋 <b>Orbs Azuis:</b> Recarregam o propulsor de turbo (Nitro Boost).</li>
-					<li>🔥 <b>Espaço ou Shift:</b> Ativar Super Nitro para ultrapassar barreiras.</li>
-					<li>⭐ <b>Modo Solo Offline:</b> Jogue instantaneamente no navegador sem necessidade de servidor.</li>
-				</ul>
-			</div>
-		</div>
-	</main>
+	<iframe id="game-frame-container" src="skyrush/index.html" allow="autoplay; fullscreen"></iframe>
 
 	
 		<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
@@ -584,7 +518,7 @@
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -598,20 +532,20 @@
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -628,7 +562,7 @@
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -658,7 +592,7 @@
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -671,22 +605,6 @@
 				</div>
 			</div>
 		</div>
-
-	
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
 
 	
 <script>
@@ -747,148 +665,138 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Bem-vindo de volta, ${user.nickname}!`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Conta criada com sucesso! Olá, ${user.nickname}!`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 
-
-	<script>
-		function toggleSkyRushFullscreen() {
-			const elem = document.getElementById("skyrush-frame-wrap");
-			if (!document.fullscreenElement) {
-				elem.requestFullscreen().catch(err => alert("Erro ao entrar em tela cheia: " + err.message));
-			} else {
-				document.exitFullscreen();
-			}
-		}
-	</script>
 </body>
 </html>

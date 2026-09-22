@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Teste de Programação & Vocacional Tech | OmniVoid Studios</title>
+	<title>Teste Dev & Orientação Vocacional | OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +104,7 @@
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -112,15 +112,16 @@
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -292,7 +293,7 @@
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -432,7 +433,7 @@
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -447,62 +448,6 @@
 		}
 	</style>
 
-	<style>
-		.quiz-option {
-			background: var(--bg-card);
-			border: 1px solid var(--border-color);
-			border-radius: 12px;
-			padding: 16px 20px;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			gap: 16px;
-			transition: all 0.25s ease;
-			margin-bottom: 12px;
-		}
-
-		.quiz-option:hover {
-			border-color: var(--accent-primary);
-			background: rgba(0, 240, 255, 0.08);
-			transform: translateX(4px);
-		}
-
-		.quiz-option.selected {
-			border-color: var(--accent-primary);
-			background: rgba(0, 240, 255, 0.18);
-			box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-		}
-
-		.lang-card {
-			background: var(--bg-card);
-			border: 1px solid var(--border-color);
-			border-radius: 14px;
-			padding: 24px;
-			transition: all 0.25s ease;
-		}
-
-		.lang-card:hover {
-			border-color: var(--border-bright);
-			transform: translateY(-3px);
-		}
-
-		.code-box {
-			background: #0d0d14;
-			border: 1px solid rgba(255, 255, 255, 0.15);
-			border-radius: 8px;
-			padding: 14px;
-			font-family: var(--font-code);
-			font-size: 13px;
-			overflow-x: auto;
-			margin: 12px 0;
-			color: #00f0ff !important;
-		}
-
-		.code-box * {
-			font-family: var(--font-code);
-			color: #00f0ff !important;
-		}
-	</style>
 </head>
 <body>
 	
@@ -512,12 +457,13 @@
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link ">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link ">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link active">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link ">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link active">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link ">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -541,173 +487,81 @@
 		</nav>
 	
 
-	<main class="container">
-		<section style="text-align: center; margin: 30px 0 40px 0;">
-			<span class="badge" style="background: rgba(157,78,221,0.2); border-color: var(--accent-purple); font-size: 13px; margin-bottom: 12px;">
-				🧠 Teste Vocacional de Desenvolvimento
+	<main class="container" style="max-width: 1000px;">
+		<div style="text-align: center; margin-bottom: 30px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 10px;">
+				🧠 ORIENTAÇÃO VOCACIONAL & QUIZ TECNOLÓGICO
 			</span>
-			<h1 style="font-size: 38px; margin-bottom: 12px;">
-				Qual Linguagem de Programação Combina com Você?
+			<h1 style="font-size: clamp(24px, 3.5vw, 36px); margin-bottom: 10px;">
+				Descubra sua Linguagem de Programação Ideal
 			</h1>
-			<p style="font-size: 16px; max-width: 750px; margin: 0 auto; opacity: 0.9; line-height: 1.6;">
-				Responda ao questionário interativo para mapear seus interesses (Games, Inteligência Artificial, Web, Mobile, Sistemas, Segurança ou Robótica) e descubra sua linguagem ideal com curiosidades e guias de início!
+			<p style="max-width: 720px; margin: 0 auto; font-size: 15px; opacity: 0.85; line-height: 1.5;">
+				Responda ao teste baseado nos seus interesses e descubra a linguagem que mais combina com você, acompanhada de curiosidades fascinantes de cada ecossistema.
 			</p>
-		</section>
+		</div>
 
-		<section id="quiz-section" class="card" style="max-width: 820px; margin: 0 auto 60px auto; border-top: 4px solid var(--accent-primary);">
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
-				<span id="quiz-question-num" style="font-weight: 700; font-size: 14px; color: var(--accent-primary) !important;">Pergunta 1 de 8</span>
-				<div style="width: 200px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-					<div id="quiz-bar" style="height: 100%; width: 12.5%; background: linear-gradient(90deg, #00f0ff, #9d4edd);"></div>
-				</div>
+		<!-- Quiz Container Card -->
+		<div id="quiz-box" class="card" style="padding: 32px; margin-bottom: 30px;">
+			<div id="quiz-progress-bar" style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-bottom: 24px; overflow: hidden;">
+				<div id="quiz-progress-fill" style="width: 16%; height: 100%; background: linear-gradient(90deg, #00f0ff, #9d4edd); transition: width 0.3s ease;"></div>
 			</div>
 
-			<h2 id="quiz-question-title" style="font-size: 22px; margin-bottom: 24px; min-height: 56px;">
-				Carregando pergunta...
-			</h2>
-
-			<div id="quiz-options-list"></div>
-
-			<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px;">
-				<button id="btn-quiz-prev" class="btn-secondary" onclick="prevQuizQuestion()" style="visibility: hidden;">
-					⬅ Anterior
-				</button>
-				<button id="btn-quiz-next" class="btn-primary" onclick="nextQuizQuestion()" disabled style="opacity: 0.5;">
-					Próxima ➔
-				</button>
+			<div id="quiz-question-container">
+				<!-- Injetado dinamicamente via JS -->
 			</div>
-		</section>
+		</div>
 
-		<section id="result-section" style="display: none; max-width: 900px; margin: 0 auto 60px auto;">
-			<div class="card" style="border-top: 5px solid var(--accent-primary); margin-bottom: 30px; text-align: center; padding: 40px 30px;">
-				<div style="font-size: 64px; margin-bottom: 10px;" id="res-icon">🐍</div>
-				<span class="badge" style="background: rgba(0, 240, 255, 0.2); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 14px;">
-					Match de Afinidade: <b id="res-match-pct" style="color: var(--accent-gold) !important;">98%</b>
-				</span>
-				<h2 id="res-lang-name" style="font-size: 36px; margin-bottom: 14px;">Python</h2>
-				<p id="res-lang-tagline" style="font-size: 16px; max-width: 650px; margin: 0 auto 24px auto; opacity: 0.9; line-height: 1.6;">
-					A linguagem perfeita para quem busca clareza, poder analítico, Inteligência Artificial e automação rápida.
-				</p>
+		<!-- Resultado do Quiz (Oculto inicialmente) -->
+		<div id="quiz-result-box" class="card" style="display: none; padding: 36px; border-color: var(--accent-primary); margin-bottom: 30px;">
+			<!-- Injetado dinamicamente via JS -->
+		</div>
 
-				<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-					<button class="btn-primary" onclick="restartQuiz()">
-						🔄 Refazer Teste
-					</button>
-					<button class="btn-secondary" onclick="document.getElementById('encyclopedia-section').scrollIntoView({ behavior: 'smooth' })">
-						📚 Ver Todas as 12 Linguagens
-					</button>
-				</div>
-			</div>
+		<!-- Catálogo com Curiosidades das 12 Linguagens -->
+		<section class="card" style="padding: 28px;">
+			<h2 style="font-size: 20px; margin-bottom: 8px;">📚 Curiosidades de 12 Grandes Linguagens de Programação</h2>
+			<p style="font-size: 13.5px; opacity: 0.8; margin-bottom: 24px;">Fatos históricos, arquiteturas e curiosidades para expandir seu repertório técnico.</p>
 
-			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px;">
-				<div class="card">
-					<h3 style="font-size: 18px; margin-bottom: 14px;">✨ Por que é perfeita para você?</h3>
-					<p id="res-why-match" style="font-size: 14px; line-height: 1.6; opacity: 0.9;">
-						Com base nas suas escolhas por inteligência artificial e facilidade de prototipagem, Python oferece um dos maiores ecossistemas do planeta.
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #ffd60a !important; font-size: 15px;">🐍 Python</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						O nome não veio da serpente, mas sim do grupo de humor britânico <i>Monty Python</i>! Criada por Guido van Rossum em 1991 como projeto de férias de Natal.
 					</p>
-					<h4 style="font-size: 14px; margin-top: 18px; margin-bottom: 8px;">🔥 Projetos Famosos Feitos com Ela:</h4>
-					<div id="res-famous-projects" style="font-size: 13px; opacity: 0.9; line-height: 1.5;"></div>
 				</div>
 
-				<div class="card">
-					<h3 style="font-size: 18px; margin-bottom: 14px;">💡 Curiosidades Incríveis</h3>
-					<p id="res-trivia" style="font-size: 14px; line-height: 1.6; opacity: 0.9; margin-bottom: 14px;"></p>
-					
-					<h4 style="font-size: 14px; margin-bottom: 6px;">⚡ Código de Exemplo:</h4>
-					<div id="res-code-snippet" class="code-box"></div>
-				</div>
-			</div>
-		</section>
-
-		<section id="encyclopedia-section" style="margin-top: 40px;">
-			<div style="text-align: center; margin-bottom: 30px;">
-				<h2 style="font-size: 28px; margin-bottom: 10px;">📚 Enciclopédia & Curiosidades das Linguagens</h2>
-				<p style="font-size: 14px; opacity: 0.85;">Explore o histórico, casos de uso e fatos marcantes das principais tecnologias mundiais</p>
-			</div>
-
-			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px;">
-				<div class="lang-card" style="border-top: 3px solid #00f0ff;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🕹️ GDScript</h3>
-						<span class="badge">Godot Engine</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Linguagem de altíssimo desempenho projetada especificamente para criação de jogos no motor Godot. Sintaxe intuitiva similar ao Python.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #00f0ff !important; font-size: 15px;">🌐 JavaScript</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Foi criada em apenas <b>10 dias</b> por Brendan Eich na Netscape em 1995. Hoje roda desde o navegador até foguetes espaciais e servidores com Node.js.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> Criada pelo argentino Juan Linietsky após testes frustrados integrando Lua e Python no motor Godot. Otimizada para garbage collector de baixo custo!
-					</div>
-					<div class="code-box">func _process(delta):<br>&nbsp;&nbsp;position += velocity * delta</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #ffd60a;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🐍 Python</h3>
-						<span class="badge">IA & Ciência de Dados</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Líder absoluta em Inteligência Artificial, Machine Learning, automação e back-end rápido.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #ff0055 !important; font-size: 15px;">🦀 Rust</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Criada por Graydon Hoare após o elevador do seu prédio quebrar constantemente por bugs de memória em C++. Rust garante segurança de memória sem garbage collector!
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O criador Guido van Rossum batizou a linguagem em homenagem ao grupo de comédia britânico Monty Python, e não à cobra!
-					</div>
-					<div class="code-box">import torch<br>model = torch.nn.Linear(10, 2)<br>print("AI Model Ready!")</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #0088ff;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🌐 TypeScript / JS</h3>
-						<span class="badge">Web & Full-Stack</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						A espinha dorsal da web mundial. Roda em qualquer navegador do mundo e também em servidores ultra-rápidos com Node.js/Bun.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #9d4edd !important; font-size: 15px;">🎮 GDScript & C#</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						GDScript foi desenhada sob medida para a Godot Engine, otimizada para compilação instantânea e manipulação fluida de nós e vetores matemáticos.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O JavaScript original foi criado por Brendan Eich em apenas 10 dias em maio de 1995 para a Netscape!
-					</div>
-					<div class="code-box">const player: Player = { name: 'Dev', score: 100 };<br>console.log(`Score: ${player.score}`);</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #9d4edd;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">⚡ C# (.NET)</h3>
-						<span class="badge">Unity, Godot & Enterprise</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Poderosa, tipada e extremamente elegante. Usada em jogos de grande escala na Unity e Godot, e em bancos corporativos globais.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #00ff88 !important; font-size: 15px;">⚡ Go (Golang)</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						Desenvolvida no Google por lendas da computação (Ken Thompson e Rob Pike) enquanto esperavam compilações gigantescas de C++ terminarem.
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O símbolo "#" no nome foi inspirado no sustenido musical, indicando que é uma nota acima de C++!
-					</div>
-					<div class="code-box">public record Player(string Name, int Level);<br>var hero = new Player("Arthur", 99);</div>
 				</div>
 
-				<div class="lang-card" style="border-top: 3px solid #ff0055;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🏎️ C++</h3>
-						<span class="badge">AAA Games & Engines</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						Desempenho bruto no metal. O motor do Unreal Engine, Godot C++, sistemas aeroespaciais da NASA e navegadores web são forjados em C++.
+				<div style="background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+					<b style="color: #38bdf8 !important; font-size: 15px;">⚙️ C / C++</b>
+					<p style="font-size: 12.5px; line-height: 1.5; opacity: 0.85; margin-top: 6px;">
+						A espinha dorsal de quase todos os sistemas operacionais (Windows, Linux, macOS), navegadores e engines de jogos AAA (Unreal Engine).
 					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> Originalmente chamada de "C with Classes" por Bjarne Stroustrup em 1979 no Bell Labs.
-					</div>
-					<div class="code-box">std::vector&lt;int&gt; scores = {100, 250, 400};<br>for(auto s : scores) std::cout &lt;&lt; s &lt;&lt; "\n";</div>
-				</div>
-
-				<div class="lang-card" style="border-top: 3px solid #ff7700;">
-					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-						<h3 style="font-size: 20px;">🦀 Rust</h3>
-						<span class="badge">Segurança & Alta Performance</span>
-					</div>
-					<p style="font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 12px;">
-						A linguagem mais amada pelos desenvolvedores no mundo por 8 anos consecutivos. Concorrência segura e zero memory leaks.
-					</p>
-					<div style="font-size: 12px; opacity: 0.9; margin-bottom: 10px;">
-						<b>Curiosidade:</b> O criador Graydon Hoare começou o projeto após o elevador do seu prédio quebrar repetidamente por falhas de memória no software em C++!
-					</div>
-					<div class="code-box">fn main() {<br>&nbsp;&nbsp;println!("Zero-cost abstractions & Safety!");<br>}</div>
 				</div>
 			</div>
 		</section>
@@ -725,7 +579,7 @@
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -739,20 +593,20 @@
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -769,7 +623,7 @@
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -799,7 +653,7 @@
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -814,20 +668,23 @@
 		</div>
 
 	
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">🏠 Início</a>
+			<a href="orcamento.html">💼 Serviços & Orçamento</a>
+			<a href="jogos.html">🎮 Hub de Jogos</a>
+			<a href="quiz.html">🧠 Teste Dev</a>
+			<a href="projetos.html">🚀 Projetos</a>
+			<a href="devchat.html">💬 Conversa Dev</a>
+			<a href="sobre.html">👤 Sobre Mim & Dedicatória</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab & Cibersegurança de Alta Performance
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> com dedicação e carinho para <b>Rita</b> • FATEC 2026
+		</p>
+	</footer>
 
 	
 <script>
@@ -888,388 +745,255 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Bem-vindo de volta, ${user.nickname}!`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Conta criada com sucesso! Olá, ${user.nickname}!`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 
 
 	<script>
-		const quizQuestions = [
+		const quizData = [
 			{
-				title: "1. O que mais te empolga quando você pensa em criar com tecnologia?",
+				q: "1. O que mais te desperta interesse ao pensar em tecnologia?",
 				options: [
-					{ text: "🎮 Criar jogos eletrizantes com física, gráficos 2D/3D e combates intensos", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🤖 Treinar Inteligências Artificiais, chatbots inteligentes e visão computacional", tags: ["python"] },
-					{ text: "🌐 Construir sites dinâmicos, portais web interativos e aplicativos globais", tags: ["typescript", "javascript"] },
-					{ text: "🛡️ Explorar cibersegurança, criptografia, redes e engenharia de baixo nível", tags: ["rust", "cpp", "c", "python"] }
+					{ text: "Criar jogos 2D/3D envolventes com física e jogabilidade épica", lang: "GDScript / C#" },
+					{ text: "Construir sites, portais visuais dinâmicos e apps modernos", lang: "JavaScript / TypeScript" },
+					{ text: "Inteligência Artificial, Data Science e automações inteligentes", lang: "Python" },
+					{ text: "Segurança cibernética, sistemas de baixo nível e máxima velocidade", lang: "Rust / C++" }
 				]
 			},
 			{
-				title: "2. Como você prefere lidar com regras de código e erros?",
+				q: "2. Como você prefere que seu código seja estruturado?",
 				options: [
-					{ text: "🚀 Quero rapidez máxima! Escrever poucas linhas e ver o resultado na tela imediatamente", tags: ["python", "gdscript", "javascript"] },
-					{ text: "🛡️ Quero rigor total! Se houver qualquer erro de tipo ou memória, o compilador deve me avisar antes de rodar", tags: ["rust", "typescript", "csharp", "cpp"] },
-					{ text: "🏎️ Quero controle absoluto sobre cada byte de memória RAM e ciclo de clock do processador", tags: ["cpp", "c", "rust"] },
-					{ text: "📱 Quero criar interfaces elegantes para smartphones Android e iOS", tags: ["kotlin", "swift", "typescript"] }
+					{ text: "Sintaxe super limpa e legível que parece inglês falado", lang: "Python" },
+					{ text: "Orientação a objetos robusta com tipagem forte e segura", lang: "C# / Java" },
+					{ text: "Flexibilidade total para prototipar rápido e ver na tela", lang: "JavaScript" },
+					{ text: "Controle estrito de memória e compilador que previne falhas", lang: "Rust" }
 				]
 			},
 			{
-				title: "3. Se você fosse chamado para um projeto épico amanhã, qual escolheria?",
+				q: "3. Qual desafio de engenharia parece mais empolgante para você?",
 				options: [
-					{ text: "🧟 Desenvolver a sequência do Zombies Survive com novos chefes e multiplayer", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🧠 Criar uma IA neural que aprende a jogar videogames sozinha por reforço", tags: ["python"] },
-					{ text: "🌐 Lançar uma plataforma web moderna com milhões de acessos simultâneos", tags: ["typescript", "go", "rust"] },
-					{ text: "🚀 Escrever o software de telemetria e navegação de um satélite espacial", tags: ["c", "cpp", "rust"] }
+					{ text: "Otimizar uma renderização de gráficos a 60 FPS", lang: "C++ / GDScript" },
+					{ text: "Treinar um modelo neural para reconhecer padrões complexos", lang: "Python" },
+					{ text: "Conectar milhares de usuários simultâneos em tempo real", lang: "Go / Node.js" },
+					{ text: "Encontrar e fechar brechas de segurança antes dos hackers", lang: "Rust / C" }
 				]
 			},
 			{
-				title: "4. Qual é a sua relação com a matemática e lógica pura?",
+				q: "4. Onde você sonha em ver seu software rodando?",
 				options: [
-					{ text: "📊 Adoro estatística, matrizes, probabilidade e visualização gráfica de dados", tags: ["python", "sql"] },
-					{ text: "📐 Gosto de vetores, trigonometria, física de colisões e geometria espacial", tags: ["gdscript", "cpp", "csharp"] },
-					{ text: "🧩 Prefiro lógica de negócios, rotas de API, bancos de dados e interfaces de usuário", tags: ["typescript", "sql", "csharp"] },
-					{ text: "⚡ Gosto de álgebra booleana, registradores, ponteiros e algoritmos de ordenação extrema", tags: ["c", "cpp", "rust"] }
-				]
-			},
-			{
-				title: "5. Em qual ambiente você mais gostaria de ver suas criações rodando?",
-				options: [
-					{ text: "🎮 Em consoles (PlayStation/Xbox/Switch), Steam e WebGL para gamers", tags: ["cpp", "csharp", "gdscript"] },
-					{ text: "☁️ Em servidores de nuvem de alta escala processando bilhões de dados por segundo", tags: ["go", "rust", "python"] },
-					{ text: "📱 Nos celulares de milhares de pessoas na Google Play e App Store", tags: ["kotlin", "swift", "typescript"] },
-					{ text: "🤖 Em robôs físicos, placas Arduino, microcontroladores e drones", tags: ["c", "cpp", "rust", "python"] }
-				]
-			},
-			{
-				title: "6. Qual frase mais define sua mentalidade como desenvolvedor?",
-				options: [
-					{ text: '"Simplicidade é a sofisticação máxima. Código legível supera código complexo."', tags: ["python", "go"] },
-					{ text: '"Velocidade e controle são inegociáveis. Quero espremer 100% da máquina."', tags: ["cpp", "rust", "c"] },
-					{ text: '"O jogo precisa ser divertido e responsivo acima de qualquer burocracia."', tags: ["gdscript", "csharp"] },
-					{ text: '"Qualquer coisa que possa ser escrita em JS, um dia será escrita em JS."', tags: ["typescript", "javascript"] }
-				]
-			},
-			{
-				title: "7. Quando você estuda um novo assunto, o que mais te motiva?",
-				options: [
-					{ text: "🎨 Criar visuais, animações, efeitos de partículas e ver a mágica visual acontecer", tags: ["gdscript", "typescript", "csharp"] },
-					{ text: "🔬 Resolver problemas de raciocínio lógico e quebra-cabeças analíticos", tags: ["python", "rust"] },
-					{ text: "💼 Criar soluções práticas que as empresas usam no dia a dia para gerar valor", tags: ["csharp", "typescript", "sql"] },
-					{ text: "⚙️ Entender as entranhas dos sistemas operacionais e como o hardware funciona", tags: ["c", "cpp", "rust"] }
-				]
-			},
-			{
-				title: "8. Qual formato de produto final te dá mais orgulho de apresentar?",
-				options: [
-					{ text: "🕹️ Um jogo publicado na Steam ou na Web onde amigos passam horas jogando", tags: ["gdscript", "csharp", "cpp"] },
-					{ text: "🤖 Um modelo de IA respondendo perguntas ou gerando imagens incríveis", tags: ["python"] },
-					{ text: "📱 Um aplicativo moderno publicado com visual limpo e design responsivo", tags: ["typescript", "kotlin", "swift"] },
-					{ text: "⚡ Um sistema super otimizado que nunca trava e processa tudo instantaneamente", tags: ["rust", "go", "cpp"] }
+					{ text: "Direto no navegador de qualquer pessoa no mundo sem instalar nada", lang: "JavaScript / WebAssembly" },
+					{ text: "Nas lojas Steam, consoles e dispositivos móveis", lang: "C# / GDScript" },
+					{ text: "Em supercomputadores de nuvem e servidores de alta escala", lang: "Go / Python" },
+					{ text: "Em sistemas embarcados, satélites ou sistemas operacionais", lang: "Rust / C++" }
 				]
 			}
 		];
 
-		const langDatabase = {
-			"gdscript": {
-				name: "GDScript (Godot Engine)",
-				icon: "🕹️",
-				tagline: "A linguagem feita sob medida para criadores de games dinâmicos e rápidos!",
-				whyMatch: "Você demonstra paixão visceral por jogos, efeitos visuais e iteração rápida. O GDScript no Godot 4 te permite transformar ideias de gameplay em realidade em questão de minutos.",
-				trivia: "O GDScript foi concebido dentro do próprio motor Godot com tipagem gradual opcional para garantir taxa de quadros estável a 60 FPS sem pausas de Garbage Collector!",
-				famous: "Zombies Survive, Brotato, Dome Keeper, Cassette Beasts, Halls of Torment.",
-				snippet: "extends CharacterBody2D\n\nfunc _physics_process(delta):\n    velocity = Input.get_vector('ui_left', 'ui_right', 'ui_up', 'ui_down') * 250\n    move_and_slide()"
-			},
-			"python": {
-				name: "Python",
-				icon: "🐍",
-				tagline: "A superpotência da Inteligência Artificial, Ciência de Dados e Automação global.",
-				whyMatch: "Suas escolhas revelam alto interesse por Machine Learning, clareza lógica e soluções inteligentes. Python é a linguagem oficial do futuro da IA.",
-				trivia: "Criada pelo holandês Guido van Rossum em 1991. O nome homenageia o grupo cômico Monty Python! O software do telescópio espacial James Webb usa scripts em Python para calibrar seus espelhos.",
-				famous: "ChatGPT (APIs & Treinamento), Instagram Backend, YouTube, Blender Scripts, TensorFlow.",
-				snippet: "import openai\n\ndef ask_ai(prompt):\n    return openai.chat.completions.create(model='gpt-4', messages=[{'role': 'user', 'content': prompt}])"
-			},
-			"typescript": {
-				name: "TypeScript / JavaScript",
-				icon: "🌐",
-				tagline: "O motor universal da Web moderna, aplicativos móveis e APIs em tempo real.",
-				whyMatch: "Você busca criar plataformas acessíveis por qualquer dispositivo no mundo, unindo interfaces atraentes e servidores modernos em tempo real.",
-				trivia: "O JavaScript foi escrito em apenas 10 dias em 1995. Hoje, com TypeScript criado pela Microsoft, tornou-se uma das linguagens tipadas mais produtivas do planeta.",
-				famous: "Netflix Web, Spotify Desktop, VS Code, SkyRush Web Portal, Discord Frontend.",
-				snippet: "interface Hero { name: string; health: number; }\nconst hero: Hero = { name: 'Sniper', health: 100 };\nconsole.log(`Hero Ready: ${hero.name}`);"
-			},
-			"csharp": {
-				name: "C# (.NET)",
-				icon: "⚡",
-				tagline: "Elegância, poder multiplataforma e a escolha de peso para grandes jogos e corporações.",
-				whyMatch: "Você gosta de robustez, orientação a objetos clássica e flexibilidade para criar tanto jogos avançados (Unity/Godot) quanto grandes sistemas corporativos.",
-				trivia: "Desenhada pelo lendário Anders Hejlsberg na Microsoft. O nome C# ('C Sharp') simboliza um sustenido musical sobre o C, significando evolução harmônica.",
-				famous: "Hollow Knight, Cuphead, Terraria, Forza Horizon (UI), Sistemas Bancários Globais.",
-				snippet: "public class Player : IEntity\n{\n    public string Nickname { get; set; } = 'VoidPlayer';\n    public void LevelUp() => Console.WriteLine('Level Up!');\n}"
-			},
-			"cpp": {
-				name: "C++",
-				icon: "🏎️",
-				tagline: "O ápice do desempenho bruto, motores gráficos AAA e computação de alta precisão.",
-				whyMatch: "Você quer entender o funcionamento do hardware, física pesada e ter controle milimétrico sobre alocação de memória e pipelines gráficos.",
-				trivia: "Criada por Bjarne Stroustrup no Bell Labs em 1979. Praticamente todos os sistemas operacionais modernos (Windows, macOS, Linux) têm seus núcleos e drivers em C e C++.",
-				famous: "Unreal Engine 5, Godot Core, GTA V, Counter-Strike 2, Adobe Photoshop.",
-				snippet: "#include <iostream>\nint main() {\n    std::cout << 'Zero Overhead AAA Game Loop!' << std::endl;\n    return 0;\n}"
-			},
-			"rust": {
-				name: "Rust",
-				icon: "🦀",
-				tagline: "Segurança de memória revolucionária aliada a desempenho idêntico ao C++.",
-				whyMatch: "Você valoriza arquiteturas seguras, confiabilidade máxima e sistemas modernos que nunca sofrem com brechas de segurança ou memory leaks.",
-				trivia: "Eleita a linguagem mais admirada do mundo pelos desenvolvedores do Stack Overflow por 8 anos consecutivos. O Linux Kernel agora aceita código oficial em Rust!",
-				famous: "Discord Backend, Ferramentas do Linux Kernel, Cloudflare Workers, 1Password, Bevy Game Engine.",
-				snippet: "fn main() {\n    let mut health: i32 = 100;\n    println!('Safe memory without garbage collector! Health: {}', health);\n}"
-			}
-		};
+		let currentQ = 0;
+		const answers = [];
 
-		let currentQuestionIndex = 0;
-		let userAnswers = [];
+		function renderQuestion() {
+			const container = document.getElementById('quiz-question-container');
+			const progressFill = document.getElementById('quiz-progress-fill');
+			if (!container) return;
 
-		function loadQuestion(index) {
-			const q = quizQuestions[index];
-			document.getElementById("quiz-question-num").innerText = `Pergunta ${index + 1} de ${quizQuestions.length}`;
-			document.getElementById("quiz-bar").style.width = `${((index + 1) / quizQuestions.length) * 100}%`;
-			document.getElementById("quiz-question-title").innerText = q.title;
+			const total = quizData.length;
+			const percent = ((currentQ + 1) / total) * 100;
+			if (progressFill) progressFill.style.width = percent + '%';
 
-			const optionsDiv = document.getElementById("quiz-options-list");
-			optionsDiv.innerHTML = "";
+			const q = quizData[currentQ];
+			let html = `
+				<h2 style="font-size: 20px; margin-bottom: 20px;">${q.q}</h2>
+				<div style="display: flex; flex-direction: column; gap: 12px;">
+			`;
 
-			const selectedOption = userAnswers[index];
-
-			q.options.forEach((opt, optIdx) => {
-				const optEl = document.createElement("div");
-				optEl.className = `quiz-option ${selectedOption === optIdx ? 'selected' : ''}`;
-				optEl.innerHTML = `
-					<div style="font-size: 18px; font-weight: 800; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;">${String.fromCharCode(65 + optIdx)}</div>
-					<div style="font-size: 14px; font-weight: 600; line-height: 1.4;">${opt.text}</div>
+			q.options.forEach((opt, idx) => {
+				html += `
+					<button class="btn-secondary" onclick="handleAnswer('${opt.lang}')" style="justify-content: flex-start; text-align: left; padding: 14px 20px; font-size: 14px; font-weight: 600; line-height: 1.4;">
+						${opt.text}
+					</button>
 				`;
-				optEl.onclick = () => selectOption(optIdx);
-				optionsDiv.appendChild(optEl);
 			});
 
-			document.getElementById("btn-quiz-prev").style.visibility = index > 0 ? "visible" : "hidden";
-			const nextBtn = document.getElementById("btn-quiz-next");
-			if (selectedOption !== undefined) {
-				nextBtn.disabled = false;
-				nextBtn.style.opacity = "1";
-				nextBtn.innerText = index === quizQuestions.length - 1 ? "Ver Meu Resultado 🏆" : "Próxima ➔";
+			html += '</div>';
+			container.innerHTML = html;
+		}
+
+		function handleAnswer(lang) {
+			answers.push(lang);
+			currentQ++;
+			if (currentQ < quizData.length) {
+				renderQuestion();
 			} else {
-				nextBtn.disabled = true;
-				nextBtn.style.opacity = "0.5";
-				nextBtn.innerText = index === quizQuestions.length - 1 ? "Ver Meu Resultado 🏆" : "Próxima ➔";
+				showQuizResult();
 			}
 		}
 
-		function selectOption(optIdx) {
-			userAnswers[currentQuestionIndex] = optIdx;
-			loadQuestion(currentQuestionIndex);
+		function showQuizResult() {
+			document.getElementById('quiz-box').style.display = 'none';
+			const resBox = document.getElementById('quiz-result-box');
+			resBox.style.display = 'block';
+
+			// Calculate primary language
+			const counts = {};
+			answers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+			const topLang = Object.keys(counts).sort((a,b) => counts[b] - counts[a])[0] || "Python / JavaScript";
+
+			resBox.innerHTML = `
+				<div style="text-align: center;">
+					<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: var(--accent-primary) !important; font-size: 13px; margin-bottom: 12px;">
+						🎉 SEU RESULTADO VOCACIONAL
+					</span>
+					<h2 style="font-size: 28px; margin-bottom: 12px; color: var(--accent-primary) !important;">
+						Sua Linguagem Ideal: ${topLang}
+					</h2>
+					<p style="max-width: 680px; margin: 0 auto 24px auto; font-size: 15px; line-height: 1.6; opacity: 0.9;">
+						Com base nas suas preferências, seu perfil tem forte sinergia com o ecossistema <b>${topLang}</b>. Esta tecnologia lhe proporcionará as melhores ferramentas para construir os projetos que você mais ama!
+					</p>
+
+					<div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+						<a href="orcamento.html" class="btn-primary" style="font-size: 13px;">
+							💼 Criar Projeto com essa Stack ➔
+						</a>
+						<button class="btn-secondary" onclick="location.reload()" style="font-size: 13px;">
+							🔄 Refazer o Teste
+						</button>
+					</div>
+				</div>
+			`;
 		}
 
-		function nextQuizQuestion() {
-			if (currentQuestionIndex < quizQuestions.length - 1) {
-				currentQuestionIndex++;
-				loadQuestion(currentQuestionIndex);
-			} else {
-				calculateAndShowResult();
-			}
-		}
-
-		function prevQuizQuestion() {
-			if (currentQuestionIndex > 0) {
-				currentQuestionIndex--;
-				loadQuestion(currentQuestionIndex);
-			}
-		}
-
-		function calculateAndShowResult() {
-			const scores = {
-				"gdscript": 0,
-				"python": 0,
-				"typescript": 0,
-				"csharp": 0,
-				"cpp": 0,
-				"rust": 0
-			};
-
-			userAnswers.forEach((ansIdx, qIdx) => {
-				const tags = quizQuestions[qIdx].options[ansIdx].tags;
-				tags.forEach(tag => {
-					if (scores[tag] !== undefined) {
-						scores[tag] += 1;
-					}
-				});
-			});
-
-			let bestLang = "python";
-			let maxScore = -1;
-			for (let lang in scores) {
-				if (scores[lang] > maxScore) {
-					maxScore = scores[lang];
-					bestLang = lang;
-				}
-			}
-
-			const langData = langDatabase[bestLang] || langDatabase["python"];
-			
-			document.getElementById("quiz-section").style.display = "none";
-			const resSec = document.getElementById("result-section");
-			resSec.style.display = "block";
-
-			document.getElementById("res-icon").innerText = langData.icon;
-			document.getElementById("res-lang-name").innerText = langData.name;
-			document.getElementById("res-lang-tagline").innerText = langData.tagline;
-			document.getElementById("res-why-match").innerText = langData.whyMatch;
-			document.getElementById("res-trivia").innerText = langData.trivia;
-			document.getElementById("res-famous-projects").innerText = langData.famous;
-			document.getElementById("res-code-snippet").innerHTML = langData.snippet.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
-
-			resSec.scrollIntoView({ behavior: 'smooth' });
-		}
-
-		function restartQuiz() {
-			currentQuestionIndex = 0;
-			userAnswers = [];
-			document.getElementById("result-section").style.display = "none";
-			document.getElementById("quiz-section").style.display = "block";
-			loadQuestion(0);
-			document.getElementById("quiz-section").scrollIntoView({ behavior: 'smooth' });
-		}
-
-		document.addEventListener("DOMContentLoaded", () => {
-			loadQuestion(0);
-		});
+		document.addEventListener('DOMContentLoaded', renderQuestion);
 	</script>
 </body>
 </html>

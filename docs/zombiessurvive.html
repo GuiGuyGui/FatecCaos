@@ -104,7 +104,7 @@
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -112,15 +112,16 @@
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -292,7 +293,7 @@
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -432,7 +433,7 @@
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -448,62 +449,56 @@
 	</style>
 
 	<style>
-		/* Immersive Full-Screen Canvas Container */
-		#canvas-wrap {
-			position: relative;
-			width: 100%;
-			height: 82vh;
-			min-height: 540px;
-			margin: 0 auto 30px auto;
+		body {
 			background: #000000;
-			border-radius: 14px;
 			overflow: hidden;
-			border: 2px solid var(--border-color);
-			box-shadow: 0 12px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 0, 85, 0.25);
+			width: 100vw;
+			height: 100vh;
 			display: flex;
-			align-items: center;
-			justify-content: center;
+			flex-direction: column;
 		}
-
+		#canvas-wrapper {
+			position: relative;
+			flex: 1;
+			width: 100vw;
+			height: calc(100vh - 65px);
+			background: #000000;
+			overflow: hidden;
+		}
 		#canvas {
-			width: 100%;
-			height: 100%;
 			display: block;
-			object-fit: fill;
-		}
-
-		#game-overlay {
+			width: 100% !important;
+			height: 100% !important;
 			position: absolute;
 			top: 0;
 			left: 0;
-			width: 100%;
-			height: 100%;
-			background: radial-gradient(circle at center, rgba(16, 16, 24, 0.96) 0%, rgba(7, 7, 12, 0.98) 100%);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			z-index: 10;
-			padding: 20px;
+			outline: none;
+		}
+		#status-overlay {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: rgba(16, 16, 24, 0.95);
+			border: 1.5px solid var(--accent-primary);
+			border-radius: 16px;
+			padding: 30px;
 			text-align: center;
+			z-index: 100;
+			max-width: 440px;
+			box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
 		}
-
-		.progress-bar-wrap {
-			width: 360px;
-			max-width: 90%;
-			height: 16px;
-			background: rgba(255, 255, 255, 0.08);
-			border-radius: 8px;
-			overflow: hidden;
-			margin-top: 18px;
-			border: 1px solid var(--border-bright);
+		.spinner {
+			width: 40px;
+			height: 40px;
+			border: 4px solid rgba(255,255,255,0.1);
+			border-top-color: var(--accent-primary);
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+			margin: 0 auto 16px auto;
 		}
-
-		.progress-bar-fill {
-			height: 100%;
-			width: 0%;
-			background: linear-gradient(90deg, #ff0055, #00f0ff);
-			transition: width 0.15s ease;
+		@keyframes spin {
+			to { transform: rotate(360deg); }
 		}
 	</style>
 </head>
@@ -515,12 +510,13 @@
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link active">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link ">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link ">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link active">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link ">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link ">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -544,121 +540,15 @@
 		</nav>
 	
 
-	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 14px;">
-			<div>
-				<h1 style="font-size: 32px; display: flex; align-items: center; gap: 10px;">
-					<span>🧟‍♂️ Zombies Survive</span>
-					<span class="badge" style="background: rgba(255,0,85,0.2); border-color: var(--accent-danger); font-size: 12px;">Resolução Total • v2.0 Web</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Mapa Polivalente: 10 Andares, Portas Desbloqueáveis, Caixas Misteriosas e Bosses</p>
-			</div>
-			<div style="display: flex; gap: 10px;">
-				<button class="btn-primary" onclick="toggleFullscreen()" style="padding: 10px 20px; font-size: 13px;">⛶ Tela Cheia Imersiva</button>
-				<button class="btn-secondary" onclick="restartGame()">🔄 Recarregar Jogo</button>
-			</div>
+	<div id="canvas-wrapper">
+		<canvas id="canvas"></canvas>
+
+		<div id="status-overlay">
+			<div class="spinner"></div>
+			<h3 style="font-size: 18px; margin-bottom: 8px;">Carregando Zombies Survive...</h3>
+			<p id="status-text" style="font-size: 12.5px; opacity: 0.8;">Iniciando WebAssembly e carregando o mapa Polivalente...</p>
 		</div>
-
-		<!-- Game Canvas Container -->
-		<div id="canvas-wrap">
-			<canvas id="canvas" oncontextmenu="event.preventDefault();" tabindex="0"></canvas>
-			
-			<div id="game-overlay">
-				<img src="logo_omnivoid.png" alt="Logo" style="max-height: 90px; margin-bottom: 16px; filter: drop-shadow(0 0 20px rgba(0,240,255,0.5));">
-				<h2 id="overlay-title" style="font-size: 28px; margin-bottom: 8px;">🩸 ZOMBIES SURVIVE</h2>
-				<p id="overlay-status" style="font-size: 15px; opacity: 0.9;">Clique no botão abaixo para carregar os 10 andares sem recortes</p>
-				
-				<button id="btn-start-load" class="btn-primary" style="margin-top: 22px; font-size: 16px; padding: 14px 36px;" onclick="startGodotEngine()">
-					▶ Iniciar Zombies Survive
-				</button>
-
-				<div id="progress-container" style="display: none; flex-direction: column; align-items: center;">
-					<div class="progress-bar-wrap">
-						<div id="progress-bar" class="progress-bar-fill"></div>
-					</div>
-					<span id="progress-text" style="font-size: 13px; margin-top: 10px; opacity: 0.9;">Baixando pacotes de jogo (0%)...</span>
-				</div>
-			</div>
-		</div>
-
-		<!-- Two Columns: Hall of Fame & Challenges -->
-		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
-			<!-- Hall da Fama with GuiGuy at 99999 -->
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-					<span>🏆 Hall da Fama - Melhores Sobreviventes</span>
-				</h3>
-				<div style="overflow-x: auto;">
-					<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-						<thead>
-							<tr style="border-bottom: 1px solid var(--border-bright); text-align: left;">
-								<th style="padding: 8px 6px;">#</th>
-								<th style="padding: 8px 6px;">Sobrevivente</th>
-								<th style="padding: 8px 6px;">Onda Máx</th>
-								<th style="padding: 8px 6px;">Eliminações</th>
-								<th style="padding: 8px 6px;">Pontos</th>
-							</tr>
-						</thead>
-						<tbody id="hof-tbody">
-							<tr style="border-bottom: 1px solid var(--border-color); background: rgba(0, 240, 255, 0.08);">
-								<td style="padding: 10px 6px; font-weight: 800;">🥇 1º</td>
-								<td style="padding: 10px 6px; font-weight: 800; color: var(--accent-primary) !important;">GuiGuy 🧑‍🚀 (Guilherme Mendes)</td>
-								<td style="padding: 10px 6px; font-weight: 700;">Onda 99</td>
-								<td style="padding: 10px 6px;">9.999</td>
-								<td style="padding: 10px 6px; font-weight: 900; font-size: 15px; color: var(--accent-gold) !important;">99999</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">🥈 2º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">CyberSniper 🥷</td>
-								<td style="padding: 8px 6px;">Onda 37</td>
-								<td style="padding: 8px 6px;">1.050</td>
-								<td style="padding: 8px 6px; font-weight: 700;">74.500</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">🥉 3º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">Valkyrie_X 🧙‍♂️</td>
-								<td style="padding: 8px 6px;">Onda 32</td>
-								<td style="padding: 8px 6px;">890</td>
-								<td style="padding: 8px 6px; font-weight: 700;">61.400</td>
-							</tr>
-							<tr style="border-bottom: 1px solid var(--border-color);">
-								<td style="padding: 8px 6px;">4º</td>
-								<td style="padding: 8px 6px; font-weight: 700;">VoidHunter 🤖</td>
-								<td style="padding: 8px 6px;">Onda 28</td>
-								<td style="padding: 8px 6px;">740</td>
-								<td style="padding: 8px 6px; font-weight: 700;">48.100</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<!-- Missões e Controles -->
-			<div class="card">
-				<h3 style="font-size: 20px; margin-bottom: 16px;">🎯 Missões Ativas & Controles</h3>
-				<div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-					<div style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent-primary);">
-						<div style="font-weight: 700; font-size: 13px;">🚪 Mestre da Exploração</div>
-						<div style="font-size: 12px; opacity: 0.8;">Desbloqueie 3 portas no mapa Polivalente em uma única partida (+500 XP).</div>
-					</div>
-					<div style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent-danger);">
-						<div style="font-weight: 700; font-size: 13px;">💀 Exterminador Noturno</div>
-						<div style="font-size: 12px; opacity: 0.8;">Elimine 100 zumbis usando escopetas ou rifles automáticos (+800 XP).</div>
-					</div>
-				</div>
-
-				<h4 style="font-size: 14px; margin-bottom: 8px;">🎮 Controles do Teclado:</h4>
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; opacity: 0.9;">
-					<div><b>WASD:</b> Movimentar</div>
-					<div><b>Mouse:</b> Mirar & Disparar</div>
-					<div><b>R:</b> Recarregar Arma</div>
-					<div><b>E / Espaço:</b> Interagir / Abrir Portas</div>
-					<div><b>1, 2, 3:</b> Trocar Armas</div>
-					<div><b>Shift / F:</b> Correr / Lanterna</div>
-				</div>
-			</div>
-		</div>
-	</main>
+	</div>
 
 	
 		<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
@@ -672,7 +562,7 @@
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -686,20 +576,20 @@
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -716,7 +606,7 @@
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -746,7 +636,7 @@
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -759,22 +649,6 @@
 				</div>
 			</div>
 		</div>
-
-	
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
 
 	
 <script>
@@ -835,275 +709,202 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Bem-vindo de volta, ${user.nickname}!`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Conta criada com sucesso! Olá, ${user.nickname}!`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 
 
 	<script src="index.js"></script>
 	<script>
-		let godotEngine = null;
+		const GODOT_CONFIG = {
+			"args": [],
+			"canvasResizePolicy": 2,
+			"ensureCrossOriginIsolationHeaders": true,
+			"executable": "index",
+			"experimentalVK": false,
+			"fileSizes": { "index.pck": 187777864, "index.wasm": 39514754 },
+			"focusCanvas": true,
+			"gdextensionLibs": []
+		};
 
-		function toggleFullscreen() {
-			const elem = document.getElementById("canvas-wrap");
-			if (!document.fullscreenElement) {
-				elem.requestFullscreen().catch(err => alert("Erro ao entrar em tela cheia: " + err.message));
-			} else {
-				document.exitFullscreen();
-			}
-		}
+		const engine = new Engine(GODOT_CONFIG);
 
-		function restartGame() {
-			window.location.reload();
-		}
+		(function() {
+			const statusOverlay = document.getElementById('status-overlay');
+			const statusText = document.getElementById('status-text');
 
-		async function startGodotEngine() {
-			const btnStart = document.getElementById("btn-start-load");
-			const progressContainer = document.getElementById("progress-container");
-			const progressBar = document.getElementById("progress-bar");
-			const progressText = document.getElementById("progress-text");
-			const overlayStatus = document.getElementById("overlay-status");
+			async function loadPckParts() {
+				const parts = ['index.pck.part0', 'index.pck.part1', 'index.pck.part2', 'index.pck.part3'];
+				const totalBytes = 187777864;
+				let loadedBytes = 0;
+				const chunks = [];
 
-			btnStart.style.display = "none";
-			progressContainer.style.display = "flex";
-			overlayStatus.innerText = "Baixando arquivos do jogo e mapas em alta definição...";
-
-			try {
-				const chunkFiles = [
-					"index.pck.part0",
-					"index.pck.part1",
-					"index.pck.part2",
-					"index.pck.part3"
-				];
-
-				const chunkBuffers = [];
-				let totalBytesLoaded = 0;
-				const estimatedTotalSize = 187777864; // ~179MB
-
-				for (let i = 0; i < chunkFiles.length; i++) {
-					const filename = chunkFiles[i];
-					progressText.innerText = `Baixando pacote ${i + 1} de ${chunkFiles.length}...`;
-					
-					const response = await fetch(filename);
-					if (!response.ok) {
-						throw new Error(`Falha ao carregar ${filename} (HTTP ${response.status})`);
-					}
-
-					const reader = response.body.getReader();
-					const chunks = [];
-					let receivedLength = 0;
-
+				for (let i = 0; i < parts.length; i++) {
+					statusText.innerText = `Baixando recursos (${i + 1}/${parts.length})...`;
+					const resp = await fetch(parts[i]);
+					if (!resp.ok) throw new Error(`Erro ao baixar ${parts[i]}`);
+					const reader = resp.body.getReader();
 					while (true) {
 						const { done, value } = await reader.read();
 						if (done) break;
 						chunks.push(value);
-						receivedLength += value.length;
-						totalBytesLoaded += value.length;
-
-						const percent = Math.min(98, Math.round((totalBytesLoaded / estimatedTotalSize) * 100));
-						progressBar.style.width = percent + "%";
-						progressText.innerText = `Baixando pacotes (${percent}% - ${(totalBytesLoaded / 1048576).toFixed(1)} MB)...`;
+						loadedBytes += value.length;
+						const pct = Math.min(100, Math.round((loadedBytes / totalBytes) * 100));
+						statusText.innerText = `Carregando texturas e áudio: ${pct}%`;
 					}
-
-					const partBuffer = new Uint8Array(receivedLength);
-					let pos = 0;
-					for (let chunk of chunks) {
-						partBuffer.set(chunk, pos);
-						pos += chunk.length;
-					}
-					chunkBuffers.push(partBuffer);
 				}
 
-				progressText.innerText = "Montando sistema de arquivos virtual...";
-				progressBar.style.width = "99%";
-
-				const mergedPck = new Uint8Array(totalBytesLoaded);
+				const combined = new Uint8Array(loadedBytes);
 				let offset = 0;
-				for (let buf of chunkBuffers) {
-					mergedPck.set(buf, offset);
-					offset += buf.length;
+				for (const chunk of chunks) {
+					combined.set(chunk, offset);
+					offset += chunk.length;
 				}
-
-				progressText.innerText = "Inicializando Godot WebAssembly...";
-				progressBar.style.width = "98%";
-
-				godotEngine = new Engine({
-					canvas: document.getElementById("canvas"),
-					executable: "index",
-					onProgress: function(current, total) {
-						if (total > 0) {
-							const pct = Math.round((current / total) * 100);
-							progressBar.style.width = pct + "%";
-						}
-					}
-				});
-
-				// 1. Carrega o runtime WebAssembly
-				await Engine.load("index");
-
-				// 2. Precarrega o pacote unificado no preloader do Godot
-				await godotEngine.preloadFile(mergedPck.buffer, 'index.pck');
-				
-				// 3. Inicializa o ambiente e sistema de arquivos
-				await godotEngine.init("index");
-
-				progressText.innerText = "Iniciando motor e renderizando em tela total...";
-				progressBar.style.width = "100%";
-
-				// Oculta o overlay somente quando a inicialização for concluída
-				document.getElementById("game-overlay").style.display = "none";
-
-				// 4. Executa a cena principal
-				await godotEngine.start({
-					args: ['--main-pack', 'index.pck'],
-					mainPack: 'index.pck'
-				});
-
-				console.log("Godot Engine iniciado com sucesso em tela total!");
-			} catch (err) {
-				console.error("Erro ao iniciar jogo:", err);
-				document.getElementById("game-overlay").style.display = "flex";
-				overlayStatus.innerText = "Erro ao carregar o jogo: " + err.message;
-				btnStart.style.display = "inline-flex";
-				btnStart.innerText = "Tentar Novamente";
-				progressContainer.style.display = "none";
+				return combined.buffer;
 			}
-		}
 
-		// Inicia automaticamente o download e carregamento ao abrir a página
-		window.addEventListener('DOMContentLoaded', () => {
-			setTimeout(() => {
-				startGodotEngine();
-			}, 300);
-		});
+			loadPckParts().then(pckBuffer => {
+				statusText.innerText = 'Inicializando Godot Engine 4.3...';
+				return engine.init().then(() => {
+					engine.copyToFS('/index.pck', pckBuffer);
+					return engine.start({ args: ['--main-pack', '/index.pck'] });
+				});
+			}).then(() => {
+				if (statusOverlay) statusOverlay.style.display = 'none';
+			}).catch(err => {
+				console.error(err);
+				statusText.innerText = 'Erro ao inicializar o jogo: ' + err.message;
+			});
+		})();
 	</script>
 </body>
 </html>

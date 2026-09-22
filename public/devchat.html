@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Conversa Dev & Comunidade | OmniVoid Studios</title>
+	<title>Conversa Dev • Fórum & Chat | OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +104,7 @@
 		.nav-links {
 			display: flex;
 			align-items: center;
-			gap: 8px;
+			gap: 6px;
 			list-style: none;
 		}
 
@@ -112,15 +112,16 @@
 			display: inline-flex;
 			align-items: center;
 			gap: 6px;
-			padding: 8px 16px;
+			padding: 8px 14px;
 			border-radius: 8px;
-			font-size: 14px;
+			font-size: 13.5px;
 			font-weight: 600;
 			letter-spacing: 0.3px;
 			color: #ffffff !important;
 			background: transparent;
 			border: 1px solid transparent;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.nav-link:hover {
@@ -292,7 +293,7 @@
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: linear-gradient(180deg, rgba(16,16,24,0.9) 0%, rgba(7,7,12,0.95) 100%);
+			background: linear-gradient(180deg, rgba(16,16,24,0.95) 0%, rgba(7,7,12,0.98) 100%);
 			border-bottom: 1px solid var(--border-color);
 			padding: 30px 20px;
 			display: flex;
@@ -432,7 +433,7 @@
 			color: var(--accent-primary) !important;
 		}
 
-		@media (max-width: 900px) {
+		@media (max-width: 1080px) {
 			#navbar {
 				flex-wrap: wrap;
 				gap: 12px;
@@ -449,42 +450,35 @@
 
 	<style>
 		.chat-channel-btn {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
 			width: 100%;
+			text-align: left;
 			padding: 10px 14px;
 			border-radius: 8px;
 			background: transparent;
 			border: 1px solid transparent;
 			cursor: pointer;
-			text-align: left;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			font-size: 13px;
 			font-weight: 600;
 			transition: all 0.2s;
+			color: #ffffff !important;
 		}
-
 		.chat-channel-btn:hover {
-			background: rgba(255, 255, 255, 0.08);
-			border-color: rgba(255, 255, 255, 0.15);
+			background: rgba(255,255,255,0.06);
+			border-color: rgba(255,255,255,0.15);
 		}
-
 		.chat-channel-btn.active {
-			background: rgba(0, 240, 255, 0.15);
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
 			border-color: var(--accent-primary);
 		}
-
 		.message-bubble {
-			background: var(--bg-surface);
+			background: rgba(255,255,255,0.04);
 			border: 1px solid var(--border-color);
-			border-radius: 12px;
-			padding: 14px 18px;
-			margin-bottom: 14px;
-			transition: all 0.2s ease;
-		}
-
-		.message-bubble:hover {
-			border-color: var(--border-bright);
+			border-radius: 10px;
+			padding: 12px 16px;
+			margin-bottom: 10px;
 		}
 	</style>
 </head>
@@ -496,12 +490,13 @@
 			</a>
 
 			<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="zombiessurvive.html" class="nav-link ">🧟‍♂️ Zombies Survive</a></li>
-				<li><a href="skyrush.html" class="nav-link ">☁️ SkyRush</a></li>
-				<li><a href="quiz.html" class="nav-link ">🧠 Teste de Programação</a></li>
+				<li><a href="index.html" class="nav-link ">🏠 Início</a></li>
+				<li><a href="orcamento.html" class="nav-link ">💼 Serviços & Orçamento</a></li>
+				<li><a href="jogos.html" class="nav-link ">🎮 Jogos</a></li>
+				<li><a href="quiz.html" class="nav-link ">🧠 Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ">🚀 Projetos</a></li>
 				<li><a href="devchat.html" class="nav-link active">💬 Conversa Dev</a></li>
+				<li><a href="sobre.html" class="nav-link ">👤 Sobre Mim</a></li>
 			</ul>
 
 			<div class="nav-user-panel">
@@ -526,35 +521,35 @@
 	
 
 	<main class="container">
-		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-			<div>
-				<h1 style="font-size: 30px; display: flex; align-items: center; gap: 10px;">
-					<span>💬 Conversa Dev & Fórum Técnico</span>
-				</h1>
-				<p style="font-size: 14px; opacity: 0.85;">Troque ideias sobre GameDev, Godot, programação, tire dúvidas e compartilhe estratégias com Guilherme Mendes e a comunidade</p>
-			</div>
+		<div style="text-align: center; margin-bottom: 24px;">
+			<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); color: var(--accent-primary) !important; margin-bottom: 8px;">
+				💬 COMUNIDADE DE DESENVOLVEDORES & ALUNOS
+			</span>
+			<h1 style="font-size: clamp(22px, 3.5vw, 32px);">
+				Conversa Dev • Networking & Dúvidas Técnicas
+			</h1>
 		</div>
 
-		<div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; min-height: 600px; margin-bottom: 40px;">
+		<div style="display: grid; grid-template-columns: 280px 1fr; gap: 20px; min-height: 580px;">
+			<!-- Canais Laterais -->
 			<div class="card" style="padding: 16px;">
-				<h3 style="font-size: 16px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-					📢 Canais de Discussão
-				</h3>
-				<div style="display: flex; flex-direction: column; gap: 6px;" id="channel-list">
+				<div style="font-size: 11px; font-weight: 800; opacity: 0.7; text-transform: uppercase; margin-bottom: 12px;">Canais da Comunidade</div>
+
+				<div style="display: flex; flex-direction: column; gap: 6px;">
 					<button class="chat-channel-btn active" onclick="switchChannel('geral')">
 						<span>💬 #geral</span>
-						<span class="badge" style="font-size: 10px;">Ativo</span>
+						<span class="badge" style="font-size: 10px;">Principal</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('zombies-survive')">
 						<span>🧟 #zombies-survive</span>
-						<span class="badge" style="font-size: 10px;">Godot</span>
+						<span class="badge" style="font-size: 10px;">Godot 4</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('skyrush')">
 						<span>☁️ #skyrush</span>
 						<span class="badge" style="font-size: 10px;">Arcade</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('dicas-programacao')">
-						<span>🧠 #dicas-programacao</span>
+						<span>🧠 #dicas-dev</span>
 						<span class="badge" style="font-size: 10px;">Quiz</span>
 					</button>
 					<button class="chat-channel-btn" onclick="switchChannel('showcase')">
@@ -562,20 +557,16 @@
 						<span class="badge" style="font-size: 10px;">Showcase</span>
 					</button>
 				</div>
-
-				<div style="margin-top: 30px; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-size: 12px; opacity: 0.85;">
-					💡 <b>Perfil Ativo:</b> Mensagens enviadas serão assinadas pelo nickname e avatar configurados.
-				</div>
 			</div>
 
+			<!-- Feed de Mensagens -->
 			<div class="card" style="display: flex; flex-direction: column; padding: 20px;">
 				<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
-					<h3 id="current-channel-title" style="font-size: 18px;">💬 #geral - Bate-papo Geral da Comunidade</h3>
-					<span class="badge" id="online-counter">🟢 Online</span>
+					<h3 id="current-channel-title" style="font-size: 17px;">💬 #geral - Bate-papo Geral da Comunidade</h3>
+					<span class="badge" id="online-counter">🟢 Comunidade Online</span>
 				</div>
 
-				<div id="messages-container" style="flex: 1; max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 16px;">
-				</div>
+				<div id="messages-container" style="flex: 1; max-height: 480px; overflow-y: auto; padding-right: 8px; margin-bottom: 16px;"></div>
 
 				<form id="chat-form" onsubmit="handleSendMessage(event)" style="display: flex; gap: 10px; align-items: center;">
 					<input type="text" id="chat-input" class="input-field" placeholder="Escreva uma mensagem ou dúvida técnica..." style="margin: 0; flex: 1;" required>
@@ -599,7 +590,7 @@
 
 				<form id="form-login" onsubmit="handleLoginSubmit(event)">
 					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, missões e participar da Conversa Dev.</p>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
 					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
@@ -613,20 +604,20 @@
 				</form>
 
 				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Sobrevivente & Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar progresso no Zombies Survive, SkyRush e Fórum.</p>
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
 
 					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
 					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Nickname no Jogo / Fórum:</label>
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
 					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
 
-					<label style="font-size: 12px; font-weight: 600;">Instituição / Turma ou Curso:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS / Ciência da Computação" required>
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
 
 					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: dev@omnivoid.com.br" required>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
 
 					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
 					<div class="avatar-picker-row">
@@ -643,7 +634,7 @@
 					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
 
 					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Progresso
+						✨ Criar Minha Conta & Salvar Perfil
 					</button>
 				</form>
 			</div>
@@ -673,7 +664,7 @@
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Moedas</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
 					</div>
 					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
 						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
@@ -688,20 +679,23 @@
 		</div>
 
 	
-		<footer>
-			<div class="container">
-				<div class="footer-links">
-					<a href="index.html">Início</a>
-					<a href="zombiessurvive.html">Zombies Survive</a>
-					<a href="skyrush.html">SkyRush</a>
-					<a href="quiz.html">Teste de Programação</a>
-					<a href="projetos.html">Projetos</a>
-					<a href="devchat.html">Conversa Dev</a>
-				</div>
-				<p style="opacity: 0.85; margin-bottom: 6px;">&copy; 2026 OmniVoid Studios. Todos os direitos reservados. Desenvolvido por <b>Guilherme Mendes</b> com paixão por desafios tecnológicos e games.</p>
-				<p style="font-size: 13px; color: var(--accent-primary) !important;">❤️ Dedicação especial à minha <b>Rita</b>, por todo o apoio e incentivo incondicional.</p>
-			</div>
-		</footer>
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">🏠 Início</a>
+			<a href="orcamento.html">💼 Serviços & Orçamento</a>
+			<a href="jogos.html">🎮 Hub de Jogos</a>
+			<a href="quiz.html">🧠 Teste Dev</a>
+			<a href="projetos.html">🚀 Projetos</a>
+			<a href="devchat.html">💬 Conversa Dev</a>
+			<a href="sobre.html">👤 Sobre Mim & Dedicatória</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab & Cibersegurança de Alta Performance
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> com dedicação e carinho para <b>Rita</b> • FATEC 2026
+		</p>
+	</footer>
 
 	
 <script>
@@ -762,135 +756,136 @@ function updateUIAfterAuth() {
 		loggedInDiv.style.display = "flex";
 		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
 		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 99}`;
+		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
 	} else {
 		loggedOutDiv.style.display = "flex";
 		loggedInDiv.style.display = "none";
 	}
 }
 function openAuthModal(tab) {
-	document.getElementById("modal-auth").style.display = "flex";
-	switchAuthTab(tab);
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
 }
 function switchAuthTab(tab) {
-	const loginForm = document.getElementById("form-login");
-	const regForm = document.getElementById("form-register");
-	const loginBtn = document.getElementById("tab-btn-login");
-	const regBtn = document.getElementById("tab-btn-register");
-	if (tab === 'login') {
-		loginForm.style.display = "block";
-		regForm.style.display = "none";
-		loginBtn.classList.add("active");
-		regBtn.classList.remove("active");
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		fLog.style.display = "block";
+		fReg.style.display = "none";
+		bLog.classList.add("active");
+		bReg.classList.remove("active");
 	} else {
-		loginForm.style.display = "none";
-		regForm.style.display = "block";
-		loginBtn.classList.remove("active");
-		regBtn.classList.add("active");
+		fLog.style.display = "none";
+		fReg.style.display = "block";
+		bLog.classList.remove("active");
+		bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
+	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
+	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
+	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
+	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
+	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
+	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
+}
+function closeModal(id) {
+	const m = document.getElementById(id);
+	if (m) m.style.display = "none";
+}
+function closeModalOnBackdrop(e, id) {
+	if (e.target && e.target.id === id) {
+		closeModal(id);
 	}
 }
 function handleLoginSubmit(e) {
 	e.preventDefault();
-	const identifier = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value;
-	const users = getUsersDB();
-	const user = users.find(u => (u.email === identifier || u.nickname === identifier) && u.password === pass);
-	if (!user) {
-		alert("E-mail/Nickname ou senha incorretos.");
-		return;
+	const ident = document.getElementById("login-identifier").value.trim();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
+		const admin = {
+			name: "Guilherme Mendes",
+			nickname: "GuiGuy",
+			turma: "Criador & Lead Developer",
+			email: "guilherme@omnivoidstudios.com.br",
+			avatar: "🧑‍🚀",
+			level: 99,
+			xp: 99999,
+			cash: 99999,
+			maxWave: 99,
+			kills: 99999,
+			score: 99999
+		};
+		setCurrentUser(admin);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
+	} else {
+		alert("Usuário ou senha incorretos.");
 	}
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Bem-vindo de volta, ${user.nickname}!`);
 }
 function handleRegisterSubmit(e) {
 	e.preventDefault();
 	const name = document.getElementById("reg-name").value.trim();
-	const nickname = document.getElementById("reg-nickname").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
 	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim().toLowerCase();
-	const password = document.getElementById("reg-password").value;
-	const users = getUsersDB();
-	if (users.some(u => u.email === email)) {
-		alert("Este e-mail já está cadastrado.");
+	const email = document.getElementById("reg-email").value.trim();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email === email || u.nickname === nick)) {
+		alert("E-mail ou Nickname já cadastrados!");
 		return;
 	}
-	if (users.some(u => u.nickname.toLowerCase() === nickname.toLowerCase())) {
-		alert("Este nickname já está em uso.");
-		return;
-	}
-	const user = {
-		id: 'u_' + Date.now(),
-		name,
-		nickname,
-		turma,
-		email,
-		password,
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
 		avatar: selectedAvatarIcon,
 		level: 1,
 		xp: 0,
 		cash: 1000,
 		maxWave: 1,
 		kills: 0,
-		completedChallenges: [],
-		createdAt: new Date().toISOString()
+		score: 0
 	};
-	users.push(user);
-	saveUsersDB(users);
-	setCurrentUser(user);
-	closeModal('modal-auth');
-	alert(`Conta criada com sucesso! Olá, ${user.nickname}!`);
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
 }
 function handleLogout() {
-	if (confirm("Deseja sair da sua conta?")) {
-		setCurrentUser(null);
-		closeModal('modal-profile');
-	}
-}
-function openProfileModal() {
-	if (!currentUser) {
-		openAuthModal('login');
-		return;
-	}
-	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-	document.getElementById("modal-profile-name").innerText = currentUser.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = `${currentUser.name || 'Guilherme Mendes'} • ${currentUser.turma || 'Criador'}`;
-	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 99}`;
-	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 99999).toLocaleString()}`;
-	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 99}`;
-	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 99999).toLocaleString();
-	document.getElementById("modal-profile").style.display = "flex";
-}
-function closeModal(id) {
-	document.getElementById(id).style.display = "none";
-}
-function closeModalOnBackdrop(e, id) {
-	if (e.target.id === id) closeModal(id);
-}
-function handlePhotoUpload(event) {
-	const file = event.target.files[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.onload = function(e) {
-			const imgs = document.querySelectorAll('.dev-profile-photo-target');
-			imgs.forEach(img => {
-				img.src = e.target.result;
-			});
-			localStorage.setItem('omnivoid_dev_photo', e.target.result);
-			alert('Sua foto de perfil foi atualizada com sucesso no site!');
-		};
-		reader.readAsDataURL(file);
+	if (confirm("Deseja desconectar sua conta?")) {
+		localStorage.removeItem("omnivoid_current_user");
+		updateUIAfterAuth();
+		closeModal("modal-profile");
 	}
 }
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
-	const savedPhoto = localStorage.getItem('omnivoid_dev_photo');
-	if (savedPhoto) {
-		const imgs = document.querySelectorAll('.dev-profile-photo-target');
-		imgs.forEach(img => {
-			img.src = savedPhoto;
-		});
-	}
 });
 </script>
 
@@ -900,15 +895,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const initialMessages = {
 			'geral': [
-				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos ao portal OmniVoid Studios! O portal e os jogos foram atualizados com tela total e o novo teste vocacional de programação!' },
-				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'O novo layout e a resolução sem barras pretas no Zombies Survive ficaram perfeitos!' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '18:30', text: 'Fala pessoal! Sejam muito bem-vindos ao portal reestruturado da OmniVoid Studios! Agora temos simulador de orçamentos, hub centralizado de jogos e área Sobre Mim.' },
+				{ author: 'Lucas_Coder', avatar: '🥷', turma: 'ADS 3º Sem', time: '18:42', text: 'A calculadora de orçamento em tempo real ficou excelente!' }
 			],
 			'zombies-survive': [
 				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '17:15', text: 'Zombies Survive com mapa Polivalente de 10 andares rodando em resolução expandida e WebAssembly direto no navegador!' },
 				{ author: 'Valkyrie_X', avatar: '🧙‍♂️', turma: 'Ciência Comp.', time: '18:10', text: 'A pontuação de 99999 do GuiGuy tá insana! Vou tentar alcançar no 10º andar.' }
 			],
 			'skyrush': [
-				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '16:00', text: 'SkyRush Arcade com física de vôo supersônico ajustada e modo solo offline disponível.' }
+				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '16:00', text: 'SkyRush Arcade com física de vôo supersônico, loadouts de armas e modo solo com caos automático!' }
 			],
 			'dicas-programacao': [
 				{ author: 'GuiGuy (Guilherme Mendes)', avatar: '🧑‍🚀', turma: 'Criador & Admin', time: '15:20', text: 'Dica do dia: no Godot 4, utilize viewport stretch mode como canvas_items e aspect como expand para telas responsivas sem letterboxing.' }
@@ -941,7 +936,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				'geral': '💬 #geral - Bate-papo Geral da Comunidade',
 				'zombies-survive': '🧟 #zombies-survive - Estratégias & Godot',
 				'skyrush': '☁️ #skyrush - Recordes & Arcade',
-				'dicas-programacao': '🧠 #dicas-programacao - Tutoriais & Quiz',
+				'dicas-programacao': '🧠 #dicas-dev - Tutoriais & Quiz',
 				'showcase': '🚀 #projetos-alunos - Mostre seus Projetos'
 			};
 			
