@@ -1316,6 +1316,7 @@ const zombiesHtml = `<!DOCTYPE html>
 				}
 
 				progressText.innerText = "Inicializando Godot WebAssembly...";
+				progressBar.style.width = "98%";
 
 				godotEngine = new Engine({
 					canvas: document.getElementById("canvas"),
@@ -1328,10 +1329,22 @@ const zombiesHtml = `<!DOCTYPE html>
 					}
 				});
 
+				// 1. Carrega o runtime WebAssembly
+				await Engine.load("index");
+
+				// 2. Precarrega o pacote unificado no preloader do Godot
 				await godotEngine.preloadFile(mergedPck.buffer, 'index.pck');
 				
+				// 3. Inicializa o ambiente e sistema de arquivos
+				await godotEngine.init("index");
+
+				progressText.innerText = "Iniciando motor e renderizando em tela total...";
+				progressBar.style.width = "100%";
+
+				// Oculta o overlay somente quando a inicialização for concluída
 				document.getElementById("game-overlay").style.display = "none";
 
+				// 4. Executa a cena principal
 				await godotEngine.start({
 					args: ['--main-pack', 'index.pck'],
 					mainPack: 'index.pck'
@@ -1340,6 +1353,7 @@ const zombiesHtml = `<!DOCTYPE html>
 				console.log("Godot Engine iniciado com sucesso em tela total!");
 			} catch (err) {
 				console.error("Erro ao iniciar jogo:", err);
+				document.getElementById("game-overlay").style.display = "flex";
 				overlayStatus.innerText = "Erro ao carregar o jogo: " + err.message;
 				btnStart.style.display = "inline-flex";
 				btnStart.innerText = "Tentar Novamente";

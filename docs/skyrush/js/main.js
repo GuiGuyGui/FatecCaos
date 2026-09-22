@@ -79,23 +79,26 @@ class GameClient {
                 if (onOpenCallback) onOpenCallback();
             };
 
-        this.ws.onmessage = (event) => {
-            try {
-                const data = jsonParseSafe(event.data);
-                if (data) this.handleServerMessage(data);
-            } catch (e) {
-                console.error('Error handling WS message:', e);
-            }
-        };
+            this.ws.onmessage = (event) => {
+                try {
+                    const data = jsonParseSafe(event.data);
+                    if (data) this.handleServerMessage(data);
+                } catch (e) {
+                    console.error('Error handling WS message:', e);
+                }
+            };
 
-        this.ws.onclose = () => {
-            console.log('Disconnected from server');
-            this.ui.addChatMessage('Sistema', 'Conexão perdida com o servidor.', '#f87171');
-        };
+            this.ws.onclose = () => {
+                console.log('Disconnected from server');
+                this.ui.addChatMessage('Sistema', 'Conexão perdida com o servidor.', '#f87171');
+            };
 
-        this.ws.onerror = (err) => {
-            console.error('WS Error:', err);
-        };
+            this.ws.onerror = (err) => {
+                console.error('WS Error:', err);
+            };
+        } catch (err) {
+            console.error('WebSocket connection error:', err);
+        }
     }
 
     createRoom(name, color) {
