@@ -1371,11 +1371,11 @@ class GameClient {
             });
         });
 
-        // Quick Play / Test Solo Button (Host Starts Instantly)
+        // Quick Play / Test Solo Button (Host Starts Instantly in Local Offline Mode)
         document.getElementById('btnQuickPlay')?.addEventListener('click', () => {
             const name = document.getElementById('nicknameInput').value.trim() || 'Host';
-            this.autoStart = true;
-            this.createRoom(name, this.selectedColor);
+            window.soundEngine.init();
+            this.startLocalSoloGame(name, this.selectedColor);
         });
 
         // Create Room Button
