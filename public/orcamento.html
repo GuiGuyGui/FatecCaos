@@ -448,6 +448,32 @@
 		}
 	</style>
 
+	<style>
+		.budget-layout-grid {
+			display: grid;
+			grid-template-columns: 1fr 380px;
+			gap: 24px;
+			align-items: start;
+		}
+		@media (max-width: 960px) {
+			.budget-layout-grid {
+				grid-template-columns: 1fr !important;
+				display: flex !important;
+				flex-direction: column !important;
+			}
+			.budget-summary-card {
+				position: static !important;
+				top: auto !important;
+				width: 100% !important;
+				order: 2 !important;
+				margin-top: 10px !important;
+			}
+			.budget-form-card {
+				order: 1 !important;
+				width: 100% !important;
+			}
+		}
+	</style>
 </head>
 <body>
 	
@@ -500,9 +526,9 @@
 			</p>
 		</div>
 
-		<div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start;">
+		<div class="budget-layout-grid">
 			<!-- Formulário da Calculadora -->
-			<div class="card" style="padding: 28px;">
+			<div class="card budget-form-card" style="padding: 28px;">
 				<h2 style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
 					<span>1.</span> Tipo de Projeto Principal
 				</h2>
@@ -583,7 +609,7 @@
 					<span>3.</span> Nível de Urgência / Prazo
 				</h2>
 
-				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px;">
+				<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px;">
 					<label style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; cursor: pointer;">
 						<input type="radio" name="deadline" value="normal" checked onchange="updateBudgetCalculation()" style="accent-color: var(--accent-primary);">
 						<div style="font-size: 12px; font-weight: 700; margin-top: 4px;">Padrão</div>
@@ -603,16 +629,40 @@
 					</label>
 				</div>
 
+				<!-- Caixa de Valor ao Vivo Direto Abaixo das Opções (Perfeita para Mobile!) -->
+				<div class="inline-price-display card" style="background: radial-gradient(circle at center, rgba(0, 240, 255, 0.12) 0%, rgba(16, 16, 24, 0.95) 100%); border: 2px solid var(--accent-primary); border-radius: 12px; padding: 18px 20px; margin: 20px 0 24px 0; text-align: center; box-shadow: 0 0 25px rgba(0,240,255,0.2);">
+					<div style="font-size: 12px; opacity: 0.85; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px;">
+						💰 VALOR ESTIMADO DO SEU PROJETO (TEMPO REAL):
+					</div>
+					<div id="inline-calc-price-range" style="font-size: clamp(24px, 4vw, 32px); font-family: var(--font-title); font-weight: 900; color: var(--accent-emerald) !important; margin-bottom: 6px;">
+						R$ 2.400 - R$ 3.800
+					</div>
+					<div style="display: flex; justify-content: center; gap: 14px; font-size: 13px; opacity: 0.9; flex-wrap: wrap;">
+						<span id="inline-calc-hours-display">⏱️ ~45 horas de desenvolvimento</span>
+						<span id="inline-calc-complexity-badge" class="badge" style="background: rgba(157, 78, 221, 0.25); color: #d8b4fe !important;">Complexidade: Média</span>
+					</div>
+				</div>
+
 				<h2 style="font-size: 18px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
 					<span>4.</span> Detalhes & Descrição Adicional (Opcional)
 				</h2>
 				<textarea id="projectNotes" class="input-field" rows="3" placeholder="Descreva regras de negócio específicas, ideias do jogo ou necessidades da sua empresa..." style="resize: vertical;"></textarea>
+
+				<!-- Botões de Ação para Celular / Direto no Formulário -->
+				<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+					<button type="button" class="btn-primary" onclick="sendQuoteWhatsApp()" style="width: 100%; justify-content: center; font-size: 14px; padding: 14px;">
+						📱 Enviar Proposta via WhatsApp
+					</button>
+					<button type="button" class="btn-secondary" onclick="copyQuoteSummary()" style="width: 100%; justify-content: center; font-size: 13px;">
+						📋 Copiar Resumo do Orçamento
+					</button>
+				</div>
 			</div>
 
 			<!-- Card Lateral do Resumo do Orçamento -->
-			<div class="card" style="padding: 24px; position: sticky; top: 90px; border-color: var(--accent-primary); background: linear-gradient(180deg, #151522 0%, #101018 100%);">
+			<div class="card budget-summary-card" style="padding: 24px; position: sticky; top: 90px; border-color: var(--accent-primary); background: linear-gradient(180deg, #151522 0%, #101018 100%);">
 				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-					<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: var(--accent-primary) !important;">ESTIMATIVA AO VIVO</span>
+					<span class="badge" style="background: rgba(0, 240, 255, 0.2); color: var(--accent-primary) !important;">RESUMO GERAL</span>
 					<span id="calc-complexity-badge" class="badge" style="background: rgba(157, 78, 221, 0.2); color: #d8b4fe !important;">Média</span>
 				</div>
 
@@ -1001,9 +1051,24 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (totalHours < 45) complexity = "Básica";
 			else if (totalHours > 80) complexity = "Avançada / Enterprise";
 
-			document.getElementById('calc-price-range').innerText = `R$ ${minPrice.toLocaleString('pt-BR')} - R$ ${maxPrice.toLocaleString('pt-BR')}`;
-			document.getElementById('calc-hours-display').innerText = `⏱️ Carga de desenvolvimento: ~${totalHours} horas úteis`;
-			document.getElementById('calc-complexity-badge').innerText = complexity;
+			const priceStr = "R$ " + minPrice.toLocaleString('pt-BR') + " - R$ " + maxPrice.toLocaleString('pt-BR');
+			const hoursStr = "⏱️ ~" + totalHours + " horas úteis de desenvolvimento";
+
+			// Update Desktop Sidebar
+			const pEl = document.getElementById('calc-price-range');
+			const hEl = document.getElementById('calc-hours-display');
+			const cEl = document.getElementById('calc-complexity-badge');
+			if (pEl) pEl.innerText = priceStr;
+			if (hEl) hEl.innerText = hoursStr;
+			if (cEl) cEl.innerText = complexity;
+
+			// Update Inline Mobile/Form Banner
+			const ipEl = document.getElementById('inline-calc-price-range');
+			const ihEl = document.getElementById('inline-calc-hours-display');
+			const icEl = document.getElementById('inline-calc-complexity-badge');
+			if (ipEl) ipEl.innerText = priceStr;
+			if (ihEl) ihEl.innerText = hoursStr;
+			if (icEl) icEl.innerText = "Complexidade: " + complexity;
 		}
 
 		function getQuoteText() {
