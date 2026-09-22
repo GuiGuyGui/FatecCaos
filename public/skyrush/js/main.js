@@ -1693,9 +1693,22 @@ class GameClient {
             });
         });
 
-        // Quick Play / Test Solo Button (Host Starts Instantly in Local Offline Mode)
+        // Initialize Nickname from active logged-in profile or Convidado
+        const savedUser = (function() {
+            try { return JSON.parse(localStorage.getItem('omnivoid_current_user')); } catch(e) { return null; }
+        })();
+        const nickInput = document.getElementById('nicknameInput');
+        if (nickInput) {
+            if (savedUser && savedUser.nickname) {
+                nickInput.value = savedUser.nickname;
+            } else if (!nickInput.value) {
+                nickInput.value = 'Convidado_' + Math.floor(Math.random() * 899 + 100);
+            }
+        }
+
+        // Quick Play / Test Solo Button (Starts Instantly in Local Mode)
         document.getElementById('btnQuickPlay')?.addEventListener('click', () => {
-            const name = document.getElementById('nicknameInput').value.trim() || 'Host';
+            const name = document.getElementById('nicknameInput').value.trim() || ('Convidado_' + Math.floor(Math.random() * 899 + 100));
             window.soundEngine.init();
             this.startLocalSoloGame(name, this.selectedColor);
         });

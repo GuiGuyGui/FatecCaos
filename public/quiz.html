@@ -708,20 +708,7 @@ function getCurrentUser() {
 	try {
 		const stored = localStorage.getItem("omnivoid_current_user");
 		if (stored) return JSON.parse(stored);
-		// Default profile for Guilherme Mendes
-		return {
-			name: "Guilherme Mendes",
-			nickname: "GuiGuy",
-			turma: "Criador & Lead Developer",
-			email: "guilherme@omnivoidstudios.com.br",
-			avatar: "🧑‍🚀",
-			level: 99,
-			xp: 99999,
-			cash: 99999,
-			maxWave: 99,
-			kills: 99999,
-			score: 99999
-		};
+		return null; // Visitantes são convidados por padrão (não pré-carrega GuiGuy)
 	} catch (e) {
 		return null;
 	}
