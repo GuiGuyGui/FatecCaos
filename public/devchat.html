@@ -15,9 +15,9 @@
 				--bg-card-hover: #121217;
 				--bg-card-alt: #16161d;
 				--accent-white: #ffffff;
-				--accent-silver: #e4e4e7;
+				--accent-silver: #ffffff;
 				--text-main: #ffffff;
-				--text-muted: #94949e;
+				--text-muted: #ffffff;
 				--border-color: rgba(255, 255, 255, 0.12);
 				--border-hover: rgba(255, 255, 255, 0.38);
 			}
@@ -116,8 +116,10 @@
 			}
 
 			.nav-link.active {
-				color: #000000 !important;
-				background: #ffffff;
+				color: #ffffff !important;
+				background: rgba(255, 255, 255, 0.18);
+				border: 1.5px solid #ffffff;
+				box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
 				font-weight: 800;
 			}
 
@@ -143,8 +145,9 @@
 			}
 
 			.nav-auth-btn:hover {
-				background: #ffffff;
-				color: #000000;
+				background: rgba(255, 255, 255, 0.25);
+				color: #ffffff;
+				border-color: #ffffff;
 			}
 
 			.user-pill-btn {
@@ -169,7 +172,7 @@
 
 			.user-level-badge {
 				background: #ffffff;
-				color: #000000 !important;
+				color: #ffffff !important;
 				padding: 1px 7px;
 				border-radius: 10px;
 				font-size: 10.5px;
@@ -210,26 +213,18 @@
 
 			/* Buttons */
 			.btn-primary {
-				background: #ffffff;
-				color: #000000 !important;
-				text-decoration: none;
-				padding: 13px 26px;
-				border-radius: 10px;
-				font-size: 14.5px;
-				font-weight: 800;
-				transition: all 0.25s ease;
-				box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
-				display: inline-flex;
-				align-items: center;
-				gap: 8px;
-				border: 1px solid #ffffff;
-				cursor: pointer;
+				background: rgba(255, 255, 255, 0.15);
+				color: #ffffff !important;
+				border: 1.5px solid #ffffff;
+				box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
 			}
 
 			.btn-primary:hover {
+				background: rgba(255, 255, 255, 0.3);
+				color: #ffffff !important;
+				border-color: #ffffff;
+				box-shadow: 0 0 24px rgba(255, 255, 255, 0.5);
 				transform: translateY(-2px);
-				background: #e4e4e7;
-				box-shadow: 0 8px 30px rgba(255, 255, 255, 0.45);
 			}
 
 			.btn-secondary {
@@ -317,7 +312,7 @@
 			.leaderboard-table td {
 				padding: 14px 18px;
 				border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-				color: #e2e8f0;
+				color: #ffffff;
 			}
 
 			.leaderboard-table tr:hover {
@@ -330,8 +325,8 @@
 			}
 
 			.rank-1 { color: #ffffff; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
-			.rank-2 { color: #d4d4d8; }
-			.rank-3 { color: #a1a1aa; }
+			.rank-2 { color: #ffffff; }
+			.rank-3 { color: #ffffff; }
 
 			.player-cell {
 				display: flex;
@@ -401,7 +396,7 @@
 
 			.modal-close-btn:hover {
 				background: #ffffff;
-				color: #000;
+				color: #ffffff !important;
 			}
 
 			.auth-tab-row {
@@ -425,7 +420,7 @@
 
 			.auth-tab-btn.active {
 				background: #ffffff;
-				color: #000000;
+				color: #ffffff !important;
 			}
 
 			.input-field {
@@ -487,7 +482,7 @@
 				border-top: 1px solid rgba(255, 255, 255, 0.08);
 				padding: 40px 0;
 				font-size: 13px;
-				color: #71717a;
+				color: #ffffff;
 				text-align: center;
 				margin-top: auto;
 			}
@@ -546,7 +541,7 @@
 			.channel-btn {
 				background: #101016;
 				border: 1px solid rgba(255, 255, 255, 0.12);
-				color: #cbd5e1;
+				color: #ffffff;
 				padding: 10px 14px;
 				border-radius: 8px;
 				font-size: 13.5px;
@@ -568,7 +563,7 @@
 			.channel-btn.active {
 				background: #ffffff;
 				border-color: #ffffff;
-				color: #000000 !important;
+				color: #ffffff !important;
 				font-weight: 800;
 			}
 
@@ -696,7 +691,7 @@
 
 			.badge-prof {
 				background: #ffffff;
-				color: #000000 !important;
+				color: #ffffff !important;
 				font-weight: 800;
 			}
 
@@ -719,7 +714,7 @@
 
 			.msg-text {
 				font-size: 13.5px;
-				color: #d4d4d8;
+				color: #ffffff;
 				line-height: 1.6;
 				margin-bottom: 12px;
 				white-space: pre-wrap;
@@ -792,13 +787,21 @@
 
 			.act-btn:hover {
 				background: #ffffff;
-				color: #000000;
+				color: #ffffff !important;
 			}
 
 			.chat-input-area {
 				background: #0d0d12;
 				border-top: 1px solid rgba(255, 255, 255, 0.12);
 				padding: 20px 24px;
+			}
+		
+			/* Universal Pure White Typography */
+			body, p, span, a, h1, h2, h3, h4, h5, h6, label, input, textarea, select, button, th, td, li, div, b, strong, i, em, small, time {
+				color: #ffffff;
+			}
+			::placeholder {
+				color: rgba(255, 255, 255, 0.65) !important;
 			}
 		</style>
 		<link rel="icon" type="image/png" href="logo_omnivoid.png" />
@@ -1379,7 +1382,7 @@ function renderMessages() {
 							<span style="color: #ffffff;">${r.avatar || '💬'} ${r.author} ${r.isProf ? '🎓 [Professor]' : ''}</span>
 							<span style="font-size: 11px; color: var(--text-muted); font-weight: normal;">${r.time}</span>
 						</div>
-						<p style="color: #e2e8f0; line-height: 1.5;">${escapeHtml(r.text)}</p>
+						<p style="color: #ffffff; line-height: 1.5;">${escapeHtml(r.text)}</p>
 					</div>
 				`;
 			});
