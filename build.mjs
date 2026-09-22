@@ -815,38 +815,73 @@ const indexHtml = `<!DOCTYPE html>
 
 	<main class="container">
 		<!-- Developer Profile & Bio Section with Photo Slot & Special Dedication to Rita -->
-		<section class="card" style="margin: 30px 0 50px 0; border: 1px solid var(--border-bright); background: linear-gradient(135deg, rgba(21,21,34,0.95) 0%, rgba(13,13,20,0.95) 100%);">
-			<div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;">
+		<section class="card" style="margin: 30px 0 50px 0; border: 1px solid var(--border-bright); background: linear-gradient(135deg, rgba(21,21,34,0.95) 0%, rgba(13,13,20,0.98) 100%);">
+			<div style="display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: flex-start;">
 				<!-- Photo Slot with upload option -->
-				<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-					<div class="profile-avatar-frame">
+				<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 6px;">
+					<div class="profile-avatar-frame" style="width: 175px; height: 175px;">
 						<img src="guilherme_mendes.jpg" onerror="this.onerror=null; this.src='logo_omnivoid.png';" alt="Guilherme Mendes" class="profile-avatar-img dev-profile-photo-target">
 					</div>
-					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 5px 12px; cursor: pointer;">
-						📷 Enviar Minha Foto
+					<label for="dev-photo-input" class="btn-secondary" style="font-size: 11px; padding: 6px 14px; cursor: pointer; text-align: center;">
+						📷 Alterar Minha Foto
 					</label>
 					<input type="file" id="dev-photo-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+					<span style="font-size: 11px; opacity: 0.75; text-align: center;">Arquivo: guilherme_mendes.jpg</span>
 				</div>
 
-				<!-- Bio & Dedication to Rita -->
+				<!-- Bio, Pillars & Dedication to Rita -->
 				<div>
-					<div class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary); margin-bottom: 12px;">
-						⚡ Desenvolvedor & Criador OmniVoid
+					<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(0, 240, 255, 0.15); border-color: var(--accent-primary);">⚡ Desenvolvedor Full-Stack</span>
+						<span class="badge" style="background: rgba(157, 78, 221, 0.15); border-color: var(--accent-purple);">🎓 Educação Tecnológica</span>
+						<span class="badge" style="background: rgba(0, 255, 136, 0.15); border-color: var(--accent-emerald);">🛡️ Segurança da Informação</span>
 					</div>
-					<h1 style="font-size: 34px; margin-bottom: 12px; line-height: 1.2;">
+
+					<h1 style="font-size: 36px; margin-bottom: 14px; line-height: 1.2;">
 						Guilherme Mendes
 					</h1>
-					<p style="font-size: 16px; line-height: 1.6; margin-bottom: 18px; opacity: 0.95;">
-						Sou um desenvolvedor movido por desafios cada vez maiores, apaixonado por criar arquiteturas inovadoras, jogos envolventes e sistemas de alta performance. Busco constantemente superar limites técnicos na engenharia de software e no universo dos games.
+
+					<p style="font-size: 17px; line-height: 1.7; margin-bottom: 20px; opacity: 0.95;">
+						Sempre fui apaixonado por criar projetos e desafios cada vez maiores e mais ambiciosos que os anteriores, superando limites técnicos e transformando ideias complexas em experiências interativas reais. Minha jornada une a paixão pelo desenvolvimento de software de alta performance, a educação através da tecnologia e o compromisso rigoroso com a segurança da informação.
 					</p>
 
-					<!-- Special Dedication to Rita -->
-					<div style="background: rgba(255, 0, 85, 0.1); border: 1px solid rgba(255, 0, 85, 0.35); border-left: 4px solid var(--accent-danger); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
-						<div style="font-weight: 800; font-size: 14px; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-							<span>❤️ Agradecimento Especial</span>
+					<!-- 3 Pilares em Cards -->
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
+						<div style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-primary) !important;">
+								💻 Desenvolvimento & Games
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Arquitetura de sistemas, engines de jogos (Godot 4, C++, WebAssembly), netcode em tempo real e interfaces fluidas.
+							</p>
 						</div>
-						<p style="font-size: 14px; line-height: 1.5; opacity: 0.95;">
-							Um agradecimento muito especial e carinhoso para a minha <b>Rita</b>, que está sempre ao meu lado, me incentiva incansavelmente a ir além, acredita nos meus projetos e me apoia em cada grande desafio!
+
+						<div style="background: rgba(157, 78, 221, 0.05); border: 1px solid rgba(157, 78, 221, 0.2); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-purple) !important;">
+								🎓 Educação & Inclusão Tech
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Criação de quizzes vocacionais, simuladores didáticos e experiências que engajam e capacitam futuros desenvolvedores.
+							</p>
+						</div>
+
+						<div style="background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 14px;">
+							<div style="font-weight: 800; font-size: 14px; margin-bottom: 6px; color: var(--accent-emerald) !important;">
+								🛡️ Segurança da Informação
+							</div>
+							<p style="font-size: 13px; line-height: 1.5; opacity: 0.9;">
+								Proteção de dados, integridade de arquiteturas, isolamento de processos (COOP/COEP) e desenvolvimento seguro (DevSecOps).
+							</p>
+						</div>
+					</div>
+
+					<!-- Special Dedication to Rita -->
+					<div style="background: linear-gradient(135deg, rgba(255, 0, 85, 0.12) 0%, rgba(157, 78, 221, 0.12) 100%); border: 1px solid rgba(255, 0, 85, 0.4); border-left: 5px solid var(--accent-danger); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(255, 0, 85, 0.15);">
+						<div style="font-weight: 800; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+							<span>❤️ Dedicatória & Agradecimento Especial para Minha Rita</span>
+						</div>
+						<p style="font-size: 14px; line-height: 1.6; opacity: 0.95;">
+							Um agradecimento de todo o coração para a minha amada <b>Rita</b>, que é meu porto seguro, me incentiva incansavelmente a sonhar mais alto, acredita na minha capacidade e está sempre ao meu lado me apoiando em cada projeto, código e desafio!
 						</p>
 					</div>
 
@@ -859,6 +894,9 @@ const indexHtml = `<!DOCTYPE html>
 						</a>
 						<a href="quiz.html" class="btn-secondary" style="border-color: var(--accent-purple);">
 							🧠 Teste de Programação
+						</a>
+						<a href="projetos.html" class="btn-secondary">
+							🚀 Ver Projetos
 						</a>
 					</div>
 				</div>
@@ -1934,12 +1972,15 @@ const projetosHtml = `<!DOCTYPE html>
 
 	<main class="container">
 		<section style="margin: 30px 0 40px 0;">
-			<span class="badge" style="background: rgba(0,240,255,0.15); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 12px;">
-				🚀 Portfólio de Engenharia & GameDev • Guilherme Mendes
-			</span>
-			<h1 style="font-size: 38px; margin-bottom: 12px;">Projetos Desenvolvidos</h1>
-			<p style="font-size: 16px; opacity: 0.85; max-width: 780px; line-height: 1.6;">
-				Conheça os principais softwares, jogos e sistemas criados com foco em alta performance, estabilidade e experiência do usuário.
+			<div class="badge" style="background: rgba(0,240,255,0.15); border-color: var(--accent-primary); font-size: 13px; margin-bottom: 12px;">
+				🚀 Portfólio de Engenharia, Games & Segurança • Guilherme Mendes
+			</div>
+			<h1 style="font-size: 38px; margin-bottom: 14px;">Projetos & Criações Técnicas</h1>
+			<p style="font-size: 16px; opacity: 0.95; max-width: 880px; line-height: 1.7; margin-bottom: 18px;">
+				Sempre busquei criar projetos cada vez mais desafiadores, unindo <b>Desenvolvimento de Software</b>, <b>Educação Tecnológica</b> e <b>Segurança da Informação</b>. Cada projeto abaixo reflete a busca contínua por inovação, desempenho extremo e robustez técnica.
+			</p>
+			<p style="font-size: 14px; color: var(--accent-primary) !important;">
+				❤️ Dedicado com carinho à minha parceira e incentivadora <b>Rita</b>.
 			</p>
 		</section>
 
