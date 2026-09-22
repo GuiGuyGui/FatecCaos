@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/JumpPad.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/general/spr_jumper/spr_jumper_0.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(32, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(48, 30)
+
+[node name="JumpPad" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+offset = Vector2(0, -8)
+
+[node name="TriggerArea" type="Area2D" parent="."]
+position = Vector2(0, -6)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="InteractArea" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="PromptLabel" type="Label" parent="."]
+z_index = 50
+offset_left = -110.0
+offset_top = -35.0
+offset_right = 110.0
+offset_bottom = -15.0
+theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "[E] Comprar Plataforma de Pulo ($ 500)"
+horizontal_alignment = 1
+vertical_alignment = 1

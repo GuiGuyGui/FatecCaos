@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/MysteryBox.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/spr_random_machine/spr_random_machine_0.png" id="2_box"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(80, 60)
+
+[node name="MysteryBox" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="BoxSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -29)
+texture = ExtResource("2_box")
+
+[node name="WeaponPreview" type="Sprite2D" parent="."]
+position = Vector2(0, -50)
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_area")
+
+[node name="PromptLabel" type="Label" parent="."]
+z_index = 50
+offset_left = -110.0
+offset_top = -75.0
+offset_right = 110.0
+offset_bottom = -55.0
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Caixa Misteriosa ($ 950)"
+horizontal_alignment = 1
+vertical_alignment = 1

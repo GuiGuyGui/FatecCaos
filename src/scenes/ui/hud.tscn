@@ -1,0 +1,630 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/effects/spr_bloody_head/spr_bloody_head_0.png" id="2_head"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/spr_hud2/spr_hud2_0.png" id="3_hud_panel"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/spr_handgun_ico/spr_handgun_ico.png" id="4_gun1_ico"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/spr_shotgun_ico/spr_shotgun_ico.png" id="5_gun2_ico"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/spr_shortcut_icons/spr_shortcut_icons_0.png" id="6_suitcase"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/spr_hud_grenades/spr_hud_grenades.png" id="7_grenade"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/spr_saw_ico/spr_saw_ico.png" id="8_chainsaw"]
+[ext_resource type="Texture2D" path="res://assets/sprites/general/spr_aim/spr_aim.png" id="9_aim"]
+[ext_resource type="Script" path="res://scripts/ui/Radar.gd" id="10_radar_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.75, 0.08, 0.08, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xp_fill"]
+bg_color = Color(0.15, 0.65, 0.95, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(0.9, 0.1, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.08, 0.18, 0.25, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.6, 0.8, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obj_bg"]
+bg_color = Color(0.05, 0.08, 0.14, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15, 0.75, 1, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obj_fill"]
+bg_color = Color(0.2, 0.85, 0.4, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud_script")
+
+[node name="TopLeft" type="Control" parent="."]
+mouse_filter = 2
+layout_mode = 3
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 260.0
+offset_bottom = 65.0
+
+[node name="HealthBar" type="ProgressBar" parent="TopLeft"]
+layout_mode = 0
+offset_top = 0.0
+offset_right = 135.0
+offset_bottom = 13.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 100.0
+show_percentage = false
+
+[node name="LvlLabel" type="Label" parent="TopLeft/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = "LVL: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XPBar" type="ProgressBar" parent="TopLeft"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 135.0
+offset_bottom = 19.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xp_fill")
+value = 0.0
+show_percentage = false
+
+[node name="StatsHBox" type="HBoxContainer" parent="TopLeft"]
+layout_mode = 0
+offset_top = 23.0
+offset_right = 220.0
+offset_bottom = 41.0
+theme_override_constants/separation = 6
+
+[node name="KillsPanel" type="PanelContainer" parent="TopLeft/StatsHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hp_bg")
+
+[node name="KillsLabel" type="Label" parent="TopLeft/StatsHBox/KillsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "💀 0"
+
+[node name="HeadshotPanel" type="PanelContainer" parent="TopLeft/StatsHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hp_bg")
+
+[node name="HeadshotsLabel" type="Label" parent="TopLeft/StatsHBox/HeadshotPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "🎯 0"
+
+[node name="WaveZombiesPanel" type="PanelContainer" parent="TopLeft/StatsHBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hp_bg")
+
+[node name="RemainingZombiesLabel" type="Label" parent="TopLeft/StatsHBox/WaveZombiesPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "🧟 16/16"
+
+[node name="TopCenter" type="Control" parent="."]
+mouse_filter = 2
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 45.0
+grow_horizontal = 2
+
+[node name="BossContainer" type="VBoxContainer" parent="TopCenter"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="BossNameLabel" type="Label" parent="TopCenter/BossContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "☠ MACACO TANK BOSS ☠"
+horizontal_alignment = 1
+
+[node name="BossHealthBar" type="ProgressBar" parent="TopCenter/BossContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+value = 100.0
+show_percentage = false
+
+[node name="ComboContainer" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -110.0
+offset_right = 120.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="ComboTitleLabel" type="Label" parent="ComboContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "MULTI KILL!"
+horizontal_alignment = 1
+
+[node name="ComboBonusLabel" type="Label" parent="ComboContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 11
+text = "+$60 (+200 PTS)"
+horizontal_alignment = 1
+
+[node name="ComboTimerBar" type="ProgressBar" parent="ComboContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+max_value = 3.2
+value = 3.2
+show_percentage = false
+
+[node name="LevelUpBanner" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 55.0
+offset_right = 120.0
+offset_bottom = 85.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "★ LEVEL UP! ★"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundAnnouncementBanner" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -65.0
+offset_right = 220.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(220, 45)
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="RoundAnnouncementBanner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "⚔️ ROUND 1 ⚔️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="RoundAnnouncementBanner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "🧟 16 Zumbis se aproximando..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+mouse_filter = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -30.0
+offset_right = 300.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PerksRow" type="HBoxContainer" parent="BottomBar"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ActivePowerUps" type="HBoxContainer" parent="BottomBar"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="EquipmentPanel" type="PanelContainer" parent="BottomBar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="EquipmentHBox" type="HBoxContainer" parent="BottomBar/EquipmentPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GrenadeLabel" type="Label" parent="BottomBar/EquipmentPanel/EquipmentHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 9
+text = "💣 [G] 3"
+
+[node name="MolotovLabel" type="Label" parent="BottomBar/EquipmentPanel/EquipmentHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+theme_override_font_sizes/font_size = 9
+text = "🔥 [F] 2"
+
+[node name="LandmineLabel" type="Label" parent="BottomBar/EquipmentPanel/EquipmentHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 9
+text = "💥 [B] 2"
+
+[node name="FlashlightLabel" type="Label" parent="BottomBar/EquipmentPanel/EquipmentHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "🔦 [T] ON"
+
+[node name="TopRight" type="Control" parent="."]
+mouse_filter = 2
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 8.0
+offset_right = -10.0
+offset_bottom = 85.0
+grow_horizontal = 0
+
+[node name="HudPanel" type="TextureRect" parent="TopRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_hud_panel")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmmoDotsLabel" type="Label" parent="TopRight/HudPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 65.0
+offset_bottom = 19.0
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "|||||"
+
+[node name="AmmoNumLabel" type="Label" parent="TopRight/HudPanel"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 4.0
+offset_right = 125.0
+offset_bottom = 20.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "5/49"
+
+[node name="DollarSign" type="Label" parent="TopRight/HudPanel"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 16.0
+offset_right = 118.0
+offset_bottom = 34.0
+theme_override_colors/font_color = Color(1, 0.85, 0.1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "$"
+
+[node name="MoneyLabel" type="Label" parent="TopRight/HudPanel"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 16.0
+offset_right = 175.0
+offset_bottom = 34.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "45"
+
+[node name="RoundLabel" type="Label" parent="TopRight/HudPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 130.0
+offset_bottom = 56.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 15
+text = "ROUND 1"
+
+[node name="RightSlots" type="VBoxContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -25.0
+offset_right = -10.0
+offset_bottom = 25.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="WeaponsRow" type="HBoxContainer" parent="RightSlots"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Slot1" type="Panel" parent="RightSlots/WeaponsRow"]
+custom_minimum_size = Vector2(30, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="RightSlots/WeaponsRow/Slot1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_gun1_ico")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Num" type="Label" parent="RightSlots/WeaponsRow/Slot1"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "1"
+horizontal_alignment = 1
+
+[node name="Slot2" type="Panel" parent="RightSlots/WeaponsRow"]
+custom_minimum_size = Vector2(30, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="RightSlots/WeaponsRow/Slot2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_gun2_ico")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Num" type="Label" parent="RightSlots/WeaponsRow/Slot2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "2"
+horizontal_alignment = 1
+
+[node name="Slot3" type="Panel" parent="RightSlots/WeaponsRow"]
+custom_minimum_size = Vector2(30, 24)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="Icon" type="TextureRect" parent="RightSlots/WeaponsRow/Slot3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Num" type="Label" parent="RightSlots/WeaponsRow/Slot3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "3"
+horizontal_alignment = 1
+
+[node name="ObjectivesWidget" type="Panel" parent="."]
+offset_left = 12.0
+offset_top = 75.0
+offset_right = 195.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_obj_bg")
+
+[node name="VBox" type="VBoxContainer" parent="ObjectivesWidget"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="HeaderHBox" type="HBoxContainer" parent="ObjectivesWidget/VBox"]
+layout_mode = 2
+
+[node name="Tag" type="Label" parent="ObjectivesWidget/VBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 9
+text = "📋 MISSÃO ATIVA"
+
+[node name="Spacer" type="Control" parent="ObjectivesWidget/VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RewardLabel" type="Label" parent="ObjectivesWidget/VBox/HeaderHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_font_sizes/font_size = 9
+text = "+$500"
+
+[node name="Title" type="Label" parent="ObjectivesWidget/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 9
+text = "⚡ Restaurar Energia Central"
+text_overrun_behavior = 3
+
+[node name="ProgressHBox" type="HBoxContainer" parent="ObjectivesWidget/VBox"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="ObjectivesWidget/VBox/ProgressHBox"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/fill = SubResource("StyleBoxFlat_obj_fill")
+max_value = 1.0
+show_percentage = false
+
+[node name="CountLabel" type="Label" parent="ObjectivesWidget/VBox/ProgressHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 8
+text = "0/1"
+
+[node name="CustomCrosshair" type="Sprite2D" parent="."]
+z_index = 100
+texture = ExtResource("9_aim")
+scale = Vector2(0.25, 0.25)

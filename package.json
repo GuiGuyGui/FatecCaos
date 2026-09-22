@@ -1,0 +1,27 @@
+{
+  "name": "fateccaos",
+  "version": "1.4.0",
+  "description": "FatecCaos - Jogo Cooperativo de Sobrevivência Zumbi para até 7 Jogadores no Navegador",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "game",
+    "godot",
+    "multiplayer",
+    "zombie",
+    "coop",
+    "render",
+    "webassembly"
+  ],
+  "author": "FatecCaos Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

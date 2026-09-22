@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/PowerGenerator.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/spr_OK_fridge/spr_OK_fridge_0.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(80, 80)
+
+[node name="PowerGenerator" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("2_tex")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_area")
+
+[node name="PromptLabel" type="Label" parent="."]
+z_index = 50
+offset_left = -140.0
+offset_top = -85.0
+offset_right = 140.0
+offset_bottom = -65.0
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Ligar Energia Central (Grátis)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -32)
+color = Color(1, 0.2, 0.2, 1)
+energy = 0.8
+texture = ExtResource("2_tex")
+texture_scale = 1.5

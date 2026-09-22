@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/bg_hospital_room_4f_pediatrics.png" id="1_bg"]
+
+[node name="RoomPediatrics" type="Node2D"]
+z_index = -15
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_bg")

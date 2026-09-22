@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/BossZombie.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/spr_tank/spr_tank_0.png" id="2_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss"]
+radius = 18.0
+height = 62.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_head"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_slam"]
+radius = 80.0
+
+[node name="BossZombie" type="CharacterBody2D" groups=["bosses", "zombies"]]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -31)
+shape = SubResource("CapsuleShape2D_boss")
+
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_tex")
+centered = false
+offset = Vector2(-34, -66)
+
+[node name="BloodOverlay" type="Sprite2D" parent="Visuals"]
+visible = false
+z_index = 1
+centered = false
+offset = Vector2(-34, -66)
+
+[node name="HeadArea" type="Area2D" parent="."]
+position = Vector2(0, -52)
+collision_layer = 2
+collision_mask = 4
+
+[node name="HeadCollision" type="CollisionShape2D" parent="HeadArea"]
+shape = SubResource("CircleShape2D_head")
+
+[node name="SlamArea" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 2
+collision_mask = 1
+
+[node name="SlamCollision" type="CollisionShape2D" parent="SlamArea"]
+shape = SubResource("CircleShape2D_slam")

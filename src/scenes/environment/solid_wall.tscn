@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/SolidWall.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles_clean/hospital_brick.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(32, 200)
+
+[node name="SolidWall" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+wall_size = Vector2(32, 200)
+border_color = Color(1, 0.55, 0.1, 0.9)
+fill_color = Color(0.12, 0.14, 0.18, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="FillColor" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -16.0
+offset_top = -100.0
+offset_right = 16.0
+offset_bottom = 100.0
+color = Color(0.12, 0.14, 0.18, 1)
+
+[node name="WallTexture" type="TextureRect" parent="."]
+offset_left = -16.0
+offset_top = -100.0
+offset_right = 16.0
+offset_bottom = 100.0
+texture = ExtResource("2_tex")
+stretch_mode = 1
+
+[node name="HighlightBorder" type="ReferenceRect" parent="."]
+z_index = 1
+offset_left = -16.0
+offset_top = -100.0
+offset_right = 16.0
+offset_bottom = 100.0
+border_color = Color(1, 0.55, 0.1, 0.9)
+border_width = 2.0
+editor_only = false

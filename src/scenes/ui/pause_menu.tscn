@@ -1,0 +1,114 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/PauseMenu.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.05, 0.06, 0.08, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.5, 0.7, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 90
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -140.0
+offset_right = 130.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 10.0
+offset_right = 80.0
+offset_bottom = 30.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 13
+text = "JOGO PAUSADO"
+horizontal_alignment = 1
+
+[node name="SettingsBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 35.0
+offset_right = 110.0
+offset_bottom = 145.0
+grow_horizontal = 2
+theme_override_constants/separation = 4
+
+[node name="MusicLabel" type="Label" parent="Panel/SettingsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "MÚSICA: 80%"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/SettingsBox"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="SfxLabel" type="Label" parent="Panel/SettingsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "EFEITOS SONOROS: 100%"
+
+[node name="SfxSlider" type="HSlider" parent="Panel/SettingsBox"]
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="FullscreenCheck" type="CheckBox" parent="Panel/SettingsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Tela Cheia (Fullscreen)"
+
+[node name="ButtonBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -120.0
+offset_right = 110.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="ResumeBtn" type="Button" parent="Panel/ButtonBox"]
+layout_mode = 2
+text = "CONTINUAR"
+
+[node name="RestartBtn" type="Button" parent="Panel/ButtonBox"]
+layout_mode = 2
+text = "REINICIAR"
+
+[node name="MenuBtn" type="Button" parent="Panel/ButtonBox"]
+layout_mode = 2
+text = "MENU PRINCIPAL"

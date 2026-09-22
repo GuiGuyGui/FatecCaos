@@ -1,0 +1,826 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/bg_mainmenu.png" id="2_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/spr_player_stand/spr_player_stand.png" id="4_body"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/spr_player_pants_stand/spr_player_pants_stand.png" id="5_pants"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/spr_player_torso/spr_player_torso_0.png" id="6_torso"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/spr_hair/spr_hair_0.png" id="7_hair"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MainPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChaosTitle" type="Label" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 25.0
+offset_right = 300.0
+offset_bottom = 85.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.12, 0.12, 1)
+theme_override_colors/font_shadow_color = Color(0.15, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.35, 0.02, 0.02, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "🩸 FATEC DO CAOS 🩸"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapSelector" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -88.0
+offset_right = 180.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PrevMapBtn" type="Button" parent="MainPanel/MapSelector"]
+custom_minimum_size = Vector2(38, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "◀"
+
+[node name="MapLabel" type="Label" parent="MainPanel/MapSelector"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.25, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 16
+text = "🏫 Polivalente"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextMapBtn" type="Button" parent="MainPanel/MapSelector"]
+custom_minimum_size = Vector2(38, 36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "▶"
+
+[node name="MenuButtons" type="VBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -42.0
+offset_right = 130.0
+offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="SingleplayerBtn" type="Button" parent="MainPanel/MenuButtons"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "JOGAR SOLO"
+
+[node name="HostBtn" type="Button" parent="MainPanel/MenuButtons"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "CRIAR SALA ONLINE"
+
+[node name="JoinBtn" type="Button" parent="MainPanel/MenuButtons"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "ENTRAR EM SALA"
+
+[node name="WorkbenchBtn" type="Button" parent="MainPanel/MenuButtons"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "👤 JOGADOR (BANCADA & ARSENAL)"
+
+[node name="AchievementsBtn" type="Button" parent="MainPanel/MenuButtons"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "🏆 CONQUISTAS"
+
+[node name="JoinBox" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -45.0
+offset_right = 140.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="CodeInput" type="LineEdit" parent="MainPanel/JoinBox"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+placeholder_text = "CÓDIGO (ex: ZKW-8492)"
+alignment = 1
+
+[node name="JoinConfirmBtn" type="Button" parent="MainPanel/JoinBox"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "CONECTAR"
+
+[node name="LobbyPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyCard" type="Panel" parent="LobbyPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoomCodeLabel" type="Label" parent="LobbyPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "CÓDIGO DA SALA: ZKW-0000"
+horizontal_alignment = 1
+
+[node name="PlayersList" type="VBoxContainer" parent="LobbyPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -45.0
+offset_right = 130.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartGameBtn" type="Button" parent="LobbyPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -100.0
+offset_right = 110.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "INICIAR PARTIDA"
+
+[node name="LeaveLobbyBtn" type="Button" parent="LobbyPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "VOLTAR"
+
+[node name="CustomPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PreviewBox" type="Node2D" parent="CustomPanel"]
+position = Vector2(320, 160)
+scale = Vector2(2, 2)
+
+[node name="Body" type="Sprite2D" parent="CustomPanel/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("4_body")
+
+[node name="Pants" type="Sprite2D" parent="CustomPanel/PreviewBox"]
+modulate = Color(0.48, 0.5, 0.54, 1)
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("5_pants")
+
+[node name="Torso" type="Sprite2D" parent="CustomPanel/PreviewBox"]
+modulate = Color(0.2, 0.45, 0.65, 1)
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("6_torso")
+
+[node name="Hair" type="Sprite2D" parent="CustomPanel/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("7_hair")
+
+[node name="TorsoControls" type="HBoxContainer" parent="CustomPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -140.0
+offset_right = 140.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="TorsoPrevBtn" type="Button" parent="CustomPanel/TorsoControls"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "◀"
+
+[node name="TorsoLabel" type="Label" parent="CustomPanel/TorsoControls"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "CAMISA: #0"
+horizontal_alignment = 1
+
+[node name="TorsoNextBtn" type="Button" parent="CustomPanel/TorsoControls"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "▶"
+
+[node name="HairControls" type="HBoxContainer" parent="CustomPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -100.0
+offset_right = 140.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="PrevBtn" type="Button" parent="CustomPanel/HairControls"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "◀"
+
+[node name="Label" type="Label" parent="CustomPanel/HairControls"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "CABELO: #0"
+horizontal_alignment = 1
+
+[node name="NextBtn" type="Button" parent="CustomPanel/HairControls"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "▶"
+
+[node name="BackBtn" type="Button" parent="CustomPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -50.0
+offset_right = 60.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "SALVAR & VOLTAR"
+
+[node name="AchievementsPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AchievementsCard" type="Panel" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -140.0
+offset_right = 220.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 50.0
+offset_right = 150.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "🏆 CONQUISTAS & DESAFIOS"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -60.0
+offset_right = 200.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AchievementsList" type="VBoxContainer" parent="AchievementsPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="BackAchievementsBtn" type="Button" parent="AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "VOLTAR"
+
+[node name="WorkbenchPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="Panel" parent="WorkbenchPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -165.0
+offset_right = 290.0
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeaderBox" type="VBoxContainer" parent="WorkbenchPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 18.0
+offset_right = 280.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="WorkbenchPanel/HeaderBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "👤 HUB DO JOGADOR & BANCADA"
+horizontal_alignment = 1
+
+[node name="CurrenciesRow" type="HBoxContainer" parent="WorkbenchPanel/HeaderBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CareerCashLabel" type="Label" parent="WorkbenchPanel/HeaderBox/CurrenciesRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "💰 DINHEIRO: $ 5000"
+horizontal_alignment = 1
+
+[node name="ScrapLabel" type="Label" parent="WorkbenchPanel/HeaderBox/CurrenciesRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚙️ SUCATAS: 25"
+horizontal_alignment = 1
+
+[node name="TabButtons" type="HBoxContainer" parent="WorkbenchPanel/HeaderBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="PlayerTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(82, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "👤 ATRIBUTOS"
+
+[node name="WeaponryTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(80, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "🔫 ARSENAL"
+
+[node name="WeaponTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(80, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "🛠️ BANCADA"
+
+[node name="AccessoriesTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(82, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "🎒 ACESSÓRIOS"
+
+[node name="AppearanceTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(80, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "👕 APARÊNCIA"
+
+[node name="StatsTabBtn" type="Button" parent="WorkbenchPanel/HeaderBox/TabButtons"]
+custom_minimum_size = Vector2(82, 22)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "📊 ESTATÍSTICAS"
+
+[node name="PlayerStatsView" type="ScrollContainer" parent="WorkbenchPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttributesList" type="VBoxContainer" parent="WorkbenchPanel/PlayerStatsView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="WeaponryView" type="ScrollContainer" parent="WorkbenchPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WeaponryList" type="VBoxContainer" parent="WorkbenchPanel/WeaponryView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="WeaponStatsView" type="Control" parent="WorkbenchPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WeaponSelectorRow" type="HBoxContainer" parent="WorkbenchPanel/WeaponStatsView"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 5.0
+offset_right = 160.0
+offset_bottom = 30.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PrevWpnBtn" type="Button" parent="WorkbenchPanel/WeaponStatsView/WeaponSelectorRow"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+text = "◀"
+
+[node name="WpnNameLabel" type="Label" parent="WorkbenchPanel/WeaponStatsView/WeaponSelectorRow"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_font_sizes/font_size = 11
+text = "M9 Pistol"
+horizontal_alignment = 1
+
+[node name="NextWpnBtn" type="Button" parent="WorkbenchPanel/WeaponStatsView/WeaponSelectorRow"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+text = "▶"
+
+[node name="WpnIcon" type="TextureRect" parent="WorkbenchPanel/WeaponStatsView"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -40.0
+offset_right = 125.0
+offset_bottom = 40.0
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WpnUpgradesVBox" type="VBoxContainer" parent="WorkbenchPanel/WeaponStatsView"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -55.0
+offset_right = -15.0
+offset_bottom = 65.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="AccessoriesView" type="ScrollContainer" parent="WorkbenchPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AccessoriesList" type="VBoxContainer" parent="WorkbenchPanel/AccessoriesView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="AppearanceView" type="Control" parent="WorkbenchPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PreviewBox" type="Node2D" parent="WorkbenchPanel/AppearanceView"]
+position = Vector2(100, 100)
+scale = Vector2(2.2, 2.2)
+
+[node name="Body" type="Sprite2D" parent="WorkbenchPanel/AppearanceView/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("4_body")
+
+[node name="Pants" type="Sprite2D" parent="WorkbenchPanel/AppearanceView/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("5_pants")
+
+[node name="Torso" type="Sprite2D" parent="WorkbenchPanel/AppearanceView/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("6_torso")
+
+[node name="Hair" type="Sprite2D" parent="WorkbenchPanel/AppearanceView/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+texture = ExtResource("7_hair")
+
+[node name="Accessory" type="Sprite2D" parent="WorkbenchPanel/AppearanceView/PreviewBox"]
+position = Vector2(0, -39)
+centered = false
+offset = Vector2(-30, -25)
+
+[node name="ControlsVBox" type="VBoxContainer" parent="WorkbenchPanel/AppearanceView"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -60.0
+offset_right = -15.0
+offset_bottom = 60.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TorsoControls" type="HBoxContainer" parent="WorkbenchPanel/AppearanceView/ControlsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TorsoPrevBtn" type="Button" parent="WorkbenchPanel/AppearanceView/ControlsVBox/TorsoControls"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "◀"
+
+[node name="TorsoLabel" type="Label" parent="WorkbenchPanel/AppearanceView/ControlsVBox/TorsoControls"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "CAMISA: #0"
+horizontal_alignment = 1
+
+[node name="TorsoNextBtn" type="Button" parent="WorkbenchPanel/AppearanceView/ControlsVBox/TorsoControls"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "▶"
+
+[node name="HairControls" type="HBoxContainer" parent="WorkbenchPanel/AppearanceView/ControlsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PrevBtn" type="Button" parent="WorkbenchPanel/AppearanceView/ControlsVBox/HairControls"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "◀"
+
+[node name="Label" type="Label" parent="WorkbenchPanel/AppearanceView/ControlsVBox/HairControls"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "CABELO: #0"
+horizontal_alignment = 1
+
+[node name="NextBtn" type="Button" parent="WorkbenchPanel/AppearanceView/ControlsVBox/HairControls"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+text = "▶"
+
+[node name="EquippedAccessoryLabel" type="Label" parent="WorkbenchPanel/AppearanceView/ControlsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "ACESSÓRIO ATUAL: NENHUM"
+horizontal_alignment = 1
+
+[node name="StatsView" type="ScrollContainer" parent="WorkbenchPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -75.0
+offset_right = 275.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StatsList" type="VBoxContainer" parent="WorkbenchPanel/StatsView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="BackWorkbenchBtn" type="Button" parent="WorkbenchPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -36.0
+offset_right = 60.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "VOLTAR"

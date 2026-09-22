@@ -1,0 +1,144 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over.tscn" id="3_gameover"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="4_pause"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles_clean/hospital_ground.png" id="6_ground"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/snd_hospital_theme.ogg" id="13_music"]
+[ext_resource type="Script" path="res://scripts/environment/WaveSpawner.gd" id="14_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/environment/door.tscn" id="15_door"]
+[ext_resource type="PackedScene" path="res://scenes/environment/weapon_wall_buy.tscn" id="16_wallbuy"]
+[ext_resource type="PackedScene" path="res://scenes/environment/mystery_box.tscn" id="17_box"]
+[ext_resource type="PackedScene" path="res://scenes/environment/perk_machine.tscn" id="18_perk"]
+[ext_resource type="PackedScene" path="res://scenes/environment/upgrade_machine.tscn" id="19_upgrade"]
+[ext_resource type="PackedScene" path="res://scenes/environment/power_generator.tscn" id="21_generator"]
+[ext_resource type="PackedScene" path="res://scenes/environment/jump_pad.tscn" id="22_jumppad"]
+[ext_resource type="PackedScene" path="res://scenes/environment/special_armory_terminal.tscn" id="23_armory"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/bg_hospital_roof_2.png" id="24_bg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2000, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(32, 1000)
+
+[node name="HospitalMap" type="Node2D"]
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="GameOver" parent="." instance=ExtResource("3_gameover")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_music")
+volume_db = -4.0
+autoplay = true
+
+[node name="BackgroundTiles" type="Node2D" parent="."]
+z_index = -20
+
+[node name="RoomBackground" type="Sprite2D" parent="BackgroundTiles"]
+position = Vector2(0, -219)
+texture = ExtResource("24_bg")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="WallBuy_Handgun" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(-280, -40)
+weapon_id = "handgun"
+cost = 0
+
+[node name="WallBuy_Shotgun" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(-220, -40)
+weapon_id = "shotgun"
+cost = 800
+
+[node name="WallBuy_MP5K" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(-160, -40)
+weapon_id = "mp5k"
+cost = 1500
+
+[node name="WallBuy_AK47" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(160, -40)
+weapon_id = "ak47"
+cost = 2500
+
+[node name="WallBuy_AWP" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(220, -40)
+weapon_id = "awp"
+cost = 4000
+
+[node name="WallBuy_Raygun" parent="Interactables" instance=ExtResource("16_wallbuy")]
+position = Vector2(280, -40)
+weapon_id = "raygun"
+cost = 8000
+
+[node name="MysteryBox" parent="Interactables" instance=ExtResource("17_box")]
+position = Vector2(-360, 0)
+
+[node name="Perk_Juggernog" parent="Interactables" instance=ExtResource("18_perk")]
+position = Vector2(360, 0)
+perk_name = "Juggernog"
+
+[node name="Perk_SpeedCola" parent="Interactables" instance=ExtResource("18_perk")]
+position = Vector2(-400, 0)
+perk_type = "speed_cola"
+cost = 2000
+perk_name = "Speed Cola"
+
+[node name="UpgradeMachine" parent="Interactables" instance=ExtResource("19_upgrade")]
+position = Vector2(400, 0)
+
+[node name="LeftDoor_Pay" parent="Interactables" instance=ExtResource("15_door")]
+position = Vector2(-460, 0)
+door_name = "Porta Cobertura Oeste"
+
+[node name="RightDoor_Round" parent="Interactables" instance=ExtResource("15_door")]
+position = Vector2(460, 0)
+door_name = "Porta Cobertura Leste"
+required_round = 3
+
+[node name="PowerGenerator" parent="Interactables" instance=ExtResource("21_generator")]
+position = Vector2(-100, 0)
+
+[node name="JumpPad" parent="Interactables" instance=ExtResource("22_jumppad")]
+position = Vector2(100, 0)
+
+[node name="SpecialArmoryTerminal" parent="Interactables" instance=ExtResource("23_armory")]
+position = Vector2(0, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(0, -10)
+
+[node name="Geometry" type="Node2D" parent="."]
+
+[node name="MainFloor" type="StaticBody2D" parent="Geometry"]
+position = Vector2(0, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/MainFloor"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundTex" type="TextureRect" parent="Geometry/MainFloor"]
+offset_left = -512.0
+offset_top = -16.0
+offset_right = 512.0
+offset_bottom = 16.0
+texture = ExtResource("6_ground")
+stretch_mode = 1
+
+[node name="LeftWall" type="StaticBody2D" parent="Geometry"]
+position = Vector2(-512, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="Geometry"]
+position = Vector2(512, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WaveSpawner" type="Node2D" parent="."]
+script = ExtResource("14_spawner")

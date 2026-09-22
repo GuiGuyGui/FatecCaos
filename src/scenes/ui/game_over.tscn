@@ -1,0 +1,152 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/GameOver.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.06, 0.06, 0.08, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85, 0.15, 0.15, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -150.0
+offset_right = 220.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 10.0
+offset_right = 160.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.15, 0.15, 1)
+theme_override_font_sizes/font_size = 18
+text = "☠ VOCÊ MORREU ☠"
+horizontal_alignment = 1
+
+[node name="StatsBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -105.0
+offset_right = 190.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 3
+
+[node name="RoundsLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "🏆 ROUNDS SOBREVIVIDOS: 1"
+horizontal_alignment = 1
+
+[node name="KillsLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+text = "💀 ZUMBIS ELIMINADOS: 0"
+horizontal_alignment = 1
+
+[node name="HeadshotsLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎯 TIROS NA CABEÇA (HEADSHOTS): 0"
+horizontal_alignment = 1
+
+[node name="MeleeKillsLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "🗡️ ABATES CORPO A CORPO: 0"
+horizontal_alignment = 1
+
+[node name="ExplosiveKillsLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0.2, 1)
+theme_override_font_sizes/font_size = 11
+text = "💣 ABATES POR EXPLOSIVOS: 0"
+horizontal_alignment = 1
+
+[node name="ComboLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.4, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⚡ MAIOR COMBO MULTI-KILL: 0x"
+horizontal_alignment = 1
+
+[node name="CashLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.95, 0.4, 1)
+theme_override_font_sizes/font_size = 12
+text = "💰 DINHEIRO GANHO: $ 500"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "⭐ PONTUAÇÃO FINAL: 0"
+horizontal_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="Panel/StatsBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "👑 RECORDE PESSOAL: 0"
+horizontal_alignment = 1
+
+[node name="ButtonRow" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -42.0
+offset_right = 170.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="RetryBtn" type="Button" parent="Panel/ButtonRow"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "TENTAR DE NOVO"
+
+[node name="MenuBtn" type="Button" parent="Panel/ButtonRow"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "MENU PRINCIPAL"

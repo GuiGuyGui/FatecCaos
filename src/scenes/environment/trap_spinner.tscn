@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/TrapSpinner.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/general/spr_spinner_trap/spr_spinner_trap_0.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
+size = Vector2(46, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 35.0
+
+[node name="TrapSpinner" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+centered = false
+offset = Vector2(-24, -19)
+
+[node name="DamageArea" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 2
+
+[node name="DamageCollision" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("RectangleShape2D_damage")
+
+[node name="InteractArea" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 2
+
+[node name="InteractCollision" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="PromptLabel" type="Label" parent="."]
+offset_left = -100.0
+offset_top = -42.0
+offset_right = 100.0
+offset_bottom = -22.0
+theme_override_font_sizes/font_size = 10
+text = "[E] Ativar Armadilha ($ 1000)"
+horizontal_alignment = 1

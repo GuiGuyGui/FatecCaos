@@ -1,0 +1,263 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over.tscn" id="3_gameover"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="4_pause"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/bg_city_2.png" id="5_city_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/bg_mall_tiles_A.png" id="6_mall_ground"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/snd_mp3_music1.ogg" id="7_music"]
+[ext_resource type="Script" path="res://scripts/environment/WaveSpawner.gd" id="8_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/environment/door.tscn" id="9_door"]
+[ext_resource type="PackedScene" path="res://scenes/environment/weapon_wall_buy.tscn" id="10_wallbuy"]
+[ext_resource type="PackedScene" path="res://scenes/environment/mystery_box.tscn" id="11_box"]
+[ext_resource type="PackedScene" path="res://scenes/environment/perk_machine.tscn" id="12_perk"]
+[ext_resource type="PackedScene" path="res://scenes/environment/upgrade_machine.tscn" id="13_upgrade"]
+[ext_resource type="PackedScene" path="res://scenes/environment/turret.tscn" id="14_turret"]
+[ext_resource type="PackedScene" path="res://scenes/environment/elevator.tscn" id="15_elevator"]
+[ext_resource type="PackedScene" path="res://scenes/environment/trap_spinner.tscn" id="16_trap"]
+[ext_resource type="PackedScene" path="res://scenes/environment/jump_pad.tscn" id="17_jumppad"]
+[ext_resource type="PackedScene" path="res://scenes/environment/special_armory_terminal.tscn" id="18_armory"]
+[ext_resource type="PackedScene" path="res://scenes/environment/ammo_terminal.tscn" id="19_ammoterminal"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(3000, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(420, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(32, 1200)
+
+[node name="CityMallMap" type="Node2D"]
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+[node name="GameOver" parent="." instance=ExtResource("3_gameover")]
+[node name="PauseMenu" parent="." instance=ExtResource("4_pause")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_music")
+autoplay = true
+volume_db = -4.0
+
+[node name="BackgroundTiles" type="Node2D" parent="."]
+z_index = -20
+
+[node name="CityBackground" type="TextureRect" parent="BackgroundTiles"]
+offset_left = -3000.0
+offset_top = -2000.0
+offset_right = 3000.0
+offset_bottom = 2000.0
+texture = ExtResource("5_city_bg")
+stretch_mode = 1
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="WallBuy_Handgun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-280, -30)
+weapon_id = "handgun"
+cost = 0
+
+[node name="WallBuy_DesertEagle" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-230, -30)
+weapon_id = "desert_eagle"
+cost = 750
+
+[node name="WallBuy_Shotgun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-180, -30)
+weapon_id = "shotgun"
+cost = 1200
+
+[node name="WallBuy_DBShotgun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-130, -30)
+weapon_id = "db_shotgun"
+cost = 1400
+
+[node name="WallBuy_AutoShotgun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-80, -30)
+weapon_id = "auto_shotgun"
+cost = 2800
+
+[node name="WallBuy_MP5K" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-30, -30)
+weapon_id = "mp5k"
+cost = 1500
+
+[node name="WallBuy_Machinegun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(20, -30)
+weapon_id = "machinegun"
+cost = 1700
+
+[node name="WallBuy_AK47" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(70, -30)
+weapon_id = "ak47"
+cost = 2500
+
+[node name="WallBuy_FAMAS" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(120, -30)
+weapon_id = "famas"
+cost = 2200
+
+[node name="WallBuy_AUG" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(170, -30)
+weapon_id = "aug"
+cost = 2700
+
+[node name="WallBuy_Rifle" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(220, -30)
+weapon_id = "rifle"
+cost = 1800
+
+[node name="WallBuy_AWP" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(270, -30)
+weapon_id = "awp"
+cost = 4000
+
+[node name="WallBuy_M60" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(320, -30)
+weapon_id = "m60"
+cost = 4200
+
+[node name="WallBuy_Heavygun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(370, -30)
+weapon_id = "heavygun"
+cost = 6000
+
+[node name="WallBuy_Chainsaw" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-260, -170)
+weapon_id = "chainsaw"
+cost = 3000
+
+[node name="WallBuy_Katana" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-210, -170)
+weapon_id = "katana"
+cost = 2600
+
+[node name="WallBuy_Crossbow" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-160, -170)
+weapon_id = "crossbow"
+cost = 3200
+
+[node name="WallBuy_RPG" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-110, -170)
+weapon_id = "rpg"
+cost = 5000
+
+[node name="WallBuy_Flamethrower" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-60, -170)
+weapon_id = "flamethrower"
+cost = 4500
+
+[node name="WallBuy_Raygun" parent="Interactables" instance=ExtResource("10_wallbuy")]
+position = Vector2(-10, -170)
+weapon_id = "raygun"
+cost = 8000
+
+[node name="MysteryBox" parent="Interactables" instance=ExtResource("11_box")]
+position = Vector2(-350, 0)
+cost = 950
+
+[node name="Perk_Juggernog" parent="Interactables" instance=ExtResource("12_perk")]
+position = Vector2(350, 0)
+perk_type = "juggernog"
+cost = 2500
+
+[node name="UpgradeMachine" parent="Interactables" instance=ExtResource("13_upgrade")]
+position = Vector2(180, -130)
+cost = 5000
+
+[node name="AutoTurret" parent="Interactables" instance=ExtResource("14_turret")]
+position = Vector2(-220, -120)
+
+[node name="Elevator" parent="Interactables" instance=ExtResource("15_elevator")]
+position = Vector2(0, 0)
+move_distance = 120.0
+move_speed = 70.0
+is_automatic = true
+
+[node name="TrapSpinner" parent="Interactables" instance=ExtResource("16_trap")]
+position = Vector2(-80, 0)
+cost = 1000
+
+[node name="LeftDoor" parent="Interactables" instance=ExtResource("9_door")]
+position = Vector2(-480, 0)
+cost = 800
+door_name = "Porta Shopping"
+
+[node name="RightDoor" parent="Interactables" instance=ExtResource("9_door")]
+position = Vector2(480, 0)
+cost = 0
+required_round = 3
+door_name = "Porta Estacionamento"
+
+[node name="JumpPad" parent="Interactables" instance=ExtResource("17_jumppad")]
+position = Vector2(-220, 0)
+cost = 500
+
+[node name="SpecialArmoryTerminal" parent="Interactables" instance=ExtResource("18_armory")]
+position = Vector2(80, 0)
+
+[node name="AmmoTerminal" parent="Interactables" instance=ExtResource("19_ammoterminal")]
+position = Vector2(0, -250)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(0, -10)
+
+[node name="Geometry" type="Node2D" parent="."]
+
+[node name="MainFloor" type="StaticBody2D" parent="Geometry"]
+position = Vector2(0, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/MainFloor"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundTex" type="TextureRect" parent="Geometry/MainFloor"]
+offset_left = -1500.0
+offset_top = -16.0
+offset_right = 1500.0
+offset_bottom = 16.0
+texture = ExtResource("6_mall_ground")
+stretch_mode = 1
+
+[node name="UpperFloor1" type="StaticBody2D" parent="Geometry"]
+position = Vector2(-220, -120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/UpperFloor1"]
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="GroundTex" type="TextureRect" parent="Geometry/UpperFloor1"]
+offset_left = -210.0
+offset_top = -10.0
+offset_right = 210.0
+offset_bottom = 10.0
+texture = ExtResource("6_mall_ground")
+stretch_mode = 1
+
+[node name="UpperFloor2" type="StaticBody2D" parent="Geometry"]
+position = Vector2(220, -120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/UpperFloor2"]
+shape = SubResource("RectangleShape2D_plat")
+
+[node name="GroundTex" type="TextureRect" parent="Geometry/UpperFloor2"]
+offset_left = -210.0
+offset_top = -10.0
+offset_right = 210.0
+offset_bottom = 10.0
+texture = ExtResource("6_mall_ground")
+stretch_mode = 1
+
+[node name="LeftWall" type="StaticBody2D" parent="Geometry"]
+position = Vector2(-1480, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="Geometry"]
+position = Vector2(1480, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WaveSpawner" type="Node2D" parent="."]
+script = ExtResource("8_spawner")

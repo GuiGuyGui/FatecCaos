@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/environment/ElectricTrap.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/spr_light_lamp/spr_light_lamp.png" id="2_lamp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
+size = Vector2(140, 90)
+
+[node name="ElectricTrap" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="LampLeft" type="Sprite2D" parent="."]
+position = Vector2(-70, -60)
+texture = ExtResource("2_lamp")
+
+[node name="LampRight" type="Sprite2D" parent="."]
+position = Vector2(70, -60)
+texture = ExtResource("2_lamp")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(0, -35)
+shape = SubResource("RectangleShape2D_damage")
+
+[node name="PromptLabel" type="Label" parent="."]
+z_index = 50
+offset_left = -130.0
+offset_top = -90.0
+offset_right = 130.0
+offset_bottom = -70.0
+theme_override_colors/font_color = Color(0.2, 0.8, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 11
+text = "[E] Ativar Barreira Elétrica ($ 750)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -35)
+emitting = false
+amount = 40
+lifetime = 0.3
+emission_shape = 3
+emission_rect_extents = Vector2(65, 35)
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 60.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(0.3, 0.85, 1, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -35)
+color = Color(0.2, 0.7, 1, 1)
+energy = 2.0
+texture = ExtResource("2_lamp")
+texture_scale = 3.0
