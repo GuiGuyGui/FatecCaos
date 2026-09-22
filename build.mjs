@@ -1440,7 +1440,7 @@ const skyrushHtml = `<!DOCTYPE html>
 		</div>
 
 		<div id="skyrush-frame-wrap">
-			<iframe id="skyrush-iframe" src="skyrush/index.html?v=10" allow="autoplay; fullscreen; gamepad"></iframe>
+			<iframe id="skyrush-iframe" src="skyrush/index.html?v=12" allow="autoplay; fullscreen; gamepad"></iframe>
 		</div>
 
 		<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">

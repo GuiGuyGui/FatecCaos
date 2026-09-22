@@ -132,6 +132,10 @@ class UIManager {
         }
     }
 
+    updateSkillBar(player) {
+        this.updateSkillCooldowns(player);
+    }
+
     showHostToolbar(show) {
         if (this.hostToolbarEl) {
             this.hostToolbarEl.style.display = show ? 'flex' : 'none';

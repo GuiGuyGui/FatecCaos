@@ -172,7 +172,7 @@ class GameClient {
         this.localPlayer = new Player(this.playerId, name || 'Jogador', color || '#3b82f6', true);
         this.localPlayer.isHost = true;
         this.localPlayer.x = 240;
-        this.localPlayer.y = 11600;
+        this.localPlayer.y = 7840;
         this.renderer.camera.x = this.localPlayer.x + this.localPlayer.w / 2;
         this.renderer.camera.y = this.localPlayer.y - 40;
         this.renderer.camera.targetX = this.renderer.camera.x;
@@ -188,7 +188,7 @@ class GameClient {
             const bp = new Player(bid, botNames[i % botNames.length], botColors[i % botColors.length], false);
             bp.isBot = true;
             bp.x = 100 + i * 90;
-            bp.y = 11600;
+            bp.y = 7840;
             this.otherPlayers[bid] = bp;
         }
 
