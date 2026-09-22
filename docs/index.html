@@ -7,7 +7,7 @@
 		<meta name="description" content="Portal oficial da OmniVoid Studios - Estúdio de desenvolvimento de jogos, aplicativos e laboratório acadêmico. Jogue FatecCaos e teste protótipos.">
 		
 		<meta property="og:title" content="OmniVoid Studios | Jogos & Projetos">
-		<meta property="og:description" content="Jogue FatecCaos online para até 7 jogadores e conheça os projetos da OmniVoid Studios.">
+		<meta property="og:description" content="Jogue FatecCaos online para até 7 jogadores, participe dos Desafios do Professor e acompanhe sua evolução de sobrevivente.">
 		<meta property="og:image" content="logo_omnivoid.png">
 		
 		<style>
@@ -18,6 +18,8 @@
 				--accent-purple: #8b5cf6;
 				--accent-cyan: #06b6d4;
 				--accent-pink: #ec4899;
+				--accent-gold: #f59e0b;
+				--accent-green: #10b981;
 				--text-main: #f8fafc;
 				--text-muted: #94a3b8;
 				--border-color: rgba(139, 92, 246, 0.22);
@@ -60,14 +62,14 @@
 				position: sticky;
 				top: 0;
 				width: 100%;
-				height: 68px;
+				height: 70px;
 				background: rgba(10, 10, 15, 0.94);
 				backdrop-filter: blur(14px);
 				border-bottom: 1px solid var(--border-color);
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 0 32px;
+				padding: 0 28px;
 				z-index: 1000;
 				box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
 			}
@@ -80,7 +82,7 @@
 			}
 
 			.nav-logo {
-				height: 42px;
+				height: 44px;
 				width: auto;
 				object-fit: contain;
 				filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
@@ -94,38 +96,102 @@
 			.nav-links {
 				display: flex;
 				align-items: center;
-				gap: 22px;
+				gap: 18px;
 				list-style: none;
 			}
 
 			.nav-link {
 				color: var(--text-muted);
 				text-decoration: none;
-				font-size: 14px;
+				font-size: 13.5px;
 				font-weight: 500;
 				transition: color 0.2s ease;
+				white-space: nowrap;
 			}
 
 			.nav-link:hover {
 				color: #fff;
 			}
 
+			.nav-user-panel {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			.nav-auth-btn {
+				background: rgba(139, 92, 246, 0.16);
+				border: 1px solid rgba(139, 92, 246, 0.4);
+				color: #c4b5fd;
+				padding: 7px 15px;
+				border-radius: 8px;
+				font-size: 13px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.nav-auth-btn:hover {
+				background: rgba(139, 92, 246, 0.3);
+				color: #fff;
+				border-color: #a78bfa;
+			}
+
+			.user-pill-btn {
+				background: #151624;
+				border: 1px solid #3b3e61;
+				color: #f1f5f9;
+				padding: 5px 12px;
+				border-radius: 20px;
+				font-size: 12.5px;
+				font-weight: 700;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				transition: all 0.2s ease;
+			}
+
+			.user-pill-btn:hover {
+				border-color: #8b5cf6;
+				box-shadow: 0 0 12px rgba(139, 92, 246, 0.35);
+			}
+
+			.user-level-badge {
+				background: linear-gradient(135deg, #7c3aed, #06b6d4);
+				color: #fff;
+				padding: 1px 6px;
+				border-radius: 10px;
+				font-size: 10px;
+				font-weight: 800;
+			}
+
 			.nav-cta {
 				background: linear-gradient(135deg, #7c3aed, #06b6d4);
 				color: #fff;
 				text-decoration: none;
-				padding: 8px 18px;
+				padding: 8px 16px;
 				border-radius: 8px;
 				font-size: 13px;
 				font-weight: 700;
 				letter-spacing: 0.3px;
 				transition: all 0.25s ease;
 				box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+				white-space: nowrap;
 			}
 
 			.nav-cta:hover {
 				transform: translateY(-2px);
 				box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+			}
+
+			@media (max-width: 1080px) {
+				.nav-links {
+					display: none;
+				}
 			}
 
 			/* Container */
@@ -139,7 +205,7 @@
 
 			/* Hero Section */
 			.hero {
-				padding: 70px 0 50px;
+				padding: 60px 0 45px;
 				text-align: center;
 			}
 
@@ -171,7 +237,7 @@
 			.hero-desc {
 				font-size: 17px;
 				color: var(--text-muted);
-				max-width: 760px;
+				max-width: 780px;
 				margin: 0 auto 32px;
 			}
 
@@ -186,15 +252,17 @@
 				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
 				color: #fff;
 				text-decoration: none;
-				padding: 13px 28px;
+				padding: 13px 26px;
 				border-radius: 10px;
-				font-size: 15px;
+				font-size: 14.5px;
 				font-weight: 700;
 				transition: all 0.25s ease;
 				box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
+				border: none;
+				cursor: pointer;
 			}
 
 			.btn-primary:hover {
@@ -207,11 +275,15 @@
 				border: 1px solid var(--border-color);
 				color: #cbd5e1;
 				text-decoration: none;
-				padding: 13px 26px;
+				padding: 13px 24px;
 				border-radius: 10px;
-				font-size: 15px;
+				font-size: 14.5px;
 				font-weight: 600;
 				transition: all 0.2s ease;
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				cursor: pointer;
 			}
 
 			.btn-secondary:hover {
@@ -222,7 +294,7 @@
 
 			/* Game Player Section */
 			.game-section {
-				padding: 30px 0 60px;
+				padding: 20px 0 60px;
 			}
 
 			.game-frame-wrapper {
@@ -248,7 +320,7 @@
 				align-items: center;
 				gap: 10px;
 				font-weight: 700;
-				font-size: 14px;
+				font-size: 13.5px;
 				color: #67e8f9;
 			}
 
@@ -396,7 +468,7 @@
 			/* Section Titles */
 			.section-header {
 				text-align: center;
-				margin-bottom: 40px;
+				margin-bottom: 36px;
 			}
 
 			.section-title {
@@ -409,6 +481,336 @@
 			.section-subtitle {
 				font-size: 15px;
 				color: var(--text-muted);
+			}
+
+			/* ============================================================
+			   SURVIVOR PROFILE SUMMARY BAR & MODALS
+			============================================================ */
+			.player-hub-section {
+				padding: 20px 0 50px;
+			}
+
+			.profile-summary-box {
+				background: linear-gradient(135deg, rgba(26, 22, 45, 0.9), rgba(15, 23, 42, 0.9));
+				border: 1px solid var(--border-color);
+				border-radius: 16px;
+				padding: 24px 30px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 20px;
+				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+			}
+
+			.profile-user-info {
+				display: flex;
+				align-items: center;
+				gap: 18px;
+			}
+
+			.player-avatar-large {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 30px;
+				border: 2px solid #a78bfa;
+				box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
+			}
+
+			.player-main-meta h3 {
+				font-size: 20px;
+				font-weight: 800;
+				color: #fff;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.player-main-meta p {
+				font-size: 13px;
+				color: var(--text-muted);
+			}
+
+			.player-stats-mini {
+				display: flex;
+				gap: 24px;
+				flex-wrap: wrap;
+			}
+
+			.stat-item {
+				text-align: center;
+			}
+
+			.stat-item .val {
+				font-size: 20px;
+				font-weight: 800;
+				color: #67e8f9;
+			}
+
+			.stat-item .lbl {
+				font-size: 11px;
+				color: var(--text-muted);
+				text-transform: uppercase;
+				font-weight: 600;
+			}
+
+			.xp-progress-bar-wrap {
+				width: 100%;
+				margin-top: 14px;
+			}
+
+			.xp-label-row {
+				display: flex;
+				justify-content: space-between;
+				font-size: 11.5px;
+				color: #cbd5e1;
+				margin-bottom: 4px;
+				font-weight: 600;
+			}
+
+			.xp-track {
+				width: 100%;
+				height: 8px;
+				background: #1e1b38;
+				border-radius: 4px;
+				overflow: hidden;
+			}
+
+			.xp-fill {
+				height: 100%;
+				background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+				width: 45%;
+				transition: width 0.5s ease;
+			}
+
+			/* ============================================================
+			   DESAFIOS DO PROFESSOR (CHALLENGE HUB)
+			============================================================ */
+			.challenges-section {
+				padding: 60px 0;
+			}
+
+			.challenges-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+				gap: 22px;
+				margin-top: 24px;
+			}
+
+			.challenge-card {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 14px;
+				padding: 22px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				transition: all 0.3s ease;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.challenge-card:hover {
+				background: var(--bg-card-hover);
+				border-color: #8b5cf6;
+				transform: translateY(-3px);
+				box-shadow: 0 10px 28px rgba(139, 92, 246, 0.18);
+			}
+
+			.challenge-card.completed {
+				border-color: rgba(16, 185, 129, 0.5);
+				background: linear-gradient(180deg, #0f181b 0%, #0d1217 100%);
+			}
+
+			.challenge-tag-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 12px;
+			}
+
+			.challenge-category {
+				font-size: 11px;
+				font-weight: 700;
+				text-transform: uppercase;
+				padding: 3px 8px;
+				border-radius: 4px;
+				background: rgba(139, 92, 246, 0.2);
+				color: #c4b5fd;
+			}
+
+			.challenge-status-badge {
+				font-size: 11px;
+				font-weight: 700;
+				padding: 3px 8px;
+				border-radius: 4px;
+			}
+
+			.status-todo {
+				background: #23253b;
+				color: #cbd5e1;
+			}
+
+			.status-inprogress {
+				background: rgba(245, 158, 11, 0.2);
+				color: #fbbf24;
+			}
+
+			.status-done {
+				background: rgba(16, 185, 129, 0.25);
+				color: #34d399;
+				border: 1px solid rgba(16, 185, 129, 0.5);
+			}
+
+			.challenge-card h3 {
+				font-size: 17px;
+				font-weight: 700;
+				color: #fff;
+				margin-bottom: 8px;
+			}
+
+			.challenge-card p {
+				font-size: 13px;
+				color: var(--text-muted);
+				line-height: 1.5;
+				margin-bottom: 14px;
+				flex-grow: 1;
+			}
+
+			.reward-pill {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: #18192a;
+				border: 1px solid #2d304f;
+				border-radius: 6px;
+				padding: 5px 10px;
+				font-size: 11.5px;
+				font-weight: 700;
+				color: #f1f5f9;
+				margin-bottom: 14px;
+			}
+
+			.reward-pill span.xp { color: #c084fc; }
+			.reward-pill span.cash { color: #34d399; }
+			.reward-pill span.badge { color: #38bdf8; }
+
+			.challenge-action-btn {
+				background: #1e2035;
+				border: 1px solid #3c4064;
+				color: #e2e8f0;
+				padding: 8px 14px;
+				border-radius: 7px;
+				font-size: 12.5px;
+				font-weight: 700;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				text-align: center;
+				width: 100%;
+			}
+
+			.challenge-action-btn:hover {
+				background: #8b5cf6;
+				color: #fff;
+				border-color: #8b5cf6;
+			}
+
+			.challenge-action-btn.claimed {
+				background: #122822;
+				border-color: #10b981;
+				color: #34d399;
+				cursor: default;
+			}
+
+			.prof-challenge-ctrl {
+				background: #131420;
+				border: 1px dashed #3f4369;
+				border-radius: 12px;
+				padding: 16px 20px;
+				margin-bottom: 24px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 12px;
+			}
+
+			/* ============================================================
+			   HALL DA FAMA / RANKING (LEADERBOARD)
+			============================================================ */
+			.leaderboard-section {
+				padding: 60px 0;
+				background: linear-gradient(180deg, rgba(7, 7, 11, 0) 0%, rgba(17, 18, 28, 0.7) 100%);
+			}
+
+			.leaderboard-table-wrap {
+				background: var(--bg-card);
+				border: 1px solid var(--border-color);
+				border-radius: 16px;
+				overflow: hidden;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+			}
+
+			.leaderboard-table {
+				width: 100%;
+				border-collapse: collapse;
+				text-align: left;
+				font-size: 13.5px;
+			}
+
+			.leaderboard-table th {
+				background: #131422;
+				color: #a78bfa;
+				padding: 14px 18px;
+				font-weight: 700;
+				font-size: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				border-bottom: 1px solid #282b45;
+			}
+
+			.leaderboard-table td {
+				padding: 14px 18px;
+				border-bottom: 1px solid #1c1e30;
+				color: #e2e8f0;
+			}
+
+			.leaderboard-table tr:hover {
+				background: rgba(139, 92, 246, 0.06);
+			}
+
+			.rank-badge {
+				font-weight: 800;
+				font-size: 15px;
+			}
+
+			.rank-1 { color: #fbbf24; }
+			.rank-2 { color: #cbd5e1; }
+			.rank-3 { color: #d97706; }
+
+			.player-cell {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				font-weight: 700;
+			}
+
+			.player-cell .avatar {
+				font-size: 18px;
+			}
+
+			.badge-pill {
+				background: #1e2035;
+				color: #cbd5e1;
+				padding: 2px 8px;
+				border-radius: 4px;
+				font-size: 11px;
+				font-weight: 600;
 			}
 
 			/* Projects Grid */
@@ -626,7 +1028,7 @@
 
 			.skill-pill {
 				background: #181926;
-				border: 1px solid #2d3047;
+				border: 1px solid #2d304f;
 				color: #e2e8f0;
 				padding: 4px 10px;
 				border-radius: 6px;
@@ -908,28 +1310,168 @@
 				transition: all 0.2s ease;
 			}
 
-			.btn-void {
-				color: #c084fc;
-			}
-			.btn-void:hover {
-				background: #7c3aed;
-				color: #fff;
+			.btn-void { color: #c084fc; }
+			.btn-void:hover { background: #7c3aed; color: #fff; }
+			.btn-hide { color: #fbbf24; }
+			.btn-hide:hover { background: #f59e0b; color: #fff; }
+			.btn-del { color: #f87171; }
+			.btn-del:hover { background: #ef4444; color: #fff; }
+
+			/* ============================================================
+			   MODALS (AUTH, PROFILE, CREATE CHALLENGE)
+			============================================================ */
+			.modal-backdrop {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100vw;
+				height: 100vh;
+				background: rgba(4, 4, 8, 0.82);
+				backdrop-filter: blur(8px);
+				display: none;
+				justify-content: center;
+				align-items: center;
+				z-index: 2000;
+				padding: 20px;
 			}
 
-			.btn-hide {
-				color: #fbbf24;
-			}
-			.btn-hide:hover {
-				background: #f59e0b;
-				color: #fff;
+			.modal-box {
+				background: #10111d;
+				border: 1px solid var(--border-color);
+				border-radius: 18px;
+				width: 100%;
+				max-width: 580px;
+				max-height: 90vh;
+				overflow-y: auto;
+				padding: 30px;
+				box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.2);
+				position: relative;
 			}
 
-			.btn-del {
-				color: #f87171;
+			.modal-close-btn {
+				position: absolute;
+				top: 18px;
+				right: 18px;
+				background: #1c1d2e;
+				border: 1px solid #33364f;
+				color: #cbd5e1;
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				font-weight: 700;
 			}
-			.btn-del:hover {
+
+			.modal-close-btn:hover {
 				background: #ef4444;
 				color: #fff;
+				border-color: #ef4444;
+			}
+
+			.auth-tab-row {
+				display: flex;
+				gap: 10px;
+				margin-bottom: 22px;
+				border-bottom: 1px solid #282a44;
+				padding-bottom: 10px;
+			}
+
+			.auth-tab-btn {
+				background: transparent;
+				border: none;
+				color: var(--text-muted);
+				font-size: 15px;
+				font-weight: 700;
+				padding: 6px 14px;
+				cursor: pointer;
+				border-radius: 6px;
+			}
+
+			.auth-tab-btn.active {
+				background: rgba(139, 92, 246, 0.2);
+				color: #c4b5fd;
+			}
+
+			.input-field {
+				width: 100%;
+				background: #171828;
+				border: 1px solid #313554;
+				color: #fff;
+				padding: 11px 14px;
+				border-radius: 8px;
+				font-size: 13.5px;
+				margin-bottom: 14px;
+				font-family: inherit;
+			}
+
+			.input-field:focus {
+				outline: none;
+				border-color: #8b5cf6;
+			}
+
+			.avatar-picker-row {
+				display: flex;
+				gap: 10px;
+				margin-bottom: 16px;
+				overflow-x: auto;
+				padding: 4px 0;
+			}
+
+			.avatar-choice {
+				font-size: 26px;
+				padding: 8px;
+				border-radius: 10px;
+				border: 2px solid transparent;
+				background: #181a2c;
+				cursor: pointer;
+				transition: all 0.2s ease;
+			}
+
+			.avatar-choice.selected {
+				border-color: #8b5cf6;
+				background: rgba(139, 92, 246, 0.25);
+				transform: scale(1.1);
+			}
+
+			/* Achievements Grid inside Profile Modal */
+			.achievements-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+				gap: 12px;
+				margin-top: 14px;
+			}
+
+			.achievement-card {
+				background: #161726;
+				border: 1px solid #2d304d;
+				border-radius: 10px;
+				padding: 12px;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			.achievement-card.unlocked {
+				border-color: rgba(16, 185, 129, 0.4);
+				background: rgba(16, 185, 129, 0.08);
+			}
+
+			.achievement-icon {
+				font-size: 24px;
+				width: 40px;
+				height: 40px;
+				border-radius: 8px;
+				background: #1f2136;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.achievement-card.unlocked .achievement-icon {
+				background: rgba(16, 185, 129, 0.2);
 			}
 
 			/* Footer */
@@ -975,13 +1517,32 @@
 			<ul class="nav-links">
 				<li><a href="#inicio" class="nav-link">Início</a></li>
 				<li><a href="#jogar" class="nav-link">Jogar FatecCaos</a></li>
-				<li><a href="#projetos" class="nav-link">Projetos & Demos</a></li>
+				<li><a href="#desafios" class="nav-link">Desafios do Prof</a></li>
+				<li><a href="#ranking" class="nav-link">Hall da Fama</a></li>
+				<li><a href="#projetos" class="nav-link">Projetos</a></li>
 				<li><a href="#professor" class="nav-link">Sobre o Professor</a></li>
-				<li><a href="#comentarios" class="nav-link">Comentários & Feedback</a></li>
-				<li><a href="#newsletter" class="nav-link">Novidades</a></li>
+				<li><a href="#comentarios" class="nav-link">Comentários</a></li>
 			</ul>
 
-			<a href="#jogar" class="nav-cta">🎮 JOGAR AGORA</a>
+			<div class="nav-user-panel">
+				<div id="auth-logged-out" style="display: flex; align-items: center; gap: 8px;">
+					<button class="nav-auth-btn" onclick="openAuthModal('login')">
+						<span>👤 Entrar</span>
+					</button>
+					<button class="nav-cta" onclick="openAuthModal('register')">
+						Cadastrar
+					</button>
+				</div>
+
+				<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
+					<button class="user-pill-btn" onclick="openProfileModal()">
+						<span id="nav-user-avatar">🧑‍🚀</span>
+						<span id="nav-user-name">Jogador</span>
+						<span class="user-level-badge" id="nav-user-level">Nvl 1</span>
+					</button>
+					<a href="#jogar" class="nav-cta">🎮 JOGAR</a>
+				</div>
+			</div>
 		</nav>
 
 		<!-- Hero Section -->
@@ -993,11 +1554,12 @@
 				<h1 class="hero-title">OmniVoid Studios</h1>
 				<p class="hero-desc">
 					O ponto de convergência entre pesquisa acadêmica, tecnologia interativa e games independentes. 
-					Explore nossos projetos de sala de aula, teste protótipos inovadores e dispute partidas cooperativas online.
+					Crie sua conta de sobrevivente, cumpra os desafios do professor, evolua seu perfil e dispute partidas cooperativas online.
 				</p>
 				<div class="hero-actions">
 					<a href="#jogar" class="btn-primary">🧟‍♂️ Jogar FatecCaos (7 Players)</a>
-					<a href="#projetos" class="btn-secondary">🚀 Explorar Outros Projetos</a>
+					<a href="#desafios" class="btn-secondary">🎯 Mural de Desafios do Professor</a>
+					<button class="btn-secondary" onclick="openProfileModal()">🎖️ Meu Perfil & Conquistas</button>
 				</div>
 			</div>
 		</section>
@@ -1013,6 +1575,7 @@
 							<span>FATECCAOS: APOCALIPSE COOPERATIVO</span>
 						</div>
 						<div class="game-controls-actions">
+							<button class="ctrl-btn" onclick="syncGameStatsWithProfile()">🔄 Sincronizar Stats</button>
 							<button class="ctrl-btn" onclick="toggleFullScreen()">⛶ Tela Cheia</button>
 						</div>
 					</div>
@@ -1047,6 +1610,106 @@
 							● Servidor WebSocket Ativo: Até 7 Jogadores em Equipe
 						</div>
 					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Survivor Hub / Quick Profile Summary -->
+		<section class="player-hub-section">
+			<div class="container">
+				<div class="profile-summary-box">
+					<div class="profile-user-info">
+						<div class="player-avatar-large" id="summary-avatar">🧑‍🚀</div>
+						<div class="player-main-meta">
+							<h3 id="summary-name">Visitante do Vazio <span class="user-level-badge" id="summary-level-tag">Nvl 1</span></h3>
+							<p id="summary-sub">Turma: Não logado &bull; Cadastre-se para salvar sua evolução</p>
+						</div>
+					</div>
+
+					<div class="player-stats-mini">
+						<div class="stat-item">
+							<div class="val" id="summary-cash">$0</div>
+							<div class="lbl">Moedas (Cash)</div>
+						</div>
+						<div class="stat-item">
+							<div class="val" id="summary-scraps">0</div>
+							<div class="lbl">Sucatas Bélicas</div>
+						</div>
+						<div class="stat-item">
+							<div class="val" id="summary-wave">Onda 0</div>
+							<div class="lbl">Maior Onda</div>
+						</div>
+						<div class="stat-item">
+							<div class="val" id="summary-kills">0</div>
+							<div class="lbl">Zumbis Eliminados</div>
+						</div>
+					</div>
+
+					<div class="xp-progress-bar-wrap">
+						<div class="xp-label-row">
+							<span>Evolução de Sobrevivente</span>
+							<span id="summary-xp-text">0 / 500 XP</span>
+						</div>
+						<div class="xp-track">
+							<div class="xp-fill" id="summary-xp-bar" style="width: 0%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Professor Challenge Hub -->
+		<section id="desafios" class="challenges-section">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-title">🎯 Mural de Desafios do Professor</h2>
+					<p class="section-subtitle">Missões especiais de gameplay, tática e programação criadas pelo professor. Cumpra metas, ganhe XP e suba de nível!</p>
+				</div>
+
+				<!-- Professor Controls (Mod Mode) -->
+				<div class="prof-challenge-ctrl">
+					<div>
+						<strong style="color: #c4b5fd;">🎓 Laboratório de Missões Acadêmicas:</strong>
+						<span style="font-size: 13px; color: var(--text-muted); margin-left: 6px;">
+							Desafios semanais com recompensas reais para o perfil do aluno.
+						</span>
+					</div>
+					<button class="ctrl-btn" onclick="openCreateChallengeModal()">
+						➕ Criar Novo Desafio (Professor)
+					</button>
+				</div>
+
+				<!-- Challenges Cards Container -->
+				<div class="challenges-grid" id="challenges-container">
+					<!-- Rendered dynamically by JS -->
+				</div>
+			</div>
+		</section>
+
+		<!-- Hall da Fama / Leaderboard -->
+		<section id="ranking" class="leaderboard-section">
+			<div class="container">
+				<div class="section-header">
+					<h2 class="section-title">🏆 Hall da Fama dos Alunos</h2>
+					<p class="section-subtitle">Classificação dos melhores sobreviventes da Fatec e comunidade OmniVoid</p>
+				</div>
+
+				<div class="leaderboard-table-wrap">
+					<table class="leaderboard-table">
+						<thead>
+							<tr>
+								<th>Posição</th>
+								<th>Sobrevivente</th>
+								<th>Nível</th>
+								<th>Maior Onda</th>
+								<th>Eliminações</th>
+								<th>Desafios Feitos</th>
+							</tr>
+						</thead>
+						<tbody id="leaderboard-tbody">
+							<!-- Rendered dynamically by JS -->
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</section>
@@ -1239,14 +1902,180 @@
 				<div class="footer-links">
 					<a href="#inicio">Início</a>
 					<a href="#jogar">Jogar FatecCaos</a>
+					<a href="#desafios">Desafios</a>
+					<a href="#ranking">Ranking</a>
 					<a href="#projetos">Projetos</a>
 					<a href="#professor">Sobre o Professor</a>
 					<a href="#comentarios">Comentários</a>
-					<a href="#newsletter">Novidades</a>
 				</div>
 				<p>© 2026 OmniVoid Studios. Todos os direitos reservados. Portal acadêmico e profissional de desenvolvimento de software e jogos.</p>
 			</div>
 		</footer>
+
+		<!-- ============================================================
+		     MODALS
+		============================================================ -->
+		<!-- Auth Modal (Login / Register) -->
+		<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
+			<div class="modal-box">
+				<button class="modal-close-btn" onclick="closeModal('modal-auth')">✕</button>
+				<div class="auth-tab-row">
+					<button id="tab-login-btn" class="auth-tab-btn active" onclick="switchAuthTab('login')">🔑 Entrar</button>
+					<button id="tab-reg-btn" class="auth-tab-btn" onclick="switchAuthTab('register')">📝 Criar Conta de Aluno</button>
+				</div>
+
+				<!-- Login Form -->
+				<form id="form-login" onsubmit="handleLoginSubmit(event)">
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">E-mail ou Nickname:</label>
+					<input type="text" id="login-identifier" class="input-field" placeholder="ex: aluno@fatec.sp.gov.br ou Gabriel" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Senha:</label>
+					<input type="password" id="login-password" class="input-field" placeholder="Sua senha secreta" required>
+
+					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+						🚀 Entrar no Vazio
+					</button>
+				</form>
+
+				<!-- Register Form -->
+				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Nome Completo:</label>
+					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme da Silva" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Nickname de Sobrevivente (Nome no Jogo):</label>
+					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: VoidSniper_99" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">RA / Matrícula ou Turma:</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: ADS - 4º Semestre / RA: 123456" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">E-mail:</label>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: aluno@fatec.sp.gov.br" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Escolha seu Avatar:</label>
+					<div class="avatar-picker-row">
+						<span class="avatar-choice selected" onclick="selectAvatar('🧑‍🚀', this)">🧑‍🚀</span>
+						<span class="avatar-choice" onclick="selectAvatar('🥷', this)">🥷</span>
+						<span class="avatar-choice" onclick="selectAvatar('🧙‍♂️', this)">🧙‍♂️</span>
+						<span class="avatar-choice" onclick="selectAvatar('🤖', this)">🤖</span>
+						<span class="avatar-choice" onclick="selectAvatar('🧟', this)">🧟</span>
+						<span class="avatar-choice" onclick="selectAvatar('👾', this)">👾</span>
+						<span class="avatar-choice" onclick="selectAvatar('🕵️', this)">🕵️</span>
+					</div>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Senha:</label>
+					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
+
+					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+						✨ Criar Minha Conta & Salvar Progresso
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Profile Modal (Survivor Card & Achievements) -->
+		<div id="modal-profile" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-profile')">
+			<div class="modal-box" style="max-width: 680px;">
+				<button class="modal-close-btn" onclick="closeModal('modal-profile')">✕</button>
+
+				<div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #282a44; padding-bottom: 16px; margin-bottom: 20px;">
+					<div style="display: flex; align-items: center; gap: 14px;">
+						<div class="player-avatar-large" id="modal-profile-avatar">🧑‍🚀</div>
+						<div>
+							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800; color: #fff;">Jogador</h2>
+							<p id="modal-profile-sub" style="font-size: 13px; color: #a78bfa;">Aluno da Fatec</p>
+						</div>
+					</div>
+					<button class="ctrl-btn" onclick="handleLogout()" style="background: #2a1b24; color: #f87171; border-color: #5c2838;">
+						🚪 Sair da Conta
+					</button>
+				</div>
+
+				<!-- Stats Grid -->
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800; color: #c084fc;">Nvl 1</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Nível</div>
+					</div>
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: #34d399;">$0</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Moedas</div>
+					</div>
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-scraps" style="font-size: 22px; font-weight: 800; color: #38bdf8;">0</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Sucatas</div>
+					</div>
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: #fbbf24;">Onda 0</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Maior Onda</div>
+					</div>
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800; color: #f472b6;">0</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Eliminações</div>
+					</div>
+					<div style="background: #151624; border: 1px solid #2b2e47; border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-headshots" style="font-size: 22px; font-weight: 800; color: #a78bfa;">0</div>
+						<div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Headshots</div>
+					</div>
+				</div>
+
+				<!-- Achievements -->
+				<h4 style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px;">🎖️ Conquistas & Medalhas Desbloqueadas:</h4>
+				<div class="achievements-grid" id="profile-achievements-container">
+					<!-- Rendered dynamically by JS -->
+				</div>
+
+				<!-- Simulator Action -->
+				<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #282a44; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+					<span style="font-size: 12px; color: var(--text-muted);">
+						💡 Jogue partidas no navegador para pontuar ou simule uma sessão para testes.
+					</span>
+					<button class="ctrl-btn" onclick="simulateSessionReward()">⚡ Simular Partida Sobrevivida (+XP)</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal: Create Challenge (Professor) -->
+		<div id="modal-create-challenge" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-create-challenge')">
+			<div class="modal-box">
+				<button class="modal-close-btn" onclick="closeModal('modal-create-challenge')">✕</button>
+				<h3 style="font-size: 20px; font-weight: 800; margin-bottom: 16px; color: #fff;">➕ Criar Desafio do Professor</h3>
+
+				<form onsubmit="handleCreateChallengeSubmit(event)">
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Título da Missão:</label>
+					<input type="text" id="new-chal-title" class="input-field" placeholder="ex: Franco-Atirador de Elite" required>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Categoria:</label>
+					<select id="new-chal-cat" class="input-field">
+						<option value="Combate">⚔️ Combate & Precisão</option>
+						<option value="Cooperação">🤝 Trabalho em Equipe</option>
+						<option value="Engenharia">🛠️ Terminais & Defesa</option>
+						<option value="Pesquisa">🧪 Feedback & Bug Hunt</option>
+					</select>
+
+					<label style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Descrição / Objetivo:</label>
+					<textarea id="new-chal-desc" class="input-field" rows="3" placeholder="Explique aos alunos como cumprir o desafio..." required></textarea>
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+						<div>
+							<label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">XP de Recompensa:</label>
+							<input type="number" id="new-chal-xp" class="input-field" value="400" min="50" required>
+						</div>
+						<div>
+							<label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Cash ($):</label>
+							<input type="number" id="new-chal-cash" class="input-field" value="1500" min="0" required>
+						</div>
+						<div>
+							<label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Título / Badge:</label>
+							<input type="text" id="new-chal-badge" class="input-field" placeholder="ex: Veterano" required>
+						</div>
+					</div>
+
+					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+						📢 Publicar Desafio para os Alunos
+					</button>
+				</form>
+			</div>
+		</div>
 
 		<!-- Godot 4 Web Engine Initialization -->
 		<script src="index.js"></script>
@@ -1271,6 +2100,548 @@ function toggleFullScreen() {
 }
 
 /* ============================================================
+   USER AUTHENTICATION & SURVIVOR PROFILE (LocalStorage)
+============================================================ */
+let selectedAvatarIcon = '🧑‍🚀';
+let currentUser = null;
+
+const DEFAULT_ACHIEVEMENTS = [
+	{ id: 'first_blood', name: 'Primeiro Sangue', desc: 'Elimine seu primeiro zumbi.', icon: '🩸', req: 1 },
+	{ id: 'wave_5', name: 'Resistência Inicial', desc: 'Sobreviva até a Onda 5.', icon: '🛡️', req: 5 },
+	{ id: 'wave_15', name: 'Sobrevivente Lendário', desc: 'Chegue até a Onda 15.', icon: '👑', req: 15 },
+	{ id: 'headhunter', name: 'Mira Cirúrgica', desc: 'Acerte 50 tiros na cabeça.', icon: '🎯', req: 50 },
+	{ id: 'terminal_buyer', name: 'Logística Bélica', desc: 'Compre armas ou munição em terminais.', icon: '📦', req: 1 },
+	{ id: 'medic', name: 'Anjo da Guarda', desc: 'Reviva um companheiro no multiplayer.', icon: '🚑', req: 1 },
+	{ id: 'void_master', name: 'Explorador do Vazio', desc: 'Conclua ao menos 3 desafios do professor.', icon: '🪐', req: 3 }
+];
+
+const DEFAULT_CHALLENGES = [
+	{
+		id: 1,
+		title: "Sobrevivência Tática em Equipe",
+		category: "Cooperação",
+		desc: "Sobreviva até a Onda 12 com ao menos 3 jogadores conectados na mesma sala de jogo.",
+		xp: 500,
+		cash: 2500,
+		badge: "Irmandade do Vazio",
+		completedBy: []
+	},
+	{
+		id: 2,
+		title: "Tiroteio de Alta Precisão",
+		category: "Combate",
+		desc: "Consiga 50 Headshots utilizando apenas armas semi-automáticas ou de precisão (Pistola ou AWP).",
+		xp: 400,
+		cash: 1800,
+		badge: "Mira Cirúrgica",
+		completedBy: []
+	},
+	{
+		id: 3,
+		title: "Engenheiro de Defesa & Barricadas",
+		category: "Engenharia",
+		desc: "Conserte e reforce 20 barricadas danificadas durante as invasões da horda.",
+		xp: 350,
+		cash: 1500,
+		badge: "Mestre Barricadeiro",
+		completedBy: []
+	},
+	{
+		id: 4,
+		title: "Explorador de Terminais Bélicos",
+		category: "Engenharia",
+		desc: "Encontre e utilize os 3 terminais de suprimentos de munição espalhados pelo mapa.",
+		xp: 450,
+		cash: 2000,
+		badge: "Mestre da Logística",
+		completedBy: []
+	},
+	{
+		id: 5,
+		title: "QA & Bug Bounty Acadêmico",
+		category: "Pesquisa",
+		desc: "Teste o jogo no navegador e poste um relatório de feedback ou bug no painel de comentários abaixo.",
+		xp: 300,
+		cash: 1000,
+		badge: "Inspetor de Qualidade",
+		completedBy: []
+	}
+];
+
+const DEFAULT_LEADERBOARD = [
+	{ name: "Lucas Silva (Aluno)", avatar: "🥷", turma: "Jogos Digitais", level: 6, maxWave: 24, kills: 2310, challengesDone: 5 },
+	{ name: "Mariana Costa", avatar: "🧑‍🚀", turma: "ADS 4º Sem", level: 5, maxWave: 19, kills: 1740, challengesDone: 4 },
+	{ name: "Gabriel Ramos", avatar: "🤖", turma: "Sistemas", level: 4, maxWave: 15, kills: 1220, challengesDone: 3 },
+	{ name: "Felipe Andrade", avatar: "🧙‍♂️", turma: "Jogos Digitais", level: 3, maxWave: 12, kills: 890, challengesDone: 2 },
+	{ name: "Beatriz Lima", avatar: "👾", turma: "Engenharia", level: 2, maxWave: 8, kills: 450, challengesDone: 1 }
+];
+
+function getUsersDB() {
+	return JSON.parse(localStorage.getItem("omnivoid_users") || "[]");
+}
+
+function saveUsersDB(users) {
+	localStorage.setItem("omnivoid_users", JSON.stringify(users));
+}
+
+function getChallengesDB() {
+	const saved = localStorage.getItem("omnivoid_challenges");
+	if (saved) {
+		try { return JSON.parse(saved); } catch (e) { return DEFAULT_CHALLENGES; }
+	}
+	localStorage.setItem("omnivoid_challenges", JSON.stringify(DEFAULT_CHALLENGES));
+	return DEFAULT_CHALLENGES;
+}
+
+function saveChallengesDB(challenges) {
+	localStorage.setItem("omnivoid_challenges", JSON.stringify(challenges));
+	renderChallenges();
+	renderLeaderboard();
+}
+
+function getCurrentUser() {
+	const saved = localStorage.getItem("omnivoid_current_user");
+	if (saved) {
+		try { return JSON.parse(saved); } catch (e) { return null; }
+	}
+	return null;
+}
+
+function setCurrentUser(user) {
+	currentUser = user;
+	if (user) {
+		localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+		// Also update users db
+		const users = getUsersDB();
+		const idx = users.findIndex(u => u.id === user.id);
+		if (idx >= 0) {
+			users[idx] = user;
+		} else {
+			users.push(user);
+		}
+		saveUsersDB(users);
+	} else {
+		localStorage.removeItem("omnivoid_current_user");
+	}
+	updateUIAfterAuth();
+}
+
+function updateUIAfterAuth() {
+	currentUser = getCurrentUser();
+	const outPanel = document.getElementById("auth-logged-out");
+	const inPanel = document.getElementById("auth-logged-in");
+
+	if (currentUser) {
+		outPanel.style.display = "none";
+		inPanel.style.display = "flex";
+
+		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
+		document.getElementById("nav-user-name").innerText = currentUser.nickname || currentUser.name;
+		document.getElementById("nav-user-level").innerText = `Nvl ${currentUser.level || 1}`;
+
+		// Summary Box
+		document.getElementById("summary-avatar").innerText = currentUser.avatar || "🧑‍🚀";
+		document.getElementById("summary-name").innerHTML = `${currentUser.nickname || currentUser.name} <span class="user-level-badge">Nvl ${currentUser.level || 1}</span>`;
+		document.getElementById("summary-sub").innerText = `Turma: ${currentUser.turma || 'Aluno'} • Sobrevivente Ativo`;
+		document.getElementById("summary-cash").innerText = `$${(currentUser.cash || 0).toLocaleString()}`;
+		document.getElementById("summary-scraps").innerText = (currentUser.scraps || 0).toLocaleString();
+		document.getElementById("summary-wave").innerText = `Onda ${currentUser.maxWave || 0}`;
+		document.getElementById("summary-kills").innerText = (currentUser.kills || 0).toLocaleString();
+
+		const curXp = currentUser.xp || 0;
+		const nextXp = (currentUser.level || 1) * 500;
+		const percent = Math.min(100, Math.round((curXp / nextXp) * 100));
+		document.getElementById("summary-xp-text").innerText = `${curXp} / ${nextXp} XP (${percent}%)`;
+		document.getElementById("summary-xp-bar").style.width = `${percent}%`;
+
+		// Auto fill comment form if present
+		const commName = document.getElementById("comm-name");
+		const commTag = document.getElementById("comm-tag");
+		if (commName && !commName.value) commName.value = currentUser.nickname || currentUser.name;
+		if (commTag && !commTag.value) commTag.value = currentUser.turma || "Aluno";
+	} else {
+		outPanel.style.display = "flex";
+		inPanel.style.display = "none";
+
+		document.getElementById("summary-avatar").innerText = "🧑‍🚀";
+		document.getElementById("summary-name").innerHTML = `Visitante do Vazio <span class="user-level-badge">Nvl 1</span>`;
+		document.getElementById("summary-sub").innerText = `Turma: Não logado • Cadastre-se para salvar sua evolução`;
+		document.getElementById("summary-cash").innerText = "$0";
+		document.getElementById("summary-scraps").innerText = "0";
+		document.getElementById("summary-wave").innerText = "Onda 0";
+		document.getElementById("summary-kills").innerText = "0";
+		document.getElementById("summary-xp-text").innerText = "0 / 500 XP";
+		document.getElementById("summary-xp-bar").style.width = "0%";
+	}
+
+	renderChallenges();
+	renderLeaderboard();
+}
+
+function openAuthModal(mode) {
+	document.getElementById("modal-auth").style.display = "flex";
+	switchAuthTab(mode || 'login');
+}
+
+function switchAuthTab(tab) {
+	const logBtn = document.getElementById("tab-login-btn");
+	const regBtn = document.getElementById("tab-reg-btn");
+	const logForm = document.getElementById("form-login");
+	const regForm = document.getElementById("form-register");
+
+	if (tab === 'login') {
+		logBtn.classList.add("active");
+		regBtn.classList.remove("active");
+		logForm.style.display = "block";
+		regForm.style.display = "none";
+	} else {
+		regBtn.classList.add("active");
+		logBtn.classList.remove("active");
+		regForm.style.display = "block";
+		logForm.style.display = "none";
+	}
+}
+
+function selectAvatar(icon, elem) {
+	selectedAvatarIcon = icon;
+	document.querySelectorAll(".avatar-choice").forEach(el => el.classList.remove("selected"));
+	if (elem) elem.classList.add("selected");
+}
+
+function handleRegisterSubmit(event) {
+	event.preventDefault();
+	const name = document.getElementById("reg-name").value.trim();
+	const nickname = document.getElementById("reg-nickname").value.trim();
+	const turma = document.getElementById("reg-turma").value.trim();
+	const email = document.getElementById("reg-email").value.trim().toLowerCase();
+	const password = document.getElementById("reg-password").value;
+
+	const users = getUsersDB();
+	if (users.some(u => u.email === email || u.nickname.toLowerCase() === nickname.toLowerCase())) {
+		alert("Já existe uma conta com este e-mail ou nickname.");
+		return;
+	}
+
+	const newUser = {
+		id: Date.now(),
+		name: name,
+		nickname: nickname,
+		turma: turma,
+		email: email,
+		password: password,
+		avatar: selectedAvatarIcon,
+		level: 1,
+		xp: 0,
+		cash: 1000,
+		scraps: 50,
+		maxWave: 1,
+		kills: 0,
+		headshots: 0,
+		achievements: ['first_blood'],
+		completedChallenges: []
+	};
+
+	users.push(newUser);
+	saveUsersDB(users);
+	setCurrentUser(newUser);
+	closeModal('modal-auth');
+	alert(`Bem-vindo ao OmniVoid Studios, ${nickname}! Sua conta foi criada com sucesso.`);
+}
+
+function handleLoginSubmit(event) {
+	event.preventDefault();
+	const identifier = document.getElementById("login-identifier").value.trim().toLowerCase();
+	const password = document.getElementById("login-password").value;
+
+	const users = getUsersDB();
+	const user = users.find(u => (u.email === identifier || u.nickname.toLowerCase() === identifier) && u.password === password);
+
+	if (!user) {
+		alert("E-mail/Nickname ou senha incorretos.");
+		return;
+	}
+
+	setCurrentUser(user);
+	closeModal('modal-auth');
+	alert(`Olá novamente, ${user.nickname}!`);
+}
+
+function handleLogout() {
+	if (confirm("Deseja realmente sair da sua conta?")) {
+		setCurrentUser(null);
+		closeModal('modal-profile');
+	}
+}
+
+function openProfileModal() {
+	if (!currentUser) {
+		openAuthModal('login');
+		return;
+	}
+
+	document.getElementById("modal-profile-avatar").innerText = currentUser.avatar || "🧑‍🚀";
+	document.getElementById("modal-profile-name").innerText = currentUser.nickname || currentUser.name;
+	document.getElementById("modal-profile-sub").innerText = `${currentUser.name} • ${currentUser.turma || 'Aluno'}`;
+
+	document.getElementById("prof-stat-level").innerText = `Nvl ${currentUser.level || 1}`;
+	document.getElementById("prof-stat-cash").innerText = `$${(currentUser.cash || 0).toLocaleString()}`;
+	document.getElementById("prof-stat-scraps").innerText = (currentUser.scraps || 0).toLocaleString();
+	document.getElementById("prof-stat-wave").innerText = `Onda ${currentUser.maxWave || 0}`;
+	document.getElementById("prof-stat-kills").innerText = (currentUser.kills || 0).toLocaleString();
+	document.getElementById("prof-stat-headshots").innerText = (currentUser.headshots || 0).toLocaleString();
+
+	const achContainer = document.getElementById("profile-achievements-container");
+	achContainer.innerHTML = "";
+
+	DEFAULT_ACHIEVEMENTS.forEach(ach => {
+		const isUnlocked = (currentUser.achievements || []).includes(ach.id);
+		const div = document.createElement("div");
+		div.className = `achievement-card ${isUnlocked ? 'unlocked' : ''}`;
+		div.innerHTML = `
+			<div class="achievement-icon">${ach.icon}</div>
+			<div>
+				<div style="font-weight: 700; font-size: 13px; color: ${isUnlocked ? '#34d399' : '#94a3b8'};">
+					${ach.name} ${isUnlocked ? '✓' : '🔒'}
+				</div>
+				<div style="font-size: 11px; color: var(--text-muted);">${ach.desc}</div>
+			</div>
+		`;
+		achContainer.appendChild(div);
+	});
+
+	document.getElementById("modal-profile").style.display = "flex";
+}
+
+function simulateSessionReward() {
+	if (!currentUser) return;
+	currentUser.kills = (currentUser.kills || 0) + 45;
+	currentUser.headshots = (currentUser.headshots || 0) + 18;
+	currentUser.cash = (currentUser.cash || 0) + 650;
+	currentUser.scraps = (currentUser.scraps || 0) + 25;
+	currentUser.maxWave = Math.max(currentUser.maxWave || 0, Math.floor(Math.random() * 8) + 7);
+	
+	// Add XP
+	addXPToUser(currentUser, 250);
+	setCurrentUser(currentUser);
+	openProfileModal();
+	alert("Partida simulada com sucesso! +250 XP, +$650 Cash, +25 Sucatas.");
+}
+
+function syncGameStatsWithProfile() {
+	if (!currentUser) {
+		openAuthModal('login');
+		return;
+	}
+	// Give reward for launching game
+	addXPToUser(currentUser, 100);
+	currentUser.cash = (currentUser.cash || 0) + 300;
+	setCurrentUser(currentUser);
+	alert("Sincronização com o motor FatecCaos realizada! +100 XP adicionados.");
+}
+
+function addXPToUser(user, xp) {
+	user.xp = (user.xp || 0) + xp;
+	let reqXp = user.level * 500;
+	while (user.xp >= reqXp) {
+		user.xp -= reqXp;
+		user.level += 1;
+		reqXp = user.level * 500;
+		alert(`🎉 PARABÉNS! Você subiu para o NÍVEL ${user.level} de Sobrevivente!`);
+	}
+}
+
+/* ============================================================
+   CHALLENGES HUB
+============================================================ */
+function renderChallenges() {
+	const container = document.getElementById("challenges-container");
+	if (!container) return;
+	const challenges = getChallengesDB();
+	container.innerHTML = "";
+
+	challenges.forEach(ch => {
+		const isCompleted = currentUser && (currentUser.completedChallenges || []).includes(ch.id);
+
+		const card = document.createElement("div");
+		card.className = `challenge-card ${isCompleted ? 'completed' : ''}`;
+
+		card.innerHTML = `
+			<div>
+				<div class="challenge-tag-row">
+					<span class="challenge-category">${ch.category}</span>
+					<span class="challenge-status-badge ${isCompleted ? 'status-done' : 'status-todo'}">
+						${isCompleted ? '✓ Concluído' : 'Disponível'}
+					</span>
+				</div>
+				<h3>${ch.title}</h3>
+				<p>${ch.desc}</p>
+				<div class="reward-pill">
+					<span class="xp">⚡ +${ch.xp} XP</span> &bull; 
+					<span class="cash">🪙 +$${ch.cash.toLocaleString()}</span> &bull; 
+					<span class="badge">🎖️ ${ch.badge}</span>
+				</div>
+			</div>
+			<div>
+				${isCompleted 
+					? '<button class="challenge-action-btn claimed">✓ Recompensa Resgatada</button>'
+					: `<button class="challenge-action-btn" onclick="claimChallengeReward(${ch.id})">🎯 Participar & Concluir Missão</button>`
+				}
+			</div>
+		`;
+		container.appendChild(card);
+	});
+}
+
+function claimChallengeReward(challengeId) {
+	if (!currentUser) {
+		alert("Você precisa estar logado com sua conta de aluno para resgatar recompensas de desafios.");
+		openAuthModal('login');
+		return;
+	}
+
+	const challenges = getChallengesDB();
+	const ch = challenges.find(c => c.id === challengeId);
+	if (!ch) return;
+
+	if (!currentUser.completedChallenges) currentUser.completedChallenges = [];
+	if (currentUser.completedChallenges.includes(challengeId)) {
+		alert("Você já resgatou a recompensa desta missão!");
+		return;
+	}
+
+	currentUser.completedChallenges.push(challengeId);
+	currentUser.cash = (currentUser.cash || 0) + (ch.cash || 1000);
+	addXPToUser(currentUser, ch.xp || 300);
+
+	// Check 3 challenges achievement
+	if (currentUser.completedChallenges.length >= 3 && !currentUser.achievements.includes('void_master')) {
+		currentUser.achievements.push('void_master');
+		alert("🏆 Nova Conquista Desbloqueada: [Explorador do Vazio]!");
+	}
+
+	setCurrentUser(currentUser);
+	alert(`Desafio "${ch.title}" concluído com sucesso!\nVocê recebeu +${ch.xp} XP e +$${ch.cash} Cash.`);
+}
+
+function openCreateChallengeModal() {
+	if (!isModMode) {
+		const pass = prompt("Digite o código de moderador do professor para cadastrar novos desafios:");
+		if (pass === "omnivoid" || pass === "fatec" || pass === "professor") {
+			toggleModMode();
+		} else {
+			alert("Código de moderador incorreto.");
+			return;
+		}
+	}
+	document.getElementById("modal-create-challenge").style.display = "flex";
+}
+
+function handleCreateChallengeSubmit(event) {
+	event.preventDefault();
+	const title = document.getElementById("new-chal-title").value.trim();
+	const cat = document.getElementById("new-chal-cat").value;
+	const desc = document.getElementById("new-chal-desc").value.trim();
+	const xp = parseInt(document.getElementById("new-chal-xp").value) || 300;
+	const cash = parseInt(document.getElementById("new-chal-cash").value) || 1000;
+	const badge = document.getElementById("new-chal-badge").value.trim() || "Sobrevivente";
+
+	const challenges = getChallengesDB();
+	challenges.unshift({
+		id: Date.now(),
+		title: title,
+		category: cat,
+		desc: desc,
+		xp: xp,
+		cash: cash,
+		badge: badge,
+		completedBy: []
+	});
+
+	saveChallengesDB(challenges);
+	closeModal('modal-create-challenge');
+	alert(`Desafio "${title}" criado e publicado no mural para todos os alunos!`);
+}
+
+/* ============================================================
+   HALL DA FAMA / LEADERBOARD
+============================================================ */
+function renderLeaderboard() {
+	const tbody = document.getElementById("leaderboard-tbody");
+	if (!tbody) return;
+
+	let players = [...DEFAULT_LEADERBOARD];
+	const dbUsers = getUsersDB();
+
+	dbUsers.forEach(u => {
+		const exists = players.find(p => p.name.toLowerCase() === (u.nickname || u.name).toLowerCase());
+		if (!exists) {
+			players.push({
+				name: u.nickname || u.name,
+				avatar: u.avatar || "🧑‍🚀",
+				turma: u.turma || "Aluno",
+				level: u.level || 1,
+				maxWave: u.maxWave || 1,
+				kills: u.kills || 0,
+				challengesDone: (u.completedChallenges || []).length
+			});
+		} else {
+			exists.level = Math.max(exists.level, u.level || 1);
+			exists.maxWave = Math.max(exists.maxWave, u.maxWave || 1);
+			exists.kills = Math.max(exists.kills, u.kills || 0);
+			exists.challengesDone = Math.max(exists.challengesDone, (u.completedChallenges || []).length);
+		}
+	});
+
+	// Sort by level desc, maxWave desc, kills desc
+	players.sort((a, b) => {
+		if (b.level !== a.level) return b.level - a.level;
+		if (b.maxWave !== a.maxWave) return b.maxWave - a.maxWave;
+		return b.kills - a.kills;
+	});
+
+	tbody.innerHTML = "";
+	players.slice(0, 10).forEach((p, idx) => {
+		const tr = document.createElement("tr");
+		let rankClass = "";
+		let trophy = `#${idx + 1}`;
+		if (idx === 0) { rankClass = "rank-1"; trophy = "🥇 1º"; }
+		else if (idx === 1) { rankClass = "rank-2"; trophy = "🥈 2º"; }
+		else if (idx === 2) { rankClass = "rank-3"; trophy = "🥉 3º"; }
+
+		tr.innerHTML = `
+			<td><span class="rank-badge ${rankClass}">${trophy}</span></td>
+			<td>
+				<div class="player-cell">
+					<span class="avatar">${p.avatar}</span>
+					<div>
+						<div>${p.name}</div>
+						<div style="font-size: 11px; color: var(--text-muted);">${p.turma}</div>
+					</div>
+				</div>
+			</td>
+			<td><span class="user-level-badge">Nvl ${p.level}</span></td>
+			<td><strong style="color: #67e8f9;">Onda ${p.maxWave}</strong></td>
+			<td>${p.kills.toLocaleString()}</td>
+			<td><span class="badge-pill">⭐ ${p.challengesDone} completados</span></td>
+		`;
+		tbody.appendChild(tr);
+	});
+}
+
+/* ============================================================
+   MODALS UTILS
+============================================================ */
+function closeModal(modalId) {
+	document.getElementById(modalId).style.display = "none";
+}
+
+function closeModalOnBackdrop(e, modalId) {
+	if (e.target.id === modalId) {
+		closeModal(modalId);
+	}
+}
+
+/* ============================================================
    COMMENTS & MODERATION SYSTEM (Local & Interactive)
 ============================================================ */
 let isModMode = false;
@@ -1291,7 +2662,7 @@ const DEFAULT_COMMENTS = [
 		name: "Mariana Costa",
 		tag: "Aluna - ADS",
 		rating: "⭐⭐⭐⭐⭐",
-		text: "Muito legal poder acompanhar a evolução do estúdio e testar os protótipos direto pelo navegador. O visual do site com a logo da OmniVoid ficou nota 10!",
+		text: "Muito legal poder acompanhar a evolução do estúdio e testar os protótipos direto pelo navegador. O visual do site com a logo da OmniVoid e o mural de desafios ficou nota 10!",
 		likes: 8,
 		hidden: false,
 		date: "Hoje às 11:45"
@@ -1301,7 +2672,7 @@ const DEFAULT_COMMENTS = [
 		name: "Gabriel Ramos",
 		tag: "Visitante",
 		rating: "⭐⭐⭐⭐⭐",
-		text: "A arma especial com o minigame das 20 setas é muito satisfatória de pegar. Parabéns pelo projeto!",
+		text: "A arma especial com o minigame das 20 setas é muito satisfatória de pegar. Parabéns pelo projeto e pelas mecânicas!",
 		likes: 5,
 		hidden: false,
 		date: "Ontem às 19:10"
@@ -1351,7 +2722,7 @@ function renderComments() {
 
 	comments.forEach((c) => {
 		if (c.hidden && !isModMode) {
-			return; // don't show to regular visitors if hidden
+			return;
 		}
 
 		const card = document.createElement("div");
@@ -1423,8 +2794,14 @@ function handleCommentSubmit(event) {
 	comments.unshift(newComment);
 	saveComments(comments);
 
-	document.getElementById("comment-form").reset();
-	alert("Comentário publicado com sucesso!");
+	// If user is logged in, give reward for feedback
+	if (currentUser) {
+		addXPToUser(currentUser, 150);
+		setCurrentUser(currentUser);
+	}
+
+	document.getElementById("comm-text").value = "";
+	alert("Comentário publicado com sucesso! +150 XP pela participação na comunidade.");
 }
 
 function likeComment(id) {
@@ -1481,8 +2858,9 @@ function handleNewsletterSubmit(event) {
 	}
 }
 
-// Initial Render of Comments
+// Initial Setup
 document.addEventListener("DOMContentLoaded", () => {
+	updateUIAfterAuth();
 	renderComments();
 });
 
