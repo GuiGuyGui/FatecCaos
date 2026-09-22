@@ -11,18 +11,18 @@
 		<meta property="og:image" content="logo_omnivoid.png">
 		
 		<style>
-			:root {
-				--bg-dark: #07070b;
-				--bg-card: #0f1017;
-				--bg-card-hover: #171824;
-				--accent-purple: #8b5cf6;
-				--accent-cyan: #06b6d4;
-				--accent-pink: #ec4899;
-				--accent-gold: #f59e0b;
-				--accent-green: #10b981;
-				--text-main: #f8fafc;
-				--text-muted: #94a3b8;
-				--border-color: rgba(139, 92, 246, 0.22);
+						:root {
+				--bg-dark: #040405;
+				--bg-card: #09090c;
+				--bg-card-hover: #121217;
+				--bg-card-alt: #16161d;
+				--accent-white: #ffffff;
+				--accent-silver: #e4e4e7;
+				--text-main: #ffffff;
+				--text-muted: #94949e;
+				--border-color: rgba(255, 255, 255, 0.12);
+				--border-hover: rgba(255, 255, 255, 0.38);
+				--btn-glow: rgba(255, 255, 255, 0.18);
 			}
 
 			* {
@@ -43,16 +43,16 @@
 				overflow-x: hidden;
 			}
 
-			/* Background Cosmic Glow */
+						/* Background Cosmic Glow (Deep Dark Monochrome) */
 			.cosmic-bg {
 				position: fixed;
 				top: 0;
 				left: 0;
 				width: 100vw;
 				height: 100vh;
-				background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 60%),
-				            radial-gradient(circle at 85% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-				            radial-gradient(circle at 15% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+				background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+				            radial-gradient(circle at 85% 60%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+				            radial-gradient(circle at 15% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
 				pointer-events: none;
 				z-index: 0;
 			}
@@ -63,7 +63,7 @@
 				top: 0;
 				width: 100%;
 				height: 70px;
-				background: rgba(10, 10, 15, 0.94);
+				background: rgba(5, 5, 7, 0.96);
 				backdrop-filter: blur(14px);
 				border-bottom: 1px solid var(--border-color);
 				display: flex;
@@ -116,17 +116,23 @@
 			}
 
 			.nav-cta {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000 !important;
 				text-decoration: none;
-				padding: 8px 16px;
+				padding: 8px 18px;
 				border-radius: 8px;
 				font-size: 13px;
-				font-weight: 700;
+				font-weight: 800;
 				letter-spacing: 0.3px;
 				transition: all 0.25s ease;
-				box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+				box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
 				white-space: nowrap;
+				border: 1px solid #ffffff;
+			}
+			.nav-cta:hover {
+				transform: translateY(-2px);
+				background: #e4e4e7;
+				box-shadow: 0 6px 26px rgba(255, 255, 255, 0.4);
 			}
 
 			.nav-cta:hover {
@@ -152,7 +158,7 @@
 			.chat-hero h1 {
 				font-size: 38px;
 				font-weight: 800;
-				background: linear-gradient(135deg, #ffffff 30%, #a78bfa 70%, #67e8f9 100%);
+				background: linear-gradient(180deg, #ffffff 40%, #a1a1aa 100%);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 				margin-bottom: 10px;
@@ -223,10 +229,14 @@
 			}
 
 			.channel-btn.active {
-				background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(6, 182, 212, 0.15));
-				border-color: #8b5cf6;
-				color: #fff;
-				font-weight: 700;
+				background: #ffffff;
+				border-color: #ffffff;
+				color: #000000 !important;
+				font-weight: 800;
+			}
+			.channel-btn.active span.channel-count {
+				background: #000000;
+				color: #ffffff;
 			}
 
 			.channel-count {
@@ -327,7 +337,8 @@
 				width: 36px;
 				height: 36px;
 				border-radius: 50%;
-				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+				background: #1a1a22;
+				border: 1px solid #ffffff;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -348,8 +359,9 @@
 			}
 
 			.badge-prof {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000 !important;
+				font-weight: 800;
 			}
 
 			.badge-student {
@@ -481,18 +493,23 @@
 			}
 
 			.btn-send {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000;
 				border: none;
 				padding: 10px 24px;
 				border-radius: 8px;
 				font-size: 13.5px;
-				font-weight: 700;
+				font-weight: 800;
 				cursor: pointer;
 				transition: all 0.2s ease;
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
+			}
+			.btn-send:hover {
+				transform: translateY(-2px);
+				background: #e4e4e7;
+				box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
 			}
 
 			.btn-send:hover {

@@ -11,18 +11,18 @@
 		<meta property="og:image" content="logo_omnivoid.png">
 		
 		<style>
-			:root {
-				--bg-dark: #07070b;
-				--bg-card: #0f1017;
-				--bg-card-hover: #171824;
-				--accent-purple: #8b5cf6;
-				--accent-cyan: #06b6d4;
-				--accent-pink: #ec4899;
-				--accent-gold: #f59e0b;
-				--accent-green: #10b981;
-				--text-main: #f8fafc;
-				--text-muted: #94a3b8;
-				--border-color: rgba(139, 92, 246, 0.22);
+						:root {
+				--bg-dark: #040405;
+				--bg-card: #09090c;
+				--bg-card-hover: #121217;
+				--bg-card-alt: #16161d;
+				--accent-white: #ffffff;
+				--accent-silver: #e4e4e7;
+				--text-main: #ffffff;
+				--text-muted: #94949e;
+				--border-color: rgba(255, 255, 255, 0.12);
+				--border-hover: rgba(255, 255, 255, 0.38);
+				--btn-glow: rgba(255, 255, 255, 0.18);
 			}
 
 			* {
@@ -43,16 +43,16 @@
 				overflow-x: hidden;
 			}
 
-			/* Background Cosmic Glow */
+						/* Background Cosmic Glow (Deep Dark Monochrome) */
 			.cosmic-bg {
 				position: fixed;
 				top: 0;
 				left: 0;
 				width: 100vw;
 				height: 100vh;
-				background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 60%),
-				            radial-gradient(circle at 85% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-				            radial-gradient(circle at 15% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+				background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+				            radial-gradient(circle at 85% 60%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+				            radial-gradient(circle at 15% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
 				pointer-events: none;
 				z-index: 0;
 			}
@@ -63,7 +63,7 @@
 				top: 0;
 				width: 100%;
 				height: 70px;
-				background: rgba(10, 10, 15, 0.94);
+				background: rgba(5, 5, 7, 0.96);
 				backdrop-filter: blur(14px);
 				border-bottom: 1px solid var(--border-color);
 				display: flex;
@@ -161,26 +161,32 @@
 			}
 
 			.user-level-badge {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
-				padding: 1px 6px;
+				background: #ffffff;
+				color: #000000 !important;
+				padding: 1px 7px;
 				border-radius: 10px;
-				font-size: 10px;
+				font-size: 10.5px;
 				font-weight: 800;
 			}
 
 			.nav-cta {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000 !important;
 				text-decoration: none;
-				padding: 8px 16px;
+				padding: 8px 18px;
 				border-radius: 8px;
 				font-size: 13px;
-				font-weight: 700;
+				font-weight: 800;
 				letter-spacing: 0.3px;
 				transition: all 0.25s ease;
-				box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+				box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
 				white-space: nowrap;
+				border: 1px solid #ffffff;
+			}
+			.nav-cta:hover {
+				transform: translateY(-2px);
+				background: #e4e4e7;
+				box-shadow: 0 6px 26px rgba(255, 255, 255, 0.4);
 			}
 
 			.nav-cta:hover {
@@ -213,14 +219,15 @@
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
-				background: rgba(139, 92, 246, 0.15);
-				border: 1px solid rgba(139, 92, 246, 0.4);
-				color: #c4b5fd;
-				padding: 6px 16px;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				color: #ffffff;
+				padding: 6px 18px;
 				border-radius: 50px;
 				font-size: 12px;
-				font-weight: 600;
+				font-weight: 700;
 				margin-bottom: 20px;
+				letter-spacing: 0.4px;
 			}
 
 			.hero-title {
@@ -229,7 +236,7 @@
 				letter-spacing: -0.5px;
 				margin-bottom: 16px;
 				line-height: 1.2;
-				background: linear-gradient(135deg, #ffffff 30%, #a78bfa 70%, #67e8f9 100%);
+				background: linear-gradient(180deg, #ffffff 40%, #a1a1aa 100%);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
@@ -249,20 +256,25 @@
 			}
 
 			.btn-primary {
-				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000 !important;
 				text-decoration: none;
 				padding: 13px 26px;
 				border-radius: 10px;
 				font-size: 14.5px;
-				font-weight: 700;
+				font-weight: 800;
 				transition: all 0.25s ease;
-				box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+				box-shadow: 0 6px 22px rgba(255, 255, 255, 0.22);
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
-				border: none;
+				border: 1px solid #ffffff;
 				cursor: pointer;
+			}
+			.btn-primary:hover {
+				transform: translateY(-2px);
+				background: #e4e4e7;
+				box-shadow: 0 8px 30px rgba(255, 255, 255, 0.45);
 			}
 
 			.btn-primary:hover {
@@ -271,19 +283,24 @@
 			}
 
 			.btn-secondary {
-				background: var(--bg-card);
-				border: 1px solid var(--border-color);
-				color: #cbd5e1;
+				background: #09090d;
+				border: 1px solid rgba(255, 255, 255, 0.22);
+				color: #ffffff !important;
 				text-decoration: none;
 				padding: 13px 24px;
 				border-radius: 10px;
 				font-size: 14.5px;
-				font-weight: 600;
+				font-weight: 700;
 				transition: all 0.2s ease;
 				display: inline-flex;
 				align-items: center;
 				gap: 8px;
 				cursor: pointer;
+			}
+			.btn-secondary:hover {
+				background: #14141c;
+				border-color: #ffffff;
+				box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
 			}
 
 			.btn-secondary:hover {
@@ -307,8 +324,8 @@
 
 			.game-bar-top {
 				height: 48px;
-				background: #11121c;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				background: #07070a;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -319,9 +336,10 @@
 				display: flex;
 				align-items: center;
 				gap: 10px;
-				font-weight: 700;
+				font-weight: 800;
 				font-size: 13.5px;
-				color: #67e8f9;
+				color: #ffffff;
+				letter-spacing: 0.5px;
 			}
 
 			.game-status-online {
@@ -339,18 +357,24 @@
 			}
 
 			.ctrl-btn {
-				background: #1e2030;
-				color: #e2e8f0;
-				border: 1px solid #33364f;
+				background: #0e0e12;
+				color: #ffffff;
+				border: 1px solid rgba(255, 255, 255, 0.2);
 				padding: 6px 14px;
 				border-radius: 6px;
 				font-size: 12px;
-				font-weight: 600;
+				font-weight: 700;
 				cursor: pointer;
 				transition: all 0.2s ease;
 				display: inline-flex;
 				align-items: center;
 				gap: 6px;
+			}
+			.ctrl-btn:hover {
+				background: #ffffff;
+				color: #000000;
+				border-color: #ffffff;
+				box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
 			}
 
 			.ctrl-btn:hover {
@@ -443,8 +467,8 @@
 
 			/* Controls guide bar */
 			.game-bar-bottom {
-				background: #0e0f18;
-				border-top: 1px solid rgba(255, 255, 255, 0.08);
+				background: #07070a;
+				border-top: 1px solid rgba(255, 255, 255, 0.12);
 				padding: 12px 18px;
 				display: flex;
 				align-items: center;
@@ -452,16 +476,16 @@
 				flex-wrap: wrap;
 				gap: 12px;
 				font-size: 12px;
-				color: var(--text-muted);
+				color: #a1a1aa;
 			}
 
 			.key-badge {
-				background: #1c1d2d;
-				color: #f1f5f9;
-				padding: 2px 7px;
+				background: #121217;
+				color: #ffffff;
+				padding: 3px 8px;
 				border-radius: 4px;
-				border: 1px solid #33364f;
-				font-weight: 700;
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				font-weight: 800;
 				font-size: 11px;
 			}
 
@@ -491,8 +515,8 @@
 			}
 
 			.profile-summary-box {
-				background: linear-gradient(135deg, rgba(26, 22, 45, 0.9), rgba(15, 23, 42, 0.9));
-				border: 1px solid var(--border-color);
+				background: #08080b;
+				border: 1px solid rgba(255, 255, 255, 0.15);
 				border-radius: 16px;
 				padding: 24px 30px;
 				display: flex;
@@ -500,7 +524,7 @@
 				justify-content: space-between;
 				flex-wrap: wrap;
 				gap: 20px;
-				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+				box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.03);
 			}
 
 			.profile-user-info {
@@ -513,13 +537,13 @@
 				width: 64px;
 				height: 64px;
 				border-radius: 50%;
-				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+				background: #14141a;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				font-size: 30px;
-				border: 2px solid #a78bfa;
-				box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
+				border: 2px solid #ffffff;
+				box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 			}
 
 			.player-main-meta h3 {
@@ -547,9 +571,9 @@
 			}
 
 			.stat-item .val {
-				font-size: 20px;
-				font-weight: 800;
-				color: #67e8f9;
+				font-size: 22px;
+				font-weight: 900;
+				color: #ffffff;
 			}
 
 			.stat-item .lbl {
@@ -576,14 +600,15 @@
 			.xp-track {
 				width: 100%;
 				height: 8px;
-				background: #1e1b38;
+				background: #121217;
+				border: 1px solid rgba(255, 255, 255, 0.15);
 				border-radius: 4px;
 				overflow: hidden;
 			}
 
 			.xp-fill {
 				height: 100%;
-				background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+				background: linear-gradient(90deg, #ffffff, #a1a1aa);
 				width: 45%;
 				transition: width 0.5s ease;
 			}
@@ -1042,12 +1067,12 @@
 			}
 
 			.newsletter-card {
-				background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.1));
-				border: 1px solid var(--border-color);
+				background: #08080b;
+				border: 1px solid rgba(255, 255, 255, 0.15);
 				border-radius: 18px;
 				padding: 40px 30px;
 				text-align: center;
-				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
 			}
 
 			.newsletter-form {
@@ -1076,15 +1101,20 @@
 			}
 
 			.newsletter-btn {
-				background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000;
 				border: none;
 				padding: 12px 24px;
 				border-radius: 8px;
 				font-size: 14px;
-				font-weight: 700;
+				font-weight: 800;
 				cursor: pointer;
 				transition: all 0.2s ease;
+			}
+			.newsletter-btn:hover {
+				background: #e4e4e7;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 20px rgba(255, 255, 255, 0.35);
 			}
 
 			.newsletter-btn:hover {
@@ -1172,15 +1202,19 @@
 			}
 
 			.submit-comment-btn {
-				background: linear-gradient(135deg, #7c3aed, #06b6d4);
-				color: #fff;
+				background: #ffffff;
+				color: #000000;
 				border: none;
 				padding: 10px 22px;
 				border-radius: 8px;
 				font-size: 13px;
-				font-weight: 700;
+				font-weight: 800;
 				cursor: pointer;
-				transition: opacity 0.2s ease;
+				transition: all 0.2s ease;
+			}
+			.submit-comment-btn:hover {
+				background: #e4e4e7;
+				box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
 			}
 
 			.comments-list {
