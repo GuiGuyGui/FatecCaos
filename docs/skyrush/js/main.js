@@ -68,15 +68,16 @@ class GameClient {
     }
 
     connectWS(onOpenCallback) {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${protocol}//${window.location.host}/ws`;
+        try {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
 
-        this.ws = new WebSocket(wsUrl);
+            this.ws = new WebSocket(wsUrl);
 
-        this.ws.onopen = () => {
-            console.log('Connected to Sky Rush Server');
-            if (onOpenCallback) onOpenCallback();
-        };
+            this.ws.onopen = () => {
+                console.log('Connected to Sky Rush Server');
+                if (onOpenCallback) onOpenCallback();
+            };
 
         this.ws.onmessage = (event) => {
             try {
@@ -99,28 +100,113 @@ class GameClient {
 
     createRoom(name, color) {
         window.soundEngine.init();
-        this.connectWS(() => {
-            this.ws.send(JSON.stringify({
-                type: 'create_room',
-                name: name,
-                color: color,
-                hunter_active: (this.selectedHunter || 0) > 0,
-                bot_count: this.selectedBotCount || 0,
-                duration_minutes: this.selectedDurationMinutes || 10
-            }));
-        });
+        let wsConnected = false;
+        const fallbackTimer = setTimeout(() => {
+            if (!wsConnected) {
+                console.log('Servidor WebSocket indisponível. Iniciando Modo Local Offline!');
+                this.startLocalSoloGame(name, color);
+            }
+        }, 800);
+
+        try {
+            this.connectWS(() => {
+                wsConnected = true;
+                clearTimeout(fallbackTimer);
+                this.ws.send(JSON.stringify({
+                    type: 'create_room',
+                    name: name,
+                    color: color,
+                    hunter_active: (this.selectedHunter || 0) > 0,
+                    bot_count: this.selectedBotCount || 0,
+                    duration_minutes: this.selectedDurationMinutes || 10
+                }));
+            });
+        } catch (e) {
+            clearTimeout(fallbackTimer);
+            this.startLocalSoloGame(name, color);
+        }
     }
 
     joinRoom(code, name, color) {
         window.soundEngine.init();
-        this.connectWS(() => {
-            this.ws.send(JSON.stringify({
-                type: 'join_room',
-                room_code: code,
-                name: name,
-                color: color
-            }));
-        });
+        let wsConnected = false;
+        const fallbackTimer = setTimeout(() => {
+            if (!wsConnected) {
+                console.log('Servidor indisponível. Iniciando Modo Local Offline!');
+                this.startLocalSoloGame(name, color);
+            }
+        }, 800);
+
+        try {
+            this.connectWS(() => {
+                wsConnected = true;
+                clearTimeout(fallbackTimer);
+                this.ws.send(JSON.stringify({
+                    type: 'join_room',
+                    room_code: code,
+                    name: name,
+                    color: color
+                }));
+            });
+        } catch (e) {
+            clearTimeout(fallbackTimer);
+            this.startLocalSoloGame(name, color);
+        }
+    }
+
+    startLocalSoloGame(name, color) {
+        this.isLocalSolo = true;
+        this.playerId = 'p_local';
+        this.roomCode = 'SOLO-' + Math.floor(Math.random() * 9000 + 1000);
+        this.isHost = true;
+        this.roundTime = (this.selectedDurationMinutes || 10) * 60;
+        this.gameState = 'playing';
+
+        // Generate Map
+        this.map = new GameMap(Math.floor(Math.random() * 999999));
+
+        // Create Local Player
+        this.localPlayer = new Player(this.playerId, name || 'Jogador', color || '#3b82f6', true);
+        this.localPlayer.isHost = true;
+        this.localPlayer.x = 240;
+        this.localPlayer.y = 11600;
+        this.renderer.camera.x = this.localPlayer.x + this.localPlayer.w / 2;
+        this.renderer.camera.y = this.localPlayer.y - 40;
+        this.renderer.camera.targetX = this.renderer.camera.x;
+        this.renderer.camera.targetY = this.renderer.camera.y;
+
+        this.otherPlayers = {};
+        const botCount = this.selectedBotCount > 0 ? this.selectedBotCount : 3;
+        const botNames = ['CyberBot_01', 'CloudClimber', 'SkyNinja', 'AeroPilot', 'SummitKing'];
+        const botColors = ['#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4'];
+
+        for (let i = 0; i < botCount; i++) {
+            const bid = 'bot_' + (i + 1);
+            const bp = new Player(bid, botNames[i % botNames.length], botColors[i % botColors.length], false);
+            bp.isBot = true;
+            bp.x = 100 + i * 90;
+            bp.y = 11600;
+            this.otherPlayers[bid] = bp;
+        }
+
+        // Update UI
+        this.ui.setRoomCode(this.roomCode);
+        this.ui.showLobbyModal(false);
+        this.ui.showWaitingLobby(false);
+        this.ui.showCinematic(false);
+        this.ui.showHostToolbar(true);
+        this.ui.updatePlayerList(this.localPlayer, this.otherPlayers);
+        this.ui.updateAltitudeBar(this.localPlayer, this.otherPlayers);
+
+        if (this.hostSelectedRole === 'spectator') {
+            this.setFreeCameraMode(true);
+        }
+
+        if (this.canvas) this.canvas.focus();
+        if (window.soundEngine && window.soundEngine.playBattleStartHorn) {
+            window.soundEngine.playBattleStartHorn();
+        }
+        this.ui.addChatMessage('Sistema', '🎮 Modo Local / Offline iniciado! Suba até o topo!', '#10b981');
     }
 
     handleServerMessage(data) {

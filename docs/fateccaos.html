@@ -1086,7 +1086,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		<!-- Godot 4 Engine Scripts -->
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":1,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":187777864,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":1,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -1173,7 +1173,7 @@ function renderFatecChallenges() {
 			<div>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
 					<span style="font-size: 11px; font-weight: 800; text-transform: uppercase; background: #181822; padding: 2px 8px; border-radius: 4px; color: #fff;">${ch.category}</span>
-					<span style="font-size: 11px; font-weight: 700; color: ${isCompleted ? '#fff' : '#94949e'};">${isCompleted ? '✓ Concluído' : 'Disponível'}</span>
+					<span style="font-size: 11px; font-weight: 700; color: ${isCompleted ? '#fff' : '#ffffff'};">${isCompleted ? '✓ Concluído' : 'Disponível'}</span>
 				</div>
 				<h3 style="font-size: 17px; font-weight: 800; margin-bottom: 8px; color: #fff;">${ch.title}</h3>
 				<p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">${ch.desc}</p>
@@ -1209,31 +1209,102 @@ function claimFatecChallenge(id) {
 	alert("Desafio concluído com sucesso!");
 }
 
-(function () {
+async function loadMergedPck(onProgress) {
+	const parts = [
+		'index.pck.part0',
+		'index.pck.part1',
+		'index.pck.part2',
+		'index.pck.part3'
+	];
+	const totalBytes = 187777864;
+	const loadedBytes = [0, 0, 0, 0];
+
+	function reportProgress() {
+		const currentSum = loadedBytes.reduce((a, b) => a + b, 0);
+		if (onProgress) onProgress(currentSum, totalBytes);
+	}
+
+	const promises = parts.map((partUrl, idx) => {
+		return fetch(partUrl).then(response => {
+			if (!response.ok) throw new Error(`Falha ao baixar ${partUrl}: status ${response.status}`);
+			const reader = response.body.getReader();
+			let received = 0;
+			const chunks = [];
+
+			return new Promise((resolve, reject) => {
+				function pump() {
+					reader.read().then(({ done, value }) => {
+						if (done) {
+							const partArr = new Uint8Array(received);
+							let offset = 0;
+							for (let c of chunks) {
+								partArr.set(c, offset);
+								offset += c.length;
+							}
+							resolve(partArr);
+							return;
+						}
+						chunks.push(value);
+						received += value.length;
+						loadedBytes[idx] = received;
+						reportProgress();
+						pump();
+					}).catch(reject);
+				}
+				pump();
+			});
+		});
+	});
+
+	const partArrays = await Promise.all(promises);
+	const fullBuffer = new Uint8Array(totalBytes);
+	let masterOffset = 0;
+	for (let part of partArrays) {
+		fullBuffer.set(part, masterOffset);
+		masterOffset += part.length;
+	}
+	return fullBuffer.buffer;
+}
+
+(async function () {
 	const statusOverlay = document.getElementById('status');
 	const statusProgress = document.getElementById('status-progress');
 	const statusNotice = document.getElementById('status-notice');
 	let initializing = true;
 	function setStatusMode(mode) {
 		if (mode === 'hidden') {
-			statusOverlay.remove();
+			if (statusOverlay) statusOverlay.remove();
 			initializing = false;
 			return;
 		}
-		statusOverlay.style.visibility = 'visible';
+		if (statusOverlay) statusOverlay.style.visibility = 'visible';
 	}
-	engine.startGame({
-		'onProgress': function (current, total) {
-			if (current > 0 && total > 0) {
+
+	try {
+		setStatusMode('progress');
+		if (statusNotice) statusNotice.innerText = 'Baixando pacotes de dados do FatecCaos...';
+
+		const pckArrayBuffer = await loadMergedPck((current, total) => {
+			if (statusProgress && total > 0) {
 				statusProgress.value = current;
 				statusProgress.max = total;
 			}
-		},
-	}).then(() => {
+			if (statusNotice) {
+				const mb = (current / (1024 * 1024)).toFixed(1);
+				const totalMb = (total / (1024 * 1024)).toFixed(1);
+				statusNotice.innerText = `Baixando FatecCaos: ${mb}MB / ${totalMb}MB`;
+			}
+		});
+
+		if (statusNotice) statusNotice.innerText = 'Inicializando motor Godot 4 Web...';
+		await engine.init('index');
+		await engine.preloadFile(pckArrayBuffer, 'index.pck');
+		await engine.start();
 		setStatusMode('hidden');
-	}, (err) => {
-		console.error(err);
-	});
+	} catch (err) {
+		console.error('Erro ao iniciar FatecCaos:', err);
+		if (statusNotice) statusNotice.innerText = 'Erro ao inicializar o jogo: ' + err.message;
+	}
 }());
 
 document.addEventListener("DOMContentLoaded", () => {
