@@ -621,27 +621,13 @@ body, html {
     display: none;
 }
 
-/* Host Floating God Powers Command Dock (Fixed Top-Docked Clean UI) */
-#hostToolbar.host-command-dock {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 95;
-    background: rgba(15, 23, 42, 0.82);
-    backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(168, 85, 247, 0.6);
-    border-radius: 14px;
-    padding: 6px 12px;
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(168, 85, 247, 0.25);
-    max-width: calc(100vw - 380px);
-    max-height: 46vh;
-    overflow-y: auto;
-    pointer-events: auto;
-    transition: all 0.25s ease-in-out;
+/* Host Floating God Powers Command Dock (Removed) */
+#hostToolbar,
+#hostToolbar.host-command-dock,
+.host-command-dock {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 #hostToolbar.host-command-dock.host-minimized {

@@ -138,7 +138,7 @@ class UIManager {
 
     showHostToolbar(show) {
         if (this.hostToolbarEl) {
-            this.hostToolbarEl.style.display = show ? 'flex' : 'none';
+            this.hostToolbarEl.style.display = 'none';
         }
     }
 
