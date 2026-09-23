@@ -467,9 +467,21 @@
 			</ul>
 
 			<div class="nav-user-panel">
-				<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;">
-					<span style="font-size: 15px;">👤</span>
-					<span style="opacity: 0.95;">Convidado</span>
+				<div id="auth-logged-out" style="display: flex; align-items: center; gap: 8px;">
+					<button class="nav-auth-btn" onclick="openAuthModal('login')">
+						<span>👤 Entrar</span>
+					</button>
+					<button class="btn-primary" style="padding: 7px 15px; font-size: 13px;" onclick="openAuthModal('register')">
+						Cadastrar
+					</button>
+				</div>
+
+				<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
+					<button class="user-pill-btn" onclick="openProfileModal()">
+						<span id="nav-user-avatar">👤</span>
+						<span id="nav-user-name">Usuário</span>
+						<span class="user-level-badge" id="nav-user-level">Nvl 1</span>
+					</button>
 				</div>
 			</div>
 		</nav>
@@ -616,6 +628,106 @@
 	</main>
 
 	
+		<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
+			<div class="modal-box">
+				<button class="modal-close-btn" onclick="closeModal('modal-auth')">✕</button>
+				
+				<div id="auth-tab-row" style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px;">
+					<button id="tab-btn-login" class="nav-link active" onclick="switchAuthTab('login')">Entrar na Conta</button>
+					<button id="tab-btn-register" class="nav-link" onclick="switchAuthTab('register')">Novo Cadastro</button>
+				</div>
+
+				<form id="form-login" onsubmit="handleLoginSubmit(event)">
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse sua conta para salvar recordes, simular orçamentos e interagir na comunidade.</p>
+
+					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
+					<input type="text" id="login-identifier" class="input-field" placeholder="ex: seu_nickname ou seu@email.com" required>
+
+					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+					<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
+
+					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+						🚀 Entrar na Conta
+					</button>
+				</form>
+
+				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Usuário</h3>
+					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Cadastre-se gratuitamente para salvar seu progresso, recordes e participar do chat.</p>
+
+					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
+					<input type="text" id="reg-name" class="input-field" placeholder="ex: Seu Nome" required>
+
+					<label style="font-size: 12px; font-weight: 600;">Nickname / Apelido:</label>
+					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: Player1" required>
+
+					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Curso (Opcional):</label>
+					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Gamer / Dev / Estudante" value="Visitante">
+
+					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
+					<input type="email" id="reg-email" class="input-field" placeholder="ex: seu@email.com" required>
+
+					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
+					<div class="avatar-picker-row">
+						<span class="avatar-choice selected" onclick="selectAvatar('🧑‍🚀', this)">🧑‍🚀</span>
+						<span class="avatar-choice" onclick="selectAvatar('🥷', this)">🥷</span>
+						<span class="avatar-choice" onclick="selectAvatar('🧙‍♂️', this)">🧙‍♂️</span>
+						<span class="avatar-choice" onclick="selectAvatar('🤖', this)">🤖</span>
+						<span class="avatar-choice" onclick="selectAvatar('🧟', this)">🧟</span>
+						<span class="avatar-choice" onclick="selectAvatar('👾', this)">👾</span>
+						<span class="avatar-choice" onclick="selectAvatar('🕵️', this)">🕵️</span>
+						<span class="avatar-choice" onclick="selectAvatar('🐱', this)">🐱</span>
+					</div>
+
+					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
+
+					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+						✨ Criar Minha Conta
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="modal-profile" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-profile')">
+			<div class="modal-box" style="max-width: 600px;">
+				<button class="modal-close-btn" onclick="closeModal('modal-profile')">✕</button>
+
+				<div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 20px;">
+					<div style="display: flex; align-items: center; gap: 14px;">
+						<div style="font-size: 40px; width: 60px; height: 60px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent-primary);" id="modal-profile-avatar">👤</div>
+						<div>
+							<h2 id="modal-profile-name" style="font-size: 20px; font-weight: 800;">Usuário</h2>
+							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Membro</p>
+						</div>
+					</div>
+					<button class="btn-secondary" onclick="handleLogout()" style="padding: 6px 14px; font-size: 12px; color: #ff0055 !important;">
+						🚪 Sair da Conta
+					</button>
+				</div>
+
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 16px;">
+					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-level" style="font-size: 20px; font-weight: 800; color: var(--accent-gold) !important;">Nvl 1</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Nível</div>
+					</div>
+					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-cash" style="font-size: 20px; font-weight: 800; color: var(--accent-emerald) !important;">$0</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
+					</div>
+					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-wave" style="font-size: 20px; font-weight: 800; color: var(--accent-danger) !important;">Onda 1</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Zombies</div>
+					</div>
+					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
+						<div id="prof-stat-kills" style="font-size: 20px; font-weight: 800; color: var(--accent-primary) !important;">0</div>
+						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Pontuação</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	
 	<footer>
 		<div class="footer-links">
@@ -637,24 +749,109 @@
 
 	
 <script>
-// Limpa qualquer sessão residual no navegador do visitante
-try {
-	localStorage.removeItem("omnivoid_current_user");
-} catch (e) {}
-
+let selectedAvatarIcon = '🧑‍🚀';
+function selectAvatar(emoji, el) {
+	selectedAvatarIcon = emoji;
+	document.querySelectorAll('.avatar-choice').forEach(e => e.classList.remove('selected'));
+	el.classList.add('selected');
+}
+function getUsersDB() {
+	try {
+		return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
+	} catch (e) {
+		return [];
+	}
+}
+function saveUsersDB(users) {
+	localStorage.setItem("omnivoid_users_db", JSON.stringify(users));
+}
 function getCurrentUser() {
-	return {
-		name: "Convidado",
-		nickname: "Convidado",
-		turma: "Visitante",
-		avatar: "👤",
-		level: 1,
-		xp: 0,
-		cash: 0,
-		maxWave: 1,
-		kills: 0,
-		score: 0
-	};
+	try {
+		const stored = localStorage.getItem("omnivoid_current_user");
+		if (stored) {
+			const parsed = JSON.parse(stored);
+			if (parsed && parsed.nickname) return parsed;
+		}
+		return null;
+	} catch (e) {
+		return null;
+	}
+}
+function setCurrentUser(user) {
+	if (user) {
+		localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+	} else {
+		localStorage.removeItem("omnivoid_current_user");
+	}
+	updateUIAfterAuth();
+}
+function updateUIAfterAuth() {
+	const user = getCurrentUser();
+	const loggedOutDiv = document.getElementById("auth-logged-out");
+	const loggedInDiv = document.getElementById("auth-logged-in");
+	if (!loggedOutDiv || !loggedInDiv) return;
+	if (user) {
+		loggedOutDiv.style.display = "none";
+		loggedInDiv.style.display = "flex";
+		const navAvatar = document.getElementById("nav-user-avatar");
+		const navName = document.getElementById("nav-user-name");
+		const navLevel = document.getElementById("nav-user-level");
+		if (navAvatar) navAvatar.innerText = user.avatar || "👤";
+		if (navName) navName.innerText = user.nickname || user.name || "Usuário";
+		if (navLevel) navLevel.innerText = "Nvl " + (user.level || 1);
+	} else {
+		loggedOutDiv.style.display = "flex";
+		loggedInDiv.style.display = "none";
+	}
+}
+function openAuthModal(tab) {
+	const m = document.getElementById("modal-auth");
+	if (m) {
+		m.style.display = "flex";
+		switchAuthTab(tab);
+	}
+}
+function switchAuthTab(tab) {
+	const fLog = document.getElementById("form-login");
+	const fReg = document.getElementById("form-register");
+	const bLog = document.getElementById("tab-btn-login");
+	const bReg = document.getElementById("tab-btn-register");
+	if (tab === "login") {
+		if (fLog) fLog.style.display = "block";
+		if (fReg) fReg.style.display = "none";
+		if (bLog) bLog.classList.add("active");
+		if (bReg) bReg.classList.remove("active");
+	} else {
+		if (fLog) fLog.style.display = "none";
+		if (fReg) fReg.style.display = "block";
+		if (bLog) bLog.classList.remove("active");
+		if (bReg) bReg.classList.add("active");
+	}
+}
+function openProfileModal() {
+	const user = getCurrentUser();
+	if (!user) {
+		openAuthModal("login");
+		return;
+	}
+	const mName = document.getElementById("modal-profile-name");
+	const mSub = document.getElementById("modal-profile-sub");
+	const mAvt = document.getElementById("modal-profile-avatar");
+	const mLevel = document.getElementById("prof-stat-level");
+	const mCash = document.getElementById("prof-stat-cash");
+	const mWave = document.getElementById("prof-stat-wave");
+	const mKills = document.getElementById("prof-stat-kills");
+
+	if (mName) mName.innerText = user.nickname || user.name || "Usuário";
+	if (mSub) mSub.innerText = (user.name || "Usuário") + " • " + (user.turma || "Membro");
+	if (mAvt) mAvt.innerText = user.avatar || "👤";
+	if (mLevel) mLevel.innerText = "Nvl " + (user.level || 1);
+	if (mCash) mCash.innerText = "$" + (user.cash || 0).toLocaleString("pt-BR");
+	if (mWave) mWave.innerText = "Onda " + (user.maxWave || 1);
+	if (mKills) mKills.innerText = (user.kills || 0).toLocaleString("pt-BR");
+
+	const m = document.getElementById("modal-profile");
+	if (m) m.style.display = "flex";
 }
 function closeModal(id) {
 	const m = document.getElementById(id);
@@ -665,6 +862,64 @@ function closeModalOnBackdrop(e, id) {
 		closeModal(id);
 	}
 }
+function handleLoginSubmit(e) {
+	e.preventDefault();
+	const ident = document.getElementById("login-identifier").value.trim().toLowerCase();
+	const pass = document.getElementById("login-password").value.trim();
+	const db = getUsersDB();
+	const found = db.find(u => (u.email.toLowerCase() === ident || u.nickname.toLowerCase() === ident) && u.password === pass);
+	if (found) {
+		setCurrentUser(found);
+		closeModal("modal-auth");
+		alert("Bem-vindo de volta, " + found.nickname + "!");
+	} else {
+		alert("Usuário ou senha incorretos. Caso ainda não possua conta, clique na aba 'Novo Cadastro'.");
+	}
+}
+function handleRegisterSubmit(e) {
+	e.preventDefault();
+	const name = document.getElementById("reg-name").value.trim();
+	const nick = document.getElementById("reg-nickname").value.trim();
+	const turma = document.getElementById("reg-turma").value.trim() || "Visitante";
+	const email = document.getElementById("reg-email").value.trim().toLowerCase();
+	const pass = document.getElementById("reg-password").value.trim();
+
+	const db = getUsersDB();
+	if (db.some(u => u.email.toLowerCase() === email || u.nickname.toLowerCase() === nick.toLowerCase())) {
+		alert("E-mail ou Nickname já cadastrados! Escolha outro identificador.");
+		return;
+	}
+
+	const newUser = {
+		name: name,
+		nickname: nick,
+		turma: turma,
+		email: email,
+		password: pass,
+		avatar: selectedAvatarIcon || "👤",
+		level: 1,
+		xp: 0,
+		cash: 0,
+		maxWave: 1,
+		kills: 0,
+		score: 0
+	};
+	db.push(newUser);
+	saveUsersDB(db);
+	setCurrentUser(newUser);
+	closeModal("modal-auth");
+	alert("Conta criada com sucesso! Bem-vindo, " + nick + "!");
+}
+function handleLogout() {
+	if (confirm("Deseja desconectar de sua conta?")) {
+		setCurrentUser(null);
+		closeModal("modal-profile");
+	}
+}
+document.addEventListener("DOMContentLoaded", () => {
+	updateUIAfterAuth();
+});
+updateUIAfterAuth();
 </script>
 
 </body>

@@ -1693,15 +1693,22 @@ class GameClient {
             });
         });
 
-        // Initialize Nickname as Convidado
+        // Initialize Nickname from logged user or Convidado
+        const savedUser = (function() {
+            try { return JSON.parse(localStorage.getItem('omnivoid_current_user')); } catch(e) { return null; }
+        })();
         const nickInput = document.getElementById('nicknameInput');
         if (nickInput) {
-            let savedNick = localStorage.getItem('omnivoid_guest_nick');
-            if (!savedNick) {
-                savedNick = 'Convidado_' + Math.floor(Math.random() * 899 + 100);
-                localStorage.setItem('omnivoid_guest_nick', savedNick);
+            if (savedUser && savedUser.nickname) {
+                nickInput.value = savedUser.nickname;
+            } else {
+                let savedNick = localStorage.getItem('omnivoid_guest_nick');
+                if (!savedNick) {
+                    savedNick = 'Convidado_' + Math.floor(Math.random() * 899 + 100);
+                    localStorage.setItem('omnivoid_guest_nick', savedNick);
+                }
+                nickInput.value = savedNick;
             }
-            nickInput.value = savedNick;
         }
 
         // Quick Play / Test Solo Button (Starts Instantly in Local Mode)
