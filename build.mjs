@@ -2412,7 +2412,7 @@ const zombiesHtml = `<!DOCTYPE html>
 
 			loadPckParts().then(pckBuffer => {
 				statusText.innerText = 'Inicializando Godot Engine 4.3...';
-				return engine.init().then(() => {
+				return engine.init('index').then(() => {
 					engine.copyToFS('/index.pck', pckBuffer);
 					return engine.start({ args: ['--main-pack', '/index.pck'] });
 				});
