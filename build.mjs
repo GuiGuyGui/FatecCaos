@@ -92,7 +92,7 @@ const COMMON_HEAD = `
 		}
 
 		.nav-logo {
-			height: 54px;
+			height: 62px;
 			width: auto;
 			object-fit: contain;
 			filter: none !important;
@@ -295,9 +295,9 @@ const COMMON_HEAD = `
 			right: 50%;
 			margin-left: -50vw;
 			margin-right: -50vw;
-			background: #07070c;
+			background: #050509;
 			border-bottom: 1px solid var(--border-color);
-			padding: 40px 20px;
+			padding: 20px 16px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -308,9 +308,9 @@ const COMMON_HEAD = `
 
 		.logo-hero-img {
 			width: 100%;
-			max-width: 1100px;
+			max-width: 1500px;
 			height: auto;
-			max-height: 260px;
+			max-height: 450px;
 			object-fit: contain;
 			filter: none !important;
 			transition: transform 0.3s ease;
