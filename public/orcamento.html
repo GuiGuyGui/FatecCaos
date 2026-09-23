@@ -985,6 +985,32 @@ function handleLogout() {
 		closeModal("modal-profile");
 	}
 }
+
+// Sincronização em tempo real de estatísticas (XP, recordes, créditos) para a conta logada
+window.addEventListener("message", (e) => {
+	if (e.data && e.data.type === "SCORE_UPDATE") {
+		const u = getCurrentUser();
+		if (u) {
+			const addedScore = parseInt(e.data.score) || 0;
+			u.score = Math.max(u.score || 0, addedScore);
+			u.cash = (u.cash || 0) + Math.floor(addedScore / 10);
+			u.xp = (u.xp || 0) + Math.floor(addedScore / 5);
+			u.level = Math.max(u.level || 1, 1 + Math.floor((u.xp || 0) / 1000));
+			if (e.data.game === "zombies") {
+				u.maxWave = Math.max(u.maxWave || 1, parseInt(e.data.wave) || 1);
+				u.kills = (u.kills || 0) + (parseInt(e.data.kills) || 0);
+			}
+			setCurrentUser(u);
+			const db = getUsersDB();
+			const idx = db.findIndex(item => item.email === u.email || item.nickname === u.nickname);
+			if (idx !== -1) {
+				db[idx] = { ...db[idx], ...u };
+				saveUsersDB(db);
+			}
+		}
+	}
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 	updateUIAfterAuth();
 });

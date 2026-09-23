@@ -216,7 +216,6 @@ class GameClient {
         this.ui.showLobbyModal(false);
         this.ui.showWaitingLobby(false);
         this.ui.showCinematic(false);
-        this.ui.showHostToolbar(true);
         this.ui.updatePlayerList(this.localPlayer, this.otherPlayers);
         this.ui.updateAltitudeBar(this.localPlayer, this.otherPlayers);
         this.ui.updateAmmoCount(this.localPlayer.ammo, this.localPlayer.currentWeapon);
@@ -405,6 +404,31 @@ class GameClient {
             scores.sort((a, b) => b.score - a.score);
             localStorage.setItem(key, JSON.stringify(scores.slice(0, 50)));
 
+            // Sincronizar dados com o perfil logado no portal OmniVoid
+            try {
+                const currentUserStr = localStorage.getItem('omnivoid_current_user');
+                if (currentUserStr) {
+                    const u = JSON.parse(currentUserStr);
+                    if (u) {
+                        u.score = Math.max(u.score || 0, score);
+                        u.cash = (u.cash || 0) + Math.floor(score / 10);
+                        u.xp = (u.xp || 0) + Math.floor(score / 5);
+                        u.level = Math.max(u.level || 1, 1 + Math.floor((u.xp || 0) / 1000));
+                        localStorage.setItem('omnivoid_current_user', JSON.stringify(u));
+                        
+                        const dbStr = localStorage.getItem('omnivoid_users_db');
+                        if (dbStr) {
+                            const db = JSON.parse(dbStr);
+                            const idx = db.findIndex(item => item.email === u.email || item.nickname === u.nickname);
+                            if (idx !== -1) {
+                                db[idx] = { ...db[idx], ...u };
+                                localStorage.setItem('omnivoid_users_db', JSON.stringify(db));
+                            }
+                        }
+                    }
+                }
+            } catch (e) {}
+
             // Also post message to parent window (OmniVoid Hub Portal)
             if (window.parent && window.parent !== window) {
                 window.parent.postMessage({
@@ -464,10 +488,8 @@ class GameClient {
 
                 if (this.gameState === 'lobby') {
                     this.ui.showWaitingLobby(true, this.roomCode, this.isHost, this.localPlayer, this.otherPlayers);
-                    this.ui.showHostToolbar(false);
                 } else {
                     this.ui.showWaitingLobby(false);
-                    this.ui.showHostToolbar(this.isHost);
                 }
 
                 if (this.isHost && this.hostSelectedRole === 'spectator') {
@@ -520,7 +542,6 @@ class GameClient {
                 this.gameState = 'playing';
                 this.ui.showWaitingLobby(false);
                 this.ui.showCinematic(false);
-                this.ui.showHostToolbar(this.isHost);
                 if (this.canvas) this.canvas.focus();
                 if (window.soundEngine && window.soundEngine.playBattleStartHorn) {
                     window.soundEngine.playBattleStartHorn();
@@ -531,9 +552,8 @@ class GameClient {
                 if (data.new_host_id === this.playerId) {
                     this.isHost = true;
                     if (this.localPlayer) this.localPlayer.isHost = true;
-                    if (this.gameState === 'playing') this.ui.showHostToolbar(true);
                     this.ui.showWaitingLobby(this.gameState === 'lobby', this.roomCode, this.isHost, this.localPlayer, this.otherPlayers);
-                    this.ui.addChatMessage('Sistema', 'Você agora é o Anfitrião da sala!', '#fbbf24');
+                    this.ui.addChatMessage('Sistema', 'Você agora é o líder da sala!', '#fbbf24');
                 } else if (data.new_host_id in this.otherPlayers) {
                     this.otherPlayers[data.new_host_id].isHost = true;
                     this.ui.updateWaitingLobbyRoster(this.localPlayer, this.otherPlayers, this.isHost);
@@ -547,7 +567,6 @@ class GameClient {
                     this.gameState = 'playing';
                     this.ui.showWaitingLobby(false);
                     this.ui.showCinematic(false);
-                    this.ui.showHostToolbar(this.isHost);
                 }
                 if (data.m) {
                     this.modifiers = data.m;
@@ -1413,7 +1432,6 @@ class GameClient {
         }
         this.gameState = 'playing';
         this.ui.showCinematic(false);
-        this.ui.showHostToolbar(this.isHost);
         window.focus();
         if (document.activeElement && document.activeElement !== this.ui.chatInputEl) {
             document.activeElement.blur();
