@@ -2371,9 +2371,11 @@ const zombiesHtml = `<!DOCTYPE html>
 			"experimentalVK": false,
 			"fileSizes": { "index.pck": 187777864, "index.wasm": 39514754 },
 			"focusCanvas": true,
-			"gdextensionLibs": []
+			"gdextensionLibs": [],
+			"unloadAfterInit": false
 		};
 
+		Engine.load('index', 39514754);
 		const engine = new Engine(GODOT_CONFIG);
 
 		(function() {
@@ -2413,8 +2415,13 @@ const zombiesHtml = `<!DOCTYPE html>
 			loadPckParts().then(pckBuffer => {
 				statusText.innerText = 'Inicializando Godot Engine 4.3...';
 				return engine.init('index').then(() => {
-					engine.copyToFS('/index.pck', pckBuffer);
-					return engine.start({ args: ['--main-pack', '/index.pck'] });
+					try {
+						engine.copyToFS('/index.pck', pckBuffer);
+					} catch(e) {}
+					try {
+						engine.copyToFS('index.pck', pckBuffer);
+					} catch(e) {}
+					return engine.start({ args: ['--main-pack', '/index.pck'], executable: 'index', unloadAfterInit: false });
 				});
 			}).then(() => {
 				if (statusOverlay) statusOverlay.style.display = 'none';
