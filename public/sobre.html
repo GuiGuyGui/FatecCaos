@@ -467,21 +467,9 @@
 			</ul>
 
 			<div class="nav-user-panel">
-				<div id="auth-logged-out" style="display: flex; align-items: center; gap: 8px;">
-					<button class="nav-auth-btn" onclick="openAuthModal('login')">
-						<span>👤 Entrar</span>
-					</button>
-					<button class="btn-primary" style="padding: 7px 15px; font-size: 13px;" onclick="openAuthModal('register')">
-						Cadastrar
-					</button>
-				</div>
-
-				<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
-					<button class="user-pill-btn" onclick="openProfileModal()">
-						<span id="nav-user-avatar">🧑‍🚀</span>
-						<span id="nav-user-name">GuiGuy</span>
-						<span class="user-level-badge" id="nav-user-level">Nvl 99</span>
-					</button>
+				<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;">
+					<span style="font-size: 15px;">👤</span>
+					<span style="opacity: 0.95;">Convidado</span>
 				</div>
 			</div>
 		</nav>
@@ -590,105 +578,6 @@
 	</main>
 
 	
-		<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
-			<div class="modal-box">
-				<button class="modal-close-btn" onclick="closeModal('modal-auth')">✕</button>
-				
-				<div id="auth-tab-row" style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px;">
-					<button id="tab-btn-login" class="nav-link active" onclick="switchAuthTab('login')">Entrar na Conta</button>
-					<button id="tab-btn-register" class="nav-link" onclick="switchAuthTab('register')">Novo Cadastro</button>
-				</div>
-
-				<form id="form-login" onsubmit="handleLoginSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse seu perfil para salvar recordes, simular orçamentos e participar da comunidade.</p>
-
-					<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
-					<input type="text" id="login-identifier" class="input-field" placeholder="ex: dev@omnivoid.com ou GuiGuy" required>
-
-					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
-					<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
-
-					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						🚀 Entrar no Universo OmniVoid
-					</button>
-				</form>
-
-				<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
-					<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta Profissional / Dev</h3>
-					<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Registre seu perfil único para sincronizar recordes em Jogos, Projetos e Conversa Dev.</p>
-
-					<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
-					<input type="text" id="reg-name" class="input-field" placeholder="ex: Guilherme Mendes" required>
-
-					<label style="font-size: 12px; font-weight: 600;">Nickname / Identificador:</label>
-					<input type="text" id="reg-nickname" class="input-field" placeholder="ex: GuiGuy" required>
-
-					<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Turma:</label>
-					<input type="text" id="reg-turma" class="input-field" placeholder="ex: Desenvolvedor / ADS / Engenheiro" required>
-
-					<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
-					<input type="email" id="reg-email" class="input-field" placeholder="ex: contato@dev.com.br" required>
-
-					<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
-					<div class="avatar-picker-row">
-						<span class="avatar-choice selected" onclick="selectAvatar('🧑‍🚀', this)">🧑‍🚀</span>
-						<span class="avatar-choice" onclick="selectAvatar('🥷', this)">🥷</span>
-						<span class="avatar-choice" onclick="selectAvatar('🧙‍♂️', this)">🧙‍♂️</span>
-						<span class="avatar-choice" onclick="selectAvatar('🤖', this)">🤖</span>
-						<span class="avatar-choice" onclick="selectAvatar('🧟', this)">🧟</span>
-						<span class="avatar-choice" onclick="selectAvatar('👾', this)">👾</span>
-						<span class="avatar-choice" onclick="selectAvatar('🕵️', this)">🕵️</span>
-					</div>
-
-					<label style="font-size: 12px; font-weight: 600;">Senha:</label>
-					<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
-
-					<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-						✨ Criar Minha Conta & Salvar Perfil
-					</button>
-				</form>
-			</div>
-		</div>
-
-		<div id="modal-profile" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-profile')">
-			<div class="modal-box" style="max-width: 680px;">
-				<button class="modal-close-btn" onclick="closeModal('modal-profile')">✕</button>
-
-				<div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 20px;">
-					<div style="display: flex; align-items: center; gap: 14px;">
-						<div style="font-size: 44px; width: 64px; height: 64px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent-primary);" id="modal-profile-avatar">🧑‍🚀</div>
-						<div>
-							<h2 id="modal-profile-name" style="font-size: 22px; font-weight: 800;">GuiGuy</h2>
-							<p id="modal-profile-sub" style="font-size: 13px; opacity: 0.85;">Guilherme Mendes • Criador & Lead Dev</p>
-						</div>
-					</div>
-					<button class="btn-secondary" onclick="handleLogout()" style="padding: 6px 14px; font-size: 12px;">
-						🚪 Sair
-					</button>
-				</div>
-
-				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px;">
-					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-level" style="font-size: 22px; font-weight: 800; color: var(--accent-gold) !important;">Nvl 99</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Nível</div>
-					</div>
-					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-cash" style="font-size: 22px; font-weight: 800; color: var(--accent-emerald) !important;">$99.999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Créditos</div>
-					</div>
-					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-wave" style="font-size: 22px; font-weight: 800; color: var(--accent-danger) !important;">Onda 99</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Zombies Survive</div>
-					</div>
-					<div style="background: #121217; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 12px; text-align: center;">
-						<div id="prof-stat-kills" style="font-size: 22px; font-weight: 800; color: var(--accent-primary) !important;">99999</div>
-						<div style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Pontuação</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 	
 	<footer>
 		<div class="footer-links">
@@ -710,96 +599,24 @@
 
 	
 <script>
-let selectedAvatarIcon = '🧑‍🚀';
-function selectAvatar(emoji, el) {
-	selectedAvatarIcon = emoji;
-	document.querySelectorAll('.avatar-choice').forEach(e => e.classList.remove('selected'));
-	el.classList.add('selected');
-}
-function getUsersDB() {
-	try {
-		return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
-	} catch (e) {
-		return [];
-	}
-}
-function saveUsersDB(users) {
-	localStorage.setItem("omnivoid_users_db", JSON.stringify(users));
-}
-function getCurrentUser() {
-	try {
-		const stored = localStorage.getItem("omnivoid_current_user");
-		if (stored) return JSON.parse(stored);
-		return null; // Visitantes são convidados por padrão (não pré-carrega GuiGuy)
-	} catch (e) {
-		return null;
-	}
-}
-function setCurrentUser(user) {
-	if (user) {
-		localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
-	} else {
-		localStorage.removeItem("omnivoid_current_user");
-	}
-	updateUIAfterAuth();
-}
-let currentUser = getCurrentUser();
-function updateUIAfterAuth() {
-	currentUser = getCurrentUser();
-	const loggedOutDiv = document.getElementById("auth-logged-out");
-	const loggedInDiv = document.getElementById("auth-logged-in");
-	if (!loggedOutDiv || !loggedInDiv) return;
-	if (currentUser) {
-		loggedOutDiv.style.display = "none";
-		loggedInDiv.style.display = "flex";
-		document.getElementById("nav-user-avatar").innerText = currentUser.avatar || "🧑‍🚀";
-		document.getElementById("nav-user-name").innerText = currentUser.nickname || "GuiGuy";
-		document.getElementById("nav-user-level").innerText = "Nvl " + (currentUser.level || 99);
-	} else {
-		loggedOutDiv.style.display = "flex";
-		loggedInDiv.style.display = "none";
-	}
-}
-function openAuthModal(tab) {
-	const m = document.getElementById("modal-auth");
-	if (m) {
-		m.style.display = "flex";
-		switchAuthTab(tab);
-	}
-}
-function switchAuthTab(tab) {
-	const fLog = document.getElementById("form-login");
-	const fReg = document.getElementById("form-register");
-	const bLog = document.getElementById("tab-btn-login");
-	const bReg = document.getElementById("tab-btn-register");
-	if (tab === "login") {
-		fLog.style.display = "block";
-		fReg.style.display = "none";
-		bLog.classList.add("active");
-		bReg.classList.remove("active");
-	} else {
-		fLog.style.display = "none";
-		fReg.style.display = "block";
-		bLog.classList.remove("active");
-		bReg.classList.add("active");
-	}
-}
-function openProfileModal() {
-	const user = getCurrentUser();
-	if (!user) {
-		openAuthModal("login");
-		return;
-	}
-	document.getElementById("modal-profile-name").innerText = user.nickname || "GuiGuy";
-	document.getElementById("modal-profile-sub").innerText = (user.name || "Guilherme Mendes") + " • " + (user.turma || "Membro");
-	document.getElementById("modal-profile-avatar").innerText = user.avatar || "🧑‍🚀";
-	document.getElementById("prof-stat-level").innerText = "Nvl " + (user.level || 99);
-	document.getElementById("prof-stat-cash").innerText = "$" + (user.cash || 99999).toLocaleString("pt-BR");
-	document.getElementById("prof-stat-wave").innerText = "Onda " + (user.maxWave || 99);
-	document.getElementById("prof-stat-kills").innerText = (user.kills || 99999).toLocaleString("pt-BR");
+// Limpa qualquer sessão residual no navegador do visitante
+try {
+	localStorage.removeItem("omnivoid_current_user");
+} catch (e) {}
 
-	const m = document.getElementById("modal-profile");
-	if (m) m.style.display = "flex";
+function getCurrentUser() {
+	return {
+		name: "Convidado",
+		nickname: "Convidado",
+		turma: "Visitante",
+		avatar: "👤",
+		level: 1,
+		xp: 0,
+		cash: 0,
+		maxWave: 1,
+		kills: 0,
+		score: 0
+	};
 }
 function closeModal(id) {
 	const m = document.getElementById(id);
@@ -810,81 +627,6 @@ function closeModalOnBackdrop(e, id) {
 		closeModal(id);
 	}
 }
-function handleLoginSubmit(e) {
-	e.preventDefault();
-	const ident = document.getElementById("login-identifier").value.trim();
-	const pass = document.getElementById("login-password").value.trim();
-	const db = getUsersDB();
-	const found = db.find(u => (u.email === ident || u.nickname === ident) && u.password === pass);
-	if (found) {
-		setCurrentUser(found);
-		closeModal("modal-auth");
-		alert("Bem-vindo de volta, " + found.nickname + "!");
-	} else if (ident === "GuiGuy" || ident === "guilherme@omnivoidstudios.com.br") {
-		const admin = {
-			name: "Guilherme Mendes",
-			nickname: "GuiGuy",
-			turma: "Criador & Lead Developer",
-			email: "guilherme@omnivoidstudios.com.br",
-			avatar: "🧑‍🚀",
-			level: 99,
-			xp: 99999,
-			cash: 99999,
-			maxWave: 99,
-			kills: 99999,
-			score: 99999
-		};
-		setCurrentUser(admin);
-		closeModal("modal-auth");
-		alert("Bem-vindo de volta, Guilherme Mendes (GuiGuy)!");
-	} else {
-		alert("Usuário ou senha incorretos.");
-	}
-}
-function handleRegisterSubmit(e) {
-	e.preventDefault();
-	const name = document.getElementById("reg-name").value.trim();
-	const nick = document.getElementById("reg-nickname").value.trim();
-	const turma = document.getElementById("reg-turma").value.trim();
-	const email = document.getElementById("reg-email").value.trim();
-	const pass = document.getElementById("reg-password").value.trim();
-
-	const db = getUsersDB();
-	if (db.some(u => u.email === email || u.nickname === nick)) {
-		alert("E-mail ou Nickname já cadastrados!");
-		return;
-	}
-
-	const newUser = {
-		name: name,
-		nickname: nick,
-		turma: turma,
-		email: email,
-		password: pass,
-		avatar: selectedAvatarIcon,
-		level: 1,
-		xp: 0,
-		cash: 1000,
-		maxWave: 1,
-		kills: 0,
-		score: 0
-	};
-	db.push(newUser);
-	saveUsersDB(db);
-	setCurrentUser(newUser);
-	closeModal("modal-auth");
-	alert("Conta criada com sucesso! Bem-vindo ao OmniVoid Studios, " + nick + "!");
-}
-function handleLogout() {
-	if (confirm("Deseja desconectar sua conta?")) {
-		localStorage.removeItem("omnivoid_current_user");
-		updateUIAfterAuth();
-		closeModal("modal-profile");
-	}
-}
-document.addEventListener("DOMContentLoaded", () => {
-	updateUIAfterAuth();
-});
 </script>
 
 

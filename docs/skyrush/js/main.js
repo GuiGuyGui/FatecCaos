@@ -1693,22 +1693,21 @@ class GameClient {
             });
         });
 
-        // Initialize Nickname from active logged-in profile or Convidado
-        const savedUser = (function() {
-            try { return JSON.parse(localStorage.getItem('omnivoid_current_user')); } catch(e) { return null; }
-        })();
+        // Initialize Nickname as Convidado
         const nickInput = document.getElementById('nicknameInput');
         if (nickInput) {
-            if (savedUser && savedUser.nickname) {
-                nickInput.value = savedUser.nickname;
-            } else if (!nickInput.value) {
-                nickInput.value = 'Convidado_' + Math.floor(Math.random() * 899 + 100);
+            let savedNick = localStorage.getItem('omnivoid_guest_nick');
+            if (!savedNick) {
+                savedNick = 'Convidado_' + Math.floor(Math.random() * 899 + 100);
+                localStorage.setItem('omnivoid_guest_nick', savedNick);
             }
+            nickInput.value = savedNick;
         }
 
         // Quick Play / Test Solo Button (Starts Instantly in Local Mode)
         document.getElementById('btnQuickPlay')?.addEventListener('click', () => {
             const name = document.getElementById('nicknameInput').value.trim() || ('Convidado_' + Math.floor(Math.random() * 899 + 100));
+            localStorage.setItem('omnivoid_guest_nick', name);
             window.soundEngine.init();
             this.startLocalSoloGame(name, this.selectedColor);
         });
