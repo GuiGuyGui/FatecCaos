@@ -461,6 +461,7 @@ function getNavbar(activeTab) {
 			<ul class="nav-links">
 				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
 				<li><a href="jornada.html" class="nav-link ${activeTab === 'jornada' ? 'active' : ''}">⚡ Jornada Dev</a></li>
+				<li><a href="perfil.html" class="nav-link ${activeTab === 'perfil' ? 'active' : ''}">👤 Meu Perfil</a></li>
 				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">⚠️ Kairo</a></li>
 				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">Serviços & Orçamento</a></li>
 				<li><a href="jogos.html" class="nav-link ${activeTab === 'jogos' ? 'active' : ''}">Jogos</a></li>
@@ -681,24 +682,7 @@ function openProfileModal() {
 		openAuthModal("login");
 		return;
 	}
-	const mName = document.getElementById("modal-profile-name");
-	const mSub = document.getElementById("modal-profile-sub");
-	const mAvt = document.getElementById("modal-profile-avatar");
-	const mLevel = document.getElementById("prof-stat-level");
-	const mCash = document.getElementById("prof-stat-cash");
-	const mWave = document.getElementById("prof-stat-wave");
-	const mKills = document.getElementById("prof-stat-kills");
-
-	if (mName) mName.innerText = user.nickname || user.name || "Usuário";
-	if (mSub) mSub.innerText = (user.name || "Usuário") + " • " + (user.turma || "Membro");
-	if (mAvt) mAvt.innerText = user.avatar || "👤";
-	if (mLevel) mLevel.innerText = "Nvl " + (user.level || 1);
-	if (mCash) mCash.innerText = "$" + (user.cash || 0).toLocaleString("pt-BR");
-	if (mWave) mWave.innerText = "Onda " + (user.maxWave || 1);
-	if (mKills) mKills.innerText = (user.kills || 0).toLocaleString("pt-BR");
-
-	const m = document.getElementById("modal-profile");
-	if (m) m.style.display = "flex";
+	window.location.href = "perfil.html";
 }
 function closeModal(id) {
 	const m = document.getElementById(id);
@@ -2511,8 +2495,8 @@ for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 		console.log(`[OK] Generated ${filePath}`);
 	}
 
-	// Copy jornada.html, kairo.html, data and js
-	for (const extraFile of ['jornada.html', 'kairo.html']) {
+	// Copy jornada.html, kairo.html, perfil.html, data and js
+	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html']) {
 		const srcPath = path.join(SITE_SRC, extraFile);
 		if (fs.existsSync(srcPath)) {
 			fs.copyFileSync(srcPath, path.join(targetDir, extraFile));

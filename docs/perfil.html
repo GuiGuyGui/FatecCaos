@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Meu Perfil Dev | OmniVoid Studios</title>
+	
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="index.icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+	<script src="coi-serviceworker.js"></script>
+	<style>
+		:root {
+			--bg-base: #07070c;
+			--bg-surface: #101018;
+			--bg-card: #151522;
+			--bg-card-hover: #1e1e30;
+			--border-color: rgba(255, 255, 255, 0.12);
+			--border-bright: rgba(255, 255, 255, 0.3);
+			--accent-primary: #00f0ff;
+			--accent-danger: #ff0055;
+			--accent-purple: #9d4edd;
+			--accent-emerald: #00ff88;
+			--accent-gold: #ffd60a;
+			--text-white: #ffffff;
+			--font-title: 'Orbitron', sans-serif;
+			--font-sub: 'Rajdhani', sans-serif;
+			--font-body: 'Inter', sans-serif;
+			--font-code: 'Fira Code', monospace;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: var(--font-body);
+			color: #ffffff !important;
+		}
+
+		body {
+			background-color: var(--bg-base);
+			background-image: 
+				radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.08) 0%, transparent 40%),
+				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			overflow-x: hidden;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			font-family: var(--font-title);
+			font-weight: 700;
+			color: #ffffff !important;
+			letter-spacing: 0.5px;
+		}
+
+		p, span, div, a, button, input, textarea, select, li, td, th, b, strong, label {
+			color: #ffffff !important;
+		}
+
+		a {
+			text-decoration: none;
+			transition: all 0.25s ease;
+		}
+
+		#navbar {
+			position: sticky;
+			top: 0;
+			z-index: 1000;
+			background: rgba(7, 7, 12, 0.94);
+			backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border-color);
+			padding: 10px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
+		}
+
+		.nav-brand {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.nav-logo {
+			height: 54px;
+			width: auto;
+			object-fit: contain;
+			filter: none !important;
+			transition: transform 0.2s ease;
+		}
+
+		.nav-logo:hover {
+			transform: scale(1.05);
+		}
+
+		.nav-links {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			list-style: none;
+		}
+
+		.nav-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 14px;
+			border-radius: 8px;
+			font-size: 13.5px;
+			font-weight: 600;
+			letter-spacing: 0.3px;
+			color: #ffffff !important;
+			background: transparent;
+			border: 1px solid transparent;
+			transition: all 0.2s ease;
+			white-space: nowrap;
+		}
+
+		.nav-link:hover {
+			background: rgba(255, 255, 255, 0.08);
+			border-color: rgba(255, 255, 255, 0.2);
+			transform: translateY(-1px);
+		}
+
+		.nav-link.active {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+		}
+
+		.container {
+			max-width: 1320px;
+			margin: 0 auto;
+			padding: 30px 20px 60px;
+			width: 100%;
+			flex: 1;
+		}
+
+		.card {
+			background: var(--bg-card);
+			border: 1px solid var(--border-color);
+			border-radius: 14px;
+			padding: 24px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+			transition: all 0.25s ease;
+		}
+
+		.card:hover {
+			border-color: var(--border-bright);
+		}
+
+		.btn-primary {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%);
+			color: #05050a !important;
+			font-family: var(--font-title);
+			font-weight: 800;
+			font-size: 13px;
+			padding: 10px 20px;
+			border-radius: 8px;
+			border: none;
+			cursor: pointer;
+			box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+			transition: all 0.25s ease;
+			text-transform: uppercase;
+		}
+
+		.btn-primary * { color: #05050a !important; }
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 22px rgba(0, 240, 255, 0.65);
+			filter: brightness(1.1);
+		}
+
+		.btn-secondary {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid var(--border-bright);
+			font-family: var(--font-title);
+			font-weight: 700;
+			font-size: 13px;
+			padding: 10px 18px;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.btn-secondary:hover {
+			background: rgba(255, 255, 255, 0.16);
+			border-color: #ffffff;
+			transform: translateY(-2px);
+		}
+
+		/* Profile Header Box */
+		.profile-hero-card {
+			background: radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.12) 0%, rgba(21, 21, 34, 0.95) 75%);
+			border: 1.5px solid rgba(0, 240, 255, 0.35);
+			border-radius: 16px;
+			padding: 32px;
+			margin-bottom: 28px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 24px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.15);
+		}
+
+		.profile-avatar-wrap {
+			position: relative;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #00f0ff, #9d4edd);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 50px;
+			box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+			border: 3px solid #00f0ff;
+			cursor: pointer;
+			overflow: hidden;
+			flex-shrink: 0;
+		}
+
+		.profile-avatar-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+
+		.avatar-edit-overlay {
+			position: absolute;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.65);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 14px;
+			font-family: var(--font-title);
+			font-weight: 700;
+			opacity: 0;
+			transition: opacity 0.2s;
+			border-radius: 50%;
+		}
+
+		.profile-avatar-wrap:hover .avatar-edit-overlay {
+			opacity: 1;
+		}
+
+		.user-main-info {
+			display: flex;
+			align-items: center;
+			gap: 22px;
+			flex-wrap: wrap;
+		}
+
+		.user-titles-box h2 {
+			font-size: 26px;
+			text-transform: uppercase;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.rank-badge {
+			background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+			padding: 4px 12px;
+			border-radius: 20px;
+			font-size: 12px;
+			font-weight: 800;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			box-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
+		}
+
+		.user-bio {
+			font-size: 14px;
+			opacity: 0.85;
+			max-width: 600px;
+			margin-top: 6px;
+			line-height: 1.5;
+		}
+
+		/* Stats Grid */
+		.stats-cards-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			gap: 16px;
+			margin-bottom: 28px;
+		}
+
+		.stat-box {
+			background: var(--bg-card);
+			border: 1px solid var(--border-color);
+			border-radius: 12px;
+			padding: 20px;
+			text-align: center;
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+		}
+
+		.stat-box .stat-val {
+			font-family: var(--font-title);
+			font-size: 26px;
+			font-weight: 800;
+			margin-bottom: 4px;
+		}
+
+		.stat-box .stat-lbl {
+			font-size: 12px;
+			opacity: 0.75;
+			text-transform: uppercase;
+		}
+
+		/* Progress by Language */
+		.skills-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 16px;
+		}
+
+		.skill-card {
+			background: #11111a;
+			border: 1px solid var(--border-color);
+			border-radius: 10px;
+			padding: 16px;
+		}
+
+		.skill-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 8px;
+		}
+
+		.skill-title {
+			font-size: 15px;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.skill-bar-track {
+			height: 8px;
+			background: #1f1f2e;
+			border-radius: 10px;
+			overflow: hidden;
+			margin: 8px 0;
+		}
+
+		.skill-bar-fill {
+			height: 100%;
+			background: linear-gradient(90deg, #00f0ff, #00ff88);
+			border-radius: 10px;
+			transition: width 0.5s ease;
+		}
+
+		/* Weak Points / Diagnostics */
+		.weak-points-card {
+			background: radial-gradient(circle at top right, rgba(255, 0, 85, 0.08) 0%, rgba(21, 21, 34, 0.95) 75%);
+			border: 1.5px solid rgba(255, 0, 85, 0.3);
+			border-radius: 14px;
+			padding: 24px;
+			margin-bottom: 28px;
+		}
+
+		.weak-item {
+			background: rgba(255, 0, 85, 0.08);
+			border: 1px solid rgba(255, 0, 85, 0.25);
+			border-radius: 8px;
+			padding: 12px 16px;
+			margin-top: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		/* Badges & Achievements */
+		.badges-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+			gap: 12px;
+		}
+
+		.badge-item {
+			background: #101018;
+			border: 1px solid var(--border-color);
+			border-radius: 10px;
+			padding: 16px;
+			text-align: center;
+			transition: all 0.2s;
+		}
+
+		.badge-item.unlocked {
+			border-color: var(--accent-gold);
+			background: rgba(255, 214, 10, 0.05);
+			box-shadow: 0 0 15px rgba(255, 214, 10, 0.15);
+		}
+
+		.badge-item.locked {
+			filter: grayscale(0.85);
+			opacity: 0.5;
+		}
+
+		/* Modals */
+		.modal-backdrop {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(10px);
+			z-index: 2000;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+
+		.modal-box {
+			background: var(--bg-surface);
+			border: 1px solid var(--border-bright);
+			border-radius: 16px;
+			padding: 30px;
+			max-width: 540px;
+			width: 100%;
+			position: relative;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.2);
+			max-height: 90vh;
+			overflow-y: auto;
+		}
+
+		.modal-close-btn {
+			position: absolute;
+			top: 18px;
+			right: 18px;
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			cursor: pointer;
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.input-field {
+			width: 100%;
+			background: rgba(0, 0, 0, 0.4);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 10px 14px;
+			font-size: 14px;
+			color: #ffffff !important;
+			outline: none;
+			margin-top: 6px;
+			margin-bottom: 14px;
+		}
+
+		.input-field:focus {
+			border-color: var(--accent-primary);
+		}
+
+		.avatar-picker-row {
+			display: flex;
+			gap: 8px;
+			margin: 10px 0 16px 0;
+			flex-wrap: wrap;
+		}
+
+		.avatar-choice {
+			font-size: 26px;
+			padding: 6px;
+			border-radius: 10px;
+			border: 2px solid transparent;
+			cursor: pointer;
+			transition: all 0.2s;
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.avatar-choice:hover, .avatar-choice.selected {
+			border-color: var(--accent-primary);
+			background: rgba(0, 240, 255, 0.2);
+			transform: scale(1.1);
+		}
+
+		footer {
+			background: #050508;
+			border-top: 1px solid var(--border-color);
+			padding: 30px 20px;
+			text-align: center;
+			margin-top: auto;
+		}
+
+		.footer-links {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			margin-bottom: 14px;
+			flex-wrap: wrap;
+		}
+
+		.footer-links a {
+			font-size: 13px;
+			color: #ffffff !important;
+			opacity: 0.8;
+		}
+
+		.footer-links a:hover {
+			opacity: 1;
+			color: var(--accent-primary) !important;
+		}
+
+		@media (max-width: 1080px) {
+			#navbar {
+				flex-wrap: wrap;
+				gap: 12px;
+				padding: 12px 16px;
+			}
+			.nav-links {
+				order: 3;
+				width: 100%;
+				overflow-x: auto;
+				padding-bottom: 4px;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Top Navigation -->
+	<nav id="navbar">
+		<a href="index.html" class="nav-brand">
+			<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="nav-logo">
+		</a>
+
+		<ul class="nav-links">
+			<li><a href="index.html" class="nav-link">Início</a></li>
+			<li><a href="jornada.html" class="nav-link">⚡ Jornada Dev</a></li>
+			<li><a href="kairo.html" class="nav-link">⚠️ Kairo</a></li>
+			<li><a href="orcamento.html" class="nav-link">Serviços &amp; Orçamento</a></li>
+			<li><a href="jogos.html" class="nav-link">Jogos</a></li>
+			<li><a href="quiz.html" class="nav-link">Teste Dev</a></li>
+			<li><a href="projetos.html" class="nav-link">Projetos</a></li>
+			<li><a href="devchat.html" class="nav-link">Conversa Dev</a></li>
+			<li><a href="sobre.html" class="nav-link">Sobre Mim</a></li>
+		</ul>
+
+		<div class="nav-user-panel">
+			<div id="auth-logged-out" style="display: flex; align-items: center; gap: 8px;">
+				<button class="nav-auth-btn btn-secondary" onclick="openAuthModal('login')">
+					<span>👤 Entrar</span>
+				</button>
+				<button class="btn-primary" onclick="openAuthModal('register')">
+					Cadastrar
+				</button>
+			</div>
+
+			<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
+				<button class="btn-secondary" onclick="openEditProfileModal()" style="padding: 6px 12px; font-size: 12px;">
+					✏️ Editar Perfil
+				</button>
+				<button class="btn-secondary" onclick="handleLogout()" style="padding: 6px 12px; font-size: 12px; color: #ff0055 !important;">
+					🚪 Sair
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<main class="container">
+		
+		<!-- Profile Hero Banner -->
+		<section class="profile-hero-card">
+			<div class="user-main-info">
+				<div class="profile-avatar-wrap" id="avatar-container" onclick="openEditProfileModal()" title="Clique para alterar avatar">
+					<span id="user-avatar-display">🧑‍🚀</span>
+					<div class="avatar-edit-overlay">Alterar</div>
+				</div>
+				<div class="user-titles-box">
+					<h2 id="user-display-name">
+						<span>Desenvolvedor</span>
+						<span class="rank-badge" id="user-rank-badge">Nvl 1 • Dev Novato</span>
+					</h2>
+					<p style="font-family: var(--font-code); color: var(--accent-primary) !important; font-size: 14px; margin-top: 2px;" id="user-handle-display">@dev_omnivoid</p>
+					<p class="user-bio" id="user-bio-display">Explorador do Vazio Cósmico, focado no aprendizado e maestria em programação.</p>
+					<div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;" id="user-specialty-tags">
+						<span style="background: rgba(0,240,255,0.15); border: 1px solid var(--accent-primary); padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Fullstack Developer</span>
+						<span style="background: rgba(0,255,136,0.15); border: 1px solid var(--accent-emerald); padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Game Lab Explorer</span>
+					</div>
+				</div>
+			</div>
+
+			<div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+				<button class="btn-primary" onclick="openEditProfileModal()">
+					✏️ Editar Informações &amp; Foto
+				</button>
+				<a href="jornada.html" class="btn-secondary" style="background: rgba(0,255,136,0.15); border-color: var(--accent-emerald); color: var(--accent-emerald) !important;">
+					⚡ Praticar na Jornada Dev
+				</a>
+			</div>
+		</section>
+
+		<!-- Global Stats Row -->
+		<section class="stats-cards-grid">
+			<div class="stat-box">
+				<div class="stat-val" style="color: var(--accent-primary) !important;" id="stat-jxp">0 JXP</div>
+				<div class="stat-lbl">Experiência Dev</div>
+			</div>
+			<div class="stat-box">
+				<div class="stat-val" style="color: var(--accent-gold) !important;" id="stat-streak">1 Dia</div>
+				<div class="stat-lbl">🔥 Sequência Ativa</div>
+			</div>
+			<div class="stat-box">
+				<div class="stat-val" style="color: var(--accent-emerald) !important;" id="stat-accuracy">100%</div>
+				<div class="stat-lbl">Taxa de Precisão</div>
+			</div>
+			<div class="stat-box">
+				<div class="stat-val" style="color: var(--accent-danger) !important;" id="stat-solved">0</div>
+				<div class="stat-lbl">Desafios Concluídos</div>
+			</div>
+			<div class="stat-box">
+				<div class="stat-val" style="color: var(--accent-purple) !important;" id="stat-level-num">Nvl 1</div>
+				<div class="stat-lbl">Patente do Vazio</div>
+			</div>
+		</section>
+
+		<!-- DIAGNOSTIC: POINTS TO IMPROVE (PONTOS PARA MELHORAR) -->
+		<section class="weak-points-card">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+				<div>
+					<h3 style="font-size: 20px; display: flex; align-items: center; gap: 8px;">
+						<span style="color: var(--accent-danger) !important;">🎯</span> Diagnóstico Dev &amp; Pontos para Melhorar
+					</h3>
+					<p style="font-size: 13px; opacity: 0.85; margin-top: 2px;">
+						Análise automática com base nos seus erros e acertos nas 2.200 questões da Jornada Dev.
+					</p>
+				</div>
+				<a href="jornada.html" class="btn-primary" style="background: linear-gradient(135deg, #ff0055 0%, #990033 100%); box-shadow: 0 4px 15px rgba(255,0,85,0.4);">
+					⚡ Treinar Pontos Fracos Agora
+				</a>
+			</div>
+
+			<div id="weak-points-list">
+				<!-- Dynamically populated by analyzer -->
+			</div>
+		</section>
+
+		<!-- DETAILED SKILL PROGRESS BY LANGUAGE -->
+		<section style="margin-bottom: 35px;">
+			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+				<div>
+					<h2 style="font-size: 22px; margin-bottom: 4px;">📊 Maestria &amp; Avanço por Linguagem</h2>
+					<p style="font-size: 14px; opacity: 0.8;">Progresso em tempo real nas 23 categorias de desenvolvimento de software</p>
+				</div>
+				<div style="font-size: 12px; opacity: 0.7; font-family: var(--font-code);">
+					TOTAL: 2.200 QUESTÕES ESTRUTURADAS
+				</div>
+			</div>
+
+			<div class="skills-grid" id="skills-progress-container">
+				<!-- Dynamically populated by script -->
+			</div>
+		</section>
+
+		<!-- BADGES & CONQUISTAS -->
+		<section style="margin-bottom: 30px;">
+			<h2 style="font-size: 22px; margin-bottom: 16px;">🏆 Medalhas &amp; Conquistas do Vazio</h2>
+			<div class="badges-grid" id="badges-container">
+				<!-- Dynamically populated -->
+			</div>
+		</section>
+
+	</main>
+
+	<!-- MODAL: EDIT PROFILE & AVATAR -->
+	<div id="modal-edit-profile" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-edit-profile')">
+		<div class="modal-box">
+			<button class="modal-close-btn" onclick="closeModal('modal-edit-profile')">✕</button>
+			
+			<h3 style="font-size: 20px; margin-bottom: 8px;">Editar Meu Perfil Dev</h3>
+			<p style="font-size: 13px; opacity: 0.85; margin-bottom: 20px;">Personalize sua foto, nome de exibição e especialidades de carreira.</p>
+
+			<form onsubmit="handleSaveProfile(event)">
+				<label style="font-size: 12px; font-weight: 700; text-transform: uppercase;">Escolha seu Avatar Temático:</label>
+				<div class="avatar-picker-row">
+					<div class="avatar-choice selected" onclick="selectEditAvatar('🧑‍🚀', this)">🧑‍🚀</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🧙‍♂️', this)">🧙‍♂️</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🤖', this)">🤖</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🐱', this)">🐱</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('👾', this)">👾</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🥷', this)">🥷</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('⚡', this)">⚡</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🐉', this)">🐉</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🧠', this)">🧠</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🚀', this)">🚀</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('🛡️', this)">🛡️</div>
+					<div class="avatar-choice" onclick="selectEditAvatar('👑', this)">👑</div>
+				</div>
+
+				<label style="font-size: 12px; font-weight: 700;">Ou use a URL de uma Imagem Personalizada:</label>
+				<input type="url" id="edit-avatar-url" class="input-field" placeholder="https://exemplo.com/minha-foto.png">
+
+				<label style="font-size: 12px; font-weight: 700;">Nome Completo / Exibição:</label>
+				<input type="text" id="edit-name" class="input-field" placeholder="Ex: Guilherme Mendes" required>
+
+				<label style="font-size: 12px; font-weight: 700;">Nickname Dev (@):</label>
+				<input type="text" id="edit-nickname" class="input-field" placeholder="Ex: guiguy" required>
+
+				<label style="font-size: 12px; font-weight: 700;">Especialidade / Foco:</label>
+				<select id="edit-specialty" class="input-field" style="background:#0c0c14;">
+					<option value="Fullstack Developer">Fullstack Developer</option>
+					<option value="Game Developer (Godot / Unity)">Game Developer (Godot / Unity)</option>
+					<option value="Frontend Specialist (React / Vue / Web)">Frontend Specialist</option>
+					<option value="Backend &amp; Cloud (Node / Python / SQL)">Backend &amp; Cloud</option>
+					<option value="DevOps &amp; Infra (Docker / Linux)">DevOps &amp; Infra</option>
+					<option value="Cibersegurança &amp; AppSec">Cibersegurança &amp; AppSec</option>
+				</select>
+
+				<label style="font-size: 12px; font-weight: 700;">Biografia Dev:</label>
+				<textarea id="edit-bio" class="input-field" style="height: 70px; resize: none;" placeholder="Conte um pouco sobre sua trajetória, tecnologias que você ama e seus objetivos..."></textarea>
+
+				<div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
+					<button type="button" class="btn-secondary" onclick="closeModal('modal-edit-profile')">Cancelar</button>
+					<button type="submit" class="btn-primary">Salvar Perfil ➔</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- MODAL: AUTHENTICATION (LOGIN / REGISTER) -->
+	<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
+		<div class="modal-box">
+			<button class="modal-close-btn" onclick="closeModal('modal-auth')">✕</button>
+			
+			<div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px;">
+				<button id="tab-btn-login" class="nav-link active" onclick="switchAuthTab('login')">Entrar na Conta</button>
+				<button id="tab-btn-register" class="nav-link" onclick="switchAuthTab('register')">Novo Cadastro</button>
+			</div>
+
+			<form id="form-login" onsubmit="handleLoginSubmit(event)">
+				<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
+				<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse sua conta para salvar recordes, simular orçamentos e ver seu avanço na Jornada Dev.</p>
+
+				<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
+				<input type="text" id="login-identifier" class="input-field" placeholder="ex: seu_nickname ou seu@email.com" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+				<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
+
+				<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+					🚀 Entrar na Conta
+				</button>
+			</form>
+
+			<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+				<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Desenvolvedor</h3>
+				<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Cadastre-se para ter seu painel exclusivo, diagnosticar pontos para melhorar e salvar seu progresso.</p>
+
+				<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
+				<div class="avatar-picker-row">
+					<div class="avatar-choice selected" onclick="selectRegAvatar('🧑‍🚀', this)">🧑‍🚀</div>
+					<div class="avatar-choice" onclick="selectRegAvatar('🧙‍♂️', this)">🧙‍♂️</div>
+					<div class="avatar-choice" onclick="selectRegAvatar('🤖', this)">🤖</div>
+					<div class="avatar-choice" onclick="selectRegAvatar('🐱', this)">🐱</div>
+					<div class="avatar-choice" onclick="selectRegAvatar('👾', this)">👾</div>
+					<div class="avatar-choice" onclick="selectRegAvatar('🥷', this)">🥷</div>
+				</div>
+
+				<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
+				<input type="text" id="reg-name" class="input-field" placeholder="Seu nome completo" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Nickname Dev (@):</label>
+				<input type="text" id="reg-nickname" class="input-field" placeholder="ex: dev_hunter" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Especialidade / Foco Inicial:</label>
+				<select id="reg-specialty" class="input-field" style="background:#0c0c14;">
+					<option value="Fullstack Developer">Fullstack Developer</option>
+					<option value="Game Developer (Godot / Unity)">Game Developer</option>
+					<option value="Frontend (Web)">Frontend</option>
+					<option value="Backend (Node / Python / SQL)">Backend</option>
+					<option value="DevOps &amp; Infra">DevOps &amp; Infra</option>
+					<option value="Cibersegurança">Cibersegurança</option>
+				</select>
+
+				<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
+				<input type="email" id="reg-email" class="input-field" placeholder="seu.email@exemplo.com" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+				<input type="password" id="reg-password" class="input-field" placeholder="Defina uma senha segura" required>
+
+				<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+					✨ Criar Minha Conta &amp; Acessar Painel
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">Início</a>
+			<a href="jornada.html">Jornada Dev</a>
+			<a href="kairo.html">Kairo</a>
+			<a href="orcamento.html">Serviços &amp; Orçamento</a>
+			<a href="jogos.html">Jogos</a>
+			<a href="projetos.html">Projetos</a>
+			<a href="sobre.html">Sobre</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab &amp; Cibersegurança de Alta Performance
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> • FATEC 2026
+		</p>
+	</footer>
+
+	<script>
+		let editSelectedAvatar = '🧑‍🚀';
+		let regSelectedAvatar = '🧑‍🚀';
+
+		const ALL_CATEGORIES = [
+			{ name: 'Fundamentos', icon: '🌱', total: 120, tip: 'Pratique variáveis, funções e tipos primitivos.' },
+			{ name: 'Lógica', icon: '🔀', total: 100, tip: 'Treine estruturas de repetição e condições lógicas complexas.' },
+			{ name: 'JavaScript', icon: '⚡', total: 180, tip: 'Revise Closures, Promises, Async/Await e manipulação de arrays.' },
+			{ name: 'TypeScript', icon: '🛡️', total: 100, tip: 'Aprofunde-se em Generics, Interfaces e Utility Types.' },
+			{ name: 'Python', icon: '🐍', total: 130, tip: 'Estude list comprehensions, decoradores e manipulação de arquivos.' },
+			{ name: 'SQL', icon: '🗄️', total: 140, tip: 'Pratique JOINs complexos, GROUP BY e indexação de tabelas.' },
+			{ name: 'Banco de Dados', icon: '💾', total: 90, tip: 'Revise normalização, transações ACID e modelagem relacional.' },
+			{ name: 'Git/GitHub', icon: '🐙', total: 120, tip: 'Pratique rebase, merge conflicts e gerenciamento de branches.' },
+			{ name: 'Docker/DevOps', icon: '🐳', total: 70, tip: 'Estude criação de Dockerfiles otimizados e pipelines CI/CD.' },
+			{ name: 'Terminal/Linux', icon: '💻', total: 100, tip: 'Treine comandos bash, permissões chmod/chown e pipes.' },
+			{ name: 'HTTP/APIs', icon: '📡', total: 120, tip: 'Revise status codes, autenticação JWT e arquitetura REST.' },
+			{ name: 'Clean Code', icon: '✨', total: 70, tip: 'Aplique princípios SOLID, DRY e refatoração semântica.' },
+			{ name: 'Testes', icon: '🧪', total: 90, tip: 'Pratique testes unitários, TDD e cobertura de código.' },
+			{ name: 'Segurança', icon: '🔒', total: 80, tip: 'Estude OWASP Top 10, sanitização contra XSS e SQL Injection.' },
+			{ name: 'Estruturas de Dados e Algoritmos', icon: '📐', total: 100, tip: 'Treine busca binária, árvores e complexidade Big-O.' },
+			{ name: 'Debugging', icon: '🔍', total: 120, tip: 'Pratique leitura de stack traces e breakpoints no devtools.' },
+			{ name: 'Arquitetura', icon: '🏛️', total: 70, tip: 'Estude microsserviços, Clean Architecture e MVC.' },
+			{ name: 'Performance', icon: '🚀', total: 70, tip: 'Analise render loops, memory leaks e profiling de CPU.' },
+			{ name: 'HTML', icon: '🌐', total: 70, tip: 'Foque em tags semânticas, acessibilidade WCAG e meta tags.' },
+			{ name: 'CSS', icon: '🎨', total: 80, tip: 'Domine Flexbox, CSS Grid e animações com keyframes.' },
+			{ name: 'Code Review', icon: '👓', total: 70, tip: 'Desenvolva olhar crítico para legibilidade e padrões de projeto.' },
+			{ name: 'Carreira e Rotina Dev', icon: '💼', total: 60, tip: 'Aprenda estimativas de tarefas, Scrum e documentação.' },
+			{ name: 'Comunicação', icon: '💬', total: 50, tip: 'Treine comunicação assíncrona e feedback em equipe.' }
+		];
+
+		const BADGES_LIST = [
+			{ id: 'first_step', icon: '🌱', name: 'Primeiro Commit', desc: 'Respondeu seu primeiro desafio dev.' },
+			{ id: 'streak_3', icon: '🔥', name: 'Em Chamas', desc: 'Manteve 3 dias de estudo consecutivos.' },
+			{ id: 'streak_7', icon: '⚡', name: 'Semana Lendária', desc: 'Manteve 7 dias seguidos de streak.' },
+			{ id: 'js_master', icon: '⭐', name: 'JS Ninja', desc: 'Acertou 15+ questões de JavaScript.' },
+			{ id: 'sql_hero', icon: '🗄️', name: 'Query Master', desc: 'Acertou 15+ questões de SQL.' },
+			{ id: 'python_pro', icon: '🐍', name: 'Pythonista', desc: 'Acertou 15+ questões de Python.' },
+			{ id: 'sec_shield', icon: '🛡️', name: 'Guardião DevSec', desc: 'Acertou desafios de Cibersegurança.' },
+			{ id: 'jxp_500', icon: '💎', name: 'Elite do Vazio', desc: 'Acumulou mais de 500 JXP.' }
+		];
+
+		function getUsersDB() {
+			try {
+				return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
+			} catch (e) {
+				return [];
+			}
+		}
+
+		function saveUsersDB(users) {
+			localStorage.setItem("omnivoid_users_db", JSON.stringify(users));
+		}
+
+		function getCurrentUser() {
+			try {
+				const stored = localStorage.getItem("omnivoid_current_user");
+				if (stored) {
+					const parsed = JSON.parse(stored);
+					if (parsed && parsed.nickname) return parsed;
+				}
+				// Default guest profile if not logged in
+				return {
+					name: "Desenvolvedor Convidado",
+					nickname: "dev_visitante",
+					email: "convidado@omnivoid.com.br",
+					avatar: "🧑‍🚀",
+					avatarUrl: "",
+					specialty: "Fullstack Developer",
+					bio: "Explorador da plataforma. Crie sua conta gratuita para salvar seu avanço individual!",
+					level: 1,
+					xp: 0,
+					streak: 1,
+					categoryStats: {}
+				};
+			} catch (e) {
+				return null;
+			}
+		}
+
+		function setCurrentUser(user) {
+			if (user) {
+				localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+			} else {
+				localStorage.removeItem("omnivoid_current_user");
+			}
+			renderUserProfile();
+		}
+
+		function renderUserProfile() {
+			const user = getCurrentUser();
+			const isGuest = user.nickname === "dev_visitante";
+
+			// Header info
+			document.getElementById("user-display-name").querySelector("span").textContent = user.name;
+			document.getElementById("user-handle-display").textContent = `@${user.nickname}`;
+			document.getElementById("user-bio-display").textContent = user.bio || "Desenvolvedor do ecossistema OmniVoid Studios.";
+			
+			// Avatar
+			const avatarDisplay = document.getElementById("user-avatar-display");
+			if (user.avatarUrl) {
+				avatarDisplay.innerHTML = `<img src="${user.avatarUrl}" class="profile-avatar-img" alt="Avatar">`;
+			} else {
+				avatarDisplay.textContent = user.avatar || "🧑‍🚀";
+			}
+
+			// Specialty Tags
+			const tagsContainer = document.getElementById("user-specialty-tags");
+			tagsContainer.innerHTML = `
+				<span style="background: rgba(0,240,255,0.15); border: 1px solid var(--accent-primary); padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">${user.specialty || 'Fullstack Developer'}</span>
+				<span style="background: rgba(157,78,221,0.15); border: 1px solid var(--accent-purple); padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">OmniVoid Dev</span>
+			`;
+
+			// Jornada stats sync
+			const jornadaData = JSON.parse(localStorage.getItem("omni_jornada_v2") || "{}");
+			const totalXp = Math.max(user.xp || 0, jornadaData.xp || 0);
+			const streak = Math.max(user.streak || 1, jornadaData.streak || 1);
+			const solvedCount = Object.keys(jornadaData.solved || {}).length;
+			const level = Math.max(user.level || 1, 1 + Math.floor(totalXp / 300));
+
+			let rankTitle = 'Dev Novato';
+			if (totalXp >= 3500) rankTitle = 'Tech Lead do Vazio';
+			else if (totalXp >= 1800) rankTitle = 'Arquiteto de Software';
+			else if (totalXp >= 900) rankTitle = 'Dev Sênior';
+			else if (totalXp >= 400) rankTitle = 'Dev Pleno';
+			else if (totalXp >= 150) rankTitle = 'Dev Júnior';
+			else if (totalXp >= 50) rankTitle = 'Estagiário Curioso';
+
+			document.getElementById("user-rank-badge").textContent = `Nvl ${level} • ${rankTitle}`;
+			document.getElementById("stat-jxp").textContent = `${totalXp} JXP`;
+			document.getElementById("stat-streak").textContent = `${streak} ${streak === 1 ? 'Dia' : 'Dias'}`;
+			document.getElementById("stat-solved").textContent = solvedCount;
+			document.getElementById("stat-level-num").textContent = `Nvl ${level}`;
+
+			// Render skills progress & Diagnostic
+			renderSkillsProgress(user, jornadaData);
+			renderBadges(totalXp, streak, solvedCount);
+
+			// Toggle Auth Buttons
+			const loggedOutDiv = document.getElementById("auth-logged-out");
+			const loggedInDiv = document.getElementById("auth-logged-in");
+			if (isGuest) {
+				loggedOutDiv.style.display = "flex";
+				loggedInDiv.style.display = "none";
+			} else {
+				loggedOutDiv.style.display = "none";
+				loggedInDiv.style.display = "flex";
+			}
+		}
+
+		function renderSkillsProgress(user, jornadaData) {
+			const container = document.getElementById("skills-progress-container");
+			const weakList = document.getElementById("weak-points-list");
+			container.innerHTML = "";
+			weakList.innerHTML = "";
+
+			const userCatStats = user.categoryStats || {};
+			const weakPoints = [];
+
+			ALL_CATEGORIES.forEach(cat => {
+				const stats = userCatStats[cat.name] || { solved: 0, wrong: 0 };
+				// Calculate mastery percentage based on solved questions
+				const solved = stats.solved || 0;
+				const wrong = stats.wrong || 0;
+				const totalAttempts = solved + wrong;
+				const accuracy = totalAttempts > 0 ? Math.round((solved / totalAttempts) * 100) : 0;
+				const progressPercent = Math.min(100, Math.round((solved / 25) * 100));
+
+				let masteryTitle = 'Iniciante';
+				if (solved >= 40) masteryTitle = 'Mestre';
+				else if (solved >= 20) masteryTitle = 'Especialista';
+				else if (solved >= 8) masteryTitle = 'Praticante';
+
+				const card = document.createElement("div");
+				card.className = "skill-card";
+				card.innerHTML = `
+					<div class="skill-header">
+						<div class="skill-title">
+							<span>${cat.icon}</span>
+							<span>${cat.name}</span>
+						</div>
+						<span style="font-size: 11px; font-weight: 700; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 6px; color: var(--accent-primary) !important;">
+							${masteryTitle}
+						</span>
+					</div>
+					<div class="skill-bar-track">
+						<div class="skill-bar-fill" style="width: ${progressPercent}%;"></div>
+					</div>
+					<div style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.75;">
+						<span>${solved} dominadas</span>
+						<span>Precisão: ${totalAttempts > 0 ? accuracy + '%' : '--'}</span>
+					</div>
+				`;
+				container.appendChild(card);
+
+				// Diagnostic condition: either has wrong answers or has 0 questions solved
+				if (wrong > 0 || (solved < 3)) {
+					weakPoints.push({
+						cat: cat.name,
+						icon: cat.icon,
+						tip: cat.tip,
+						accuracy: totalAttempts > 0 ? `${accuracy}% de precisão` : 'Não praticado ainda'
+					});
+				}
+			});
+
+			// Render top 3 weak points
+			const topWeak = weakPoints.slice(0, 3);
+			if (topWeak.length === 0) {
+				weakList.innerHTML = `
+					<div style="background: rgba(0,255,136,0.1); border: 1px solid var(--accent-emerald); padding: 14px; border-radius: 8px; color: #00ff88 !important;">
+						✓ Incrível! Você está com alto aproveitamento em todas as tecnologias estudadas. Continue na Jornada Dev!
+					</div>
+				`;
+			} else {
+				topWeak.forEach(wp => {
+					const item = document.createElement("div");
+					item.className = "weak-item";
+					item.innerHTML = `
+						<div>
+							<strong style="font-size: 14px; color: #ff0055 !important;">${wp.icon} ${wp.cat}</strong>
+							<span style="font-size: 12px; opacity: 0.75; margin-left: 8px;">(${wp.accuracy})</span>
+							<p style="font-size: 13px; margin-top: 4px; opacity: 0.9;">💡 <strong>Dica de evolução:</strong> ${wp.tip}</p>
+						</div>
+						<a href="jornada.html" class="btn-secondary" style="padding: 6px 12px; font-size: 11px; border-color: #ff0055; color: #ff0055 !important;">
+							Praticar ${wp.cat} ➔
+						</a>
+					`;
+					weakList.appendChild(item);
+				});
+			}
+		}
+
+		function renderBadges(xp, streak, solved) {
+			const container = document.getElementById("badges-container");
+			container.innerHTML = "";
+
+			BADGES_LIST.forEach(b => {
+				let isUnlocked = false;
+				if (b.id === 'first_step' && solved >= 1) isUnlocked = true;
+				if (b.id === 'streak_3' && streak >= 3) isUnlocked = true;
+				if (b.id === 'streak_7' && streak >= 7) isUnlocked = true;
+				if (b.id === 'jxp_500' && xp >= 500) isUnlocked = true;
+				if (b.id === 'js_master' && solved >= 15) isUnlocked = true;
+				if (b.id === 'sql_hero' && solved >= 15) isUnlocked = true;
+				if (b.id === 'python_pro' && solved >= 15) isUnlocked = true;
+
+				const el = document.createElement("div");
+				el.className = `badge-item ${isUnlocked ? 'unlocked' : 'locked'}`;
+				el.innerHTML = `
+					<div style="font-size: 32px; margin-bottom: 6px;">${b.icon}</div>
+					<div style="font-size: 12px; font-weight: 700; text-transform: uppercase;">${b.name}</div>
+					<div style="font-size: 10px; opacity: 0.75; margin-top: 2px;">${b.desc}</div>
+					<div style="font-size: 10px; font-weight: 800; margin-top: 6px; color: ${isUnlocked ? '#ffd60a' : '#64748b'} !important;">
+						${isUnlocked ? '✓ CONQUISTADO' : '🔒 BLOQUEADO'}
+					</div>
+				`;
+				container.appendChild(el);
+			});
+		}
+
+		// Edit Profile
+		function openEditProfileModal() {
+			const user = getCurrentUser();
+			document.getElementById("edit-name").value = user.name || "";
+			document.getElementById("edit-nickname").value = user.nickname || "";
+			document.getElementById("edit-bio").value = user.bio || "";
+			document.getElementById("edit-specialty").value = user.specialty || "Fullstack Developer";
+			document.getElementById("edit-avatar-url").value = user.avatarUrl || "";
+			editSelectedAvatar = user.avatar || "🧑‍🚀";
+
+			document.querySelectorAll(".avatar-choice").forEach(el => {
+				el.classList.toggle("selected", el.textContent.trim() === editSelectedAvatar);
+			});
+
+			openModal("modal-edit-profile");
+		}
+
+		function selectEditAvatar(emoji, el) {
+			editSelectedAvatar = emoji;
+			document.querySelectorAll("#modal-edit-profile .avatar-choice").forEach(e => e.classList.remove("selected"));
+			el.classList.add("selected");
+		}
+
+		function handleSaveProfile(e) {
+			e.preventDefault();
+			const user = getCurrentUser();
+			const name = document.getElementById("edit-name").value.trim();
+			const nickname = document.getElementById("edit-nickname").value.trim();
+			const bio = document.getElementById("edit-bio").value.trim();
+			const specialty = document.getElementById("edit-specialty").value;
+			const avatarUrl = document.getElementById("edit-avatar-url").value.trim();
+
+			user.name = name;
+			user.nickname = nickname;
+			user.bio = bio;
+			user.specialty = specialty;
+			user.avatar = editSelectedAvatar;
+			user.avatarUrl = avatarUrl;
+
+			setCurrentUser(user);
+
+			// Update in users DB
+			const db = getUsersDB();
+			const idx = db.findIndex(u => u.email === user.email || u.nickname === user.nickname);
+			if (idx !== -1) {
+				db[idx] = { ...db[idx], ...user };
+				saveUsersDB(db);
+			}
+
+			closeModal("modal-edit-profile");
+			alert("Perfil atualizado com sucesso!");
+		}
+
+		// Auth
+		function selectRegAvatar(emoji, el) {
+			regSelectedAvatar = emoji;
+			document.querySelectorAll("#form-register .avatar-choice").forEach(e => e.classList.remove("selected"));
+			el.classList.add("selected");
+		}
+
+		function openAuthModal(tab) {
+			switchAuthTab(tab);
+			openModal("modal-auth");
+		}
+
+		function switchAuthTab(tab) {
+			const btnL = document.getElementById("tab-btn-login");
+			const btnR = document.getElementById("tab-btn-register");
+			const formL = document.getElementById("form-login");
+			const formR = document.getElementById("form-register");
+
+			if (tab === 'login') {
+				btnL.classList.add("active");
+				btnR.classList.remove("active");
+				formL.style.display = "block";
+				formR.style.display = "none";
+			} else {
+				btnR.classList.add("active");
+				btnL.classList.remove("active");
+				formR.style.display = "block";
+				formL.style.display = "none";
+			}
+		}
+
+		function handleLoginSubmit(e) {
+			e.preventDefault();
+			const ident = document.getElementById("login-identifier").value.trim().toLowerCase();
+			const pass = document.getElementById("login-password").value.trim();
+			const db = getUsersDB();
+			const found = db.find(u => (u.email.toLowerCase() === ident || u.nickname.toLowerCase() === ident) && u.password === pass);
+			if (found) {
+				setCurrentUser(found);
+				closeModal("modal-auth");
+				alert("Bem-vindo de volta, " + found.nickname + "!");
+			} else {
+				alert("Usuário ou senha incorretos.");
+			}
+		}
+
+		function handleRegisterSubmit(e) {
+			e.preventDefault();
+			const name = document.getElementById("reg-name").value.trim();
+			const nick = document.getElementById("reg-nickname").value.trim();
+			const specialty = document.getElementById("reg-specialty").value;
+			const email = document.getElementById("reg-email").value.trim().toLowerCase();
+			const pass = document.getElementById("reg-password").value.trim();
+
+			const db = getUsersDB();
+			if (db.some(u => u.email.toLowerCase() === email || u.nickname.toLowerCase() === nick.toLowerCase())) {
+				alert("E-mail ou Nickname já cadastrados!");
+				return;
+			}
+
+			const newUser = {
+				name: name,
+				nickname: nick,
+				specialty: specialty,
+				email: email,
+				password: pass,
+				avatar: regSelectedAvatar || "🧑‍🚀",
+				avatarUrl: "",
+				bio: "Desenvolvedor apaixonado por tecnologia e focado na Jornada Dev.",
+				level: 1,
+				xp: 0,
+				streak: 1,
+				categoryStats: {}
+			};
+
+			db.push(newUser);
+			saveUsersDB(db);
+			setCurrentUser(newUser);
+			closeModal("modal-auth");
+			alert("Conta criada com sucesso! Bem-vindo ao seu painel, " + nick + "!");
+		}
+
+		function handleLogout() {
+			localStorage.removeItem("omnivoid_current_user");
+			renderUserProfile();
+			alert("Você saiu da conta.");
+		}
+
+		function openModal(id) {
+			const m = document.getElementById(id);
+			if (m) m.style.display = "flex";
+		}
+
+		function closeModal(id) {
+			const m = document.getElementById(id);
+			if (m) m.style.display = "none";
+		}
+
+		function closeModalOnBackdrop(e, id) {
+			if (e.target && e.target.id === id) {
+				closeModal(id);
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			renderUserProfile();
+		});
+	</script>
+</body>
+</html>

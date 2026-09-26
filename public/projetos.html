@@ -459,6 +459,7 @@
 			<ul class="nav-links">
 				<li><a href="index.html" class="nav-link ">Início</a></li>
 				<li><a href="jornada.html" class="nav-link ">⚡ Jornada Dev</a></li>
+				<li><a href="perfil.html" class="nav-link ">👤 Meu Perfil</a></li>
 				<li><a href="kairo.html" class="nav-link ">⚠️ Kairo</a></li>
 				<li><a href="orcamento.html" class="nav-link ">Serviços & Orçamento</a></li>
 				<li><a href="jogos.html" class="nav-link ">Jogos</a></li>
@@ -816,24 +817,7 @@ function openProfileModal() {
 		openAuthModal("login");
 		return;
 	}
-	const mName = document.getElementById("modal-profile-name");
-	const mSub = document.getElementById("modal-profile-sub");
-	const mAvt = document.getElementById("modal-profile-avatar");
-	const mLevel = document.getElementById("prof-stat-level");
-	const mCash = document.getElementById("prof-stat-cash");
-	const mWave = document.getElementById("prof-stat-wave");
-	const mKills = document.getElementById("prof-stat-kills");
-
-	if (mName) mName.innerText = user.nickname || user.name || "Usuário";
-	if (mSub) mSub.innerText = (user.name || "Usuário") + " • " + (user.turma || "Membro");
-	if (mAvt) mAvt.innerText = user.avatar || "👤";
-	if (mLevel) mLevel.innerText = "Nvl " + (user.level || 1);
-	if (mCash) mCash.innerText = "$" + (user.cash || 0).toLocaleString("pt-BR");
-	if (mWave) mWave.innerText = "Onda " + (user.maxWave || 1);
-	if (mKills) mKills.innerText = (user.kills || 0).toLocaleString("pt-BR");
-
-	const m = document.getElementById("modal-profile");
-	if (m) m.style.display = "flex";
+	window.location.href = "perfil.html";
 }
 function closeModal(id) {
 	const m = document.getElementById(id);

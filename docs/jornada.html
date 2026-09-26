@@ -1108,6 +1108,33 @@
 				`;
 			}
 
+			// Synchronize answered category stats directly to logged-in user profile
+			try {
+				let currUser = JSON.parse(localStorage.getItem('omnivoid_current_user') || 'null');
+				if (currUser) {
+					currUser.categoryStats = currUser.categoryStats || {};
+					currUser.categoryStats[q.category] = currUser.categoryStats[q.category] || { solved: 0, wrong: 0 };
+					if (isCorrect) {
+						currUser.categoryStats[q.category].solved = (currUser.categoryStats[q.category].solved || 0) + 1;
+					} else {
+						currUser.categoryStats[q.category].wrong = (currUser.categoryStats[q.category].wrong || 0) + 1;
+					}
+					currUser.xp = userState.xp;
+					currUser.streak = userState.streak;
+					currUser.level = userState.level;
+					localStorage.setItem('omnivoid_current_user', JSON.stringify(currUser));
+
+					let db = JSON.parse(localStorage.getItem('omnivoid_users_db') || '[]');
+					let idx = db.findIndex(u => u.email === currUser.email || u.nickname === currUser.nickname);
+					if (idx !== -1) {
+						db[idx] = { ...db[idx], ...currUser };
+						localStorage.setItem('omnivoid_users_db', JSON.stringify(db));
+					}
+				}
+			} catch (e) {
+				console.warn('Erro ao atualizar estatísticas do perfil:', e);
+			}
+
 			saveState();
 		}
 
