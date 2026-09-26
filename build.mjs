@@ -460,6 +460,8 @@ function getNavbar(activeTab) {
 
 			<ul class="nav-links">
 				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
+				<li><a href="jornada.html" class="nav-link ${activeTab === 'jornada' ? 'active' : ''}">⚡ Jornada Dev</a></li>
+				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">⚠️ Kairo</a></li>
 				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">Serviços & Orçamento</a></li>
 				<li><a href="jogos.html" class="nav-link ${activeTab === 'jogos' ? 'active' : ''}">Jogos</a></li>
 				<li><a href="quiz.html" class="nav-link ${activeTab === 'quiz' ? 'active' : ''}">Teste Dev</a></li>
@@ -798,6 +800,8 @@ const COMMON_FOOTER = `
 	<footer>
 		<div class="footer-links">
 			<a href="index.html">Início</a>
+			<a href="jornada.html">Jornada Dev</a>
+			<a href="kairo.html">Kairo</a>
 			<a href="orcamento.html">Serviços & Orçamento</a>
 			<a href="jogos.html">Jogos</a>
 			<a href="quiz.html">Teste Dev</a>
@@ -847,14 +851,17 @@ const indexHtml = `<!DOCTYPE html>
 			</p>
 
 			<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+				<a href="jornada.html" class="btn-primary" style="font-size: 14px; padding: 14px 28px; background: linear-gradient(135deg, #00ff88 0%, #00b359 100%); color: #05050a !important; box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);">
+					⚡ Jogar Jornada Dev (2.200 Qs) ➔
+				</a>
 				<a href="orcamento.html" class="btn-primary" style="font-size: 14px; padding: 14px 28px;">
 					💼 Fazer Orçamento Online ➔
 				</a>
 				<a href="jogos.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
 					🎮 Jogar Nossos Jogos
 				</a>
-				<a href="quiz.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
-					🧠 Teste Vocacional Dev
+				<a href="kairo.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px; border-color: rgba(255,0,85,0.4); color: #ff0055 !important;">
+					⚠️ Status Kairo
 				</a>
 			</div>
 		</section>
@@ -2494,12 +2501,33 @@ const pages = {
 	'fateccaos.html': fateccaosHtml
 };
 
+const SITE_SRC = 'C:/Users/Guilherme/Desktop/Site';
+
 for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 	fs.mkdirSync(targetDir, { recursive: true });
 	for (const [filename, content] of Object.entries(pages)) {
 		const filePath = path.join(targetDir, filename);
 		fs.writeFileSync(filePath, content, 'utf-8');
 		console.log(`[OK] Generated ${filePath}`);
+	}
+
+	// Copy jornada.html, kairo.html, data and js
+	for (const extraFile of ['jornada.html', 'kairo.html']) {
+		const srcPath = path.join(SITE_SRC, extraFile);
+		if (fs.existsSync(srcPath)) {
+			fs.copyFileSync(srcPath, path.join(targetDir, extraFile));
+			console.log(`[OK] Synced ${extraFile} to ${targetDir}`);
+		}
+	}
+
+	// Copy data/ and js/ directories
+	for (const extraDir of ['data', 'js']) {
+		const srcDirPath = path.join(SITE_SRC, extraDir);
+		const destDirPath = path.join(targetDir, extraDir);
+		if (fs.existsSync(srcDirPath)) {
+			fs.cpSync(srcDirPath, destDirPath, { recursive: true, force: true });
+			console.log(`[OK] Synced directory ${extraDir} to ${targetDir}`);
+		}
 	}
 }
 
