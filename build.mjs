@@ -462,7 +462,7 @@ function getNavbar(activeTab) {
 				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
 				<li><a href="jornada.html" class="nav-link ${activeTab === 'jornada' ? 'active' : ''}">⚡ Jornada Dev</a></li>
 				<li><a href="perfil.html" class="nav-link ${activeTab === 'perfil' ? 'active' : ''}">👤 Meu Perfil</a></li>
-				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">⚠️ Kairo</a></li>
+				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">✨ Kairo Lang</a></li>
 				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">Serviços & Orçamento</a></li>
 				<li><a href="jogos.html" class="nav-link ${activeTab === 'jogos' ? 'active' : ''}">Jogos</a></li>
 				<li><a href="quiz.html" class="nav-link ${activeTab === 'quiz' ? 'active' : ''}">Teste Dev</a></li>
@@ -844,8 +844,8 @@ const indexHtml = `<!DOCTYPE html>
 				<a href="jogos.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
 					🎮 Jogar Nossos Jogos
 				</a>
-				<a href="kairo.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px; border-color: rgba(255,0,85,0.4); color: #ff0055 !important;">
-					⚠️ Status Kairo
+				<a href="kairo.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px; border-color: rgba(157,78,221,0.5); color: #c4b5fd !important; background: rgba(157,78,221,0.12);">
+					✨ Conhecer Kairo Lang
 				</a>
 			</div>
 		</section>

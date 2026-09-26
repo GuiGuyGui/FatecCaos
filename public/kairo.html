@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Kairo (Em Manutenção) | OmniVoid Studios</title>
+	<title>Kairo Lang | A Linguagem Educacional da OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="index.icon.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<script src="coi-serviceworker.js"></script>
 	<style>
 		:root {
@@ -41,8 +41,8 @@
 		body {
 			background-color: var(--bg-base);
 			background-image: 
-				radial-gradient(circle at 15% 15%, rgba(255, 0, 85, 0.08) 0%, transparent 40%),
-				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.08) 0%, transparent 40%),
+				radial-gradient(circle at 15% 15%, rgba(157, 78, 221, 0.12) 0%, transparent 45%),
+				radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
 				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
 				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
@@ -130,34 +130,66 @@
 		}
 
 		.nav-link.active {
-			background: linear-gradient(135deg, rgba(255, 0, 85, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
-			border-color: var(--accent-danger);
-			box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+			background: linear-gradient(135deg, rgba(157, 78, 221, 0.25) 0%, rgba(0, 240, 255, 0.25) 100%);
+			border-color: var(--accent-purple);
+			box-shadow: 0 0 14px rgba(157, 78, 221, 0.35);
 		}
 
 		.container {
-			max-width: 1200px;
+			max-width: 1280px;
 			margin: 0 auto;
-			padding: 40px 24px;
+			padding: 40px 20px 70px;
 			width: 100%;
 			flex: 1;
 		}
 
-		.card {
-			background: var(--bg-card);
-			border: 1px solid var(--border-color);
-			border-radius: 14px;
-			padding: 30px;
-			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+		.hero-card {
+			background: radial-gradient(circle at center, rgba(157, 78, 221, 0.15) 0%, rgba(21, 21, 34, 0.95) 80%);
+			border: 1.5px solid rgba(157, 78, 221, 0.4);
+			border-radius: 18px;
+			padding: 40px 30px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(157, 78, 221, 0.2);
+			text-align: center;
 			position: relative;
 			overflow: hidden;
+			margin-bottom: 35px;
 		}
 
-		.btn-danger {
+		.kairo-badge {
 			display: inline-flex;
 			align-items: center;
 			gap: 8px;
-			background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%);
+			background: rgba(157, 78, 221, 0.2);
+			border: 1px solid var(--accent-purple);
+			padding: 6px 18px;
+			border-radius: 20px;
+			font-size: 12px;
+			font-weight: 800;
+			color: var(--accent-purple) !important;
+			margin-bottom: 20px;
+			text-transform: uppercase;
+			box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+		}
+
+		.kairo-pulse-dot {
+			width: 8px;
+			height: 8px;
+			background: var(--accent-purple);
+			border-radius: 50%;
+			box-shadow: 0 0 10px var(--accent-purple);
+			animation: blink 1.2s infinite;
+		}
+
+		@keyframes blink {
+			0%, 100% { opacity: 1; transform: scale(1); }
+			50% { opacity: 0.3; transform: scale(0.8); }
+		}
+
+		.btn-purple {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%);
 			color: #ffffff !important;
 			font-family: var(--font-title);
 			font-weight: 800;
@@ -166,67 +198,237 @@
 			border-radius: 8px;
 			border: none;
 			cursor: pointer;
-			box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+			box-shadow: 0 4px 20px rgba(157, 78, 221, 0.4);
 			transition: all 0.25s ease;
 			text-transform: uppercase;
 		}
 
-		.btn-danger:hover {
+		.btn-purple:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 6px 22px rgba(255, 0, 85, 0.65);
+			box-shadow: 0 6px 25px rgba(157, 78, 221, 0.65);
 			filter: brightness(1.1);
 		}
 
-		/* HUD Animation */
-		.reactor-circle {
-			width: 160px;
-			height: 160px;
+		/* ====================================================================
+		   ANIMAÇÃO CURIOSA: O COMPILADOR HOLOGRÁFICO QUÂNTICO (KAIRO CORE)
+		   ==================================================================== */
+		.kairo-interactive-zone {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 24px;
+			margin: 35px 0;
+			text-align: left;
+		}
+
+		@media (max-width: 900px) {
+			.kairo-interactive-zone {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		/* IDE / Code Window */
+		.code-ide-card {
+			background: #090912;
+			border: 1px solid var(--border-bright);
+			border-radius: 14px;
+			overflow: hidden;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+			display: flex;
+			flex-direction: column;
+		}
+
+		.code-ide-header {
+			background: #11111d;
+			padding: 10px 16px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			font-family: var(--font-code);
+			font-size: 12px;
+		}
+
+		.ide-dots {
+			display: flex;
+			gap: 6px;
+		}
+
+		.ide-dot {
+			width: 10px;
+			height: 10px;
 			border-radius: 50%;
-			border: 2px dashed rgba(255, 0, 85, 0.5);
-			margin: 0 auto 24px;
+		}
+		.dot-r { background: #ff0055; }
+		.dot-y { background: #ffd60a; }
+		.dot-g { background: #00ff88; }
+
+		.code-editor-content {
+			padding: 20px;
+			font-family: var(--font-code);
+			font-size: 14px;
+			line-height: 1.7;
+			color: #e2e8f0 !important;
+			flex: 1;
+			min-height: 280px;
+			position: relative;
+		}
+
+		.token-kw { color: #ff0055 !important; font-weight: 700; }
+		.token-fn { color: #00f0ff !important; font-weight: 700; }
+		.token-type { color: #ffd60a !important; }
+		.token-str { color: #00ff88 !important; }
+		.token-comment { color: #64748b !important; font-style: italic; }
+		.token-pipe { color: #9d4edd !important; font-weight: 800; }
+
+		.typing-cursor {
+			display: inline-block;
+			width: 8px;
+			height: 16px;
+			background: var(--accent-primary);
+			vertical-align: middle;
+			margin-left: 4px;
+			animation: blinkCursor 0.8s infinite;
+		}
+
+		@keyframes blinkCursor {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0; }
+		}
+
+		/* Holographic Visualizer / AST Matrix */
+		.ast-visualizer-card {
+			background: radial-gradient(circle at center, rgba(0, 240, 255, 0.08) 0%, #090914 80%);
+			border: 1px solid rgba(0, 240, 255, 0.3);
+			border-radius: 14px;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+		}
+
+		.quantum-orb-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 20px 0;
+			position: relative;
+			height: 180px;
+		}
+
+		.orb-ring-outer {
+			width: 170px;
+			height: 170px;
+			border-radius: 50%;
+			border: 2px dashed var(--accent-purple);
+			position: absolute;
+			animation: rotateRings 14s linear infinite;
+		}
+
+		.orb-ring-mid {
+			width: 120px;
+			height: 120px;
+			border-radius: 50%;
+			border: 2px solid var(--accent-primary);
+			position: absolute;
+			animation: rotateRingsReverse 8s linear infinite;
+			box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+		}
+
+		.orb-core {
+			width: 65px;
+			height: 65px;
+			border-radius: 50%;
+			background: radial-gradient(circle at 30% 30%, #00f0ff, #9d4edd);
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			animation: spinClockwise 15s linear infinite;
-			box-shadow: 0 0 30px rgba(255, 0, 85, 0.2);
+			font-size: 24px;
+			font-family: var(--font-title);
+			font-weight: 900;
+			box-shadow: 0 0 30px rgba(0, 240, 255, 0.6), inset 0 0 15px #ffffff;
+			animation: pulseCore 2.5s infinite ease-in-out;
 		}
 
-		.reactor-inner {
-			width: 110px;
-			height: 110px;
-			border-radius: 50%;
-			border: 2px solid #ff0055;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			animation: spinCounter 10s linear infinite;
-		}
-
-		@keyframes spinClockwise {
+		@keyframes rotateRings {
 			from { transform: rotate(0deg); }
 			to { transform: rotate(360deg); }
 		}
 
-		@keyframes spinCounter {
+		@keyframes rotateRingsReverse {
 			from { transform: rotate(0deg); }
 			to { transform: rotate(-360deg); }
 		}
 
-		.terminal-box {
-			background: #08080f;
-			border: 1px solid rgba(255, 0, 85, 0.3);
-			border-radius: 10px;
-			padding: 18px;
+		@keyframes pulseCore {
+			0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px #00f0ff); }
+			50% { transform: scale(1.12); filter: drop-shadow(0 0 25px #9d4edd); }
+		}
+
+		/* Realtime Pipeline Steps */
+		.pipeline-steps-row {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 8px;
+			text-align: center;
+			margin-top: 14px;
+		}
+
+		.pipeline-step {
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 10px 6px;
 			font-family: var(--font-code);
-			font-size: 13px;
-			height: 180px;
+			font-size: 11px;
+			transition: all 0.3s;
+		}
+
+		.pipeline-step.active-step {
+			border-color: var(--accent-primary);
+			background: rgba(0, 240, 255, 0.15);
+			box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+			transform: scale(1.05);
+		}
+
+		/* Terminal Logs Stream */
+		.kairo-term-log {
+			background: #05050a;
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 12px;
+			font-family: var(--font-code);
+			font-size: 12px;
+			height: 110px;
 			overflow-y: auto;
 			display: flex;
 			flex-direction: column;
-			gap: 8px;
-			text-align: left;
-			margin: 24px 0;
-			box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+			gap: 4px;
+			margin-top: 14px;
+		}
+
+		/* Feature Cards Grid */
+		.features-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 20px;
+			margin-bottom: 40px;
+		}
+
+		.feat-box {
+			background: var(--bg-card);
+			border: 1px solid var(--border-color);
+			border-radius: 14px;
+			padding: 24px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+			transition: all 0.25s;
+		}
+
+		.feat-box:hover {
+			border-color: var(--accent-purple);
+			transform: translateY(-3px);
 		}
 
 		footer {
@@ -279,111 +481,235 @@
 		</a>
 
 		<ul class="nav-links">
-				<li><a href="index.html" class="nav-link ">Início</a></li>
-				<li><a href="jornada.html" class="nav-link ">⚡ Jornada Dev</a></li>
-				<li><a href="kairo.html" class="nav-link active">⚠️ Kairo</a></li>
-				<li><a href="orcamento.html" class="nav-link ">Serviços &amp; Orçamento</a></li>
-				<li><a href="jogos.html" class="nav-link ">Jogos</a></li>
-				<li><a href="quiz.html" class="nav-link ">Teste Dev</a></li>
-				<li><a href="projetos.html" class="nav-link ">Projetos</a></li>
-				<li><a href="devchat.html" class="nav-link ">Conversa Dev</a></li>
-				<li><a href="sobre.html" class="nav-link ">Sobre Mim</a></li>
-			</ul>
+			<li><a href="index.html" class="nav-link">Início</a></li>
+			<li><a href="jornada.html" class="nav-link">⚡ Jornada Dev</a></li>
+			<li><a href="perfil.html" class="nav-link">👤 Meu Perfil</a></li>
+			<li><a href="kairo.html" class="nav-link active">✨ Kairo Lang</a></li>
+			<li><a href="orcamento.html" class="nav-link">Serviços &amp; Orçamento</a></li>
+			<li><a href="jogos.html" class="nav-link">Jogos</a></li>
+			<li><a href="quiz.html" class="nav-link">Teste Dev</a></li>
+			<li><a href="projetos.html" class="nav-link">Projetos</a></li>
+			<li><a href="devchat.html" class="nav-link">Conversa Dev</a></li>
+			<li><a href="sobre.html" class="nav-link">Sobre Mim</a></li>
+		</ul>
 
 		<div class="nav-user-panel">
-			<a href="index.html" class="btn-secondary" style="padding: 7px 15px; font-size: 13px;">
-				Voltar ao Início
+			<a href="jornada.html" class="btn-purple" style="padding: 7px 15px; font-size: 13px;">
+				⚡ Jornada Dev
 			</a>
 		</div>
 	</nav>
 
 	<main class="container">
-		<div class="card" style="text-align: center; border-color: rgba(255, 0, 85, 0.4); background: radial-gradient(circle at center, rgba(255,0,85,0.1) 0%, rgba(21,21,34,0.95) 80%);">
-			
-			<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,0,85,0.15); border: 1px solid var(--accent-danger); padding: 6px 18px; border-radius: 20px; font-size: 12px; font-weight: 800; color: var(--accent-danger) !important; margin-bottom: 24px; text-transform: uppercase;">
-				<span style="display:inline-block; width:8px; height:8px; background:#ff0055; border-radius:50%; box-shadow: 0 0 8px #ff0055;"></span>
-				Status: Sistema em Manutenção &amp; Atualização Neural
+		
+		<!-- Hero Section -->
+		<section class="hero-card">
+			<div class="kairo-badge">
+				<span class="kairo-pulse-dot"></span>
+				PROJETO KAIRO • EM DESENVOLVIMENTO ATIVO (v0.1.0-ALPHA)
 			</div>
 
-			<h1 style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 3px; margin-bottom: 12px; text-transform: uppercase;">
-				PROJETO <span style="color: #ff0055 !important; text-shadow: 0 0 20px rgba(255,0,85,0.6);">KAIRO</span>
+			<h1 style="font-size: clamp(32px, 5vw, 56px); letter-spacing: 3px; margin-bottom: 14px; text-transform: uppercase;">
+				LINGUAGEM <span style="background: linear-gradient(135deg, #00f0ff 0%, #9d4edd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">KAIRO</span>
 			</h1>
 
-			<p style="max-width: 750px; margin: 0 auto 30px; font-size: 16px; line-height: 1.6; opacity: 0.9;">
-				Os servidores centrais do protocolo Kairo estão temporariamente suspensos para calibração quântica, otimização de renderização espacial e sincronização da rede multi-região.
+			<p style="max-width: 860px; margin: 0 auto 24px; font-size: 17px; line-height: 1.6; opacity: 0.95;">
+				Uma <strong>linguagem de programação proprietária</strong> criada pela OmniVoid Studios com um único propósito: <strong>revolucionar a educação de programação, raciocínio lógico e desenvolvimento de jogos</strong> através de uma sintaxe visual, compilador explicativo e execução direta no navegador.
 			</p>
 
-			<!-- Reactor Visual -->
-			<div class="reactor-circle">
-				<div class="reactor-inner">
-					<span style="font-size: 32px; color: #ff0055 !important;">☢</span>
+			<div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+				<a href="#early-access" class="btn-purple">
+					✨ Solicitar Acesso Antecipado ao Beta
+				</a>
+				<a href="jornada.html" class="btn-primary" style="background: rgba(0,240,255,0.15); border: 1px solid var(--accent-primary);">
+					⚡ Praticar na Jornada Dev
+				</a>
+			</div>
+		</section>
+
+		<!-- ====================================================================
+		     ANIMAÇÃO CURIOSA: COMPILADOR & LIVE TOKEN SCANNER
+		     ==================================================================== -->
+		<section class="kairo-interactive-zone">
+			
+			<!-- IDE Card: Real Kairo Code Demo -->
+			<div class="code-ide-card">
+				<div class="code-ide-header">
+					<div class="ide-dots">
+						<div class="ide-dot dot-r"></div>
+						<div class="ide-dot dot-y"></div>
+						<div class="ide-dot dot-g"></div>
+					</div>
+					<span style="color: var(--accent-purple) !important;">exemplo_jornada.kairo</span>
+					<span style="opacity: 0.6;">UTF-8</span>
+				</div>
+
+				<div class="code-editor-content">
+					<p><span class="token-comment">// Kairo Lang: Sintaxe nativa, intuitiva e expressiva</span></p>
+					<p><span class="token-kw">modulo</span> <span class="token-type">Educacao.Desenvolvedor</span>;</p>
+					<br>
+					<p><span class="token-kw">estrutura</span> <span class="token-type">Jogador</span> {</p>
+					<p>&nbsp;&nbsp;<span class="token-type">Texto</span> nome;</p>
+					<p>&nbsp;&nbsp;<span class="token-type">Numero</span> jxp = <span class="token-str">0</span>;</p>
+					<p>&nbsp;&nbsp;<span class="token-type">Lista</span>&lt;<span class="token-type">Habilidade</span>&gt; skills;</p>
+					<p>}</p>
+					<br>
+					<p><span class="token-kw">funcao</span> <span class="token-fn">evoluirDev</span>(<span class="token-type">Jogador</span> dev, <span class="token-type">Desafio</span> questao) -&gt; <span class="token-type">Progresso</span> {</p>
+					<p>&nbsp;&nbsp;<span class="token-kw">se</span> questao.<span class="token-fn">estaCorreta</span>() {</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;dev.jxp += questao.recompensa;</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="token-fn">portal.emitir</span>(<span class="token-str">"✨ Conhecimento Forjado!"</span>);</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="token-kw">retornar</span> <span class="token-type">Progresso</span>.<span class="token-fn">Avanco</span>;</p>
+					<p>&nbsp;&nbsp;} <span class="token-kw">senao</span> {</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="token-fn">diagnostico.recomendar</span>(questao.ponto_melhoria);</p>
+					<p>&nbsp;&nbsp;}</p>
+					<p>}<span class="typing-cursor"></span></p>
 				</div>
 			</div>
 
-			<!-- Terminal Logs Stream -->
-			<div style="max-width: 800px; margin: 0 auto;">
-				<div style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.7; font-family: var(--font-code); margin-bottom: 6px; padding: 0 4px;">
-					<span>TERMINAL DE DIAGNÓSTICO KAIRO-7</span>
-					<span style="color: #00ff88 !important;">ONLINE [SECURE LINK]</span>
+			<!-- AST / Holographic Pipeline Visualizer -->
+			<div class="ast-visualizer-card">
+				<div style="display: flex; justify-content: space-between; font-size: 12px; font-family: var(--font-code);">
+					<span style="color: var(--accent-primary) !important;">NÚCLEO DO COMPILADOR KAIRO</span>
+					<span style="color: #00ff88 !important;" id="engine-status">ESTADO: COMPILANDO AST</span>
 				</div>
-				<div class="terminal-box" id="kairo-term">
-					<div><span style="color:#64748b !important;">[17:50:01]</span> <span style="color:#00f0ff !important;">[SYS]</span> Inicializando diagnóstico de barramentos...</div>
-					<div><span style="color:#64748b !important;">[17:50:02]</span> <span style="color:#00ff88 !important;">[OK]</span> Módulos de física e renderização espacial: 100% OK</div>
-					<div><span style="color:#64748b !important;">[17:50:03]</span> <span style="color:#ffd60a !important;">[WARN]</span> Servidores principais em recalibração de memória neural</div>
-					<div><span style="color:#64748b !important;">[17:50:04]</span> <span style="color:#ff0055 !important;">[LOCK]</span> Acesso público bloqueado temporariamente (Protocolo de Manutenção Ativo)</div>
+
+				<!-- Quantum Orb Visualizer -->
+				<div class="quantum-orb-container">
+					<div class="orb-ring-outer"></div>
+					<div class="orb-ring-mid"></div>
+					<div class="orb-core">
+						<span>K</span>
+					</div>
+				</div>
+
+				<!-- Live Pipeline Stages -->
+				<div class="pipeline-steps-row">
+					<div class="pipeline-step active-step" id="step-lex">1. Lexer (Tokens)</div>
+					<div class="pipeline-step" id="step-parse">2. Parser (AST)</div>
+					<div class="pipeline-step" id="step-type">3. Type Check</div>
+					<div class="pipeline-step" id="step-wasm">4. WebAssembly</div>
+				</div>
+
+				<!-- Live Compilation Stream -->
+				<div class="kairo-term-log" id="kairo-live-stream">
+					<div><span style="color:#64748b !important;">[KAIRO-CORE]</span> <span style="color:#00f0ff !important;">[LEXER]</span> 24 tokens identificados com sucesso.</div>
+					<div><span style="color:#64748b !important;">[KAIRO-CORE]</span> <span style="color:#9d4edd !important;">[PARSER]</span> Construindo nós sintáticos da função evoluirDev()...</div>
 				</div>
 			</div>
 
-			<!-- Form VIP -->
-			<div style="max-width: 520px; margin: 30px auto 10px; background: rgba(0,0,0,0.4); padding: 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-				<h3 style="font-size: 18px; margin-bottom: 8px;">Garantir Acesso VIP Antecipado</h3>
-				<p style="font-size: 13px; opacity: 0.8; margin-bottom: 16px;">Seja o primeiro a ser notificado no instante em que os portais de Kairo abrirem.</p>
-				
-				<form id="kairo-form" onsubmit="event.preventDefault(); alert('Inscrição VIP confirmada! Você será notificado assim que os servidores abrirem.'); this.reset();" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
-					<input type="email" placeholder="seu.email@exemplo.com" required style="flex: 1; min-width: 220px; background: #0c0c14; border: 1px solid var(--border-bright); padding: 12px 16px; border-radius: 8px; font-size: 14px; outline: none;">
-					<button type="submit" class="btn-danger">
-						Notificar-me ➔
-					</button>
-				</form>
+		</section>
+
+		<!-- ====================================================================
+		     PILARES DA LINGUAGEM KAIRO
+		     ==================================================================== -->
+		<section style="margin-top: 50px;">
+			<div style="text-align: center; margin-bottom: 30px;">
+				<h2 style="font-size: 26px; text-transform: uppercase;">Por que Criamos a Kairo?</h2>
+				<p style="font-size: 15px; opacity: 0.85; max-width: 700px; margin: 6px auto 0;">
+					Aprender a programar não precisa ser confuso. Kairo foi projetada para ensinar os fundamentos profundos da computação sem as frustrações sintáticas do passado.
+				</p>
 			</div>
 
-		</div>
+			<div class="features-grid">
+				<div class="feat-box">
+					<div style="font-size: 32px; margin-bottom: 12px;">🧠</div>
+					<h3 style="font-size: 18px; margin-bottom: 8px;">Compilador Didático &amp; Amigável</h3>
+					<p style="font-size: 14px; opacity: 0.85; line-height: 1.5;">
+						Em vez de erros crípticos como <em>"Segmentation Fault"</em> ou <em>"Undefined is not a function"</em>, o compilador Kairo aponta exatamente o que aconteceu, por que aconteceu e sugere a correção em português claro.
+					</p>
+				</div>
+
+				<div class="feat-box">
+					<div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+					<h3 style="font-size: 18px; margin-bottom: 8px;">Visualizador de Memória em Tempo Real</h3>
+					<p style="font-size: 14px; opacity: 0.85; line-height: 1.5;">
+						Veja visualmente a criação de variáveis na Stack e Heap, ponteiros e o fluxo de execução das suas funções conforme o código é digitado.
+					</p>
+				</div>
+
+				<div class="feat-box">
+					<div style="font-size: 32px; margin-bottom: 12px;">🎮</div>
+					<h3 style="font-size: 18px; margin-bottom: 8px;">Nativa para Games &amp; WebAssembly</h3>
+					<p style="font-size: 14px; opacity: 0.85; line-height: 1.5;">
+						Compilação direta e ultraveloz para WebAssembly (WASM), permitindo que estudantes criem e compartilhem jogos 2D e aplicações interativas diretamente no navegador.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Early Access Registration -->
+		<section id="early-access" style="max-width: 620px; margin: 40px auto 0; background: var(--bg-card); border: 1.5px solid var(--accent-purple); border-radius: 16px; padding: 32px; text-align: center; box-shadow: 0 0 30px rgba(157, 78, 221, 0.25);">
+			<h3 style="font-size: 22px; margin-bottom: 8px; text-transform: uppercase;">Acesso Antecipado ao Beta da Kairo</h3>
+			<p style="font-size: 14px; opacity: 0.85; margin-bottom: 20px;">
+				Cadastre-se para ser um dos primeiros a testar o compilador Kairo e a IDE educacional quando a versão Alpha for liberada.
+			</p>
+
+			<form onsubmit="event.preventDefault(); alert('Inscrição confirmada! Você receberá o convite para o Beta fechado da Linguagem Kairo no seu e-mail.'); this.reset();" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+				<input type="email" placeholder="seu.melhor.email@exemplo.com" required style="flex: 1; min-width: 240px; background: #0c0c14; border: 1px solid var(--border-bright); padding: 12px 16px; border-radius: 8px; font-size: 14px; outline: none;">
+				<button type="submit" class="btn-purple">
+					Garantir Vaga no Beta ➔
+				</button>
+			</form>
+		</section>
+
 	</main>
 
 	<footer>
 		<div class="footer-links">
 			<a href="index.html">Início</a>
 			<a href="jornada.html">Jornada Dev</a>
-			<a href="kairo.html">Kairo</a>
+			<a href="perfil.html">Meu Perfil</a>
+			<a href="kairo.html">Kairo Lang</a>
 			<a href="orcamento.html">Serviços &amp; Orçamento</a>
 			<a href="jogos.html">Jogos</a>
 			<a href="projetos.html">Projetos</a>
 			<a href="sobre.html">Sobre</a>
 		</div>
-		<p style="font-size: 12px; opacity: 0.6;">© 2026 OmniVoid Studios • omnivoidstudios.com.br</p>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Kairo Programming Language Project • omnivoidstudios.com.br
+		</p>
+		<p style="font-size: 11px; opacity: 0.6;">
+			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> • FATEC 2026
+		</p>
 	</footer>
 
 	<script>
-		// Terminal log streaming
-		const term = document.getElementById('kairo-term');
-		const extraLogs = [
-			'Otimizando pipelines de shaders para WebAssembly...',
-			'Sincronizando nós de baixa latência em São Paulo e Virgínia...',
-			'Recalibrando limites de colisão volumétrica no mapa...',
-			'Verificação de integridade dos pacotes: 100% íntegro.',
-			'Aguardando comando de liberação do servidor central.'
+		// Real-time Compilation Pipeline Animation Loop
+		const steps = [
+			{ id: 'step-lex', name: 'LEXER (ANALISANDO TOKENS)', log: '[LEXER] Analisando sintaxe léxica da Linguagem Kairo...' },
+			{ id: 'step-parse', name: 'PARSER (CONSTRUINDO AST)', log: '[PARSER] Gerando Árvore Sintática Abstrata (AST) com nós quânticos...' },
+			{ id: 'step-type', name: 'TYPE CHECK (VALIDAÇÃO)', log: '[TYPECHECK] Sistema de tipos gradual validado: 0 erros de tipo.' },
+			{ id: 'step-wasm', name: 'WASM EMIT (BYTECODE)', log: '[BYTECODE] Emitindo binário WebAssembly otimizado para o navegador!' }
 		];
-		let idx = 0;
+
+		let currentStepIndex = 0;
+		const logContainer = document.getElementById('kairo-live-stream');
+		const statusText = document.getElementById('engine-status');
+
 		setInterval(() => {
-			if (idx < extraLogs.length) {
+			// Update step indicators
+			document.querySelectorAll('.pipeline-step').forEach(s => s.classList.remove('active-step'));
+			const activeStepData = steps[currentStepIndex];
+			const activeEl = document.getElementById(activeStepData.id);
+			if (activeEl) activeEl.classList.add('active-step');
+
+			if (statusText) statusText.textContent = `ESTADO: ${activeStepData.name}`;
+
+			// Add log
+			if (logContainer) {
 				const now = new Date().toTimeString().split(' ')[0];
-				const div = document.createElement('div');
-				div.innerHTML = `<span style="color:#64748b !important;">[${now}]</span> <span style="color:#00f0ff !important;">[SYS]</span> ${extraLogs[idx]}`;
-				term.appendChild(div);
-				term.scrollTop = term.scrollHeight;
-				idx++;
+				const logDiv = document.createElement('div');
+				logDiv.innerHTML = `<span style="color:#64748b !important;">[${now}]</span> <span style="color:#00ff88 !important;">✓</span> ${activeStepData.log}`;
+				logContainer.appendChild(logDiv);
+				logContainer.scrollTop = logContainer.scrollHeight;
+
+				if (logContainer.children.length > 8) {
+					logContainer.removeChild(logContainer.children[0]);
+				}
 			}
-		}, 3500);
+
+			currentStepIndex = (currentStepIndex + 1) % steps.length;
+		}, 2800);
 	</script>
 </body>
 </html>
