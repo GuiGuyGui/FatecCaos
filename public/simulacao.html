@@ -953,7 +953,7 @@
 		}
 
 		async function executeActionWithAI(cmd) {
-			const loc = LOCATIONS[kState.locationKey] || LOCATIONS['praca'];
+			const loc = FEUDAL_LOCATIONS[kState.locationKey] || FEUDAL_LOCATIONS['praca'];
 			const loadingDiv = document.createElement('div');
 			loadingDiv.className = 'cmd-line cmd-cyan';
 			loadingDiv.innerHTML = '⚔️ <em>[Game Master AI (Gemini) processando a Boêmia de 1390...]</em>';
@@ -1038,10 +1038,10 @@
 					kState.inventory.splice(idx, 1);
 				}
 			}
-			if (d.new_location && LOCATIONS[d.new_location]) {
+			if (d.new_location && FEUDAL_LOCATIONS[d.new_location]) {
 				kState.locationKey = d.new_location;
 			}
-			updateHUD();
+			updateKingdomHud();
 		}
 
 		function executeLocalFallbackAction(cmd) {
@@ -1064,11 +1064,7 @@
 			} else {
 				printLine(`Você observa atentamente as ruas enlameadas e as cabanas de Ratboř. Os aldeões seguem com suas vidas diárias.`, 'story');
 			}
-			updateHUD();
-		}
-
-			checkSurvivalRules();
-			saveKingdomState();
+			updateKingdomHud();
 		}
 
 		function addMoney(gr, hel) {
