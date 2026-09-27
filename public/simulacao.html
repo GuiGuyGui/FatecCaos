@@ -858,163 +858,214 @@
 			printLine(`<span class="cmd-prefix">boemia:\\${kState.locationKey}&gt;</span> ${cmd}`, 'gold');
 			if (window.soundEngine) window.soundEngine.playClick();
 
+			// Custom API Key commands
+			if (clean.startsWith('!chave ') || clean.startsWith('!api ')) {
+				const key = clean.split(' ')[1]?.trim();
+				if (key) {
+					localStorage.setItem('kingdoms_custom_api_key', key);
+					printLine('🔑 Chave de API Gemini personalizada salva com sucesso no seu navegador!', 'green');
+					printLine('O Game Master agora usará sua cota dedicada do Google Gemini.', 'cyan');
+				}
+				return;
+			} else if (clean === '!limpar_chave' || clean === '!remover_chave') {
+				localStorage.removeItem('kingdoms_custom_api_key');
+				printLine('🔑 Chave personalizada removida. Usando provedor padrão do servidor OmniVoid.', 'story');
+				return;
+			}
+
 			// Character Creation Flow
 			if (kState.inCreation) {
 				handleCreationInput(clean);
 				return;
 			}
 
-			// Navigation
+			// System / Client Utilities
+			if (clean === 'status' || clean === 'perfil') {
+				showPlayerStatus();
+				return;
+			} else if (clean === 'inventario' || clean === 'itens' || clean === 'inv') {
+				showPlayerInventory();
+				return;
+			} else if (clean === 'comer') {
+				actionEatProvision();
+				saveKingdomState();
+				return;
+			} else if (clean === 'limpar' || clean === 'cls' || clean === 'clear') {
+				screen.innerHTML = '';
+				showCurrentScene();
+				return;
+			} else if (clean === 'novo_personagem' || clean === 'origens') {
+				startCharacterCreation();
+				return;
+			} else if (clean === 'ajuda' || clean === 'help') {
+				showHelp();
+				return;
+			}
+
+			// Navigation Direct Short-cuts
 			if (clean === 'ir praca' || clean === 'praca' || clean === 'voltar') {
 				kState.locationKey = 'praca';
 				printLine('🚶 Você caminhou até a Praça Central de Ratboř.', 'green');
 				showCurrentScene();
-			} else if (clean === 'ir taverna' || clean === 'taverna' || clean === '1' && kState.locationKey === 'praca') {
+				saveKingdomState();
+				return;
+			} else if (clean === 'ir taverna' || clean === 'taverna' || (clean === '1' && kState.locationKey === 'praca')) {
 				kState.locationKey = 'taverna';
 				printLine('🚪 Você empurrou a porta pesada de carvalho e entrou na Taverna do Cervo Dourado.', 'green');
 				showCurrentScene();
-			} else if (clean === 'ir forja' || clean === 'forja' || clean === '2' && kState.locationKey === 'praca') {
+				saveKingdomState();
+				return;
+			} else if (clean === 'ir forja' || clean === 'forja' || (clean === '2' && kState.locationKey === 'praca')) {
 				kState.locationKey = 'forja';
 				printLine('🔨 Você se aproximou da forja esfumaçada de Mestre Jan.', 'green');
 				showCurrentScene();
-			} else if (clean === 'ir mosteiro' || clean === 'mosteiro' || clean === 'igreja' || clean === '3' && kState.locationKey === 'praca') {
+				saveKingdomState();
+				return;
+			} else if (clean === 'ir mosteiro' || clean === 'mosteiro' || clean === 'igreja' || (clean === '3' && kState.locationKey === 'praca')) {
 				kState.locationKey = 'mosteiro';
 				printLine('⛪ Você entrou no claustro silencioso do Mosteiro de Santo Estêvão.', 'green');
 				showCurrentScene();
-			} else if (clean === 'ir bosque' || clean === 'bosque' || clean === '4' && kState.locationKey === 'praca') {
+				saveKingdomState();
+				return;
+			} else if (clean === 'ir bosque' || clean === 'bosque' || (clean === '4' && kState.locationKey === 'praca')) {
 				kState.locationKey = 'bosque';
 				printLine('🌲 Você seguiu pela trilha de terra batida em direção ao Bosque de Rataje.', 'green');
 				showCurrentScene();
-			} else if (clean === 'ir castelo' || clean === 'castelo' || clean === '5' && kState.locationKey === 'praca') {
+				saveKingdomState();
+				return;
+			} else if (clean === 'ir castelo' || clean === 'castelo' || (clean === '5' && kState.locationKey === 'praca')) {
 				kState.locationKey = 'castelo';
 				printLine('🏰 Você subiu a colina rochosa até as muralhas do Castelo de Pirkstein.', 'green');
 				showCurrentScene();
+				saveKingdomState();
+				return;
 			}
 
-			// Activities in Praça
-			else if (clean === 'trabalhar' || clean === '6' && kState.locationKey === 'praca') {
-				if (kState.energy < 20) {
-					printLine('⚠️ Você está exausto demais para arar o solo. Descanse na taverna ou cabana!', 'red');
+			// Taverna Dice Mini-game
+			if (clean === 'jogar dados' || (clean === '3' && kState.locationKey === 'taverna')) {
+				playDiceGame();
+				saveKingdomState();
+				return;
+			}
+
+			// Call the Live Kingdoms Game Master AI for all actions, dialogue, questions & interactions!
+			executeActionWithAI(cmd);
+		}
+
+		async function executeActionWithAI(cmd) {
+			const loc = LOCATIONS[kState.locationKey] || LOCATIONS['praca'];
+			const loadingDiv = document.createElement('div');
+			loadingDiv.className = 'cmd-line cmd-cyan';
+			loadingDiv.innerHTML = '⚔️ <em>[Game Master AI (Gemini) processando a Boêmia de 1390...]</em>';
+			screen.appendChild(loadingDiv);
+			screen.scrollTop = screen.scrollHeight;
+
+			try {
+				const customApiKey = localStorage.getItem('kingdoms_custom_api_key') || '';
+				const payload = {
+					command: cmd,
+					location: loc.name,
+					player: {
+						name: kState.name,
+						backgroundTitle: kState.bgTitle,
+						hp: kState.health,
+						hunger: kState.hunger,
+						thirst: kState.thirst,
+						energy: kState.energy,
+						groschen: kState.groschen,
+						hellers: kState.heller,
+						reputation: kState.reputation,
+						inventory: kState.inventory
+					},
+					timeState: `Dia ${kState.day} de ${kState.season}, Ano ${kState.year}`,
+					customApiKey
+				};
+
+				const res = await fetch('/api/kingdoms/action', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+
+				if (loadingDiv.parentNode) {
+					screen.removeChild(loadingDiv);
+				}
+
+				if (res.ok) {
+					const data = await res.json();
+					if (data.narrative) {
+						printLine(data.narrative.replace(/\n/g, '<br>'), 'story');
+					}
+					if (data.delta) {
+						applyStateDelta(data.delta);
+					}
+					if (data.model) {
+						printLine(`<small style="opacity:0.6;">[Motor: ${data.model}]</small>`, 'cyan');
+					}
 				} else {
-					kState.energy -= 20;
-					kState.hunger = Math.min(100, kState.hunger + 15);
-					const hel = Math.floor(Math.random() * 10) + 8;
-					addMoney(0, hel);
-					printLine(`🌾 Você trabalhou nos campos de cevada da aldeia. Ganhou <span class="cmd-gold">+${hel} Heller</span>.`, 'green');
-					triggerRandomEvent();
+					throw new Error('Servidor retornou erro HTTP ' + res.status);
+				}
+			} catch (err) {
+				if (loadingDiv.parentNode) {
+					screen.removeChild(loadingDiv);
+				}
+				printLine('⚠️ Conexão remota instável. O Game Master local assumiu a narrativa:', 'gold');
+				executeLocalFallbackAction(cmd);
+			}
+
+			checkSurvivalRules();
+			saveKingdomState();
+		}
+
+		function applyStateDelta(d) {
+			if (typeof d.hp === 'number') kState.health = Math.max(0, Math.min(100, kState.health + d.hp));
+			if (typeof d.hunger === 'number') kState.hunger = Math.max(0, Math.min(100, kState.hunger + d.hunger));
+			if (typeof d.thirst === 'number') kState.thirst = Math.max(0, Math.min(100, kState.thirst + d.thirst));
+			if (typeof d.energy === 'number') kState.energy = Math.max(0, Math.min(100, kState.energy + d.energy));
+			if (typeof d.reputation === 'number') kState.reputation = Math.max(0, Math.min(100, kState.reputation + d.reputation));
+			
+			if (typeof d.groschen === 'number' || typeof d.hellers === 'number') {
+				addMoney(d.groschen || 0, d.hellers || 0);
+			}
+
+			if (d.add_item && typeof d.add_item === 'string' && d.add_item.trim()) {
+				kState.inventory.push(d.add_item.trim());
+				printLine(`🎒 Novo item obtido: <strong>${d.add_item}</strong>!`, 'green');
+			}
+			if (d.remove_item && typeof d.remove_item === 'string' && d.remove_item.trim()) {
+				const idx = kState.inventory.findIndex(i => i.toLowerCase().includes(d.remove_item.toLowerCase()));
+				if (idx !== -1) {
+					kState.inventory.splice(idx, 1);
 				}
 			}
+			if (d.new_location && LOCATIONS[d.new_location]) {
+				kState.locationKey = d.new_location;
+			}
+			updateHUD();
+		}
 
-			// Activities in Taverna
-			else if (clean === 'comprar cerveja' || clean === '1' && kState.locationKey === 'taverna') {
+		function executeLocalFallbackAction(cmd) {
+			const clean = (cmd || '').toLowerCase().trim();
+			if (clean.includes('trabalh') || clean.includes('lenha') || clean.includes('campo')) {
+				kState.energy = Math.max(0, kState.energy - 20);
+				kState.hunger = Math.min(100, kState.hunger + 15);
+				addMoney(0, 8);
+				printLine('🌾 Você executou um dia de trabalho nos campos e recebeu +8 Heller de cobre.', 'green');
+			} else if (clean.includes('comprar cerveja') || clean.includes('beber')) {
 				if (spendMoney(0, 6)) {
 					kState.thirst = 0;
-					kState.health = Math.min(100, kState.health + 5);
-					printLine('🍺 Você bebeu uma caneca gelada de cerveja preta de espelta. Sede saciada!', 'green');
+					printLine('🍺 Você bebeu cerveja fresca na caneca de barro (-6 Heller). Sede saciada!', 'green');
 				} else {
-					printLine('❌ Você não tem 6 Heller para pagar a cerveja.', 'red');
+					printLine('❌ Sem moedas suficientes para cerveja.', 'red');
 				}
-			} else if (clean === 'comprar guisado' || clean === '2' && kState.locationKey === 'taverna') {
-				if (spendMoney(0, 12)) {
-					kState.hunger = Math.max(0, kState.hunger - 45);
-					kState.health = Math.min(100, kState.health + 10);
-					printLine('🍲 Você saboreou uma tigela fumegante de guisado de carneiro com ervilhas (-12 Heller). Fome saciada!', 'green');
-				} else {
-					printLine('❌ Faltam moedas para o guisado (custa 12 Heller).', 'red');
-				}
-			} else if (clean === 'jogar dados' || clean === '3' && kState.locationKey === 'taverna') {
-				playDiceGame();
-			} else if (clean === 'ouvir rumores' || clean === '4' && kState.locationKey === 'taverna') {
-				showRumors();
-			} else if (clean === 'dormir' || clean === 'descansar' || clean === '5' && kState.locationKey === 'taverna') {
-				if (spendMoney(0, 8)) {
-					advanceDay();
-					printLine('🛏️ Você alugou uma cama de palha limpa na taverna (-8 Heller). Acordou revigorado!', 'green');
-				} else {
-					printLine('Você dormiu no chão de palha da estrebaria sem pagar. Recuperou energia parcialmente.', 'story');
-					kState.energy = 80;
-					advanceDay();
-				}
-			}
-
-			// Activities in Forja
-			else if (clean === 'trabalhar forja' || clean === '1' && kState.locationKey === 'forja') {
-				if (kState.energy < 25) {
-					printLine('⚠️ Sem energia para bater na bigorna!', 'red');
-				} else {
-					kState.energy -= 25;
-					kState.hunger = Math.min(100, kState.hunger + 20);
-					const earn = Math.floor(Math.random() * 16) + 12;
-					addMoney(0, earn);
-					printLine(`🔨 Mestre Jan pagou a você <span class="cmd-gold">+${earn} Heller</span> pelo trabalho nos foles e forja.`, 'green');
-				}
-			} else if (clean === 'comprar faca' || clean === '2' && kState.locationKey === 'forja') {
-				if (spendMoney(0, 18)) {
-					kState.inventory.push("Faca Curta de Ferro de Jan");
-					printLine('🗡️ Você comprou uma faca curta de ferro forjada em Ratboř (-18 Heller).', 'green');
-				} else {
-					printLine('❌ Você precisa de 18 Heller para a faca.', 'red');
-				}
-			}
-
-			// Activities in Mosteiro
-			else if (clean === 'rezar' || clean === '1' && kState.locationKey === 'mosteiro') {
+			} else if (clean.includes('rezar')) {
 				kState.reputation += 2;
-				kState.health = Math.min(100, kState.health + 10);
-				printLine('⛪ Você se ajoelhou e rezou perante o crucifixo de madeira. Uma sensação de paz renova seu espírito (+Bênção e Honra).', 'green');
-			} else if (clean === 'pedir cura' || clean === '2' && kState.locationKey === 'mosteiro') {
-				kState.health = Math.min(100, kState.health + 30);
-				printLine('🌿 Frei Bernardo aplicou um emplastro de camomila e erva-de-são-joão nas suas feridas (+30% Vida).', 'green');
-			}
-
-			// Activities in Bosque
-			else if (clean === 'coletar lenha' || clean === '1' && kState.locationKey === 'bosque') {
-				if (kState.energy < 20) {
-					printLine('⚠️ Exausto demais para cortar madeira!', 'red');
-				} else {
-					kState.energy -= 20;
-					addMoney(0, 10);
-					printLine('🪵 Você cortou um feixe de lenha de carvalho e vendeu aos aldeões (+10 Heller).', 'green');
-				}
-			} else if (clean === 'cacar' || clean === '2' && kState.locationKey === 'bosque') {
-				huntForest();
-			}
-
-			// Activities in Castelo
-			else if (clean === 'pagar tributo' || clean === '1' && kState.locationKey === 'castelo') {
-				if (spendMoney(1, 0)) {
-					kState.reputation += 5;
-					printLine('📜 Você pagou 1 Groschen de tributo feudal ao senhor. O meirinho anotou sua quitação no livro de registros.', 'green');
-				} else {
-					printLine('❌ Você não tem 1 Groschen de prata para o tributo real.', 'red');
-				}
-			} else if (clean === 'alistar guarda' || clean === '3' && kState.locationKey === 'castelo') {
-				if (kState.energy < 30) {
-					printLine('⚠️ Você precisa estar descansado para cumprir a vigília da muralha.', 'red');
-				} else {
-					kState.energy -= 30;
-					addMoney(1, 4);
-					printLine('🛡️ Você montou guarda na torre norte de Pirkstein (+1 Groschen e 4 Heller).', 'green');
-				}
-			}
-
-			// General Commands
-			else if (clean === 'status' || clean === 'perfil') {
-				showPlayerStatus();
-			} else if (clean === 'inventario' || clean === 'itens' || clean === 'inv') {
-				showPlayerInventory();
-			} else if (clean === 'comer') {
-				actionEatProvision();
-			} else if (clean === 'limpar' || clean === 'cls' || clean === 'clear') {
-				screen.innerHTML = '';
-				showCurrentScene();
-			} else if (clean === 'novo_personagem' || clean === 'origens') {
-				startCharacterCreation();
-			} else if (clean === 'ajuda' || clean === 'help') {
-				showHelp();
+				printLine('⛪ Você orou com fervor diante do crucifixo de madeira (+Bênção e Honra).', 'green');
 			} else {
-				printLine(`Comando '${cmd}' não compreendido pelo escrivão feudal. Digite 'ajuda' ou selecione uma opção acima.`, 'red');
+				printLine(`Você observa atentamente as ruas enlameadas e as cabanas de Ratboř. Os aldeões seguem com suas vidas diárias.`, 'story');
 			}
+			updateHUD();
+		}
 
 			checkSurvivalRules();
 			saveKingdomState();
