@@ -234,6 +234,95 @@
 			gap: 10px;
 		}
 
+		.ai-config-bar {
+			background: rgba(13, 14, 25, 0.95);
+			border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+			padding: 8px 18px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+			font-size: 13px;
+		}
+
+		.ai-status-pill {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-family: var(--font-code);
+			font-size: 12px;
+			background: rgba(0, 255, 136, 0.1);
+			padding: 4px 10px;
+			border-radius: 20px;
+			border: 1px solid rgba(0, 255, 136, 0.3);
+		}
+
+		.status-dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: #00ff88;
+			box-shadow: 0 0 8px #00ff88;
+			display: inline-block;
+		}
+
+		.ai-input-wrapper {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex: 1;
+			max-width: 580px;
+		}
+
+		.ai-input-wrapper input {
+			flex: 1;
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			border-radius: 6px;
+			padding: 5px 10px;
+			color: #00f0ff !important;
+			font-family: var(--font-code);
+			font-size: 12px;
+			outline: none;
+			transition: border-color 0.2s;
+		}
+
+		.ai-input-wrapper input:focus {
+			border-color: #00f0ff;
+			box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+		}
+
+		.btn-api-save {
+			background: linear-gradient(135deg, #00f0ff, #0088ff);
+			border: none;
+			color: #050508 !important;
+			font-weight: 700;
+			font-size: 11px;
+			padding: 6px 12px;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: opacity 0.2s;
+		}
+
+		.btn-api-save:hover {
+			opacity: 0.9;
+		}
+
+		.btn-api-clear {
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			color: #ffffff !important;
+			font-size: 11px;
+			padding: 5px 10px;
+			border-radius: 6px;
+			cursor: pointer;
+		}
+
+		.btn-api-clear:hover {
+			background: rgba(255, 255, 255, 0.15);
+		}
+
 		.window-controls {
 			display: flex;
 			gap: 6px;
@@ -491,7 +580,7 @@
 						<div class="win-btn btn-max"></div>
 					</div>
 					<span style="font-family: var(--font-code); font-size: 13px; font-weight: 700; color: #ffd60a !important;">
-						kingdoms_anno_domini_1390.exe — [Boêmia Feudal • Sincronizado em Tempo Real]
+						kingdoms_anno_domini_1390.exe — [Boêmia Feudal • Game Master IA]
 					</span>
 				</div>
 
@@ -501,6 +590,20 @@
 					<button class="theme-btn" onclick="setTerminalTheme('green')">Verde</button>
 					<button class="theme-btn" onclick="setTerminalTheme('cyan')">Ciano</button>
 					<button class="theme-btn" onclick="toggleScanlines()">CRT Scanlines</button>
+				</div>
+			</div>
+
+			<!-- AI Engine & API Key Configuration Bar -->
+			<div class="ai-config-bar">
+				<div class="ai-status-pill" id="ai-status-pill">
+					<span class="status-dot online"></span>
+					<span id="ai-status-text">IA Game Master: <strong>Gemini Ativo</strong></span>
+				</div>
+				<div class="ai-input-wrapper">
+					<span class="key-icon">🔑</span>
+					<input type="password" id="custom-api-key-input" placeholder="Cole sua Gemini API Key aqui para cota própria (opcional)..." autocomplete="off">
+					<button id="btn-save-key" class="btn-api-save" onclick="saveCustomApiKey()">Salvar Chave</button>
+					<button id="btn-clear-key" class="btn-api-clear" onclick="clearCustomApiKey()" title="Restaurar padrão do servidor">Usar Padrão</button>
 				</div>
 			</div>
 
@@ -586,150 +689,346 @@
 		const HISTORICAL_BACKGROUNDS = [
 			{
 				id: "indebted_miller_son",
-				title: "O Filho do Moleiro Endividado",
-				summary: "Seu pai morreu afogado no canal da roda d'água, deixando a moenda hipotecada ao bailio local.",
-				lead: "Procurar o moleiro da aldeia vizinha para pedir trabalho ou investigar se a dívida do seu pai era legítima.",
+				title: "1. O Filho do Moleiro Endividado",
+				summary: "Seu pai morreu no canal da roda d'água, deixando a moenda hipotecada ao bailio.",
+				lead: "Procurar o moleiro da aldeia vizinha para pedir trabalho ou averiguar a dívida.",
 				groschen: 4, heller: 18,
-				items: ["Túnica de Linho Cru", "Calças de Sarja com Remendos", "Tamancos de Madeira", "Pederneira & Isca", "Pão Duro de Centeio", "Pequena Pá de Madeira do Pai"],
+				items: ["Túnica de Linho Cru", "Calças de Sarja com Remendos", "Tamancos de Madeira", "Pederneira & Isca", "Pão Duro de Centeio", "Pá de Madeira"],
 				profession: "Moleiro"
 			},
 			{
 				id: "escaped_serf",
-				title: "O Servo Fugitivo da Corveia",
-				summary: "Fugiu à noite após um castigo desmedido; o senhor feudal colocou meirinhos no seu rastro.",
-				lead: "Permanecer sem ser capturado por um ano e um dia em uma cidade livre com carta de franquia.",
+				title: "2. O Servo Fugitivo da Corveia",
+				summary: "Fugiu à noite após castigo injusto; meirinhos do senhor feudal seguem seu rastro.",
+				lead: "Permanecer um ano e um dia em cidade livre com carta de franquia.",
 				groschen: 1, heller: 6,
-				items: ["Camisão de Lã Áspera", "Botas Gastas com Furos", "Faca Pequena de Desossar", "Tocha de Resina", "Queijo Curado de Cabra"],
+				items: ["Camisão de Lã Áspera", "Botas Furadas", "Faca de Desossar", "Tocha de Resina", "Queijo de Cabra Seco"],
 				profession: "Fugitivo"
 			},
 			{
-				id: "blacksmith_apprentice",
-				title: "O Aprendiz de Ferreiro",
-				summary: "Trabalhou na forja soprando foles e forjando pregos, ferraduras e relhas de arado.",
-				lead: "Conseguir comprar suas próprias tenazes e bigorna para abrir uma forja independente.",
-				groschen: 5, heller: 12,
-				items: ["Avental de Couro Grosso", "Martelo Pequeno de Forja", "Tenaz Pequena", "Pão de Centeio", "Cantil de Cerveja de Espelta"],
-				profession: "Ferreiro"
-			},
-			{
-				id: "herbalist_apprentice",
-				title: "O Ajudante de Herborista",
-				summary: "Aprendeu com uma curandeira idosa o segredo das raízes de bardana, camomila e emplastros.",
-				lead: "Reunir ervas raras para criar um unguento milagroso contra a febre dos pântanos.",
+				id: "herbalist_orphan",
+				title: "3. O Órfão da Curandeira / Boticária",
+				summary: "Sua mãe preparava unguentos e raízes, mas foi acusada de bruxaria após a peste no gado.",
+				lead: "Encontrar um boticário urbano ou monge herborista para aprender novas fórmulas.",
 				groschen: 3, heller: 24,
-				items: ["Bolsa de Lona com Ervas Secas", "Faquinha de Colheita", "Vidro de Tintura de Salgueiro", "Pão de Aveia"],
+				items: ["Manto com Capuz Verde", "Bolsa de Ervas Secas", "Morteiro de Calcário", "Frasco de Banha", "Maçãs Desidratadas"],
 				profession: "Herborista"
 			},
 			{
-				id: "poacher_outcast",
-				title: "O Caçador Furtivo do Bosque Real",
-				summary: "Armava laços para lebres nas florestas do barão; vive com um olho nas trilhas e outro nos guardas.",
-				lead: "Vender peles no mercado negro de Kutná Hora sem alertar o couteiro real.",
-				groschen: 2, heller: 15,
-				items: ["Arco de Freixo Rústico", "Aljava com 6 Flechas", "Faca de Caça", "Corda de Cânhamo", "Pele de Raposa"],
+				id: "dismissed_smith_apprentice",
+				title: "4. O Aprendiz de Ferreiro Sem Mestre",
+				summary: "A forja faliu com os impostos do ferro e o mestre dispensou os aprendizes.",
+				lead: "Conseguir lingotes de ferro bruto ou forja comunitária para reparar relhas.",
+				groschen: 5, heller: 12,
+				items: ["Avental de Couro Grosso", "Martelo de Forja 1.5kg", "Tenaz Pequena", "Toucinho Salgado", "Pedra de Afiar"],
+				profession: "Ferreiro"
+			},
+			{
+				id: "charcoal_burner",
+				title: "5. O Carvoeiro das Matas Ermas",
+				summary: "Vivia isolado em montículos de queima lenta de carvalho nas entranhas da floresta.",
+				lead: "Vender sacas de carvão limpo na forja do castelo ou guiar caravanas na serra.",
+				groschen: 3, heller: 8,
+				items: ["Capote de Lã Manchada de Cinza", "Machado Pequeno de Lenhador", "Saco de Carvão Vegetal", "Cantil de Água"],
+				profession: "Carvoeiro"
+			},
+			{
+				id: "discharged_camp_follower",
+				title: "6. O Criado de Acampamento de Guerra",
+				summary: "Acompanhou companhias de lanceiros mercenários cozinhando e tratando feridos.",
+				lead: "Procurar estalagens ou guarnições de castelo que precisem de cozinheiro.",
+				groschen: 6, heller: 15,
+				items: ["Giba de Couro Desgastada", "Panela de Ferro Fundido", "Agulha de Osso & Linha", "Bandagens de Linho (3x)", "Carne Seca"],
+				profession: "Cozinheiro"
+			},
+			{
+				id: "friars_nephew",
+				title: "7. O Menino de Recados do Frade Mendicante",
+				summary: "Aprendeu latim arcaico e versículos enquanto acompanhava um tio franciscano.",
+				lead: "Entregar o saltério e cartas de recomendação ao abade de Sázava.",
+				groschen: 2, heller: 30,
+				items: ["Hábito Marrom com Cordão", "Rosário de Madeira de Oliveira", "Pergaminho em Latim", "Cabaça para Água"],
+				profession: "Copista"
+			},
+			{
+				id: "tavern_potboy_witness",
+				title: "8. O Moço de Estalagem que Ouviu Demais",
+				summary: "Escutou fidalgos encapuzados tramando o assassinato do meirinho do conde.",
+				lead: "Decidir se vende a informação ao bailio ou foge para salvar a pele.",
+				groschen: 5, heller: 14,
+				items: ["Camisa e Colete de Linho", "Copo de Estanho", "Linguiça Defumada", "Moeda de Chumbo com Sinete Oculto"],
+				profession: "Estalajadeiro"
+			},
+			{
+				id: "burned_village_swineherd",
+				title: "9. O Porqueiro da Aldeia Devastada",
+				summary: "Cavaleiros ladrões queimaram sua vila natal; você escapou com um cajado para as matas.",
+				lead: "Achar refúgio em senhorios que precisem de pastoreio de gado e porcos.",
+				groschen: 3, heller: 10,
+				items: ["Capa de Pele de Cabra", "Cajado de Freixo Endurecido ao Fogo", "Bolsa de Bolotas e Frutas"],
+				profession: "Pastor"
+			},
+			{
+				id: "poacher_marked",
+				title: "10. O Caçador Furtivo das Florestas Reais",
+				summary: "Abateu um corço real para alimentar a família e os guardas do barão acharam os laços.",
+				lead: "Vender peles no mercado clandestino sem alertar os couteiros florestais.",
+				groschen: 4, heller: 5,
+				items: ["Arco Curto de Freixo", "Aljava com 8 Flechas", "Armadilhas de Laço (2x)", "Faca Curva de Coureiro"],
 				profession: "Caçador"
 			},
 			{
-				id: "novice_defrocked",
-				title: "O Noviço Fugitivo da Abadia",
-				summary: "Fugiu do claustro por não suportar os jejuns e o voto de silêncio perpétuo.",
-				lead: "Viajar para Praga e encontrar um escrivão que o contrate como copista secular.",
-				groschen: 6, heller: 4,
-				items: ["Hábito Franciscano Surrado", "Pequeno Evangelho em Latim", "Pena de Ganso & Tinta", "Pão Branco Banhado em Mel"],
-				profession: "Erudito"
+				id: "ruined_river_fisherman",
+				title: "11. O Pescador do Grande Rio Feudal",
+				summary: "Pedágios fluviais e correntes no rio arruinaram seu barco e sustento.",
+				lead: "Trabalhar como balseiro nos vaus fluviais de Ledetchko e Sasau.",
+				groschen: 4, heller: 20,
+				items: ["Rede de Pesca de Cânhamo", "Tridente de 3 Pontas", "Peixe Salgado Defumado", "Botas Engraxadas com Sebo"],
+				profession: "Pescador"
 			},
 			{
-				id: "itinerant_tinker",
-				title: "O Caldeireiro & Mercador Ambulante",
-				summary: "Viaja com sua carroça consertando tachos de bronze e panelas de ferro pelas aldeias.",
-				lead: "Lucrar cem groschens comerciando sal e ferro entre vilarejos.",
-				groschen: 8, heller: 30,
-				items: ["Mochila com Rebites & Chapas", "Martelo de Calafate", "Capa com Capuz de Chuva", "Secos & Molhados"],
-				profession: "Mercador"
+				id: "disinherited_weaver",
+				title: "12. O Tecelão Banido da Guilda",
+				summary: "Acusado injustamente por mestres invejosos de adulterar panos de linho.",
+				lead: "Encontrar artesãos rurais para montar um tear independente.",
+				groschen: 7, heller: 10,
+				items: ["Túnica de Lã Azul", "Tesoura de Alfaiate de Ferro", "Novelo de Fio Forte", "Giz de Alfaiate"],
+				profession: "Tecelão"
 			},
 			{
-				id: "woodcutter_strong",
-				title: "O Lenhador do Bosque de Carvalho",
-				summary: "Braços talhados pelo machado derrubando toras para os fornos de carvão da província.",
-				lead: "Entregar um carregamento de vigas de carvalho para a ponte do castelo.",
-				groschen: 3, heller: 10,
-				items: ["Machado de Lenhador de Aço", "Luvas de Couro de Cervo", "Pedaço de Toucinho Salgado", "Cantil de Água da Fonte"],
-				profession: "Lenhador"
+				id: "lone_shepherd",
+				title: "13. O Pastor dos Montes Altos",
+				summary: "Sobreviveu a invernos rigorosos e ataques de lobos nas colinas descampadas.",
+				lead: "Encontrar rebanhos de mosteiros que precisem de guarda experiente.",
+				groschen: 3, heller: 15,
+				items: ["Manto Grosso de Pelo de Ovelha", "Funda de Couro com 10 Seixos", "Flauta de Cana", "Queijo Salgado"],
+				profession: "Pastor"
+			},
+			{
+				id: "parish_gravedigger",
+				title: "14. O Coveiro da Paróquia de Santo Ivo",
+				summary: "Cavou sepulturas durante surtos de peste e conhece segredos dos túmulos.",
+				lead: "Descobrir as origens de um medalhão fúnebre desenterrado no cemitério velho.",
+				groschen: 4, heller: 22,
+				items: ["Pá de Ferro Forjado", "Lanterna de Chifre", "Luvas de Couro de Porco", "Frasco de Vinagre Forte"],
+				profession: "Coveiro"
+			},
+			{
+				id: "foot_messenger",
+				title: "15. O Mensageiro Feudal a Pé",
+				summary: "Corria léguas pelas estradas enlameadas entregando editais e cartas senhoriais.",
+				lead: "Levar uma missiva secreta selada até os guardas do Castelo de Pirkstein.",
+				groschen: 5, heller: 18,
+				items: ["Sapatos de Couro Rápido", "Tubo de Lata Selado com Cera", "Bastão de Caminhada", "Pão Seco"],
+				profession: "Mensageiro"
+			},
+			{
+				id: "pilgrim_beggar",
+				title: "16. O Peregrino Penitente das Estradas",
+				summary: "Caminha em direção aos santuários da Boêmia cumprindo voto solene.",
+				lead: "Alcançar a Abadia de São Procópio em Sasau para receber a bênção do bispo.",
+				groschen: 1, heller: 28,
+				items: ["Bordão de Peregrino com Cabaça", "Concha de Santiago no Chapéu", "Manto Esfarrapado", "Pedaço de Pão Banhado"],
+				profession: "Peregrino"
+			},
+			{
+				id: "stonemason_quarry",
+				title: "17. O Canteiro da Pedreira de Talmberg",
+				summary: "Talhava blocos de calcário para erguer as muralhas de fortalezas e igrejas.",
+				lead: "Vender seu serviço de talhe de pedras no canteiro de obras da Sé de Kuttenberg.",
+				groschen: 6, heller: 8,
+				items: ["Cinzel de Aço Temperado", "Macete Pesado de Madeira", "Óculos Rústicos de Couro", "Pão com Manteiga"],
+				profession: "Pedreiro"
+			},
+			{
+				id: "wild_hop_brewer",
+				title: "18. O Fabricante de Cerveja de Lúpulo Selvagem",
+				summary: "Conhece a fermentação de cevada, trigo e lúpulos aromáticos das encostas.",
+				lead: "Vender barris de cerveja especial para o estalajadeiro do Cervo Dourado.",
+				groschen: 5, heller: 25,
+				items: ["Caneca de Madeira Envernizada", "Saco de Lúpulo Seco", "Termômetro Rústico de Cera", "Queijo com Ervas"],
+				profession: "Cervejeiro"
+			},
+			{
+				id: "tanner_foul_smell",
+				title: "19. O Curtidor de Peles dos Arrabaldes",
+				summary: "Acostumado ao cheiro acre do cal e urina usados no curtume de couros resistentes.",
+				lead: "Fornecer tiras de couro de alta densidade para selarias e bainhas de espadas.",
+				groschen: 4, heller: 16,
+				items: ["Avental de Couro Impermeável", "Faca de Raspar Pele", "Pedaço de Couro Bovino Curtido", "Sabão de Sebo"],
+				profession: "Curtidor"
+			},
+			{
+				id: "discharged_militia_guard",
+				title: "20. O Guarda Miliciano Dispensado",
+				summary: "Serviu na vigília dos portões de Rattay e foi dispensado após ferimento no braço.",
+				lead: "Recuperar sua reputação e alistar-se na guarda pessoal do Barão de Valois.",
+				groschen: 8, heller: 12,
+				items: ["Camisa de Linho Reforçada", "Adaga de Aço Feudal", "Fivela de Bronze com Brasão", "Cinto de Couro Militar"],
+				profession: "Guarda"
 			}
 		];
 
 		const FEUDAL_LOCATIONS = {
+			"rattay": {
+				name: "Rattay Feudal (Rataje nad Sázavou)",
+				desc: "Cidade fortificada com muralhas de pedra, dois castelos (Pirkstein e Castelo Superior), feira livre e tavernas animadas.",
+				npcs: ["Burgrave Hanush", "Capitão Bernard", "Jan (Ferreiro)", "Martin (Taverneiro)", "Bailio Cobrador"],
+				actions: [
+					{ label: "1. Visitar a Taverna do Cervo Dourado", cmd: "ir taverna" },
+					{ label: "2. Ir à Forja de Mestre Jan", cmd: "ir forja" },
+					{ label: "3. Subir ao Castelo de Pirkstein", cmd: "ir castelo" },
+					{ label: "4. Viajar pela Estrada para Sasau", cmd: "ir sasau" },
+					{ label: "5. Viajar para Skalitz", cmd: "ir skalitz" },
+					{ label: "6. Explorar o Bosque de Rataje", cmd: "ir bosque" }
+				]
+			},
 			"praca": {
-				name: "Praça Central da Aldeia de Ratboř",
-				desc: "Camponeses caminham com sacas de aveia, galinhas ciscam no chão de terra e um pelourinho ergue-se ao lado da igreja.",
-				npcs: ["Martin (Estalajadeiro)", "Frei Bernardo", "Jan (Ferreiro)"],
+				name: "Praça Central de Ratboř",
+				desc: "Aldeia produtora de cevada e centeio. Camponeses empurram carroças sobre a lama e o pelourinho domina o largo.",
+				npcs: ["Feitor da Aldeia", "Moleiro Antigo", "Frei Bernardo"],
 				actions: [
 					{ label: "1. Ir à Taverna do Cervo Dourado", cmd: "ir taverna" },
 					{ label: "2. Ir à Forja de Jan", cmd: "ir forja" },
-					{ label: "3. Ir à Igreja & Mosteiro", cmd: "ir mosteiro" },
-					{ label: "4. Sair para o Bosque", cmd: "ir bosque" },
-					{ label: "5. Estrada para o Castelo de Pirkstein", cmd: "ir castelo" },
-					{ label: "6. Trabalhar na Colheita Comunitária", cmd: "trabalhar" }
+					{ label: "3. Ir ao Mosteiro de Santo Estêvão", cmd: "ir mosteiro" },
+					{ label: "4. Ir ao Bosque de Rataje", cmd: "ir bosque" },
+					{ label: "5. Viajar para Rattay", cmd: "ir rattay" },
+					{ label: "6. Trabalhar nos Campos (+Hellers)", cmd: "trabalhar" }
 				]
 			},
 			"taverna": {
-				name: "Taverna do Cervo Dourado",
-				desc: "O calor da lareira crepita. O aroma de cerveja preta fermentada e guisado de carneiro preenche o ambiente rústico.",
-				npcs: ["Martin (Estalajadeiro)", "Mercador Andarilho", "Bardo Janek"],
+				name: "Taverna do Cervo Dourado (Rataje / Ratboř)",
+				desc: "Ambiente aquecido pela lareira crepitante de carvalho. Odor de cerveja preta, linguiça assada e fumaça de cachimbo de palha.",
+				npcs: ["Martin (Estalajadeiro)", "Bardo Janek", "Mercador de Sal de Praga"],
 				actions: [
-					{ label: "1. Comprar Caneca de Cerveja (6 Heller)", cmd: "comprar cerveja" },
-					{ label: "2. Comer Prato de Guisado Quente (12 Heller)", cmd: "comprar guisado" },
-					{ label: "3. Apostar nos Dados de Osso", cmd: "jogar dados" },
-					{ label: "4. Ouvir Rumores da Província", cmd: "ouvir rumores" },
-					{ label: "5. Alugar Cama de Palha para a Noite (8 Heller)", cmd: "dormir" },
-					{ label: "6. Voltar à Praça", cmd: "ir praca" }
+					{ label: "1. Beber Caneca de Cerveja Preta (6 Hel.)", cmd: "comprar cerveja" },
+					{ label: "2. Comer Guisado de Nabo e Porco (12 Hel.)", cmd: "comprar guisado" },
+					{ label: "3. Jogar Dados de Osso com Mercadores", cmd: "jogar dados" },
+					{ label: "4. Ouvir Rumores & Fofocas do Reino", cmd: "ouvir rumores" },
+					{ label: "5. Dormir na Cama de Palha (8 Hel.)", cmd: "dormir" },
+					{ label: "6. Sair para o Largo", cmd: "ir praca" }
 				]
 			},
 			"forja": {
-				name: "Forja de Jan, o Mestre Ferreiro",
-				desc: "O martelar rítmico sobre a bigorna ecoa pelas paredes de pedra. Faíscas voam enquanto o fole sopra as brasas incandescentes.",
-				npcs: ["Mestre Jan (Ferreiro)"],
+				name: "Forja de Mestre Jan",
+				desc: "O fole estufa e solta labaredas alaranjadas. O bater do martelo na bigorna ecoa pelas ruelas com cheiro de ferro em brasa.",
+				npcs: ["Mestre Jan (Ferreiro)", "Aprendiz Jakub"],
 				actions: [
-					{ label: "1. Trabalhar no Fole & Forjaria (+Groschen)", cmd: "trabalhar forja" },
-					{ label: "2. Comprar Faca de Ferro (18 Heller)", cmd: "comprar faca" },
-					{ label: "3. Reparar Ferramentas", cmd: "reparar" },
-					{ label: "4. Voltar à Praça", cmd: "ir praca" }
+					{ label: "1. Ajudar nos Foles & Bigorna (+Hellers)", cmd: "trabalhar forja" },
+					{ label: "2. Comprar Faca Curta de Ferro (18 Hel.)", cmd: "comprar faca" },
+					{ label: "3. Consertar Ferramentas Quebradas", cmd: "consertar ferramentas" },
+					{ label: "4. Voltar ao Centro", cmd: "ir praca" }
 				]
 			},
 			"mosteiro": {
-				name: "Mosteiro de Santo Estêvão",
-				desc: "Velas de cera iluminam o altar de carvalho talhado. O silêncio solene é quebrado apenas pelos sussurros de preces em latim.",
-				npcs: ["Frei Bernardo", "Monge Herborista"],
+				name: "Mosteiro de Santo Estêvão / Abadia de Sasau",
+				desc: "Claustro gótico silencioso. O aroma de incenso e o cântico suave dos monges beneditinos preenchem a capela.",
+				npcs: ["Frei Bernardo", "Irmão Herborista", "Padre Godwin"],
 				actions: [
 					{ label: "1. Ajoelhar e Rezar (+Bênção & Honra)", cmd: "rezar" },
-					{ label: "2. Pedir Água Benta & Curativo (+Saúde)", cmd: "pedir cura" },
-					{ label: "3. Fazer Doação de Esmola (4 Heller)", cmd: "doar esmola" },
-					{ label: "4. Voltar à Praça", cmd: "ir praca" }
+					{ label: "2. Pedir Curativo de Ervas aos Monges (+Vida)", cmd: "pedir cura" },
+					{ label: "3. Doar Esmola aos Pobres (4 Hel.)", cmd: "doar esmola" },
+					{ label: "4. Voltar ao Povoado", cmd: "ir praca" }
 				]
 			},
 			"bosque": {
-				name: "Bosque de Rataje & Trilhas Sombrias",
-				desc: "Grandes faias e carvalhos centenários cobrem o céu. O vento uiva entre a copa das árvores. Trilhas levam a clareiras de caça.",
-				npcs: ["Couteiro Florestal"],
+				name: "Bosque de Rataje & Matas Reais",
+				desc: "Grandes faias e carvalhos seculares bloqueiam a luz solar. Trilhas sinuosas levam a clareiras ermas onde vivem lebres e lobos.",
+				npcs: ["Couteiro Florestal", "Carvoeiro Solitário"],
 				actions: [
-					{ label: "1. Coletar Lenha e Gravetos Secos", cmd: "coletar lenha" },
-					{ label: "2. Caçar Lebres & Aves com Armadilhas", cmd: "cacar" },
-					{ label: "3. Colher Cogumelos & Raízes Silvestres", cmd: "colher cogumelos" },
-					{ label: "4. Voltar à Aldeia", cmd: "ir praca" }
+					{ label: "1. Cortar Feixe de Lenha (+Hellers)", cmd: "coletar lenha" },
+					{ label: "2. Caçar Lebres & Cervos com Laços", cmd: "cacar" },
+					{ label: "3. Colher Raízes e Cogumelos Silvestres", cmd: "colher cogumelos" },
+					{ label: "4. Voltar pela Trilha", cmd: "ir praca" }
 				]
 			},
 			"castelo": {
 				name: "Castelo de Pirkstein (Fortaleza Feudal)",
-				desc: "As imponentes torres de granito e a ponte levadiça vigiada por guardas de cota de malha guardam a corte do Barão de Valois.",
+				desc: "Muralhas maciças de cantaria, ponte levadiça e guardas armados de bestas e lanças vigiando as ameias.",
 				npcs: ["Capitão da Guarda", "Bailio Cobrador de Impostos"],
 				actions: [
-					{ label: "1. Pagar Tributo de Proteção Feudal (1 Groschen)", cmd: "pagar tributo" },
-					{ label: "2. Pedir Audiência com o Senhor Feudal", cmd: "audiencia" },
-					{ label: "3. Alistar-se na Vigília da Milícia", cmd: "alistar guarda" },
-					{ label: "4. Voltar à Aldeia", cmd: "ir praca" }
+					{ label: "1. Pagar Tributo Feudal (1 Groschen)", cmd: "pagar tributo" },
+					{ label: "2. Pedir Audiência com o Senhor Nobre", cmd: "audiencia" },
+					{ label: "3. Alistar-se na Milícia da Muralha (+Soldo)", cmd: "alistar guarda" },
+					{ label: "4. Descer para a Cidade", cmd: "ir praca" }
+				]
+			},
+			"skalitz": {
+				name: "Skalitz Prateada (Stříbrná Skalice)",
+				desc: "Vila mineradora aos pés das montanhas, famosa pelas galerias de prata e forjas de espadas reais.",
+				npcs: ["Mestre Martin (Ferreiro)", "Capataz das Minas de Prata"],
+				actions: [
+					{ label: "1. Trabalhar nas Minas de Prata (+Groschen)", cmd: "trabalhar minas" },
+					{ label: "2. Visitar a Forja de Martin", cmd: "falar martin" },
+					{ label: "3. Viajar para Talmberg", cmd: "ir talmberg" },
+					{ label: "4. Viajar para Rattay", cmd: "ir rattay" }
+				]
+			},
+			"sasau": {
+				name: "Sasau Monástica (Sázava)",
+				desc: "Grande centro religioso com o imponente mosteiro beneditino de São Procópio e pátio de mestres pedreiros.",
+				npcs: ["Abade de Sázava", "Mestre Construtor", "Curandeira da Margem"],
+				actions: [
+					{ label: "1. Visitar a Grande Basílica", cmd: "ir mosteiro" },
+					{ label: "2. Atravessar o Rio na Balsa de Madeira", cmd: "cruzar rio" },
+					{ label: "3. Viajar para Ledetchko", cmd: "ir ledetchko" },
+					{ label: "4. Viajar para Rattay", cmd: "ir rattay" }
+				]
+			},
+			"talmberg": {
+				name: "Talmberg Feudal (Talmberk)",
+				desc: "Fortaleza erguida no cume de um penhasco rochoso sobre uma pedreira de calcário e lago.",
+				npcs: ["Lorde Divish", "Dama Stephanie", "Mestre da Pedreira"],
+				actions: [
+					{ label: "1. Trabalhar na Pedreira de Calcário", cmd: "trabalhar pedreira" },
+					{ label: "2. Descansar na Estalagem da Borda", cmd: "ir taverna" },
+					{ label: "3. Viajar para Uzhitz", cmd: "ir uzhitz" },
+					{ label: "4. Viajar para Skalitz", cmd: "ir skalitz" }
+				]
+			},
+			"kuttenberg": {
+				name: "Kutná Hora (Cidade Real da Prata)",
+				desc: "A capital mineradora do Reino da Boêmia. A Casa da Moeda Real cunha os célebres Groschens de Prata.",
+				npcs: ["Mestre da Moeda Real", "Mercadores Italianos", "Guarda Real"],
+				actions: [
+					{ label: "1. Visitar a Casa da Moeda Real de Prata", cmd: "ir casa da moeda" },
+					{ label: "2. Comprar Ferramentas & Armas Nobres", cmd: "comprar armas" },
+					{ label: "3. Viajar de volta para Rattay", cmd: "ir rattay" }
 				]
 			}
 		};
+
+		// API Key management
+		function saveCustomApiKey() {
+			const input = document.getElementById('custom-api-key-input');
+			const val = input.value.trim();
+			if (val) {
+				localStorage.setItem('kingdoms_custom_api_key', val);
+				updateAiStatusIndicator(true, 'Chave Própria Ativa');
+				printLine('🔑 <strong>Chave API Gemini personalizada salva com sucesso!</strong>', 'green');
+				printLine('O Game Master utilizará sua cota própria para narrar todas as ações com liberdade total.', 'cyan');
+			} else {
+				clearCustomApiKey();
+			}
+		}
+
+		function clearCustomApiKey() {
+			localStorage.removeItem('kingdoms_custom_api_key');
+			const input = document.getElementById('custom-api-key-input');
+			if (input) input.value = '';
+			updateAiStatusIndicator(true, 'Gemini Padrão');
+			printLine('🔑 Usando servidor de IA padrão da OmniVoid Studios.', 'story');
+		}
+
+		function updateAiStatusIndicator(online, label) {
+			const dot = document.querySelector('.status-dot');
+			const text = document.getElementById('ai-status-text');
+			if (text) text.innerHTML = `IA Game Master: <strong>${label || 'Gemini Ativo'}</strong>`;
+			if (dot) {
+				dot.style.background = online ? '#00ff88' : '#ff0055';
+				dot.style.boxShadow = online ? '0 0 8px #00ff88' : '0 0 8px #ff0055';
+			}
+		}
 
 		// Kingdom Game State
 		let kState = loadKingdomState();
@@ -791,6 +1090,16 @@
 
 		function initKingdomGame() {
 			screen.innerHTML = '';
+
+			const savedKey = localStorage.getItem('kingdoms_custom_api_key');
+			if (savedKey) {
+				const keyInput = document.getElementById('custom-api-key-input');
+				if (keyInput) keyInput.value = savedKey;
+				updateAiStatusIndicator(true, 'Chave Própria Ativa');
+			} else {
+				updateAiStatusIndicator(true, 'Gemini Padrão');
+			}
+
 			printLine('╔══════════════════════════════════════════════════════════════════════════════╗', 'gold');
 			printLine('║                  ⚔️   K I N G D O M S   ( 1 3 9 0 )   ⚔️                     ║', 'gold');
 			printLine('║           Simulador de Vida Camponesa & Mundo Feudal Autônomo                ║', 'gold');
