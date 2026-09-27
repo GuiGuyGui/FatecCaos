@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>Simulação Medieval | OmniVoid Studios</title>
+	<title>Kingdoms (1390) | Simulação Medieval por Texto — OmniVoid Studios</title>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,11 +31,11 @@
 			--font-retro: 'VT323', monospace;
 
 			/* Terminal Colors */
-			--cmd-bg: #090a0f;
+			--cmd-bg: #090a10;
 			--cmd-amber: #ffb000;
 			--cmd-green: #33ff33;
 			--cmd-cyan: #00f0ff;
-			--cmd-text: #33ff33;
+			--cmd-text: #ffd60a;
 		}
 
 		* {
@@ -49,8 +49,8 @@
 		body {
 			background-color: var(--bg-base);
 			background-image: 
-				radial-gradient(circle at 15% 15%, rgba(255, 176, 0, 0.08) 0%, transparent 40%),
-				radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+				radial-gradient(circle at 15% 15%, rgba(255, 176, 0, 0.09) 0%, transparent 45%),
+				radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.09) 0%, transparent 45%),
 				linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
 				linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
 			background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
@@ -138,13 +138,13 @@
 		}
 
 		.nav-link.active {
-			background: linear-gradient(135deg, rgba(255, 176, 0, 0.25) 0%, rgba(0, 240, 255, 0.2) 100%);
-			border-color: var(--cmd-amber);
-			box-shadow: 0 0 14px rgba(255, 176, 0, 0.35);
+			background: linear-gradient(135deg, rgba(255, 176, 0, 0.25) 0%, rgba(157, 78, 221, 0.25) 100%);
+			border-color: var(--accent-gold);
+			box-shadow: 0 0 14px rgba(255, 214, 10, 0.35);
 		}
 
 		.container {
-			max-width: 1280px;
+			max-width: 1320px;
 			margin: 0 auto;
 			padding: 24px 20px 60px;
 			width: 100%;
@@ -152,23 +152,79 @@
 		}
 
 		/* ====================================================================
-		   MEDIEVAL CMD CONSOLE STYLING
+		   ENGINE ARCHITECTURE BANNER (TOPO)
+		   ==================================================================== */
+		.engine-architecture-banner {
+			background: radial-gradient(circle at 10% 20%, rgba(255, 214, 10, 0.12) 0%, rgba(21, 21, 34, 0.95) 75%);
+			border: 1.5px solid rgba(255, 214, 10, 0.35);
+			border-radius: 16px;
+			padding: 28px 32px;
+			margin-bottom: 28px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 214, 10, 0.15);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.engine-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(255, 214, 10, 0.15);
+			border: 1px solid var(--accent-gold);
+			padding: 4px 14px;
+			border-radius: 20px;
+			font-size: 11px;
+			font-weight: 800;
+			color: var(--accent-gold) !important;
+			text-transform: uppercase;
+			margin-bottom: 12px;
+		}
+
+		.engine-cards-mini {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 12px;
+			margin-top: 20px;
+		}
+
+		.engine-pill-box {
+			background: rgba(0, 0, 0, 0.4);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 10px;
+			padding: 12px 14px;
+		}
+
+		.engine-pill-box h4 {
+			font-size: 13px;
+			color: var(--accent-primary) !important;
+			margin-bottom: 4px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.engine-pill-box p {
+			font-size: 11px;
+			opacity: 0.8;
+			line-height: 1.4;
+		}
+
+		/* ====================================================================
+		   KINGDOMS CMD TERMINAL
 		   ==================================================================== */
 		.terminal-outer-frame {
 			background: #0d0e15;
-			border: 2px solid rgba(255, 176, 0, 0.4);
+			border: 2px solid rgba(255, 214, 10, 0.4);
 			border-radius: 16px;
-			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 176, 0, 0.2);
+			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 214, 10, 0.2);
 			overflow: hidden;
 			display: flex;
 			flex-direction: column;
 			margin-bottom: 24px;
-			position: relative;
 		}
 
-		/* Retro Titlebar */
 		.terminal-titlebar {
-			background: linear-gradient(90deg, #151722 0%, #1a1c2b 100%);
+			background: linear-gradient(90deg, #161824 0%, #1e2033 100%);
 			border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 			padding: 12px 18px;
 			display: flex;
@@ -176,12 +232,6 @@
 			justify-content: space-between;
 			flex-wrap: wrap;
 			gap: 10px;
-		}
-
-		.titlebar-left {
-			display: flex;
-			align-items: center;
-			gap: 12px;
 		}
 
 		.window-controls {
@@ -199,8 +249,8 @@
 		.btn-max { background: #27c93f; }
 
 		.terminal-status-hud {
-			background: rgba(0, 0, 0, 0.6);
-			border-bottom: 1px solid rgba(255, 176, 0, 0.25);
+			background: rgba(5, 5, 10, 0.8);
+			border-bottom: 1px solid rgba(255, 214, 10, 0.25);
 			padding: 10px 18px;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -215,13 +265,12 @@
 			gap: 6px;
 		}
 
-		/* Terminal Screen */
 		.terminal-screen {
 			background: var(--cmd-bg);
 			min-height: 480px;
-			max-height: 580px;
+			max-height: 560px;
 			overflow-y: auto;
-			padding: 20px;
+			padding: 22px;
 			font-family: var(--font-code);
 			font-size: 14px;
 			line-height: 1.7;
@@ -242,7 +291,7 @@
 			background-size: 100% 4px;
 			z-index: 2;
 			pointer-events: none;
-			opacity: 0.6;
+			opacity: 0.55;
 		}
 
 		.cmd-line-text {
@@ -250,14 +299,14 @@
 			word-break: break-word;
 		}
 
-		.cmd-highlight { color: #ffd60a !important; font-weight: 700; }
-		.cmd-success { color: #00ff88 !important; font-weight: 700; }
-		.cmd-danger { color: #ff0055 !important; font-weight: 700; }
-		.cmd-info { color: #00f0ff !important; }
+		.cmd-gold { color: #ffd60a !important; font-weight: 700; }
+		.cmd-green { color: #00ff88 !important; font-weight: 700; }
+		.cmd-red { color: #ff0055 !important; font-weight: 700; }
+		.cmd-cyan { color: #00f0ff !important; }
+		.cmd-purple { color: #c4b5fd !important; }
 		.cmd-story { color: #e2e8f0 !important; }
-		.cmd-prompt-prefix { color: #ffb000 !important; font-weight: 800; }
+		.cmd-prefix { color: #ffb000 !important; font-weight: 800; }
 
-		/* Input Prompt Line */
 		.cmd-input-row {
 			display: flex;
 			align-items: center;
@@ -278,7 +327,6 @@
 			color: var(--cmd-text) !important;
 		}
 
-		/* Quick Action Toolbar (Mobile & Desktop) */
 		.quick-action-bar {
 			background: #11111d;
 			border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -302,12 +350,11 @@
 		}
 
 		.action-chip:hover {
-			background: rgba(255, 176, 0, 0.2);
-			border-color: var(--cmd-amber);
+			background: rgba(255, 214, 10, 0.2);
+			border-color: var(--accent-gold);
 			transform: translateY(-1px);
 		}
 
-		/* Theme Selector Buttons */
 		.theme-btn {
 			background: rgba(255, 255, 255, 0.05);
 			border: 1px solid var(--border-color);
@@ -317,8 +364,8 @@
 			cursor: pointer;
 		}
 		.theme-btn.active {
-			border-color: var(--cmd-amber);
-			background: rgba(255, 176, 0, 0.15);
+			border-color: var(--accent-gold);
+			background: rgba(255, 214, 10, 0.15);
 		}
 
 		footer {
@@ -394,55 +441,82 @@
 
 	<main class="container">
 		
-		<!-- Introduction Header -->
-		<div style="text-align: center; margin-bottom: 24px;">
-			<div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,176,0,0.15); border: 1px solid var(--cmd-amber); padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; color: var(--cmd-amber) !important; margin-bottom: 12px; text-transform: uppercase;">
-				⚔️ TEXT-BASED MEDIEVAL RPG SIMULATION
+		<!-- ====================================================================
+		     TOP ENGINE ARCHITECTURE BANNER (SOLICITADO)
+		     ==================================================================== -->
+		<section class="engine-architecture-banner">
+			<div class="engine-badge">
+				⚙️ ARQUITETURA MODULAR • OMNIVOID ENGINE LAB
 			</div>
-			<h1 style="font-size: clamp(24px, 4vw, 38px); text-transform: uppercase; margin-bottom: 8px;">
-				Crônicas do Feudo: <span style="background: linear-gradient(135deg, #ffd60a 0%, #ff5f56 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Simulação Medieval</span>
-			</h1>
-			<p style="font-size: 14px; opacity: 0.85; max-width: 780px; margin: 0 auto;">
-				Experimente a vida, os dilemas, o trabalho e as intrigas do Século XIII através de um terminal interativo. Digite comandos ou selecione as opções numéricas para sobreviver e construir seu legado.
+
+			<h2 style="font-size: clamp(22px, 3.5vw, 32px); text-transform: uppercase; margin-bottom: 10px;">
+				Engines Especializadas: <span style="background: linear-gradient(135deg, #ffd60a 0%, #00f0ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Construindo Universos Maiores &amp; Melhores</span>
+			</h2>
+
+			<p style="font-size: 15px; line-height: 1.6; opacity: 0.95; max-width: 980px;">
+				O desenvolvimento desacoplado de <strong>engines independentes e especializadas</strong> é o pilar da engenharia da OmniVoid Studios. Ao isolar a geração de relevo, a demografia de populações, os diálogos e o motor de regras, podemos criar simulações e mundos virtuais cada vez <strong>maiores, mais profundos, vivos e tecnologicamente escaláveis</strong>.
 			</p>
-		</div>
+
+			<div class="engine-cards-mini">
+				<div class="engine-pill-box">
+					<h4>🗺️ World Engine</h4>
+					<p>Geração procedural 4096x4096, relevo, estradas, biomas e povoamento feudal.</p>
+				</div>
+				<div class="engine-pill-box">
+					<h4>👥 People Engine</h4>
+					<p>Demografia autônoma, 20 origens históricas, linhagens e teia de suserania.</p>
+				</div>
+				<div class="engine-pill-box">
+					<h4>💬 Conversation Engine</h4>
+					<p>Diálogos contextuais, rumores, personalidades e IA de NPCs.</p>
+				</div>
+				<div class="engine-pill-box">
+					<h4>⚔️ Game Master (Kingdoms)</h4>
+					<p>Simulação viva em tempo real, economia feudal, saúde, doenças e sobrevivência.</p>
+				</div>
+			</div>
+		</section>
 
 		<!-- ====================================================================
-		     CMD TERMINAL BOX
+		     KINGDOMS PLAYABLE CMD TERMINAL
 		     ==================================================================== -->
 		<div class="terminal-outer-frame">
 			
 			<!-- Titlebar -->
 			<div class="terminal-titlebar">
-				<div class="titlebar-left">
+				<div style="display: flex; align-items: center; gap: 12px;">
 					<div class="window-controls">
 						<div class="win-btn btn-close"></div>
 						<div class="win-btn btn-min"></div>
 						<div class="win-btn btn-max"></div>
 					</div>
 					<span style="font-family: var(--font-code); font-size: 13px; font-weight: 700; color: #ffd60a !important;">
-						medieval_cmd.exe — [Reino de Valória v1.0.4]
+						kingdoms_anno_domini_1390.exe — [Boêmia Feudal • Sincronizado em Tempo Real]
 					</span>
 				</div>
 
 				<div style="display: flex; gap: 6px; align-items: center;">
 					<span style="font-size: 11px; opacity: 0.7;">Fósforo:</span>
-					<button class="theme-btn active" onclick="setTerminalTheme('green')">Verde</button>
-					<button class="theme-btn" onclick="setTerminalTheme('amber')">Âmbar</button>
+					<button class="theme-btn active" onclick="setTerminalTheme('amber')">Âmbar</button>
+					<button class="theme-btn" onclick="setTerminalTheme('green')">Verde</button>
 					<button class="theme-btn" onclick="setTerminalTheme('cyan')">Ciano</button>
 					<button class="theme-btn" onclick="toggleScanlines()">CRT Scanlines</button>
 				</div>
 			</div>
 
-			<!-- Live Status HUD -->
+			<!-- Status HUD -->
 			<div class="terminal-status-hud">
 				<div class="hud-stat">
 					<span>👑</span>
-					<strong id="hud-name">Guilherme, o Camponês</strong>
+					<strong id="hud-name">Jindřich</strong>
+				</div>
+				<div class="hud-stat">
+					<span>📍</span>
+					<span id="hud-location">Aldeia de Ratboř</span>
 				</div>
 				<div class="hud-stat">
 					<span>📅</span>
-					<span id="hud-date">Ano 1242 • Primavera (Dia 1)</span>
+					<span id="hud-date">Ano 1390 • Primavera</span>
 				</div>
 				<div class="hud-stat">
 					<span>❤️</span>
@@ -450,7 +524,7 @@
 				</div>
 				<div class="hud-stat">
 					<span>🍞</span>
-					<span>Fome: <strong id="hud-hunger" style="color:#ffd60a !important;">20%</strong></span>
+					<span>Fome: <strong id="hud-hunger" style="color:#ffd60a !important;">15%</strong></span>
 				</div>
 				<div class="hud-stat">
 					<span>⚡</span>
@@ -458,33 +532,24 @@
 				</div>
 				<div class="hud-stat">
 					<span>💰</span>
-					<span>Moedas: <strong id="hud-coins" style="color:#ffd60a !important;">15 Denários</strong></span>
+					<span>Riqueza: <strong id="hud-coins" style="color:#ffd60a !important;">4 Gr. 18 Hel.</strong></span>
 				</div>
 			</div>
 
 			<!-- Terminal Screen Output -->
 			<div class="terminal-screen scanlines" id="cmd-screen">
-				<!-- Output streamed by script -->
+				<!-- Output streamed by Kingdoms Engine -->
 			</div>
 
-			<!-- Quick Actions Toolbar -->
+			<!-- Contextual Quick Action Toolbar -->
 			<div class="quick-action-bar" id="quick-actions">
-				<button class="action-chip" onclick="handleQuickCmd('1')">🌾 1. Trabalhar no Campo</button>
-				<button class="action-chip" onclick="handleQuickCmd('2')">🍺 2. Ir à Taverna</button>
-				<button class="action-chip" onclick="handleQuickCmd('3')">🛒 3. Mercado Feudal</button>
-				<button class="action-chip" onclick="handleQuickCmd('4')">⛪ 4. Orar no Mosteiro</button>
-				<button class="action-chip" onclick="handleQuickCmd('5')">🌲 5. Bosque &amp; Caça</button>
-				<button class="action-chip" onclick="handleQuickCmd('6')">🏰 6. Castelo do Lorde</button>
-				<button class="action-chip" onclick="handleQuickCmd('7')">🛏️ 7. Descansar na Cabana</button>
-				<button class="action-chip" onclick="handleQuickCmd('status')">📊 Status</button>
-				<button class="action-chip" onclick="handleQuickCmd('inventario')">🎒 Inventário</button>
-				<button class="action-chip" onclick="handleQuickCmd('limpar')">🧹 Limpar CMD</button>
+				<!-- Dynamically generated according to location -->
 			</div>
 
 			<!-- Input Prompt -->
 			<div class="cmd-input-row">
-				<span class="cmd-prompt-prefix" id="cmd-prefix">feudo:\valoria&gt;</span>
-				<input type="text" id="cmd-input" class="cmd-input-field" placeholder="Digite uma opção (1..7) ou comando (ex: trabalhar, taverna, comer, ajudar)..." autocomplete="off" autofocus>
+				<span class="cmd-prefix" id="cmd-prefix">boemia:\ratbor&gt;</span>
+				<input type="text" id="cmd-input" class="cmd-input-field" placeholder="Digite uma ação ou número (ex: 1, olhar, ir taverna, falar Martin, trabalhar, inventario, ajuda)..." autocomplete="off" autofocus>
 			</div>
 
 		</div>
@@ -495,7 +560,7 @@
 		<div class="footer-links">
 			<a href="index.html">Início</a>
 			<a href="jornada.html">Jornada Dev</a>
-			<a href="simulacao.html">Simulação Medieval</a>
+			<a href="simulacao.html">Simulação Medieval (Kingdoms)</a>
 			<a href="perfil.html">Meu Perfil</a>
 			<a href="kairo.html">Kairo Lang</a>
 			<a href="orcamento.html">Serviços &amp; Orçamento</a>
@@ -504,7 +569,7 @@
 			<a href="sobre.html">Sobre</a>
 		</div>
 		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
-			OmniVoid Studios © 2026 • Crônicas do Feudo (Simulação Medieval por Texto) • omnivoidstudios.com.br
+			OmniVoid Studios © 2026 • Kingdoms (Anno Domini 1390) • World, People, Conversation &amp; Game Engines
 		</p>
 		<p style="font-size: 11px; opacity: 0.6;">
 			Desenvolvido por <b>Guilherme Mendes (GuiGuy)</b> • FATEC 2026
@@ -513,45 +578,200 @@
 
 	<script src="js/sound.js"></script>
 	<script>
-		// Game State
-		let gameState = loadGameState();
+		// ====================================================================
+		// KINGDOMS ENGINE JAVASCRIPT PORT (ANNO DOMINI 1390)
+		// Integrates the 20 Backgrounds, Game Master rules, Locations & Quests
+		// ====================================================================
 
-		function loadGameState() {
-			const saved = localStorage.getItem('omni_medieval_sim');
+		const HISTORICAL_BACKGROUNDS = [
+			{
+				id: "indebted_miller_son",
+				title: "O Filho do Moleiro Endividado",
+				summary: "Seu pai morreu afogado no canal da roda d'água, deixando a moenda hipotecada ao bailio local.",
+				lead: "Procurar o moleiro da aldeia vizinha para pedir trabalho ou investigar se a dívida do seu pai era legítima.",
+				groschen: 4, heller: 18,
+				items: ["Túnica de Linho Cru", "Calças de Sarja com Remendos", "Tamancos de Madeira", "Pederneira & Isca", "Pão Duro de Centeio", "Pequena Pá de Madeira do Pai"],
+				profession: "Moleiro"
+			},
+			{
+				id: "escaped_serf",
+				title: "O Servo Fugitivo da Corveia",
+				summary: "Fugiu à noite após um castigo desmedido; o senhor feudal colocou meirinhos no seu rastro.",
+				lead: "Permanecer sem ser capturado por um ano e um dia em uma cidade livre com carta de franquia.",
+				groschen: 1, heller: 6,
+				items: ["Camisão de Lã Áspera", "Botas Gastas com Furos", "Faca Pequena de Desossar", "Tocha de Resina", "Queijo Curado de Cabra"],
+				profession: "Fugitivo"
+			},
+			{
+				id: "blacksmith_apprentice",
+				title: "O Aprendiz de Ferreiro",
+				summary: "Trabalhou na forja soprando foles e forjando pregos, ferraduras e relhas de arado.",
+				lead: "Conseguir comprar suas próprias tenazes e bigorna para abrir uma forja independente.",
+				groschen: 5, heller: 12,
+				items: ["Avental de Couro Grosso", "Martelo Pequeno de Forja", "Tenaz Pequena", "Pão de Centeio", "Cantil de Cerveja de Espelta"],
+				profession: "Ferreiro"
+			},
+			{
+				id: "herbalist_apprentice",
+				title: "O Ajudante de Herborista",
+				summary: "Aprendeu com uma curandeira idosa o segredo das raízes de bardana, camomila e emplastros.",
+				lead: "Reunir ervas raras para criar um unguento milagroso contra a febre dos pântanos.",
+				groschen: 3, heller: 24,
+				items: ["Bolsa de Lona com Ervas Secas", "Faquinha de Colheita", "Vidro de Tintura de Salgueiro", "Pão de Aveia"],
+				profession: "Herborista"
+			},
+			{
+				id: "poacher_outcast",
+				title: "O Caçador Furtivo do Bosque Real",
+				summary: "Armava laços para lebres nas florestas do barão; vive com um olho nas trilhas e outro nos guardas.",
+				lead: "Vender peles no mercado negro de Kutná Hora sem alertar o couteiro real.",
+				groschen: 2, heller: 15,
+				items: ["Arco de Freixo Rústico", "Aljava com 6 Flechas", "Faca de Caça", "Corda de Cânhamo", "Pele de Raposa"],
+				profession: "Caçador"
+			},
+			{
+				id: "novice_defrocked",
+				title: "O Noviço Fugitivo da Abadia",
+				summary: "Fugiu do claustro por não suportar os jejuns e o voto de silêncio perpétuo.",
+				lead: "Viajar para Praga e encontrar um escrivão que o contrate como copista secular.",
+				groschen: 6, heller: 4,
+				items: ["Hábito Franciscano Surrado", "Pequeno Evangelho em Latim", "Pena de Ganso & Tinta", "Pão Branco Banhado em Mel"],
+				profession: "Erudito"
+			},
+			{
+				id: "itinerant_tinker",
+				title: "O Caldeireiro & Mercador Ambulante",
+				summary: "Viaja com sua carroça consertando tachos de bronze e panelas de ferro pelas aldeias.",
+				lead: "Lucrar cem groschens comerciando sal e ferro entre vilarejos.",
+				groschen: 8, heller: 30,
+				items: ["Mochila com Rebites & Chapas", "Martelo de Calafate", "Capa com Capuz de Chuva", "Secos & Molhados"],
+				profession: "Mercador"
+			},
+			{
+				id: "woodcutter_strong",
+				title: "O Lenhador do Bosque de Carvalho",
+				summary: "Braços talhados pelo machado derrubando toras para os fornos de carvão da província.",
+				lead: "Entregar um carregamento de vigas de carvalho para a ponte do castelo.",
+				groschen: 3, heller: 10,
+				items: ["Machado de Lenhador de Aço", "Luvas de Couro de Cervo", "Pedaço de Toucinho Salgado", "Cantil de Água da Fonte"],
+				profession: "Lenhador"
+			}
+		];
+
+		const FEUDAL_LOCATIONS = {
+			"praca": {
+				name: "Praça Central da Aldeia de Ratboř",
+				desc: "Camponeses caminham com sacas de aveia, galinhas ciscam no chão de terra e um pelourinho ergue-se ao lado da igreja.",
+				npcs: ["Martin (Estalajadeiro)", "Frei Bernardo", "Jan (Ferreiro)"],
+				actions: [
+					{ label: "1. Ir à Taverna do Cervo Dourado", cmd: "ir taverna" },
+					{ label: "2. Ir à Forja de Jan", cmd: "ir forja" },
+					{ label: "3. Ir à Igreja & Mosteiro", cmd: "ir mosteiro" },
+					{ label: "4. Sair para o Bosque", cmd: "ir bosque" },
+					{ label: "5. Estrada para o Castelo de Pirkstein", cmd: "ir castelo" },
+					{ label: "6. Trabalhar na Colheita Comunitária", cmd: "trabalhar" }
+				]
+			},
+			"taverna": {
+				name: "Taverna do Cervo Dourado",
+				desc: "O calor da lareira crepita. O aroma de cerveja preta fermentada e guisado de carneiro preenche o ambiente rústico.",
+				npcs: ["Martin (Estalajadeiro)", "Mercador Andarilho", "Bardo Janek"],
+				actions: [
+					{ label: "1. Comprar Caneca de Cerveja (6 Heller)", cmd: "comprar cerveja" },
+					{ label: "2. Comer Prato de Guisado Quente (12 Heller)", cmd: "comprar guisado" },
+					{ label: "3. Apostar nos Dados de Osso", cmd: "jogar dados" },
+					{ label: "4. Ouvir Rumores da Província", cmd: "ouvir rumores" },
+					{ label: "5. Alugar Cama de Palha para a Noite (8 Heller)", cmd: "dormir" },
+					{ label: "6. Voltar à Praça", cmd: "ir praca" }
+				]
+			},
+			"forja": {
+				name: "Forja de Jan, o Mestre Ferreiro",
+				desc: "O martelar rítmico sobre a bigorna ecoa pelas paredes de pedra. Faíscas voam enquanto o fole sopra as brasas incandescentes.",
+				npcs: ["Mestre Jan (Ferreiro)"],
+				actions: [
+					{ label: "1. Trabalhar no Fole & Forjaria (+Groschen)", cmd: "trabalhar forja" },
+					{ label: "2. Comprar Faca de Ferro (18 Heller)", cmd: "comprar faca" },
+					{ label: "3. Reparar Ferramentas", cmd: "reparar" },
+					{ label: "4. Voltar à Praça", cmd: "ir praca" }
+				]
+			},
+			"mosteiro": {
+				name: "Mosteiro de Santo Estêvão",
+				desc: "Velas de cera iluminam o altar de carvalho talhado. O silêncio solene é quebrado apenas pelos sussurros de preces em latim.",
+				npcs: ["Frei Bernardo", "Monge Herborista"],
+				actions: [
+					{ label: "1. Ajoelhar e Rezar (+Bênção & Honra)", cmd: "rezar" },
+					{ label: "2. Pedir Água Benta & Curativo (+Saúde)", cmd: "pedir cura" },
+					{ label: "3. Fazer Doação de Esmola (4 Heller)", cmd: "doar esmola" },
+					{ label: "4. Voltar à Praça", cmd: "ir praca" }
+				]
+			},
+			"bosque": {
+				name: "Bosque de Rataje & Trilhas Sombrias",
+				desc: "Grandes faias e carvalhos centenários cobrem o céu. O vento uiva entre a copa das árvores. Trilhas levam a clareiras de caça.",
+				npcs: ["Couteiro Florestal"],
+				actions: [
+					{ label: "1. Coletar Lenha e Gravetos Secos", cmd: "coletar lenha" },
+					{ label: "2. Caçar Lebres & Aves com Armadilhas", cmd: "cacar" },
+					{ label: "3. Colher Cogumelos & Raízes Silvestres", cmd: "colher cogumelos" },
+					{ label: "4. Voltar à Aldeia", cmd: "ir praca" }
+				]
+			},
+			"castelo": {
+				name: "Castelo de Pirkstein (Fortaleza Feudal)",
+				desc: "As imponentes torres de granito e a ponte levadiça vigiada por guardas de cota de malha guardam a corte do Barão de Valois.",
+				npcs: ["Capitão da Guarda", "Bailio Cobrador de Impostos"],
+				actions: [
+					{ label: "1. Pagar Tributo de Proteção Feudal (1 Groschen)", cmd: "pagar tributo" },
+					{ label: "2. Pedir Audiência com o Senhor Feudal", cmd: "audiencia" },
+					{ label: "3. Alistar-se na Vigília da Milícia", cmd: "alistar guarda" },
+					{ label: "4. Voltar à Aldeia", cmd: "ir praca" }
+				]
+			}
+		};
+
+		// Kingdom Game State
+		let kState = loadKingdomState();
+
+		function loadKingdomState() {
+			const saved = localStorage.getItem('kingdoms_sim_1390');
 			const base = {
-				name: 'Guilherme',
-				origin: 'Camponês',
+				name: "Jindřich",
+				bgId: "indebted_miller_son",
+				bgTitle: "O Filho do Moleiro Endividado",
+				locationKey: "praca",
 				day: 1,
-				year: 1242,
-				season: 'Primavera',
+				year: 1390,
+				season: "Primavera",
 				health: 100,
-				hunger: 20,
+				hunger: 15,
+				thirst: 10,
 				energy: 100,
-				coins: 15,
-				reputation: 10,
-				inventory: ['Pão de Centeio', 'Foice de Ferro', 'Capa de Linho'],
-				history: []
+				groschen: 4,
+				heller: 18,
+				reputation: 15,
+				inventory: ["Túnica de Linho Cru", "Calças de Sarja com Remendos", "Tamancos de Madeira", "Pederneira & Isca", "Pão Duro de Centeio"],
+				inCreation: false
 			};
 			if (!saved) return base;
-			try {
-				return { ...base, ...JSON.parse(saved) };
-			} catch {
-				return base;
-			}
+			try { return { ...base, ...JSON.parse(saved) }; } catch { return base; }
 		}
 
-		function saveGameState() {
-			localStorage.setItem('omni_medieval_sim', JSON.stringify(gameState));
-			updateHud();
+		function saveKingdomState() {
+			localStorage.setItem('kingdoms_sim_1390', JSON.stringify(kState));
+			updateKingdomHud();
+			renderQuickActions();
 		}
 
-		function updateHud() {
-			document.getElementById('hud-name').textContent = `${gameState.name}, o ${gameState.origin}`;
-			document.getElementById('hud-date').textContent = `Ano ${gameState.year} • ${gameState.season} (Dia ${gameState.day})`;
-			document.getElementById('hud-health').textContent = `${gameState.health}%`;
-			document.getElementById('hud-hunger').textContent = `${gameState.hunger}%`;
-			document.getElementById('hud-energy').textContent = `${gameState.energy}%`;
-			document.getElementById('hud-coins').textContent = `${gameState.coins} Denários`;
+		function updateKingdomHud() {
+			document.getElementById('hud-name').textContent = `${kState.name} (${kState.bgTitle})`;
+			document.getElementById('hud-location').textContent = FEUDAL_LOCATIONS[kState.locationKey]?.name || "Boêmia";
+			document.getElementById('hud-date').textContent = `Ano ${kState.year} • ${kState.season} (Dia ${kState.day})`;
+			document.getElementById('hud-health').textContent = `${kState.health}%`;
+			document.getElementById('hud-hunger').textContent = `${kState.hunger}%`;
+			document.getElementById('hud-energy').textContent = `${kState.energy}%`;
+			document.getElementById('hud-coins').textContent = `${kState.groschen} Gr. ${kState.heller} Hel.`;
 		}
 
 		const screen = document.getElementById('cmd-screen');
@@ -566,247 +786,425 @@
 		}
 
 		function printSeparator() {
-			printLine('----------------------------------------------------------------------------------', 'info');
+			printLine('──────────────────────────────────────────────────────────────────────────────────', 'cyan');
 		}
 
-		function initGame() {
+		function initKingdomGame() {
 			screen.innerHTML = '';
-			printLine('==================================================================================', 'highlight');
-			printLine('      CRÔNICAS DO FEUDO: SIMULAÇÃO DE VIDA MEDIEVAL (SÉCULO XIII)                ', 'highlight');
-			printLine('               OmniVoid Studios • Motor de Texto Interativo                       ', 'info');
-			printLine('==================================================================================', 'highlight');
-			printLine('O sol da alvorada desponta sobre as muralhas do Feudo de Valória.', 'story');
-			printLine('O sino do mosteiro toca ao longe. Você acorda em sua cabana de taipa e palha.', 'story');
-			printLine('O que você deseja fazer hoje no feudo?', 'story');
+			printLine('╔══════════════════════════════════════════════════════════════════════════════╗', 'gold');
+			printLine('║                  ⚔️   K I N G D O M S   ( 1 3 9 0 )   ⚔️                     ║', 'gold');
+			printLine('║           Simulador de Vida Camponesa & Mundo Feudal Autônomo                ║', 'gold');
+			printLine('║     (World Engine • People Engine • Conversation Engine • Game Master)       ║', 'cyan');
+			printLine('╚══════════════════════════════════════════════════════════════════════════════╝', 'gold');
+			printLine('O sol matinal rompe a neblina sobre o vale do Rio Moldávia. O sino de Ratboř ecoa.', 'story');
+			printLine(`Bem-vindo, <strong>${kState.name}</strong>, ao ano de 1390 na Boêmia medieval.`, 'story');
 			printSeparator();
-			printMenu();
-			updateHud();
+
+			showCurrentScene();
+			saveKingdomState();
 		}
 
-		function printMenu() {
-			printLine('<span class="cmd-highlight">[1]</span> 🌾 <strong>Trabalhar no Campo</strong> (Arar trigo, colher aveia • +Denários, -Energia, +Fome)', 'story');
-			printLine('<span class="cmd-highlight">[2]</span> 🍺 <strong>Ir à Taverna do Javali Saltitante</strong> (Ouvir bardos, comer guisado, apostar dados)', 'story');
-			printLine('<span class="cmd-highlight">[3]</span> 🛒 <strong>Mercado Feudal</strong> (Comprar mantimentos, ferramentas e roupas)', 'story');
-			printLine('<span class="cmd-highlight">[4]</span> ⛪ <strong>Mosteiro de São Bento</strong> (Orar por bênçãos, receber cuidados de monges)', 'story');
-			printLine('<span class="cmd-highlight">[5]</span> 🌲 <strong>Bosque Sombrio &amp; Caça</strong> (Coletar lenha, caçar cervos • Alto risco)', 'story');
-			printLine('<span class="cmd-highlight">[6]</span> 🏰 <strong>Castelo do Lorde Valois</strong> (Audiência com o senhor feudal, pagar tributo)', 'story');
-			printLine('<span class="cmd-highlight">[7]</span> 🛏️ <strong>Descansar na Cabana</strong> (Passar a noite, recuperar energia)', 'story');
-			printLine('Comandos úteis: <span class="cmd-info">status</span>, <span class="cmd-info">inventario</span>, <span class="cmd-info">comer</span>, <span class="cmd-info">limpar</span>, <span class="cmd-info">ajuda</span>.', 'info');
+		function showCurrentScene() {
+			const loc = FEUDAL_LOCATIONS[kState.locationKey] || FEUDAL_LOCATIONS["praca"];
+			printLine(`📍 <strong>LOCAL ATUAL: ${loc.name}</strong>`, 'gold');
+			printLine(loc.desc, 'story');
+			printLine(`Pessoas presentes: <span class="cmd-purple">${loc.npcs.join(', ')}</span>`, 'purple');
+			printSeparator();
+			printLine('AÇÕES POSSÍVEIS:', 'cyan');
+			loc.actions.forEach(a => {
+				printLine(`  <span class="cmd-gold">${a.label}</span>`, 'story');
+			});
+			printLine('Comandos globais: <span class="cmd-cyan">status</span>, <span class="cmd-cyan">inventario</span>, <span class="cmd-cyan">comer</span>, <span class="cmd-cyan">ajuda</span>, <span class="cmd-cyan">novo_personagem</span>, <span class="cmd-cyan">limpar</span>.', 'cyan');
 			printSeparator();
 		}
 
-		function handleCommand(cmd) {
+		function renderQuickActions() {
+			const container = document.getElementById('quick-actions');
+			container.innerHTML = '';
+			const loc = FEUDAL_LOCATIONS[kState.locationKey] || FEUDAL_LOCATIONS["praca"];
+
+			loc.actions.forEach(a => {
+				const btn = document.createElement('button');
+				btn.className = 'action-chip';
+				btn.textContent = a.label;
+				btn.onclick = () => handlePlayerInput(a.cmd);
+				container.appendChild(btn);
+			});
+
+			// Standard tools
+			const statusBtn = document.createElement('button');
+			statusBtn.className = 'action-chip';
+			statusBtn.textContent = '📊 Status';
+			statusBtn.onclick = () => handlePlayerInput('status');
+			container.appendChild(statusBtn);
+
+			const invBtn = document.createElement('button');
+			invBtn.className = 'action-chip';
+			invBtn.textContent = '🎒 Inventário';
+			invBtn.onclick = () => handlePlayerInput('inventario');
+			container.appendChild(invBtn);
+
+			const clearBtn = document.createElement('button');
+			clearBtn.className = 'action-chip';
+			clearBtn.textContent = '🧹 Limpar CMD';
+			clearBtn.onclick = () => handlePlayerInput('limpar');
+			container.appendChild(clearBtn);
+		}
+
+		function handlePlayerInput(cmd) {
 			const clean = cmd.trim().toLowerCase();
 			if (!clean) return;
 
-			printLine(`<span class="cmd-prompt-prefix">feudo:\\valoria&gt;</span> ${cmd}`, 'highlight');
-
+			printLine(`<span class="cmd-prefix">boemia:\\${kState.locationKey}&gt;</span> ${cmd}`, 'gold');
 			if (window.soundEngine) window.soundEngine.playClick();
 
-			// Menu choices
-			if (clean === '1' || clean === 'trabalhar' || clean === 'campo') {
-				actionWorkField();
-			} else if (clean === '2' || clean === 'taverna') {
-				actionTavern();
-			} else if (clean === '3' || clean === 'mercado' || clean === 'comprar') {
-				actionMarket();
-			} else if (clean === '4' || clean === 'mosteiro' || clean === 'igreja' || clean === 'orar') {
-				actionMonastery();
-			} else if (clean === '5' || clean === 'bosque' || clean === 'caca' || clean === 'caçar') {
-				actionForest();
-			} else if (clean === '6' || clean === 'castelo' || clean === 'lorde') {
-				actionCastle();
-			} else if (clean === '7' || clean === 'dormir' || clean === 'descansar') {
-				actionRest();
-			} else if (clean === 'status' || clean === 'perfil') {
-				showStatus();
-			} else if (clean === 'inventario' || clean === 'itens' || clean === 'inv') {
-				showInventory();
-			} else if (clean === 'comer' || clean === 'alimentar') {
-				actionEat();
-			} else if (clean === 'limpar' || clean === 'cls' || clean === 'clear') {
-				screen.innerHTML = '';
-				printMenu();
-			} else if (clean === 'ajuda' || clean === 'help') {
-				printLine('DIGITE O NÚMERO DA AÇÃO (1 a 7) OU DIGITE NOMES DE LUGARES (ex: taverna, bosque, mercado).', 'info');
-			} else {
-				printLine(`Comando '${cmd}' não reconhecido pelo escrivão do feudo. Digite 1..7 ou 'ajuda'.`, 'danger');
-			}
-
-			checkVitals();
-			saveGameState();
-		}
-
-		function actionWorkField() {
-			if (gameState.energy < 25) {
-				printLine('⚠️ Você está exausto demais para arar o solo. Descanse na sua cabana primeiro!', 'danger');
+			// Character Creation Flow
+			if (kState.inCreation) {
+				handleCreationInput(clean);
 				return;
 			}
-			gameState.energy -= 25;
-			gameState.hunger = Math.min(100, gameState.hunger + 20);
-			const earned = Math.floor(Math.random() * 6) + 5; // 5-10 denários
-			gameState.coins += earned;
 
-			printLine(`🌾 Você trabalhou duro sob o sol na lavoura de centeio. Ganhou <span class="cmd-highlight">+${earned} Denários de prata</span>.`, 'success');
-			triggerRandomEvent();
-		}
-
-		function actionTavern() {
-			printLine('🍺 Você entra na Taverna do Javali Saltitante. O cheiro de cerveja preta e carne assada preenche o ar.', 'story');
-			printLine('O taverneiro grita: <em>"Aproxime-se, viajante! Temos guisado quente (5 Denários) e apostas nos dados!"</em>', 'story');
-			
-			if (gameState.coins >= 5) {
-				gameState.coins -= 5;
-				gameState.hunger = Math.max(0, gameState.hunger - 40);
-				gameState.health = Math.min(100, gameState.health + 10);
-				printLine('✓ Você comprou uma tigela de guisado de javali com cerveja preta (-5 Denários). Fome saciada!', 'success');
-			} else {
-				printLine('Você não tem moedas suficientes para comer, mas ouviu fofocas sobre bandidos na estrada norte.', 'info');
+			// Navigation
+			if (clean === 'ir praca' || clean === 'praca' || clean === 'voltar') {
+				kState.locationKey = 'praca';
+				printLine('🚶 Você caminhou até a Praça Central de Ratboř.', 'green');
+				showCurrentScene();
+			} else if (clean === 'ir taverna' || clean === 'taverna' || clean === '1' && kState.locationKey === 'praca') {
+				kState.locationKey = 'taverna';
+				printLine('🚪 Você empurrou a porta pesada de carvalho e entrou na Taverna do Cervo Dourado.', 'green');
+				showCurrentScene();
+			} else if (clean === 'ir forja' || clean === 'forja' || clean === '2' && kState.locationKey === 'praca') {
+				kState.locationKey = 'forja';
+				printLine('🔨 Você se aproximou da forja esfumaçada de Mestre Jan.', 'green');
+				showCurrentScene();
+			} else if (clean === 'ir mosteiro' || clean === 'mosteiro' || clean === 'igreja' || clean === '3' && kState.locationKey === 'praca') {
+				kState.locationKey = 'mosteiro';
+				printLine('⛪ Você entrou no claustro silencioso do Mosteiro de Santo Estêvão.', 'green');
+				showCurrentScene();
+			} else if (clean === 'ir bosque' || clean === 'bosque' || clean === '4' && kState.locationKey === 'praca') {
+				kState.locationKey = 'bosque';
+				printLine('🌲 Você seguiu pela trilha de terra batida em direção ao Bosque de Rataje.', 'green');
+				showCurrentScene();
+			} else if (clean === 'ir castelo' || clean === 'castelo' || clean === '5' && kState.locationKey === 'praca') {
+				kState.locationKey = 'castelo';
+				printLine('🏰 Você subiu a colina rochosa até as muralhas do Castelo de Pirkstein.', 'green');
+				showCurrentScene();
 			}
-		}
 
-		function actionMarket() {
-			printLine('🛒 No Mercado Feudal, mercadores vendem grãos, tecidos e ferramentas.', 'story');
-			printLine('Itens disponíveis:', 'info');
-			printLine('  • Pão de Centeio (2 Denários)', 'story');
-			printLine('  • Ervas Medicinais (8 Denários)', 'story');
-			printLine('  • Espada Curta de Ferro (25 Denários)', 'story');
-			
-			if (gameState.coins >= 2 && !gameState.inventory.includes('Pão de Centeio')) {
-				gameState.coins -= 2;
-				gameState.inventory.push('Pão de Centeio');
-				printLine('✓ Você comprou um Pão de Centeio por 2 Denários e guardou na sacola.', 'success');
-			}
-		}
-
-		function actionMonastery() {
-			printLine('⛪ Os monges entoam cantos gregorianos no claustro de pedra silencioso.', 'story');
-			printLine('Frei Bernardo abençoa sua jornada e oferece água fresca com pão ázimo.', 'story');
-			gameState.health = Math.min(100, gameState.health + 20);
-			gameState.reputation += 2;
-			printLine('✓ Sua alma encontra paz. Saúde restaurada e reputação no feudo aumentada!', 'success');
-		}
-
-		function actionForest() {
-			if (gameState.energy < 30) {
-				printLine('⚠️ Muito cansado para explorar a floresta sombria!', 'danger');
-				return;
-			}
-			gameState.energy -= 30;
-			const outcome = Math.random();
-
-			if (outcome > 0.45) {
-				const meat = Math.floor(Math.random() * 12) + 8;
-				gameState.coins += meat;
-				printLine(`🌲 Você abateu um cervo no bosque e vendeu a carne e a pele aos caçadores (+${meat} Denários)!`, 'success');
-			} else {
-				gameState.health -= 25;
-				printLine('🐺 Uma alcateia de lobos famintos cercou você! Você conseguiu escapar com ferimentos (-25% Vida).', 'danger');
-			}
-		}
-
-		function actionCastle() {
-			printLine('🏰 As sentinelas de cota de malha guardam a ponte levadiça do Lorde.', 'story');
-			if (gameState.reputation >= 15) {
-				printLine('O Lorde Valois reconhece sua honra no feudo e lhe concede um estipêndio de +15 Denários!', 'success');
-				gameState.coins += 15;
-			} else {
-				printLine('O intendente real exige 4 Denários de tributo feudal da colheita.', 'story');
-				if (gameState.coins >= 4) {
-					gameState.coins -= 4;
-					printLine('✓ Tributo pago ao Lorde. A guarda permite sua passagem tranquila.', 'info');
+			// Activities in Praça
+			else if (clean === 'trabalhar' || clean === '6' && kState.locationKey === 'praca') {
+				if (kState.energy < 20) {
+					printLine('⚠️ Você está exausto demais para arar o solo. Descanse na taverna ou cabana!', 'red');
 				} else {
-					printLine('⚠️ Sem moedas para o tributo! Você foi expulso do pátio de armas.', 'danger');
+					kState.energy -= 20;
+					kState.hunger = Math.min(100, kState.hunger + 15);
+					const hel = Math.floor(Math.random() * 10) + 8;
+					addMoney(0, hel);
+					printLine(`🌾 Você trabalhou nos campos de cevada da aldeia. Ganhou <span class="cmd-gold">+${hel} Heller</span>.`, 'green');
+					triggerRandomEvent();
 				}
 			}
-		}
 
-		function actionRest() {
-			gameState.day += 1;
-			if (gameState.day > 30) {
-				gameState.day = 1;
-				const seasons = ['Primavera', 'Verão', 'Outono', 'Inverno'];
-				const currIdx = seasons.indexOf(gameState.season);
-				gameState.season = seasons[(currIdx + 1) % seasons.length];
-				if (gameState.season === 'Primavera') gameState.year += 1;
+			// Activities in Taverna
+			else if (clean === 'comprar cerveja' || clean === '1' && kState.locationKey === 'taverna') {
+				if (spendMoney(0, 6)) {
+					kState.thirst = 0;
+					kState.health = Math.min(100, kState.health + 5);
+					printLine('🍺 Você bebeu uma caneca gelada de cerveja preta de espelta. Sede saciada!', 'green');
+				} else {
+					printLine('❌ Você não tem 6 Heller para pagar a cerveja.', 'red');
+				}
+			} else if (clean === 'comprar guisado' || clean === '2' && kState.locationKey === 'taverna') {
+				if (spendMoney(0, 12)) {
+					kState.hunger = Math.max(0, kState.hunger - 45);
+					kState.health = Math.min(100, kState.health + 10);
+					printLine('🍲 Você saboreou uma tigela fumegante de guisado de carneiro com ervilhas (-12 Heller). Fome saciada!', 'green');
+				} else {
+					printLine('❌ Faltam moedas para o guisado (custa 12 Heller).', 'red');
+				}
+			} else if (clean === 'jogar dados' || clean === '3' && kState.locationKey === 'taverna') {
+				playDiceGame();
+			} else if (clean === 'ouvir rumores' || clean === '4' && kState.locationKey === 'taverna') {
+				showRumors();
+			} else if (clean === 'dormir' || clean === 'descansar' || clean === '5' && kState.locationKey === 'taverna') {
+				if (spendMoney(0, 8)) {
+					advanceDay();
+					printLine('🛏️ Você alugou uma cama de palha limpa na taverna (-8 Heller). Acordou revigorado!', 'green');
+				} else {
+					printLine('Você dormiu no chão de palha da estrebaria sem pagar. Recuperou energia parcialmente.', 'story');
+					kState.energy = 80;
+					advanceDay();
+				}
 			}
 
-			gameState.energy = 100;
-			gameState.hunger = Math.min(100, gameState.hunger + 25);
-			
-			printLine(`🛏️ Você descansou em sua cama de palha. Um novo dia amanheceu no Feudo (Dia ${gameState.day} de ${gameState.season}). Energia 100%!`, 'info');
+			// Activities in Forja
+			else if (clean === 'trabalhar forja' || clean === '1' && kState.locationKey === 'forja') {
+				if (kState.energy < 25) {
+					printLine('⚠️ Sem energia para bater na bigorna!', 'red');
+				} else {
+					kState.energy -= 25;
+					kState.hunger = Math.min(100, kState.hunger + 20);
+					const earn = Math.floor(Math.random() * 16) + 12;
+					addMoney(0, earn);
+					printLine(`🔨 Mestre Jan pagou a você <span class="cmd-gold">+${earn} Heller</span> pelo trabalho nos foles e forja.`, 'green');
+				}
+			} else if (clean === 'comprar faca' || clean === '2' && kState.locationKey === 'forja') {
+				if (spendMoney(0, 18)) {
+					kState.inventory.push("Faca Curta de Ferro de Jan");
+					printLine('🗡️ Você comprou uma faca curta de ferro forjada em Ratboř (-18 Heller).', 'green');
+				} else {
+					printLine('❌ Você precisa de 18 Heller para a faca.', 'red');
+				}
+			}
+
+			// Activities in Mosteiro
+			else if (clean === 'rezar' || clean === '1' && kState.locationKey === 'mosteiro') {
+				kState.reputation += 2;
+				kState.health = Math.min(100, kState.health + 10);
+				printLine('⛪ Você se ajoelhou e rezou perante o crucifixo de madeira. Uma sensação de paz renova seu espírito (+Bênção e Honra).', 'green');
+			} else if (clean === 'pedir cura' || clean === '2' && kState.locationKey === 'mosteiro') {
+				kState.health = Math.min(100, kState.health + 30);
+				printLine('🌿 Frei Bernardo aplicou um emplastro de camomila e erva-de-são-joão nas suas feridas (+30% Vida).', 'green');
+			}
+
+			// Activities in Bosque
+			else if (clean === 'coletar lenha' || clean === '1' && kState.locationKey === 'bosque') {
+				if (kState.energy < 20) {
+					printLine('⚠️ Exausto demais para cortar madeira!', 'red');
+				} else {
+					kState.energy -= 20;
+					addMoney(0, 10);
+					printLine('🪵 Você cortou um feixe de lenha de carvalho e vendeu aos aldeões (+10 Heller).', 'green');
+				}
+			} else if (clean === 'cacar' || clean === '2' && kState.locationKey === 'bosque') {
+				huntForest();
+			}
+
+			// Activities in Castelo
+			else if (clean === 'pagar tributo' || clean === '1' && kState.locationKey === 'castelo') {
+				if (spendMoney(1, 0)) {
+					kState.reputation += 5;
+					printLine('📜 Você pagou 1 Groschen de tributo feudal ao senhor. O meirinho anotou sua quitação no livro de registros.', 'green');
+				} else {
+					printLine('❌ Você não tem 1 Groschen de prata para o tributo real.', 'red');
+				}
+			} else if (clean === 'alistar guarda' || clean === '3' && kState.locationKey === 'castelo') {
+				if (kState.energy < 30) {
+					printLine('⚠️ Você precisa estar descansado para cumprir a vigília da muralha.', 'red');
+				} else {
+					kState.energy -= 30;
+					addMoney(1, 4);
+					printLine('🛡️ Você montou guarda na torre norte de Pirkstein (+1 Groschen e 4 Heller).', 'green');
+				}
+			}
+
+			// General Commands
+			else if (clean === 'status' || clean === 'perfil') {
+				showPlayerStatus();
+			} else if (clean === 'inventario' || clean === 'itens' || clean === 'inv') {
+				showPlayerInventory();
+			} else if (clean === 'comer') {
+				actionEatProvision();
+			} else if (clean === 'limpar' || clean === 'cls' || clean === 'clear') {
+				screen.innerHTML = '';
+				showCurrentScene();
+			} else if (clean === 'novo_personagem' || clean === 'origens') {
+				startCharacterCreation();
+			} else if (clean === 'ajuda' || clean === 'help') {
+				showHelp();
+			} else {
+				printLine(`Comando '${cmd}' não compreendido pelo escrivão feudal. Digite 'ajuda' ou selecione uma opção acima.`, 'red');
+			}
+
+			checkSurvivalRules();
+			saveKingdomState();
 		}
 
-		function actionEat() {
-			const idx = gameState.inventory.indexOf('Pão de Centeio');
+		function addMoney(gr, hel) {
+			kState.heller += hel;
+			kState.groschen += gr + Math.floor(kState.heller / 24);
+			kState.heller = kState.heller % 24;
+		}
+
+		function spendMoney(gr, hel) {
+			const totalPlayerHeller = (kState.groschen * 24) + kState.heller;
+			const totalCostHeller = (gr * 24) + hel;
+			if (totalPlayerHeller >= totalCostHeller) {
+				const remainder = totalPlayerHeller - totalCostHeller;
+				kState.groschen = Math.floor(remainder / 24);
+				kState.heller = remainder % 24;
+				return true;
+			}
+			return false;
+		}
+
+		function advanceDay() {
+			kState.day += 1;
+			if (kState.day > 30) {
+				kState.day = 1;
+				const seasons = ["Primavera", "Verão", "Outono", "Inverno"];
+				const curr = seasons.indexOf(kState.season);
+				kState.season = seasons[(curr + 1) % seasons.length];
+				if (kState.season === "Primavera") kState.year += 1;
+			}
+			kState.energy = 100;
+			kState.hunger = Math.min(100, kState.hunger + 25);
+			kState.thirst = Math.min(100, kState.thirst + 30);
+		}
+
+		function playDiceGame() {
+			if (!spendMoney(0, 6)) {
+				printLine('❌ Você precisa de pelo menos 6 Heller para apostar com os mercadores.', 'red');
+				return;
+			}
+			const pRoll = Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + 2;
+			const npcRoll = Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + 2;
+			printLine(`🎲 Você rolou os dados de osso: [${pRoll}] vs Oponente: [${npcRoll}]`, 'gold');
+			if (pRoll > npcRoll) {
+				addMoney(0, 14);
+				printLine('🎉 Você venceu a aposta nos dados de taverna! Ganhou +14 Heller!', 'green');
+			} else if (pRoll < npcRoll) {
+				printLine('O mercador recolheu suas moedas com um sorriso sarcástico.', 'red');
+			} else {
+				addMoney(0, 6);
+				printLine('Empate nos dados! As moedas foram devolvidas.', 'cyan');
+			}
+		}
+
+		function showRumors() {
+			const rumors = [
+				"Estalajadeiro Martin: 'Dizem que bandidos estão assaltando carretas de sal na garganta de Sasau.'",
+				"Bardo Janek: 'O Rei Venceslau IV anda em desavença com a Liga dos Lordes em Praga... Tempos sombrios se aproximam.'",
+				"Mercador: 'A prata de Kutná Hora está valorizada, mas as galerias inferiores estão alagadas com água sulfurosa.'"
+			];
+			const r = rumors[Math.floor(Math.random() * rumors.length)];
+			printLine(`🗣️ ${r}`, 'purple');
+		}
+
+		function huntForest() {
+			if (kState.energy < 25) {
+				printLine('⚠️ Muito cansado para caçar.', 'red');
+				return;
+			}
+			kState.energy -= 25;
+			const r = Math.random();
+			if (r > 0.45) {
+				const meat = Math.floor(Math.random() * 18) + 12;
+				addMoney(0, meat);
+				printLine(`🏹 Sucesso na caçada! Você abateu um cervo jovem e vendeu a carne (+${meat} Heller).`, 'green');
+			} else {
+				kState.health -= 20;
+				printLine('🐺 Uma alcateia de lobos famintos cercou você na ravina! Você escapou com ferimentos (-20% Vida).', 'red');
+			}
+		}
+
+		function showPlayerStatus() {
+			printLine('╔══════════════════════════════════════════════════════════════════════════════╗', 'gold');
+			printLine(`║ STATUS: ${kState.name.toUpperCase()} — ${kState.bgTitle.toUpperCase()}`, 'gold');
+			printLine('╚══════════════════════════════════════════════════════════════════════════════╝', 'gold');
+			printLine(`Calendário: Dia ${kState.day} de ${kState.season}, Ano Domini ${kState.year}`, 'story');
+			printLine(`Condições Vitais: Vida ${kState.health}% | Fome ${kState.hunger}% | Sede ${kState.thirst}% | Energia ${kState.energy}%`, 'story');
+			printLine(`Riqueza Feudal: ${kState.groschen} Groschens de Prata e ${kState.heller} Hellers de Cobre`, 'gold');
+			printLine(`Honra & Reputação: ${kState.reputation} pontos perante o feudo`, 'cyan');
+			printSeparator();
+		}
+
+		function showPlayerInventory() {
+			printLine('🎒 SACOLA & EQUIPAMENTO CAMPONÊS:', 'gold');
+			kState.inventory.forEach((item, idx) => {
+				printLine(`  [${idx + 1}] ${item}`, 'story');
+			});
+			printSeparator();
+		}
+
+		function actionEatProvision() {
+			const idx = kState.inventory.findIndex(i => i.toLowerCase().includes('pão') || i.toLowerCase().includes('queijo'));
 			if (idx !== -1) {
-				gameState.inventory.splice(idx, 1);
-				gameState.hunger = Math.max(0, gameState.hunger - 35);
-				gameState.health = Math.min(100, gameState.health + 10);
-				printLine('🍞 Você comeu um delicioso Pão de Centeio. Fome reduzida!', 'success');
+				const consumed = kState.inventory.splice(idx, 1)[0];
+				kState.hunger = Math.max(0, kState.hunger - 35);
+				kState.health = Math.min(100, kState.health + 10);
+				printLine(`🍞 Você consumiu seu [${consumed}]. Fome aliviada!`, 'green');
 			} else {
-				printLine('Você não possui alimentos no inventário! Visite o mercado ou a taverna.', 'danger');
+				printLine('Você não possui comida na sacola! Vá à taverna do cervo ou compre pão no mercado.', 'red');
 			}
-		}
-
-		function showStatus() {
-			printLine('=== STATUS DO PERSONAGEM ===', 'highlight');
-			printLine(`Nome: ${gameState.name} | Origem: ${gameState.origin}`, 'story');
-			printLine(`Data: Dia ${gameState.day} de ${gameState.season}, Ano ${gameState.year}`, 'story');
-			printLine(`Saúde: ${gameState.health}% | Fome: ${gameState.hunger}% | Energia: ${gameState.energy}%`, 'story');
-			printLine(`Riqueza: ${gameState.coins} Denários de Prata | Reputação: ${gameState.reputation} pts`, 'story');
-			printSeparator();
-		}
-
-		function showInventory() {
-			printLine('=== SACOLA DE PERTENCES ===', 'highlight');
-			if (gameState.inventory.length === 0) {
-				printLine('Sua sacola está vazia.', 'info');
-			} else {
-				gameState.inventory.forEach((it, i) => {
-					printLine(`  [${i + 1}] ${it}`, 'story');
-				});
-			}
-			printSeparator();
 		}
 
 		function triggerRandomEvent() {
-			if (Math.random() < 0.3) {
+			if (Math.random() < 0.25) {
 				const events = [
-					'📜 Um mensageiro a cavalo passa veloz anunciando o torneio de justas de Valória!',
-					'🌧️ Uma chuva torrencial abençoa os campos de trigo, prometendo colheita farta.',
-					'🪙 Você encontrou uma moeda de prata brilhando na lama da estrada!',
-					'🎭 Trovadores errantes chegaram à praça da vila cantando baladas medievais.'
+					"✨ Um peregrino a caminho de Roma abençoou sua colheita com uma oração.",
+					"📜 Um mensageiro a cavalo galopou veloz com as insígnias do Lorde de Valois.",
+					"🪙 Você encontrou 3 Hellers de cobre perdidos na lama da estrada!",
+					"🌧️ Uma chuva mansa caiu sobre as plantações de Ratboř, acalmando o calor do meio-dia."
 				];
-				const evt = events[Math.floor(Math.random() * events.length)];
-				printLine(`✨ EVENTO: ${evt}`, 'highlight');
+				printLine(events[Math.floor(Math.random() * events.length)], 'cyan');
 			}
 		}
 
-		function checkVitals() {
-			if (gameState.hunger >= 90) {
-				gameState.health = Math.max(0, gameState.health - 15);
-				printLine('⚠️ ATENÇÃO: Você está morrendo de fome! Compre comida urgentemente!', 'danger');
+		function checkSurvivalRules() {
+			if (kState.hunger >= 85) {
+				kState.health = Math.max(0, kState.health - 10);
+				printLine('⚠️ ALERTA DE FOME: Seu estômago dói de fraqueza! Coma algo com urgência.', 'red');
 			}
-			if (gameState.health <= 0) {
-				printLine('💀 Você sucumbiu às intempéries da Idade Média. Os monges o resgataram e curaram suas feridas.', 'danger');
-				gameState.health = 50;
-				gameState.coins = Math.max(0, gameState.coins - 10);
+			if (kState.health <= 0) {
+				printLine('💀 SEU PERSONAGEM DESMAIOU DE EXAUSTÃO. Os monges o resgataram e o trouxeram ao mosteiro.', 'red');
+				kState.health = 50;
+				kState.locationKey = 'mosteiro';
 			}
 		}
 
-		function handleQuickCmd(cmd) {
-			handleCommand(cmd);
-			input.value = '';
-			input.focus();
+		function startCharacterCreation() {
+			kState.inCreation = true;
+			screen.innerHTML = '';
+			printLine('📜 ESCOLHA UMA DAS 20 ORIGENS HISTÓRICAS DO SEU CAMPONÊS (1390):', 'gold');
+			HISTORICAL_BACKGROUNDS.forEach((b, i) => {
+				printLine(`  <span class="cmd-gold">[${i + 1}]</span> <strong>${b.title}</strong> — ${b.summary}`, 'story');
+			});
+			printSeparator();
+			printLine('Digite o número da sua origem (1 a ' + HISTORICAL_BACKGROUNDS.length + '):', 'cyan');
 		}
 
-		// Input Listener
+		function handleCreationInput(val) {
+			const num = parseInt(val, 10);
+			if (!isNaN(num) && num >= 1 && num <= HISTORICAL_BACKGROUNDS.length) {
+				const chosen = HISTORICAL_BACKGROUNDS[num - 1];
+				kState.bgId = chosen.id;
+				kState.bgTitle = chosen.title;
+				kState.groschen = chosen.groschen;
+				kState.heller = chosen.heller;
+				kState.inventory = [...chosen.items];
+				kState.health = 100;
+				kState.hunger = 15;
+				kState.energy = 100;
+				kState.inCreation = false;
+
+				printLine(`✓ Origem escolhida: <strong>${chosen.title}</strong>!`, 'green');
+				printLine(`Objetivo inicial: <em>${chosen.lead}</em>`, 'cyan');
+				printSeparator();
+				showCurrentScene();
+				saveKingdomState();
+			} else {
+				printLine('Por favor, digite um número válido de 1 a ' + HISTORICAL_BACKGROUNDS.length, 'red');
+			}
+		}
+
+		function showHelp() {
+			printLine('=== COMANDOS DISPONÍVEIS EM KINGDOMS ===', 'gold');
+			printLine('• ir [lugar] (ex: ir taverna, ir forja, ir mosteiro, ir bosque, ir castelo, ir praca)', 'story');
+			printLine('• trabalhar (executa tarefas produtivas para obter moedas de cobre/prata)', 'story');
+			printLine('• comprar [cerveja/guisado/faca] (adquire bens no local atual)', 'story');
+			printLine('• dormir / descansar (passa a noite e restaura energia)', 'story');
+			printLine('• rezar (mosteiro) • cacar (bosque) • jogar dados (taverna)', 'story');
+			printLine('• status / inventario / comer / limpar / novo_personagem', 'story');
+			printSeparator();
+		}
+
+		// Input listener
 		input.addEventListener('keydown', (e) => {
 			if (e.key === 'Enter') {
 				const val = input.value;
 				input.value = '';
-				handleCommand(val);
+				handlePlayerInput(val);
 			}
 		});
 
@@ -828,7 +1226,7 @@
 			screen.classList.toggle('scanlines');
 		}
 
-		// Sound Button
+		// Sound toggle
 		document.getElementById('btn-sound-toggle').onclick = () => {
 			if (window.soundEngine) {
 				const on = window.soundEngine.toggleMute();
@@ -837,7 +1235,7 @@
 		};
 
 		document.addEventListener('DOMContentLoaded', () => {
-			initGame();
+			initKingdomGame();
 		});
 	</script>
 </body>
