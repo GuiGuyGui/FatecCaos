@@ -727,25 +727,29 @@
 			const row = document.createElement('div');
 			row.id = 'active-prompt-row';
 			row.className = 'cmd-prompt-line';
-			row.innerHTML = `<span>${promptText}</span><input type="text" id="active-cmd-input" class="cmd-prompt-input" autocomplete="off">`;
+			row.innerHTML = `<span>${promptText}</span><input type="text" id="active-cmd-input" class="cmd-prompt-input" autocomplete="off" autofocus>`;
 			screen.appendChild(row);
-			screen.scrollTop = screen.scrollHeight;
-
-			const inp = document.getElementById('active-cmd-input');
-			inp.focus();
-			inp.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter') {
-					const val = inp.value;
-					inp.disabled = true;
-					row.id = '';
-					handleFlowInput(val);
+			
+			setTimeout(() => {
+				screen.scrollTop = screen.scrollHeight;
+				const inp = document.getElementById('active-cmd-input');
+				if (inp) {
+					inp.focus();
+					inp.addEventListener('keydown', (e) => {
+						if (e.key === 'Enter') {
+							const val = inp.value;
+							inp.disabled = true;
+							row.id = '';
+							handleFlowInput(val);
+						}
+					});
 				}
-			});
+			}, 30);
 		}
 
 		function focusActivePrompt() {
 			const inp = document.getElementById('active-cmd-input');
-			if (inp) inp.focus();
+			if (inp && !inp.disabled) inp.focus();
 		}
 
 		// Initial Launch Screen (Matches Image 1)
@@ -763,22 +767,58 @@
 			renderPrompt('✍️  Digite o nome do seu personagem [padrão: Jindřich]: ');
 		}
 
-		// Step 2: Backgrounds Menu
+		// Step 2: Backgrounds Menu (Clickable + Typable)
 		function showBackgroundMenu() {
 			flowState = 1;
 			print('');
-			print(`📜 ESCOLHA A ORIGEM HISTÓRICA DO SEU CAMPONÊS (ou pressione ENTER para aleatório):`, 'c-gold');
+			print(`📜 ESCOLHA A ORIGEM HISTÓRICA DO SEU CAMPONÊS (ou clique / pressione ENTER para aleatório):`, 'c-gold');
 			print('');
 
 			BACKGROUNDS_20.forEach((bg, idx) => {
 				const numStr = `[${(idx + 1).toString().padStart(2, ' ')}]`;
 				const titlePadded = bg.title.padEnd(46, ' ');
-				print(`  <span class="c-cyan">${numStr}</span> <strong class="c-gold">${titlePadded}</strong> — <span class="c-dim">${bg.summary}</span>`);
+				print(`  <span class="c-cyan" style="cursor:pointer; text-decoration: underline;" onclick="selectBackgroundDirectly(${idx + 1})">${numStr}</span> <strong class="c-gold" style="cursor:pointer;" onclick="selectBackgroundDirectly(${idx + 1})">${titlePadded}</strong> — <span class="c-dim">${bg.summary}</span>`);
 			});
-			print(`  <span class="c-cyan">[ 0]</span> <strong class="c-gold">Origem Aleatória (Destino Feudal)</strong>`);
+			print(`  <span class="c-cyan" style="cursor:pointer; text-decoration: underline;" onclick="selectBackgroundDirectly(0)">[ 0]</span> <strong class="c-gold" style="cursor:pointer;" onclick="selectBackgroundDirectly(0)">Origem Aleatória (Destino Feudal)</strong>`);
 			print('');
 
 			renderPrompt('👉 Escolha o número da sua origem [0-20]: ');
+		}
+
+		function selectBackgroundDirectly(num) {
+			if (flowState !== 1) return;
+			const inp = document.getElementById('active-cmd-input');
+			if (inp) {
+				inp.value = num.toString();
+				inp.disabled = true;
+			}
+			const row = document.getElementById('active-prompt-row');
+			if (row) row.id = '';
+			handleFlowInput(num.toString());
+		}
+
+		function parseBackgroundChoice(raw) {
+			const clean = (raw || '').trim().toLowerCase();
+			if (!clean || clean === '0' || clean === 'aleatorio' || clean === 'aleatório') {
+				return BACKGROUNDS_20[Math.floor(Math.random() * BACKGROUNDS_20.length)];
+			}
+			const match = clean.match(/\d+/);
+			if (match) {
+				const n = parseInt(match[0], 10);
+				if (n >= 1 && n <= BACKGROUNDS_20.length) {
+					return BACKGROUNDS_20[n - 1];
+				}
+				if (n === 0) {
+					return BACKGROUNDS_20[Math.floor(Math.random() * BACKGROUNDS_20.length)];
+				}
+			}
+			// Search by keyword in titles
+			for (const bg of BACKGROUNDS_20) {
+				if (bg.title.toLowerCase().includes(clean) || bg.id.toLowerCase().includes(clean)) {
+					return bg;
+				}
+			}
+			return BACKGROUNDS_20[0];
 		}
 
 		// Step 3 & 4: Render Full Game Scene (Matches Image 2)
@@ -897,13 +937,8 @@
 			} 
 			else if (flowState === 1) {
 				// Background choice
-				const num = parseInt(text, 10);
-				if (!isNaN(num) && num >= 1 && num <= BACKGROUNDS_20.length) {
-					chosenBg = BACKGROUNDS_20[num - 1];
-				} else {
-					chosenBg = BACKGROUNDS_20[Math.floor(Math.random() * BACKGROUNDS_20.length)];
-				}
-				print(`> Escolha: ${chosenBg.title}`, 'c-green');
+				chosenBg = parseBackgroundChoice(text);
+				print(`> Origem Selecionada: ${chosenBg.title}`, 'c-green');
 				renderFullGameScene(true);
 			} 
 			else if (flowState === 2) {
