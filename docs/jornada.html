@@ -1268,35 +1268,80 @@
 		];
 
 		function loadState() {
-			const saved = localStorage.getItem('omni_jornada_v2');
 			const today = new Date().toISOString().split('T')[0];
+			const saved = localStorage.getItem('omni_jornada_v2');
+			const currUser = JSON.parse(localStorage.getItem('omnivoid_current_user') || 'null');
+
 			const base = {
-				xp: 0,
-				streak: 1,
+				xp: currUser ? (currUser.xp || 0) : 0,
+				streak: currUser ? (currUser.streak || 1) : 1,
 				lastDate: today,
 				lastActiveDay: today,
-				hearts: 5,
-				level: 1,
-				title: 'Dev Novato',
-				completed: [],
-				dailyNodesCompleted: [],
+				hearts: (currUser && typeof currUser.hearts === 'number' && currUser.lastActiveDay === today) ? currUser.hearts : 5,
+				level: currUser ? (currUser.level || 1) : 1,
+				title: currUser ? (currUser.title || 'Dev Novato') : 'Dev Novato',
+				completed: (currUser && Array.isArray(currUser.completed)) ? currUser.completed : [],
+				dailyNodesCompleted: (currUser && Array.isArray(currUser.dailyNodesCompleted) && currUser.lastActiveDay === today) ? currUser.dailyNodesCompleted : [],
 				solved: {}
 			};
-			if (!saved) return base;
-			try {
-				const p = JSON.parse(saved);
-				const merged = { ...base, ...p };
-				
-				// Check if a new day has arrived to refill hearts and reset daily study pacing limit
-				if (merged.lastActiveDay !== today) {
-					merged.hearts = 5; // Refill 5 hearts on a new day!
-					merged.dailyNodesCompleted = []; // Reset daily completed count
-					merged.lastActiveDay = today;
-					localStorage.setItem('omni_jornada_v2', JSON.stringify(merged));
+
+			let state = { ...base };
+			if (saved) {
+				try {
+					const p = JSON.parse(saved);
+					state = { ...base, ...p };
+				} catch (e) {}
+			}
+
+			// If user account is active, prioritize account day and hearts
+			if (currUser) {
+				if (typeof currUser.hearts === 'number' && currUser.lastActiveDay === today) {
+					state.hearts = currUser.hearts;
 				}
-				return merged;
-			} catch {
-				return base;
+				if (Array.isArray(currUser.dailyNodesCompleted) && currUser.lastActiveDay === today) {
+					state.dailyNodesCompleted = currUser.dailyNodesCompleted;
+				}
+				if (currUser.lastActiveDay) {
+					state.lastActiveDay = currUser.lastActiveDay;
+				}
+			}
+
+			// Check if new day: only reset hearts and daily nodes if day has actually changed
+			if (state.lastActiveDay !== today) {
+				state.hearts = 5;
+				state.dailyNodesCompleted = [];
+				state.lastActiveDay = today;
+				state.lastDate = today;
+			}
+
+			localStorage.setItem('omni_jornada_v2', JSON.stringify(state));
+			syncStateToAccount(state);
+			return state;
+		}
+
+		function syncStateToAccount(state) {
+			try {
+				let currUser = JSON.parse(localStorage.getItem('omnivoid_current_user') || 'null');
+				if (currUser) {
+					currUser.hearts = state.hearts;
+					currUser.lastActiveDay = state.lastActiveDay;
+					currUser.dailyNodesCompleted = state.dailyNodesCompleted;
+					currUser.completed = state.completed;
+					currUser.xp = state.xp;
+					currUser.streak = state.streak;
+					currUser.level = state.level;
+					currUser.title = state.title;
+					localStorage.setItem('omnivoid_current_user', JSON.stringify(currUser));
+
+					let db = JSON.parse(localStorage.getItem('omnivoid_users_db') || '[]');
+					let idx = db.findIndex(u => u.email === currUser.email || u.nickname === currUser.nickname);
+					if (idx !== -1) {
+						db[idx] = { ...db[idx], ...currUser };
+						localStorage.setItem('omnivoid_users_db', JSON.stringify(db));
+					}
+				}
+			} catch (e) {
+				console.warn('Erro ao sincronizar com conta:', e);
 			}
 		}
 
@@ -1311,11 +1356,26 @@
 			else { userState.level = 7; userState.title = 'Tech Lead do Vazio OmniVoid'; }
 
 			localStorage.setItem('omni_jornada_v2', JSON.stringify(userState));
+			syncStateToAccount(userState);
 			updateUI();
 		}
 
 		function updateUI() {
-			document.getElementById('user-title').textContent = userState.title;
+			const currUser = JSON.parse(localStorage.getItem('omnivoid_current_user') || 'null');
+			if (currUser) {
+				if (currUser.name || currUser.nickname) {
+					document.getElementById('user-title').textContent = `${currUser.nickname ? '@' + currUser.nickname : currUser.name} • ${userState.title}`;
+				} else {
+					document.getElementById('user-title').textContent = userState.title;
+				}
+				if (currUser.avatar) {
+					const avatarEl = document.querySelector('.rank-avatar');
+					if (avatarEl) avatarEl.textContent = currUser.avatar;
+				}
+			} else {
+				document.getElementById('user-title').textContent = userState.title;
+			}
+
 			document.getElementById('user-level').textContent = `Nível ${userState.level} • ${userState.xp} JXP`;
 			document.getElementById('user-streak').textContent = `${userState.streak} dia${userState.streak > 1 ? 's' : ''}`;
 			document.getElementById('user-xp').textContent = `${userState.xp} JXP`;
