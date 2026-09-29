@@ -206,12 +206,13 @@
 			border-radius: 30px;
 			font-family: var(--font-title);
 			font-weight: 700;
-			font-size: 14px;
+			font-size: 13.5px;
 		}
 
 		.stat-streak { border-color: rgba(255, 214, 10, 0.4); color: var(--accent-gold) !important; }
 		.stat-xp { border-color: rgba(0, 240, 255, 0.4); color: var(--accent-primary) !important; }
-		.stat-hearts { border-color: rgba(255, 0, 85, 0.4); color: var(--accent-danger) !important; }
+		.stat-hearts { border-color: rgba(255, 0, 85, 0.4); color: var(--accent-danger) !important; cursor: pointer; }
+		.stat-daily { border-color: rgba(157, 78, 221, 0.4); color: var(--accent-purple) !important; }
 
 		/* Tabs */
 		.jornada-tabs {
@@ -523,6 +524,13 @@
 			filter: grayscale(0.8);
 		}
 
+		.path-node-btn.cooldown {
+			background: #3b284c;
+			border-color: #5a3d75;
+			border-bottom-color: #271933;
+			cursor: pointer;
+		}
+
 		.path-node-btn.completed {
 			background: #ffd60a;
 			border-color: #cca800;
@@ -706,8 +714,8 @@
 			flex-wrap: wrap;
 		}
 
-		/* Victory Modal */
-		.victory-box {
+		/* Generic System Modals */
+		.system-modal-backdrop {
 			position: fixed;
 			inset: 0;
 			background: rgba(5, 5, 10, 0.95);
@@ -719,19 +727,43 @@
 			padding: 20px;
 		}
 
-		.victory-box.active {
+		.system-modal-backdrop.active {
 			display: flex;
 		}
 
-		.victory-card {
+		.system-modal-card {
 			background: #0f0f1c;
 			border: 2px solid var(--accent-emerald);
 			border-radius: 16px;
 			padding: 36px 28px;
 			text-align: center;
-			max-width: 440px;
+			max-width: 480px;
 			width: 100%;
 			box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+		}
+
+		.system-modal-card.card-danger {
+			border-color: var(--accent-danger);
+			box-shadow: 0 0 40px rgba(255, 0, 85, 0.3);
+		}
+
+		.system-modal-card.card-purple {
+			border-color: var(--accent-purple);
+			box-shadow: 0 0 40px rgba(157, 78, 221, 0.3);
+		}
+
+		.timer-countdown-badge {
+			font-family: var(--font-title);
+			font-size: 22px;
+			font-weight: 800;
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid var(--border-bright);
+			padding: 12px 20px;
+			border-radius: 10px;
+			display: inline-block;
+			margin: 16px 0 24px;
+			color: #00f0ff !important;
+			letter-spacing: 1px;
 		}
 
 		footer {
@@ -816,17 +848,21 @@
 			</div>
 
 			<div class="gamification-stats">
-				<div class="stat-pill stat-streak" title="Sequência de dias">
+				<div class="stat-pill stat-streak" title="Sequência de dias estudados">
 					<span>🔥</span>
 					<span id="user-streak">1 dia</span>
 				</div>
-				<div class="stat-pill stat-xp" title="Experiência acumulada">
+				<div class="stat-pill stat-xp" title="Experiência total acumulada">
 					<span>💎</span>
 					<span id="user-xp">0 JXP</span>
 				</div>
-				<div class="stat-pill stat-hearts" title="Vidas disponíveis">
+				<div class="stat-pill stat-hearts" id="pill-hearts" onclick="showHeartsInfo()" title="Vidas disponíveis (Recarga diária à meia-noite)">
 					<span>❤️</span>
 					<span id="user-hearts">5/5</span>
+				</div>
+				<div class="stat-pill stat-daily" title="Progresso diário na trilha (Máximo de 3 novas fases/dia)">
+					<span>⏳</span>
+					<span id="user-daily-pacing">Fases Hoje: 0/3</span>
 				</div>
 			</div>
 		</div>
@@ -834,7 +870,7 @@
 		<!-- Jornada Sub Tabs -->
 		<div class="jornada-tabs">
 			<button class="tab-btn active" onclick="switchJornadaTab('path')">🗺️ Árvore de Fases &amp; Especializações</button>
-			<button class="tab-btn" onclick="switchJornadaTab('categories')">📚 Prática Livre (2.200+ Questões)</button>
+			<button class="tab-btn" onclick="switchJornadaTab('categories')">📚 Prática Livre (2.200+ Questões Ilimitadas)</button>
 			<button class="tab-btn" onclick="switchJornadaTab('profile')">📊 Meu Perfil Dev &amp; Conquistas</button>
 		</div>
 
@@ -865,7 +901,7 @@
 
 				<div class="track-progress-info">
 					<span id="track-stats-text">Progresso Geral: 0 de 52 fases concluídas (0%)</span>
-					<span id="track-title-badge" style="font-family:var(--font-code); font-size:11px; opacity:0.8;">OmniVoid Fullstack &amp; Engineering Path</span>
+					<span id="track-title-badge" style="font-family:var(--font-code); font-size:11px; opacity:0.8;">Ritmo de Estudo: Máximo de 3 Fases Novas por Dia</span>
 				</div>
 				<div class="track-progress-bar-bg">
 					<div class="track-progress-bar-fill" id="track-progress-fill"></div>
@@ -940,6 +976,7 @@
 				<span id="quiz-cat-tag" style="background:rgba(0,240,255,0.15); border:1px solid var(--accent-primary); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;"></span>
 				<span id="quiz-level-tag" style="background:rgba(0,255,136,0.15); border:1px solid var(--accent-emerald); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;"></span>
 				<span id="quiz-xp-tag" style="background:rgba(255,214,10,0.15); border:1px solid var(--accent-gold); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;"></span>
+				<span id="quiz-qnum-tag" style="background:rgba(157,78,221,0.15); border:1px solid var(--accent-purple); padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;"></span>
 			</div>
 
 			<h2 id="quiz-question" style="font-size:18px; line-height:1.5; margin-bottom:14px;"></h2>
@@ -956,8 +993,8 @@
 	</div>
 
 	<!-- VICTORY MODAL -->
-	<div class="victory-box" id="victory-box">
-		<div class="victory-card">
+	<div class="system-modal-backdrop" id="victory-box">
+		<div class="system-modal-card">
 			<div style="font-size: 54px; margin-bottom: 12px;">🏆</div>
 			<h2 style="font-size: 24px; text-transform: uppercase; margin-bottom: 8px;">Fase Concluída!</h2>
 			<p style="font-size: 14px; opacity: 0.85; margin-bottom: 24px;">Você dominou mais um módulo com sucesso!</p>
@@ -979,6 +1016,58 @@
 		</div>
 	</div>
 
+	<!-- NO HEARTS MODAL (OUT OF LIVES) -->
+	<div class="system-modal-backdrop" id="no-hearts-modal">
+		<div class="system-modal-card card-danger">
+			<div style="font-size: 54px; margin-bottom: 12px;">💔</div>
+			<h2 style="font-size: 22px; text-transform: uppercase; margin-bottom: 8px; color:#ff0055 !important;">Vidas Esgotadas!</h2>
+			<p style="font-size: 14px; opacity: 0.85; line-height: 1.5;">
+				Suas vidas acabaram por hoje. Para fixar o aprendizado com consistência, suas <strong>5 vidas</strong> serão totalmente restauradas na meia-noite!
+			</p>
+			
+			<div class="timer-countdown-badge" id="countdown-hearts">
+				00h 00m 00s
+			</div>
+
+			<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+				<button onclick="switchJornadaTab('categories'); closeNoHeartsModal();" class="btn-duo" style="background: linear-gradient(135deg, #00f0ff, #0080ff); border-color: #0066cc;">
+					📚 Praticar Modo Livre
+				</button>
+				<button onclick="closeNoHeartsModal()" class="btn-duo" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- DAILY STUDY LIMIT MODAL (PACING / COOLDOWN) -->
+	<div class="system-modal-backdrop" id="study-limit-modal">
+		<div class="system-modal-card card-purple">
+			<div style="font-size: 54px; margin-bottom: 12px;">🎓</div>
+			<h2 style="font-size: 22px; text-transform: uppercase; margin-bottom: 8px; color:#9d4edd !important;">Meta Diária Atingida!</h2>
+			<p style="font-size: 14px; opacity: 0.85; line-height: 1.5;">
+				Excelente trabalho! Você concluiu o limite de <strong>3 fases novas por hoje</strong>. Esse intervalo garante a consolidação do conhecimento na memória de longo prazo.
+			</p>
+			
+			<div class="timer-countdown-badge" id="countdown-pacing" style="color: #9d4edd !important; border-color: rgba(157, 78, 221, 0.4);">
+				00h 00m 00s
+			</div>
+
+			<p style="font-size: 12px; opacity: 0.75; margin-bottom: 20px;">
+				Dica: Você pode rever fases já concluídas ou praticar sem limites na aba de Prática Livre!
+			</p>
+
+			<div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+				<button onclick="switchJornadaTab('categories'); closeStudyLimitModal();" class="btn-duo" style="background: linear-gradient(135deg, #00ff88, #00b359);">
+					📚 Ir para Prática Livre
+				</button>
+				<button onclick="closeStudyLimitModal()" class="btn-duo" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+
 	<footer>
 		<div class="footer-links">
 			<a href="index.html">Início</a>
@@ -995,6 +1084,7 @@
 	<!-- Logic Engine -->
 	<script src="js/sound.js"></script>
 	<script>
+		const DAILY_NODE_LIMIT = 3; // Maximum new track phases allowed per day
 		let allQuestions = [];
 		let activeSession = null;
 		let currentTrackFilter = 'all';
@@ -1014,7 +1104,7 @@
 					{ id: 'u1-2', label: 'Condicionais & Loops', cat: 'Lógica', icon: '🔀' },
 					{ id: 'u1-3', label: 'Funções & Escopo', cat: 'Fundamentos', icon: '📦' },
 					{ id: 'u1-4', label: 'Estruturas de Dados', cat: 'Estruturas de Dados e Algoritmos', icon: '🌲' },
-					{ id: 'u1-5', label: 'Chefe: Desafio de Lógica', cat: 'Lógica', icon: '🏆' }
+					{ id: 'u1-5', label: 'Chefe: Desafio de Lógica', cat: 'Lógica', icon: '🏆', isBoss: true }
 				]
 			},
 			{
@@ -1028,7 +1118,7 @@
 					{ id: 'u2-2', label: 'CSS Moderno & Layouts', cat: 'CSS', icon: '🎨' },
 					{ id: 'u2-3', label: 'JavaScript ES6+', cat: 'JavaScript', icon: '⚡' },
 					{ id: 'u2-4', label: 'TypeScript & Tipagem', cat: 'TypeScript', icon: '🛡️' },
-					{ id: 'u2-5', label: 'Chefe: Mestre Frontend', cat: 'JavaScript', icon: '👑' }
+					{ id: 'u2-5', label: 'Chefe: Mestre Frontend', cat: 'JavaScript', icon: '👑', isBoss: true }
 				]
 			},
 			{
@@ -1042,7 +1132,7 @@
 					{ id: 'u3-2', label: 'Python & Scripting', cat: 'Python', icon: '🐍' },
 					{ id: 'u3-3', label: 'Modelagem SQL & Joins', cat: 'SQL', icon: '🗄️' },
 					{ id: 'u3-4', label: 'Bancos de Dados & Índices', cat: 'Banco de Dados', icon: '⚡' },
-					{ id: 'u3-5', label: 'Chefe: Arquiteto Backend', cat: 'HTTP/APIs', icon: '💎' }
+					{ id: 'u3-5', label: 'Chefe: Arquiteto Backend', cat: 'HTTP/APIs', icon: '💎', isBoss: true }
 				]
 			},
 			{
@@ -1056,7 +1146,7 @@
 					{ id: 'u4-2', label: 'Clean Code & Refatoração', cat: 'Clean Code', icon: '✨' },
 					{ id: 'u4-3', label: 'Testes Unitários & TDD', cat: 'Testes', icon: '🧪' },
 					{ id: 'u4-4', label: 'Arquitetura de Software', cat: 'Arquitetura', icon: '🏛️' },
-					{ id: 'u4-5', label: 'Chefe: Engenheiro Pleno', cat: 'Arquitetura', icon: '🌌' }
+					{ id: 'u4-5', label: 'Chefe: Engenheiro Pleno', cat: 'Arquitetura', icon: '🌌', isBoss: true }
 				]
 			},
 
@@ -1072,7 +1162,7 @@
 					{ id: 'u5-2', label: 'Criptografia & Hashes', cat: 'Segurança', icon: '🔐' },
 					{ id: 'u5-3', label: 'SSL/TLS & Certificados', cat: 'Segurança', icon: '📜' },
 					{ id: 'u5-4', label: 'Gestão de Senhas & Sal', cat: 'Segurança', icon: '🗝️' },
-					{ id: 'u5-5', label: 'Chefe: Sentinela Cripto', cat: 'Segurança', icon: '🏆' }
+					{ id: 'u5-5', label: 'Chefe: Sentinela Cripto', cat: 'Segurança', icon: '🏆', isBoss: true }
 				]
 			},
 			{
@@ -1086,7 +1176,7 @@
 					{ id: 'u6-2', label: 'Cross-Site Scripting (XSS)', cat: 'Segurança', icon: '⚡' },
 					{ id: 'u6-3', label: 'CSRF & Tokens de Sessão', cat: 'Segurança', icon: '🎯' },
 					{ id: 'u6-4', label: 'Autenticação JWT Segura', cat: 'Segurança', icon: '🎟️' },
-					{ id: 'u6-5', label: 'Chefe: Guardião de Aplicações', cat: 'Segurança', icon: '⚔️' }
+					{ id: 'u6-5', label: 'Chefe: Guardião de Aplicações', cat: 'Segurança', icon: '⚔️', isBoss: true }
 				]
 			},
 			{
@@ -1100,7 +1190,7 @@
 					{ id: 'u7-2', label: 'Varredura & Nmap', cat: 'Terminal/Linux', icon: '📡' },
 					{ id: 'u7-3', label: 'Firewalls, WAF & Regras', cat: 'Segurança', icon: '🧱' },
 					{ id: 'u7-4', label: 'Análise de Vulnerabilidades', cat: 'Debugging', icon: '🔍' },
-					{ id: 'u7-5', label: 'Chefe: Pentester Ético', cat: 'Segurança', icon: '🏹' }
+					{ id: 'u7-5', label: 'Chefe: Pentester Ético', cat: 'Segurança', icon: '🏹', isBoss: true }
 				]
 			},
 			{
@@ -1114,7 +1204,7 @@
 					{ id: 'u8-2', label: 'Segurança em Contêineres', cat: 'Docker/DevOps', icon: '🐳' },
 					{ id: 'u8-3', label: 'CI/CD Seguro & SAST', cat: 'Docker/DevOps', icon: '⚙️' },
 					{ id: 'u8-4', label: 'Auditoria de Logs & Forense', cat: 'Debugging', icon: '🕵️' },
-					{ id: 'u8-5', label: 'Chefe: Líder DevSecOps', cat: 'Segurança', icon: '👑' }
+					{ id: 'u8-5', label: 'Chefe: Líder DevSecOps', cat: 'Segurança', icon: '👑', isBoss: true }
 				]
 			},
 
@@ -1130,7 +1220,7 @@
 					{ id: 'u9-2', label: 'Binário, Hex & Bits', cat: 'Hardware', icon: '🔢' },
 					{ id: 'u9-3', label: 'CPU: ALU & Registradores', cat: 'Hardware', icon: '🧠' },
 					{ id: 'u9-4', label: 'Barramentos, Clock & Cache', cat: 'Hardware', icon: '⚡' },
-					{ id: 'u9-5', label: 'Chefe: Mestre dos Circuitos', cat: 'Hardware', icon: '🏆' }
+					{ id: 'u9-5', label: 'Chefe: Mestre dos Circuitos', cat: 'Hardware', icon: '🏆', isBoss: true }
 				]
 			},
 			{
@@ -1144,7 +1234,7 @@
 					{ id: 'u10-2', label: 'Memória Heap vs Stack', cat: 'Baixo Nível', icon: '📦' },
 					{ id: 'u10-3', label: 'Assembly x86/ARM Básico', cat: 'Baixo Nível', icon: '⚙️' },
 					{ id: 'u10-4', label: 'Chamadas de Sistema (Syscalls)', cat: 'Baixo Nível', icon: '🚥' },
-					{ id: 'u10-5', label: 'Chefe: Alquimista da Memória', cat: 'Baixo Nível', icon: '💎' }
+					{ id: 'u10-5', label: 'Chefe: Alquimista da Memória', cat: 'Baixo Nível', icon: '💎', isBoss: true }
 				]
 			},
 			{
@@ -1158,7 +1248,7 @@
 					{ id: 'u11-2', label: 'Sinais PWM & Atuadores', cat: 'Sistemas Embarcados', icon: '💡' },
 					{ id: 'u11-3', label: 'Interrupções de Hardware (ISR)', cat: 'Sistemas Embarcados', icon: '⚡' },
 					{ id: 'u11-4', label: 'Timers & Conversores ADC', cat: 'Sistemas Embarcados', icon: '⏱️' },
-					{ id: 'u11-5', label: 'Chefe: Engenheiro de Firmware', cat: 'Sistemas Embarcados', icon: '🦾' }
+					{ id: 'u11-5', label: 'Chefe: Engenheiro de Firmware', cat: 'Sistemas Embarcados', icon: '🦾', isBoss: true }
 				]
 			},
 			{
@@ -1172,27 +1262,39 @@
 					{ id: 'u12-2', label: 'Sensores Digitais & Barramentos', cat: 'Sistemas Embarcados', icon: '🌡️' },
 					{ id: 'u12-3', label: 'Protocolo MQTT para IoT', cat: 'Sistemas Embarcados', icon: '📡' },
 					{ id: 'u12-4', label: 'RTOS & Multithreading', cat: 'Sistemas Embarcados', icon: '🔄' },
-					{ id: 'u12-5', label: 'Soberano do Silício OmniVoid', cat: 'Hardware', icon: '🌌' }
+					{ id: 'u12-5', label: 'Soberano do Silício OmniVoid', cat: 'Hardware', icon: '🌌', isBoss: true }
 				]
 			}
 		];
 
 		function loadState() {
 			const saved = localStorage.getItem('omni_jornada_v2');
+			const today = new Date().toISOString().split('T')[0];
 			const base = {
 				xp: 0,
 				streak: 1,
-				lastDate: new Date().toISOString().split('T')[0],
+				lastDate: today,
+				lastActiveDay: today,
 				hearts: 5,
 				level: 1,
 				title: 'Dev Novato',
 				completed: [],
+				dailyNodesCompleted: [],
 				solved: {}
 			};
 			if (!saved) return base;
 			try {
 				const p = JSON.parse(saved);
-				return { ...base, ...p };
+				const merged = { ...base, ...p };
+				
+				// Check if a new day has arrived to refill hearts and reset daily study pacing limit
+				if (merged.lastActiveDay !== today) {
+					merged.hearts = 5; // Refill 5 hearts on a new day!
+					merged.dailyNodesCompleted = []; // Reset daily completed count
+					merged.lastActiveDay = today;
+					localStorage.setItem('omni_jornada_v2', JSON.stringify(merged));
+				}
+				return merged;
 			} catch {
 				return base;
 			}
@@ -1218,6 +1320,10 @@
 			document.getElementById('user-streak').textContent = `${userState.streak} dia${userState.streak > 1 ? 's' : ''}`;
 			document.getElementById('user-xp').textContent = `${userState.xp} JXP`;
 			document.getElementById('user-hearts').textContent = `${userState.hearts}/5`;
+			
+			const dailyCount = (userState.dailyNodesCompleted || []).length;
+			document.getElementById('user-daily-pacing').textContent = `Fases Hoje: ${dailyCount}/${DAILY_NODE_LIMIT}`;
+			
 			updateTrackProgress();
 		}
 
@@ -1269,6 +1375,15 @@
 			renderCategories();
 			renderProfile();
 			updateUI();
+			startMidnightCountdown();
+		}
+
+		// Calculate scaled question count per lesson: doubles progressively down the units!
+		function getQuestionCountForUnit(unitId, isBoss) {
+			if (unitId <= 3) return isBoss ? 7 : 5;      // Units 1-3: 5 (7 boss)
+			if (unitId <= 6) return isBoss ? 10 : 8;    // Units 4-6: 8 (10 boss)
+			if (unitId <= 9) return isBoss ? 15 : 12;   // Units 7-9: 12 (15 boss)
+			return isBoss ? 20 : 16;                    // Units 10-12: 16 (20 boss)
 		}
 
 		function renderPath() {
@@ -1280,13 +1395,18 @@
 
 			let html = '';
 			const positions = ['node-center', 'node-left', 'node-center', 'node-right', 'node-center'];
+			const dailyCount = (userState.dailyNodesCompleted || []).length;
+			const isDailyLimitReached = dailyCount >= DAILY_NODE_LIMIT;
 
 			filteredUnits.forEach((u, uIdx) => {
+				const qCountNormal = getQuestionCountForUnit(u.id, false);
+				const qCountBoss = getQuestionCountForUnit(u.id, true);
+
 				html += `
 					<div class="unit-card ${u.theme}">
 						<div>
 							<div style="display:inline-block; font-size:11px; font-weight:800; background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:4px; margin-bottom:4px;">
-								${u.badge}
+								${u.badge} • ${qCountNormal} Qs/fase (${qCountBoss} no Chefe)
 							</div>
 							<h3 style="font-size:16px;">${u.title}</h3>
 							<p style="font-size:12px; opacity:0.85;">Domine os desafios sequenciais da unidade</p>
@@ -1299,7 +1419,7 @@
 				u.nodes.forEach((n, nIdx) => {
 					const isDone = userState.completed.includes(n.id);
 					
-					// Progressive unlock: first node is unlocked if it's the first unit, or if the previous unit's boss is done
+					// Progressive unlock: first node is unlocked if it's the first unit, or if previous node is done
 					let isPrevDone = false;
 					if (uIdx === 0 && nIdx === 0) {
 						isPrevDone = true;
@@ -1312,13 +1432,20 @@
 					}
 
 					const isLocked = !isDone && !isPrevDone;
+					const isUnderCooldown = !isDone && isPrevDone && isDailyLimitReached;
+					
+					let stateClass = '';
+					if (isDone) stateClass = 'completed';
+					else if (isUnderCooldown) stateClass = 'cooldown';
+					else if (isLocked) stateClass = 'locked';
+
 					const pos = positions[nIdx % positions.length];
-					const stateClass = isDone ? 'completed' : (isLocked ? 'locked' : '');
+					const nodeIcon = isDone ? '⭐' : (isUnderCooldown ? '⏳' : (isLocked ? '🔒' : n.icon));
 
 					html += `
-						<button class="path-node-btn ${pos} ${stateClass}" onclick="startLesson('${n.id}', '${n.cat}', ${isLocked})">
-							<span class="node-tooltip">${n.label}</span>
-							<span>${isLocked ? '🔒' : (isDone ? '⭐' : n.icon)}</span>
+						<button class="path-node-btn ${pos} ${stateClass}" onclick="startLesson('${n.id}', '${n.cat}', ${isLocked}, ${isUnderCooldown}, ${u.id}, ${!!n.isBoss})">
+							<span class="node-tooltip">${n.label} ${isUnderCooldown ? '(Amanhã)' : ''}</span>
+							<span>${nodeIcon}</span>
 						</button>
 					`;
 				});
@@ -1339,15 +1466,15 @@
 			let html = '';
 			Object.keys(counts).sort().forEach(cat => {
 				html += `
-					<div class="cat-card" onclick="startLesson(null, '${cat}', false)">
+					<div class="cat-card" onclick="startPractice('${cat}')">
 						<div>
 							<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
 								<span style="font-weight:700; font-size:15px;">${cat}</span>
 								<span style="background:rgba(255,255,255,0.08); padding:2px 8px; border-radius:10px; font-size:11px;">${counts[cat]} Qs</span>
 							</div>
-							<p style="font-size:12px; opacity:0.75;">Pratique agora questões deste tópico.</p>
+							<p style="font-size:12px; opacity:0.75;">Pratique agora sem gastar vidas nem limite diário.</p>
 						</div>
-						<button class="btn-duo" style="margin-top:14px; width:100%; font-size:11px; padding:8px;">Praticar</button>
+						<button class="btn-duo" style="margin-top:14px; width:100%; font-size:11px; padding:8px;">Praticar Livre</button>
 					</div>
 				`;
 			});
@@ -1357,6 +1484,7 @@
 		function renderProfile() {
 			const grid = document.getElementById('profile-grid');
 			const solvedCount = Object.keys(userState.solved).length;
+			const dailyCount = (userState.dailyNodesCompleted || []).length;
 			grid.innerHTML = `
 				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
 					<div style="font-size:32px; color:#ffd60a !important;">🔥 ${userState.streak}</div>
@@ -1371,42 +1499,67 @@
 					<div style="font-size:12px; opacity:0.8;">Questões Dominadas</div>
 				</div>
 				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
-					<div style="font-size:32px; color:#ff9e00 !important;">⭐ ${userState.completed.length} / 52</div>
-					<div style="font-size:12px; opacity:0.8;">Fases da Trilha Concluídas</div>
+					<div style="font-size:32px; color:#9d4edd !important;">⏳ ${dailyCount} / ${DAILY_NODE_LIMIT}</div>
+					<div style="font-size:12px; opacity:0.8;">Fases Concluídas Hoje</div>
 				</div>
 			`;
 		}
 
 		function switchJornadaTab(tab) {
 			document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-			event.target.classList.add('active');
+			if (event && event.target && event.target.classList.contains('tab-btn')) {
+				event.target.classList.add('active');
+			}
 
 			document.getElementById('jornada-tab-path').style.display = tab === 'path' ? 'block' : 'none';
 			document.getElementById('jornada-tab-categories').style.display = tab === 'categories' ? 'block' : 'none';
 			document.getElementById('jornada-tab-profile').style.display = tab === 'profile' ? 'block' : 'none';
 		}
 
-		function startLesson(nodeId, cat, isLocked) {
+		// Start a regular Campaign Lesson with Hearts and Pacing Check
+		function startLesson(nodeId, cat, isLocked, isUnderCooldown, unitId, isBoss) {
 			if (isLocked) {
 				if (window.soundEngine) window.soundEngine.playIncorrect();
 				alert('Conclua as fases anteriores para desbloquear esta fase da trilha!');
 				return;
 			}
-			if (userState.hearts <= 0) {
-				userState.hearts = 5;
-				saveState();
+
+			// Daily study pacing cooldown check
+			const isDone = userState.completed.includes(nodeId);
+			if (!isDone && isUnderCooldown) {
+				if (window.soundEngine) window.soundEngine.playIncorrect();
+				document.getElementById('study-limit-modal').classList.add('active');
+				return;
 			}
 
+			// Daily Hearts check: NO instant refills. Must wait for midnight if out of hearts!
+			if (userState.hearts <= 0) {
+				if (window.soundEngine) window.soundEngine.playIncorrect();
+				document.getElementById('no-hearts-modal').classList.add('active');
+				return;
+			}
+
+			const targetCount = getQuestionCountForUnit(unitId || 1, !!isBoss);
+			launchQuizSession(nodeId, cat, targetCount, false);
+		}
+
+		// Free Practice mode (unlimited, does not consume hearts or daily node limits)
+		function startPractice(cat) {
+			launchQuizSession(null, cat, 5, true);
+		}
+
+		function launchQuizSession(nodeId, cat, count, isPractice) {
 			let pool = allQuestions.filter(q => !cat || q.category.toLowerCase() === cat.toLowerCase());
 			if (pool.length === 0) pool = allQuestions;
 
 			const shuffled = [...pool].sort(() => 0.5 - Math.random());
-			const questions = shuffled.slice(0, 5);
+			const questions = shuffled.slice(0, count);
 
 			activeSession = {
 				nodeId,
 				cat,
 				questions,
+				isPractice,
 				idx: 0,
 				correct: 0,
 				earnedXp: 0,
@@ -1430,10 +1583,11 @@
 			s.answered = false;
 
 			document.getElementById('quiz-bar').style.width = `${(s.idx / s.questions.length) * 100}%`;
-			document.getElementById('quiz-hearts').textContent = userState.hearts;
+			document.getElementById('quiz-hearts').textContent = s.isPractice ? '∞ (Livre)' : userState.hearts;
 			document.getElementById('quiz-cat-tag').textContent = q.category;
 			document.getElementById('quiz-level-tag').textContent = `Nível: ${q.level || 'intermediário'}`;
 			document.getElementById('quiz-xp-tag').textContent = `+${q.xp || 15} JXP`;
+			document.getElementById('quiz-qnum-tag').textContent = `Pergunta ${s.idx + 1} de ${s.questions.length}`;
 			document.getElementById('quiz-question').textContent = q.question;
 
 			const codeEl = document.getElementById('quiz-code');
@@ -1512,8 +1666,11 @@
 					}
 				});
 
-				userState.hearts = Math.max(0, userState.hearts - 1);
-				document.getElementById('quiz-hearts').textContent = userState.hearts;
+				// In campaign mode, losing a heart is permanent for the rest of the day!
+				if (!s.isPractice) {
+					userState.hearts = Math.max(0, userState.hearts - 1);
+					document.getElementById('quiz-hearts').textContent = userState.hearts;
+				}
 
 				dock.innerHTML = `
 					<div class="dock-content">
@@ -1561,6 +1718,12 @@
 			const s = activeSession;
 			s.idx++;
 			if (s.idx < s.questions.length) {
+				// If campaign mode and player has 0 hearts, end session immediately
+				if (!s.isPractice && userState.hearts <= 0) {
+					closeQuiz();
+					document.getElementById('no-hearts-modal').classList.add('active');
+					return;
+				}
 				renderQuestion();
 			} else {
 				finishQuiz();
@@ -1569,8 +1732,14 @@
 
 		function finishQuiz() {
 			const s = activeSession;
-			if (s.nodeId && !userState.completed.includes(s.nodeId)) {
-				userState.completed.push(s.nodeId);
+			if (s.nodeId) {
+				if (!userState.completed.includes(s.nodeId)) {
+					userState.completed.push(s.nodeId);
+					userState.dailyNodesCompleted = userState.dailyNodesCompleted || [];
+					if (!userState.dailyNodesCompleted.includes(s.nodeId)) {
+						userState.dailyNodesCompleted.push(s.nodeId);
+					}
+				}
 			}
 			saveState();
 			closeQuiz();
@@ -1589,6 +1758,52 @@
 
 		function closeVictory() {
 			document.getElementById('victory-box').classList.remove('active');
+		}
+
+		function closeNoHeartsModal() {
+			document.getElementById('no-hearts-modal').classList.remove('active');
+		}
+
+		function closeStudyLimitModal() {
+			document.getElementById('study-limit-modal').classList.remove('active');
+		}
+
+		function showHeartsInfo() {
+			if (userState.hearts <= 0) {
+				document.getElementById('no-hearts-modal').classList.add('active');
+			} else {
+				alert(`Você tem ${userState.hearts} de 5 vidas disponíveis hoje.\n\nElas são restauradas diariamente à meia-noite!`);
+			}
+		}
+
+		// Real-time Countdown Timer until Midnight for Daily Refills & Pacing
+		function startMidnightCountdown() {
+			function updateTimer() {
+				const now = new Date();
+				const midnight = new Date(now);
+				midnight.setHours(24, 0, 0, 0); // Next 00:00:00
+
+				const diff = midnight - now;
+				if (diff <= 0) {
+					// Day reset!
+					userState = loadState();
+					updateUI();
+					renderPath();
+					return;
+				}
+
+				const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+				const minutes = Math.floor((diff / (1000 * 60)) % 60);
+				const seconds = Math.floor((diff / 1000) % 60);
+
+				const str = `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+				const hEl = document.getElementById('countdown-hearts');
+				const pEl = document.getElementById('countdown-pacing');
+				if (hEl) hEl.textContent = str;
+				if (pEl) pEl.textContent = str;
+			}
+			updateTimer();
+			setInterval(updateTimer, 1000);
 		}
 
 		// Audio toggle
