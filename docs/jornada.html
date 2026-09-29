@@ -1451,12 +1451,13 @@
 			startMidnightCountdown();
 		}
 
-		// Calculate scaled question count per lesson: doubles progressively down the units!
+		// Calculate scaled question count per lesson: doubles from module 2 onwards!
 		function getQuestionCountForUnit(unitId, isBoss) {
-			if (unitId <= 3) return isBoss ? 7 : 5;      // Units 1-3: 5 (7 boss)
-			if (unitId <= 6) return isBoss ? 10 : 8;    // Units 4-6: 8 (10 boss)
-			if (unitId <= 9) return isBoss ? 15 : 12;   // Units 7-9: 12 (15 boss)
-			return isBoss ? 20 : 16;                    // Units 10-12: 16 (20 boss)
+			if (unitId === 1) return isBoss ? 7 : 5;      // Unit 1: 5 (7 boss)
+			if (unitId <= 3) return isBoss ? 14 : 10;     // Units 2-3 (Doubled from mod 2!): 10 (14 boss)
+			if (unitId <= 6) return isBoss ? 20 : 16;     // Units 4-6: 16 (20 boss)
+			if (unitId <= 9) return isBoss ? 26 : 20;     // Units 7-9: 20 (26 boss)
+			return isBoss ? 30 : 24;                      // Units 10-12: 24 (30 boss)
 		}
 
 		function renderPath() {
@@ -1909,6 +1910,15 @@
 				document.getElementById('btn-sound').textContent = on ? '🔊 Som' : '🔇 Mudo';
 			}
 		};
+
+		// Global 500-character input safeguard
+		document.addEventListener('input', (e) => {
+			if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+				if (e.target.value && e.target.value.length > 500) {
+					e.target.value = e.target.value.slice(0, 500);
+				}
+			}
+		});
 
 		// Filter search
 		document.getElementById('cat-search').addEventListener('input', (e) => {

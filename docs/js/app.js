@@ -164,3 +164,12 @@ function initStarsCanvas() {
 
   animate();
 }
+
+// Global 500-character input safeguard
+document.addEventListener('input', (e) => {
+  if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+    if (e.target.value && e.target.value.length > 500) {
+      e.target.value = e.target.value.slice(0, 500);
+    }
+  }
+});
