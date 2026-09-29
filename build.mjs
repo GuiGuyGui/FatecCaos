@@ -462,6 +462,7 @@ function getNavbar(activeTab) {
 				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
 				<li><a href="jornada.html" class="nav-link ${activeTab === 'jornada' ? 'active' : ''}">⚡ Jornada Dev</a></li>
 				<li><a href="pentest.html" class="nav-link ${activeTab === 'pentest' ? 'active' : ''}">🛡️ Pentest &amp; Hacking</a></li>
+				<li><a href="aula.html" class="nav-link ${activeTab === 'aula' ? 'active' : ''}">🎓 Aulas</a></li>
 				<li><a href="perfil.html" class="nav-link ${activeTab === 'perfil' ? 'active' : ''}">👤 Meu Perfil</a></li>
 				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">✨ Kairo Lang</a></li>
 				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">Serviços & Orçamento</a></li>
@@ -787,6 +788,7 @@ const COMMON_FOOTER = `
 			<a href="index.html">Início</a>
 			<a href="jornada.html">Jornada Dev</a>
 			<a href="pentest.html">Pentest &amp; Hacking</a>
+			<a href="aula.html">Aulas</a>
 			<a href="perfil.html">Meu Perfil</a>
 			<a href="kairo.html">Kairo Lang</a>
 			<a href="orcamento.html">Serviços & Orçamento</a>
@@ -2498,8 +2500,8 @@ for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 		console.log(`[OK] Generated ${filePath}`);
 	}
 
-	// Copy jornada.html, kairo.html, perfil.html, pentest.html, data and js
-	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html', 'pentest.html']) {
+	// Copy jornada.html, kairo.html, perfil.html, pentest.html, aula.html, data and js
+	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html', 'pentest.html', 'aula.html']) {
 		const srcPath = path.join(SITE_SRC, extraFile);
 		if (fs.existsSync(srcPath)) {
 			fs.copyFileSync(srcPath, path.join(targetDir, extraFile));
