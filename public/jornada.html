@@ -1642,12 +1642,13 @@
 			const q = s.questions[s.idx];
 			s.answered = false;
 
-			document.getElementById('quiz-bar').style.width = `${(s.idx / s.questions.length) * 100}%`;
+			const progressPct = Math.round((s.correct / s.questions.length) * 100);
+			document.getElementById('quiz-bar').style.width = `${progressPct}%`;
 			document.getElementById('quiz-hearts').textContent = s.isPractice ? '∞ (Livre)' : userState.hearts;
 			document.getElementById('quiz-cat-tag').textContent = q.category;
 			document.getElementById('quiz-level-tag').textContent = `Nível: ${q.level || 'intermediário'}`;
 			document.getElementById('quiz-xp-tag').textContent = `+${q.xp || 15} JXP`;
-			document.getElementById('quiz-qnum-tag').textContent = `Pergunta ${s.idx + 1} de ${s.questions.length}`;
+			document.getElementById('quiz-qnum-tag').textContent = `Progresso: ${s.correct} de ${s.questions.length} acertadas`;
 			document.getElementById('quiz-question').textContent = q.question;
 
 			const codeEl = document.getElementById('quiz-code');
@@ -1706,13 +1707,17 @@
 				userState.xp += earned;
 				userState.solved[q.id] = true;
 
+				const progressPct = Math.round((s.correct / s.questions.length) * 100);
+				document.getElementById('quiz-bar').style.width = `${progressPct}%`;
+				document.getElementById('quiz-qnum-tag').textContent = `Progresso: ${s.correct} de ${s.questions.length} acertadas`;
+
 				dock.innerHTML = `
 					<div class="dock-content">
 						<div style="flex:1;">
 							<div style="color:#00ff88 !important; font-weight:800; font-size:16px;">✓ Excelente! Resposta Correta</div>
 							<div style="font-size:13px; margin-top:4px;">${q.explanation || ''}</div>
 						</div>
-						<button class="btn-duo" onclick="nextQuestion()">Continuar</button>
+						<button class="btn-duo" onclick="nextQuestion()">Avançar ➔</button>
 					</div>
 				`;
 			} else {
@@ -1720,28 +1725,34 @@
 				sel.classList.add('incorrect-state');
 				dock.className = 'quiz-dock dock-incorrect';
 
-				document.querySelectorAll('.opt-btn').forEach(b => {
-					if (b.querySelector('span').textContent.trim() === String(q.answer).trim()) {
-						b.classList.add('correct-state');
-					}
-				});
-
 				// In campaign mode, losing a heart is permanent for the rest of the day!
 				if (!s.isPractice) {
 					userState.hearts = Math.max(0, userState.hearts - 1);
 					document.getElementById('quiz-hearts').textContent = userState.hearts;
 				}
 
-				dock.innerHTML = `
-					<div class="dock-content">
-						<div style="flex:1;">
-							<div style="color:#ff0055 !important; font-weight:800; font-size:16px;">✕ Resposta Incorreta</div>
-							<div style="font-size:13px; margin-top:4px;"><strong>Resposta certa:</strong> ${q.answer}</div>
-							${q.explanation ? `<div style="font-size:12px; opacity:0.85; margin-top:2px;">${q.explanation}</div>` : ''}
+				if (!s.isPractice && userState.hearts <= 0) {
+					dock.innerHTML = `
+						<div class="dock-content">
+							<div style="flex:1;">
+								<div style="color:#ff0055 !important; font-weight:800; font-size:16px;">✕ Vidas Esgotadas! (0/5)</div>
+								<div style="font-size:13px; margin-top:4px;">Suas vidas acabaram por hoje. Elas recarregarão à meia-noite.</div>
+							</div>
+							<button class="btn-duo" onclick="closeQuiz(); document.getElementById('no-hearts-modal').classList.add('active');" style="background:#ff0055; border-color:#990033;">Encerrar</button>
 						</div>
-						<button class="btn-duo" onclick="nextQuestion()">Continuar</button>
-					</div>
-				`;
+					`;
+				} else {
+					dock.innerHTML = `
+						<div class="dock-content">
+							<div style="flex:1;">
+								<div style="color:#ff0055 !important; font-weight:800; font-size:16px;">✕ Resposta Incorreta (-1 Vida)</div>
+								<div style="font-size:13px; margin-top:4px;">Você deve acertar esta pergunta para conseguir avançar no progresso!</div>
+								${q.explanation ? `<div style="font-size:12px; opacity:0.85; margin-top:2px;"><strong>Dica:</strong> ${q.explanation}</div>` : ''}
+							</div>
+							<button class="btn-duo" onclick="retryCurrentQuestion()">Tentar Novamente ↺</button>
+						</div>
+					`;
+				}
 			}
 
 			// Synchronize answered stats to logged-in user profile
@@ -1758,6 +1769,7 @@
 					currUser.xp = userState.xp;
 					currUser.streak = userState.streak;
 					currUser.level = userState.level;
+					currUser.hearts = userState.hearts;
 					localStorage.setItem('omnivoid_current_user', JSON.stringify(currUser));
 
 					let db = JSON.parse(localStorage.getItem('omnivoid_users_db') || '[]');
@@ -1774,8 +1786,19 @@
 			saveState();
 		}
 
+		function retryCurrentQuestion() {
+			if (!activeSession) return;
+			if (!activeSession.isPractice && userState.hearts <= 0) {
+				closeQuiz();
+				document.getElementById('no-hearts-modal').classList.add('active');
+				return;
+			}
+			renderQuestion();
+		}
+
 		function nextQuestion() {
 			const s = activeSession;
+			if (!s) return;
 			s.idx++;
 			if (s.idx < s.questions.length) {
 				// If campaign mode and player has 0 hearts, end session immediately
