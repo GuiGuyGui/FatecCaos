@@ -869,6 +869,19 @@
 			{ id: 'jxp_500', icon: '💎', name: 'Elite do Vazio', desc: 'Acumulou mais de 500 JXP.' }
 		];
 
+		// System-wide accounts and journey clean reset to ensure all players start fresh
+		(function checkAccountReset() {
+			const RESET_VERSION = 'omnivoid_reset_v4_accounts_clean';
+			if (!localStorage.getItem(RESET_VERSION)) {
+				localStorage.removeItem('omnivoid_users_db');
+				localStorage.removeItem('omnivoid_current_user');
+				localStorage.removeItem('omni_jornada_v2');
+				localStorage.removeItem('omni_jornada_state');
+				localStorage.setItem(RESET_VERSION, 'true');
+				console.log('[OmniVoid] All accounts and journey progress cleanly reset.');
+			}
+		})();
+
 		function getUsersDB() {
 			try {
 				return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
