@@ -461,6 +461,7 @@ function getNavbar(activeTab) {
 			<ul class="nav-links">
 				<li><a href="index.html" class="nav-link ${activeTab === 'inicio' ? 'active' : ''}">Início</a></li>
 				<li><a href="jornada.html" class="nav-link ${activeTab === 'jornada' ? 'active' : ''}">⚡ Jornada Dev</a></li>
+				<li><a href="pentest.html" class="nav-link ${activeTab === 'pentest' ? 'active' : ''}">🛡️ Pentest &amp; Hacking</a></li>
 				<li><a href="simulacao.html" class="nav-link ${activeTab === 'simulacao' ? 'active' : ''}">⚔️ Simulação</a></li>
 				<li><a href="perfil.html" class="nav-link ${activeTab === 'perfil' ? 'active' : ''}">👤 Meu Perfil</a></li>
 				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">✨ Kairo Lang</a></li>
@@ -2498,8 +2499,8 @@ for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 		console.log(`[OK] Generated ${filePath}`);
 	}
 
-	// Copy jornada.html, kairo.html, perfil.html, simulacao.html, data and js
-	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html', 'simulacao.html']) {
+	// Copy jornada.html, kairo.html, perfil.html, simulacao.html, pentest.html, data and js
+	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html', 'simulacao.html', 'pentest.html']) {
 		const srcPath = path.join(SITE_SRC, extraFile);
 		if (fs.existsSync(srcPath)) {
 			fs.copyFileSync(srcPath, path.join(targetDir, extraFile));
