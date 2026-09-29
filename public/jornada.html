@@ -24,6 +24,7 @@
 			--accent-purple: #9d4edd;
 			--accent-emerald: #00ff88;
 			--accent-gold: #ffd60a;
+			--accent-hardware: #ff9e00;
 			--text-white: #ffffff;
 			--font-title: 'Orbitron', sans-serif;
 			--font-sub: 'Rajdhani', sans-serif;
@@ -144,7 +145,7 @@
 			flex: 1;
 		}
 
-		/* Duolingo Gamification Top Bar */
+		/* Gamification Top Bar */
 		.gamification-header {
 			background: var(--bg-card);
 			border: 1.5px solid rgba(0, 255, 136, 0.3);
@@ -216,7 +217,7 @@
 		.jornada-tabs {
 			display: flex;
 			gap: 8px;
-			margin-bottom: 24px;
+			margin-bottom: 20px;
 			border-bottom: 1px solid var(--border-color);
 			padding-bottom: 12px;
 			overflow-x: auto;
@@ -233,6 +234,7 @@
 			cursor: pointer;
 			text-transform: uppercase;
 			transition: all 0.2s ease;
+			white-space: nowrap;
 		}
 
 		.tab-btn:hover {
@@ -243,6 +245,94 @@
 			background: rgba(0, 255, 136, 0.15);
 			border-color: var(--accent-emerald);
 			box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
+		}
+
+		/* Career Branches / Tracks Selector Bar */
+		.track-selector-bar {
+			background: var(--bg-card);
+			border: 1px solid var(--border-color);
+			border-radius: 14px;
+			padding: 16px 20px;
+			margin-bottom: 28px;
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.track-buttons-row {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.track-pill {
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			padding: 10px 18px;
+			font-family: var(--font-title);
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.track-pill:hover {
+			background: rgba(255, 255, 255, 0.1);
+			transform: translateY(-1px);
+		}
+
+		.track-pill.active-all {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 255, 136, 0.2));
+			border-color: var(--accent-emerald);
+			box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+		}
+
+		.track-pill.active-prog {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.25), rgba(157, 78, 221, 0.2));
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+		}
+
+		.track-pill.active-sec {
+			background: linear-gradient(135deg, rgba(255, 0, 85, 0.25), rgba(157, 78, 221, 0.2));
+			border-color: var(--accent-danger);
+			box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+		}
+
+		.track-pill.active-hard {
+			background: linear-gradient(135deg, rgba(255, 158, 0, 0.25), rgba(255, 214, 10, 0.2));
+			border-color: var(--accent-hardware);
+			box-shadow: 0 0 12px rgba(255, 158, 0, 0.3);
+		}
+
+		.track-progress-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 12px;
+			opacity: 0.9;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		.track-progress-bar-bg {
+			width: 100%;
+			height: 8px;
+			background: rgba(255, 255, 255, 0.08);
+			border-radius: 10px;
+			overflow: hidden;
+		}
+
+		.track-progress-bar-fill {
+			height: 100%;
+			width: 0%;
+			background: linear-gradient(90deg, #00f0ff, #00ff88);
+			border-radius: 10px;
+			transition: width 0.4s ease;
 		}
 
 		/* 3D Duolingo Button */
@@ -287,18 +377,18 @@
 			border-bottom-width: 4px;
 		}
 
-		/* Duolingo Learning Path Zig-Zag */
+		/* Learning Path Zig-Zag Tree */
 		.path-container {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 36px;
-			padding: 10px 0 40px;
+			gap: 40px;
+			padding: 10px 0 60px;
 		}
 
 		.unit-card {
 			width: 100%;
-			max-width: 620px;
+			max-width: 680px;
 			background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 240, 255, 0.1) 100%);
 			border: 1.5px solid var(--accent-emerald);
 			border-radius: 14px;
@@ -306,39 +396,101 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			box-shadow: 0 6px 20px rgba(0, 255, 136, 0.2);
+			box-shadow: 0 6px 25px rgba(0, 255, 136, 0.2);
+			transition: transform 0.2s ease;
 		}
 
-		.unit-card.unit-2 {
-			background: linear-gradient(135deg, rgba(157, 78, 221, 0.2) 0%, rgba(0, 240, 255, 0.1) 100%);
+		.unit-card:hover {
+			transform: scale(1.01);
+		}
+
+		/* Theme Colors for Tracks */
+		.unit-theme-prog-1 {
+			background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 240, 255, 0.1) 100%);
+			border-color: var(--accent-emerald);
+			box-shadow: 0 6px 25px rgba(0, 255, 136, 0.2);
+		}
+
+		.unit-theme-prog-2 {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(157, 78, 221, 0.1) 100%);
+			border-color: var(--accent-primary);
+			box-shadow: 0 6px 25px rgba(0, 240, 255, 0.2);
+		}
+
+		.unit-theme-prog-3 {
+			background: linear-gradient(135deg, rgba(157, 78, 221, 0.2) 0%, rgba(0, 255, 136, 0.1) 100%);
 			border-color: var(--accent-purple);
-			box-shadow: 0 6px 20px rgba(157, 78, 221, 0.2);
+			box-shadow: 0 6px 25px rgba(157, 78, 221, 0.2);
 		}
 
-		.unit-card.unit-3 {
+		.unit-theme-prog-4 {
 			background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(255, 214, 10, 0.1) 100%);
 			border-color: var(--accent-primary);
-			box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+			box-shadow: 0 6px 25px rgba(0, 240, 255, 0.2);
 		}
 
-		.unit-card.unit-4 {
-			background: linear-gradient(135deg, rgba(255, 0, 85, 0.2) 0%, rgba(157, 78, 221, 0.1) 100%);
+		/* Security Track Units */
+		.unit-theme-sec-1 {
+			background: linear-gradient(135deg, rgba(255, 0, 85, 0.25) 0%, rgba(157, 78, 221, 0.15) 100%);
 			border-color: var(--accent-danger);
-			box-shadow: 0 6px 20px rgba(255, 0, 85, 0.2);
+			box-shadow: 0 6px 25px rgba(255, 0, 85, 0.25);
+		}
+
+		.unit-theme-sec-2 {
+			background: linear-gradient(135deg, rgba(255, 0, 85, 0.2) 0%, rgba(255, 100, 0, 0.15) 100%);
+			border-color: #ff3366;
+			box-shadow: 0 6px 25px rgba(255, 51, 102, 0.25);
+		}
+
+		.unit-theme-sec-3 {
+			background: linear-gradient(135deg, rgba(157, 78, 221, 0.25) 0%, rgba(255, 0, 85, 0.15) 100%);
+			border-color: var(--accent-purple);
+			box-shadow: 0 6px 25px rgba(157, 78, 221, 0.25);
+		}
+
+		.unit-theme-sec-4 {
+			background: linear-gradient(135deg, rgba(255, 0, 85, 0.3) 0%, rgba(0, 240, 255, 0.15) 100%);
+			border-color: var(--accent-danger);
+			box-shadow: 0 6px 25px rgba(255, 0, 85, 0.3);
+		}
+
+		/* Hardware Track Units */
+		.unit-theme-hard-1 {
+			background: linear-gradient(135deg, rgba(255, 158, 0, 0.25) 0%, rgba(255, 214, 10, 0.15) 100%);
+			border-color: var(--accent-hardware);
+			box-shadow: 0 6px 25px rgba(255, 158, 0, 0.25);
+		}
+
+		.unit-theme-hard-2 {
+			background: linear-gradient(135deg, rgba(255, 214, 10, 0.25) 0%, rgba(0, 240, 255, 0.15) 100%);
+			border-color: var(--accent-gold);
+			box-shadow: 0 6px 25px rgba(255, 214, 10, 0.25);
+		}
+
+		.unit-theme-hard-3 {
+			background: linear-gradient(135deg, rgba(255, 158, 0, 0.25) 0%, rgba(0, 255, 136, 0.15) 100%);
+			border-color: var(--accent-hardware);
+			box-shadow: 0 6px 25px rgba(255, 158, 0, 0.25);
+		}
+
+		.unit-theme-hard-4 {
+			background: linear-gradient(135deg, rgba(255, 158, 0, 0.3) 0%, rgba(157, 78, 221, 0.2) 100%);
+			border-color: var(--accent-hardware);
+			box-shadow: 0 6px 25px rgba(255, 158, 0, 0.3);
 		}
 
 		.path-nodes {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 20px;
+			gap: 22px;
 			width: 100%;
 			max-width: 480px;
 		}
 
 		.path-node-btn {
-			width: 78px;
-			height: 78px;
+			width: 80px;
+			height: 80px;
 			border-radius: 50%;
 			background: #00ff88;
 			border: 4px solid #00cc6a;
@@ -346,7 +498,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			font-size: 26px;
+			font-size: 28px;
 			cursor: pointer;
 			position: relative;
 			transition: all 0.15s ease;
@@ -377,16 +529,16 @@
 			border-bottom-color: #997e00;
 		}
 
-		.node-left { transform: translateX(-50px); }
+		.node-left { transform: translateX(-55px); }
 		.node-center { transform: translateX(0); }
-		.node-right { transform: translateX(50px); }
+		.node-right { transform: translateX(55px); }
 
 		.node-tooltip {
 			position: absolute;
 			top: -30px;
 			background: #101018;
 			border: 1px solid var(--border-bright);
-			padding: 3px 8px;
+			padding: 3px 10px;
 			border-radius: 6px;
 			font-size: 11px;
 			font-family: var(--font-title);
@@ -645,7 +797,7 @@
 		</ul>
 
 		<div class="nav-user-panel">
-			<button id="btn-sound" class="btn-secondary" style="padding: 6px 12px; font-size: 13px;">
+			<button id="btn-sound" class="btn-duo" style="padding: 6px 14px; font-size: 12px; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2);">
 				🔊 Som
 			</button>
 		</div>
@@ -681,13 +833,45 @@
 
 		<!-- Jornada Sub Tabs -->
 		<div class="jornada-tabs">
-			<button class="tab-btn active" onclick="switchJornadaTab('path')">🗺️ Trilha de Fases</button>
-			<button class="tab-btn" onclick="switchJornadaTab('categories')">📚 Prática Livre (2.200 Questões)</button>
-			<button class="tab-btn" onclick="switchJornadaTab('profile')">📊 Meu Perfil Dev</button>
+			<button class="tab-btn active" onclick="switchJornadaTab('path')">🗺️ Árvore de Fases &amp; Especializações</button>
+			<button class="tab-btn" onclick="switchJornadaTab('categories')">📚 Prática Livre (2.200+ Questões)</button>
+			<button class="tab-btn" onclick="switchJornadaTab('profile')">📊 Meu Perfil Dev &amp; Conquistas</button>
 		</div>
 
-		<!-- TAB 1: LEARNING PATH (DUOLINGO STYLE) -->
+		<!-- TAB 1: LEARNING PATH WITH BRANCHES / TRACKS -->
 		<div id="jornada-tab-path">
+			
+			<!-- Track Selector Bar -->
+			<div class="track-selector-bar">
+				<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+					<span style="font-family:var(--font-title); font-size:13px; font-weight:700; text-transform:uppercase; color:var(--accent-primary) !important;">
+						🎯 Especialização da Trilha:
+					</span>
+					<div class="track-buttons-row">
+						<button class="track-pill active-all" id="pill-all" onclick="setTrackFilter('all')">
+							<span>🌟</span> Todas as Trilhas (12 Unidades)
+						</button>
+						<button class="track-pill" id="pill-prog" onclick="setTrackFilter('prog')">
+							<span>💻</span> Programação &amp; Web (Unidades 1-4)
+						</button>
+						<button class="track-pill" id="pill-sec" onclick="setTrackFilter('sec')">
+							<span>🛡️</span> Cibersegurança &amp; Hacking (Unidades 5-8)
+						</button>
+						<button class="track-pill" id="pill-hard" onclick="setTrackFilter('hard')">
+							<span>🔌</span> Hardware &amp; Baixo Nível (Unidades 9-12)
+						</button>
+					</div>
+				</div>
+
+				<div class="track-progress-info">
+					<span id="track-stats-text">Progresso Geral: 0 de 52 fases concluídas (0%)</span>
+					<span id="track-title-badge" style="font-family:var(--font-code); font-size:11px; opacity:0.8;">OmniVoid Fullstack &amp; Engineering Path</span>
+				</div>
+				<div class="track-progress-bar-bg">
+					<div class="track-progress-bar-fill" id="track-progress-fill"></div>
+				</div>
+			</div>
+
 			<div class="path-container" id="path-tree-wrapper">
 				<!-- Dynamically generated by script -->
 			</div>
@@ -696,7 +880,7 @@
 		<!-- TAB 2: CATEGORIES EXPLORER -->
 		<div id="jornada-tab-categories" style="display: none;">
 			<div style="margin-bottom: 20px;">
-				<input type="text" id="cat-search" placeholder="🔍 Filtrar categoria (ex: JavaScript, Python, SQL, Docker, Clean Code)..." style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-bright); padding: 14px 18px; border-radius: 8px; font-size: 14px; outline: none;">
+				<input type="text" id="cat-search" placeholder="🔍 Filtrar categoria (ex: Hardware, Cibersegurança, Baixo Nível, JavaScript, SQL, Docker, Python)..." style="width: 100%; background: var(--bg-card); border: 1px solid var(--border-bright); padding: 14px 18px; border-radius: 8px; font-size: 14px; outline: none;">
 			</div>
 			<div class="categories-grid" id="cat-grid-wrapper">
 				<!-- Dynamically generated by script -->
@@ -707,6 +891,33 @@
 		<div id="jornada-tab-profile" style="display: none;">
 			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px;" id="profile-grid">
 				<!-- Dynamically generated -->
+			</div>
+
+			<div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; margin-top: 20px;">
+				<h3 style="font-size: 16px; margin-bottom: 16px; color: var(--accent-primary) !important;">🏆 Títulos &amp; Hierarquia de Carreira</h3>
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; font-size: 13px;">
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #00ff88;">
+						<strong>Nível 1 (0 JXP):</strong> Dev Novato
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #00f0ff;">
+						<strong>Nível 2 (150 JXP):</strong> Estagiário Curioso
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #9d4edd;">
+						<strong>Nível 3 (400 JXP):</strong> Dev Júnior Multi-stack
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #ffd60a;">
+						<strong>Nível 4 (900 JXP):</strong> Dev Pleno &amp; Defensor
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #ff0055;">
+						<strong>Nível 5 (1.800 JXP):</strong> Dev Sênior &amp; Hacker Ético
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #ff9e00;">
+						<strong>Nível 6 (3.500 JXP):</strong> Arquiteto de Software &amp; Hardware
+					</div>
+					<div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.2);">
+						<strong>Nível 7 (6.000+ JXP):</strong> Tech Lead do Vazio OmniVoid
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -748,8 +959,8 @@
 	<div class="victory-box" id="victory-box">
 		<div class="victory-card">
 			<div style="font-size: 54px; margin-bottom: 12px;">🏆</div>
-			<h2 style="font-size: 24px; text-transform: uppercase; margin-bottom: 8px;">Lição Concluída!</h2>
-			<p style="font-size: 14px; opacity: 0.85; margin-bottom: 24px;">Você dominou mais um módulo de desenvolvimento!</p>
+			<h2 style="font-size: 24px; text-transform: uppercase; margin-bottom: 8px;">Fase Concluída!</h2>
+			<p style="font-size: 14px; opacity: 0.85; margin-bottom: 24px;">Você dominou mais um módulo com sucesso!</p>
 			
 			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
 				<div style="background: rgba(255,255,255,0.04); padding: 14px; border-radius: 8px;">
@@ -786,7 +997,185 @@
 	<script>
 		let allQuestions = [];
 		let activeSession = null;
+		let currentTrackFilter = 'all';
 		let userState = loadState();
+
+		// 12 Full Units Across 3 Major Career Tracks
+		const allUnits = [
+			// ================= TRACK 1: PROGRAMAÇÃO & WEB =================
+			{
+				id: 1,
+				track: 'prog',
+				title: 'Unidade 1: Fundamentos de Lógica & Algoritmos',
+				badge: '💻 Programação',
+				theme: 'unit-theme-prog-1',
+				nodes: [
+					{ id: 'u1-1', label: 'Variáveis & Tipos', cat: 'Fundamentos', icon: '🌱' },
+					{ id: 'u1-2', label: 'Condicionais & Loops', cat: 'Lógica', icon: '🔀' },
+					{ id: 'u1-3', label: 'Funções & Escopo', cat: 'Fundamentos', icon: '📦' },
+					{ id: 'u1-4', label: 'Estruturas de Dados', cat: 'Estruturas de Dados e Algoritmos', icon: '🌲' },
+					{ id: 'u1-5', label: 'Chefe: Desafio de Lógica', cat: 'Lógica', icon: '🏆' }
+				]
+			},
+			{
+				id: 2,
+				track: 'prog',
+				title: 'Unidade 2: Frontend & Engenharia Web',
+				badge: '💻 Programação',
+				theme: 'unit-theme-prog-2',
+				nodes: [
+					{ id: 'u2-1', label: 'HTML5 Semântico', cat: 'HTML', icon: '📄' },
+					{ id: 'u2-2', label: 'CSS Moderno & Layouts', cat: 'CSS', icon: '🎨' },
+					{ id: 'u2-3', label: 'JavaScript ES6+', cat: 'JavaScript', icon: '⚡' },
+					{ id: 'u2-4', label: 'TypeScript & Tipagem', cat: 'TypeScript', icon: '🛡️' },
+					{ id: 'u2-5', label: 'Chefe: Mestre Frontend', cat: 'JavaScript', icon: '👑' }
+				]
+			},
+			{
+				id: 3,
+				track: 'prog',
+				title: 'Unidade 3: Backend, Bancos de Dados & APIs',
+				badge: '💻 Programação',
+				theme: 'unit-theme-prog-3',
+				nodes: [
+					{ id: 'u3-1', label: 'Protocolo HTTP & REST', cat: 'HTTP/APIs', icon: '🌐' },
+					{ id: 'u3-2', label: 'Python & Scripting', cat: 'Python', icon: '🐍' },
+					{ id: 'u3-3', label: 'Modelagem SQL & Joins', cat: 'SQL', icon: '🗄️' },
+					{ id: 'u3-4', label: 'Bancos de Dados & Índices', cat: 'Banco de Dados', icon: '⚡' },
+					{ id: 'u3-5', label: 'Chefe: Arquiteto Backend', cat: 'HTTP/APIs', icon: '💎' }
+				]
+			},
+			{
+				id: 4,
+				track: 'prog',
+				title: 'Unidade 4: Engenharia de Software & Clean Code',
+				badge: '💻 Programação',
+				theme: 'unit-theme-prog-4',
+				nodes: [
+					{ id: 'u4-1', label: 'Controle de Versão Git', cat: 'Git/GitHub', icon: '🐙' },
+					{ id: 'u4-2', label: 'Clean Code & Refatoração', cat: 'Clean Code', icon: '✨' },
+					{ id: 'u4-3', label: 'Testes Unitários & TDD', cat: 'Testes', icon: '🧪' },
+					{ id: 'u4-4', label: 'Arquitetura de Software', cat: 'Arquitetura', icon: '🏛️' },
+					{ id: 'u4-5', label: 'Chefe: Engenheiro Pleno', cat: 'Arquitetura', icon: '🌌' }
+				]
+			},
+
+			// ================= TRACK 2: CIBERSEGURANÇA & HACKING =================
+			{
+				id: 5,
+				track: 'sec',
+				title: 'Unidade 5: Fundamentos de Cibersegurança & Criptografia',
+				badge: '🛡️ Cibersegurança',
+				theme: 'unit-theme-sec-1',
+				nodes: [
+					{ id: 'u5-1', label: 'Tríade CIA & Ameaças', cat: 'Segurança', icon: '🛡️' },
+					{ id: 'u5-2', label: 'Criptografia & Hashes', cat: 'Segurança', icon: '🔐' },
+					{ id: 'u5-3', label: 'SSL/TLS & Certificados', cat: 'Segurança', icon: '📜' },
+					{ id: 'u5-4', label: 'Gestão de Senhas & Sal', cat: 'Segurança', icon: '🗝️' },
+					{ id: 'u5-5', label: 'Chefe: Sentinela Cripto', cat: 'Segurança', icon: '🏆' }
+				]
+			},
+			{
+				id: 6,
+				track: 'sec',
+				title: 'Unidade 6: Segurança de Aplicações & OWASP Top 10',
+				badge: '🛡️ Cibersegurança',
+				theme: 'unit-theme-sec-2',
+				nodes: [
+					{ id: 'u6-1', label: 'SQL Injection (SQLi)', cat: 'Segurança', icon: '💉' },
+					{ id: 'u6-2', label: 'Cross-Site Scripting (XSS)', cat: 'Segurança', icon: '⚡' },
+					{ id: 'u6-3', label: 'CSRF & Tokens de Sessão', cat: 'Segurança', icon: '🎯' },
+					{ id: 'u6-4', label: 'Autenticação JWT Segura', cat: 'Segurança', icon: '🎟️' },
+					{ id: 'u6-5', label: 'Chefe: Guardião de Aplicações', cat: 'Segurança', icon: '⚔️' }
+				]
+			},
+			{
+				id: 7,
+				track: 'sec',
+				title: 'Unidade 7: Redes, Defesa & Hacking Ético',
+				badge: '🛡️ Cibersegurança',
+				theme: 'unit-theme-sec-3',
+				nodes: [
+					{ id: 'u7-1', label: 'Protocolos TCP/IP & Portas', cat: 'Segurança', icon: '🌐' },
+					{ id: 'u7-2', label: 'Varredura & Nmap', cat: 'Terminal/Linux', icon: '📡' },
+					{ id: 'u7-3', label: 'Firewalls, WAF & Regras', cat: 'Segurança', icon: '🧱' },
+					{ id: 'u7-4', label: 'Análise de Vulnerabilidades', cat: 'Debugging', icon: '🔍' },
+					{ id: 'u7-5', label: 'Chefe: Pentester Ético', cat: 'Segurança', icon: '🏹' }
+				]
+			},
+			{
+				id: 8,
+				track: 'sec',
+				title: 'Unidade 8: DevSecOps, Hardening Linux & Forense',
+				badge: '🛡️ Cibersegurança',
+				theme: 'unit-theme-sec-4',
+				nodes: [
+					{ id: 'u8-1', label: 'Hardening Linux & POSIX', cat: 'Terminal/Linux', icon: '🐧' },
+					{ id: 'u8-2', label: 'Segurança em Contêineres', cat: 'Docker/DevOps', icon: '🐳' },
+					{ id: 'u8-3', label: 'CI/CD Seguro & SAST', cat: 'Docker/DevOps', icon: '⚙️' },
+					{ id: 'u8-4', label: 'Auditoria de Logs & Forense', cat: 'Debugging', icon: '🕵️' },
+					{ id: 'u8-5', label: 'Chefe: Líder DevSecOps', cat: 'Segurança', icon: '👑' }
+				]
+			},
+
+			// ================= TRACK 3: HARDWARE & BAIXO NÍVEL =================
+			{
+				id: 9,
+				track: 'hard',
+				title: 'Unidade 9: Arquitetura de Computadores & Lógica Digital',
+				badge: '🔌 Hardware',
+				theme: 'unit-theme-hard-1',
+				nodes: [
+					{ id: 'u9-1', label: 'Portas Lógicas & Álgebra', cat: 'Hardware', icon: '🔌' },
+					{ id: 'u9-2', label: 'Binário, Hex & Bits', cat: 'Hardware', icon: '🔢' },
+					{ id: 'u9-3', label: 'CPU: ALU & Registradores', cat: 'Hardware', icon: '🧠' },
+					{ id: 'u9-4', label: 'Barramentos, Clock & Cache', cat: 'Hardware', icon: '⚡' },
+					{ id: 'u9-5', label: 'Chefe: Mestre dos Circuitos', cat: 'Hardware', icon: '🏆' }
+				]
+			},
+			{
+				id: 10,
+				track: 'hard',
+				title: 'Unidade 10: Linguagem C, Assembly & Gerenciamento de Memória',
+				badge: '🔌 Hardware',
+				theme: 'unit-theme-hard-2',
+				nodes: [
+					{ id: 'u10-1', label: 'Ponteiros & Endereços C', cat: 'Baixo Nível', icon: '📍' },
+					{ id: 'u10-2', label: 'Memória Heap vs Stack', cat: 'Baixo Nível', icon: '📦' },
+					{ id: 'u10-3', label: 'Assembly x86/ARM Básico', cat: 'Baixo Nível', icon: '⚙️' },
+					{ id: 'u10-4', label: 'Chamadas de Sistema (Syscalls)', cat: 'Baixo Nível', icon: '🚥' },
+					{ id: 'u10-5', label: 'Chefe: Alquimista da Memória', cat: 'Baixo Nível', icon: '💎' }
+				]
+			},
+			{
+				id: 11,
+				track: 'hard',
+				title: 'Unidade 11: Sistemas Embarcados & Microcontroladores',
+				badge: '🔌 Hardware',
+				theme: 'unit-theme-hard-3',
+				nodes: [
+					{ id: 'u11-1', label: 'Arduino & ESP32 GPIO', cat: 'Sistemas Embarcados', icon: '🤖' },
+					{ id: 'u11-2', label: 'Sinais PWM & Atuadores', cat: 'Sistemas Embarcados', icon: '💡' },
+					{ id: 'u11-3', label: 'Interrupções de Hardware (ISR)', cat: 'Sistemas Embarcados', icon: '⚡' },
+					{ id: 'u11-4', label: 'Timers & Conversores ADC', cat: 'Sistemas Embarcados', icon: '⏱️' },
+					{ id: 'u11-5', label: 'Chefe: Engenheiro de Firmware', cat: 'Sistemas Embarcados', icon: '🦾' }
+				]
+			},
+			{
+				id: 12,
+				track: 'hard',
+				title: 'Unidade 12: Comunicação Serial, Sensores & IoT',
+				badge: '🔌 Hardware',
+				theme: 'unit-theme-hard-4',
+				nodes: [
+					{ id: 'u12-1', label: 'Protocolos I2C, SPI & UART', cat: 'Sistemas Embarcados', icon: '🔗' },
+					{ id: 'u12-2', label: 'Sensores Digitais & Barramentos', cat: 'Sistemas Embarcados', icon: '🌡️' },
+					{ id: 'u12-3', label: 'Protocolo MQTT para IoT', cat: 'Sistemas Embarcados', icon: '📡' },
+					{ id: 'u12-4', label: 'RTOS & Multithreading', cat: 'Sistemas Embarcados', icon: '🔄' },
+					{ id: 'u12-5', label: 'Soberano do Silício OmniVoid', cat: 'Hardware', icon: '🌌' }
+				]
+			}
+		];
 
 		function loadState() {
 			const saved = localStorage.getItem('omni_jornada_v2');
@@ -811,13 +1200,13 @@
 
 		function saveState() {
 			const xp = userState.xp;
-			if (xp < 50) { userState.level = 1; userState.title = 'Dev Novato'; }
-			else if (xp < 150) { userState.level = 2; userState.title = 'Estagiário Curioso'; }
-			else if (xp < 400) { userState.level = 3; userState.title = 'Dev Júnior'; }
-			else if (xp < 900) { userState.level = 4; userState.title = 'Dev Pleno'; }
-			else if (xp < 1800) { userState.level = 5; userState.title = 'Dev Sênior'; }
-			else if (xp < 3500) { userState.level = 6; userState.title = 'Arquiteto de Software'; }
-			else { userState.level = 7; userState.title = 'Tech Lead do Vazio'; }
+			if (xp < 150) { userState.level = 1; userState.title = 'Dev Novato'; }
+			else if (xp < 400) { userState.level = 2; userState.title = 'Estagiário Curioso'; }
+			else if (xp < 900) { userState.level = 3; userState.title = 'Dev Júnior Multi-stack'; }
+			else if (xp < 1800) { userState.level = 4; userState.title = 'Dev Pleno & Defensor'; }
+			else if (xp < 3500) { userState.level = 5; userState.title = 'Dev Sênior & Hacker Ético'; }
+			else if (xp < 6000) { userState.level = 6; userState.title = 'Arquiteto de Software & Hardware'; }
+			else { userState.level = 7; userState.title = 'Tech Lead do Vazio OmniVoid'; }
 
 			localStorage.setItem('omni_jornada_v2', JSON.stringify(userState));
 			updateUI();
@@ -826,9 +1215,47 @@
 		function updateUI() {
 			document.getElementById('user-title').textContent = userState.title;
 			document.getElementById('user-level').textContent = `Nível ${userState.level} • ${userState.xp} JXP`;
-			document.getElementById('user-streak').textContent = `${userState.streak} dias`;
+			document.getElementById('user-streak').textContent = `${userState.streak} dia${userState.streak > 1 ? 's' : ''}`;
 			document.getElementById('user-xp').textContent = `${userState.xp} JXP`;
 			document.getElementById('user-hearts').textContent = `${userState.hearts}/5`;
+			updateTrackProgress();
+		}
+
+		function setTrackFilter(track) {
+			currentTrackFilter = track;
+			document.querySelectorAll('.track-pill').forEach(b => {
+				b.classList.remove('active-all', 'active-prog', 'active-sec', 'active-hard');
+			});
+
+			const pill = document.getElementById(`pill-${track}`);
+			if (pill) {
+				if (track === 'all') pill.classList.add('active-all');
+				if (track === 'prog') pill.classList.add('active-prog');
+				if (track === 'sec') pill.classList.add('active-sec');
+				if (track === 'hard') pill.classList.add('active-hard');
+			}
+
+			renderPath();
+			updateTrackProgress();
+		}
+
+		function updateTrackProgress() {
+			let visibleUnits = allUnits;
+			let trackName = 'Geral (Todas as Trilhas)';
+			if (currentTrackFilter !== 'all') {
+				visibleUnits = allUnits.filter(u => u.track === currentTrackFilter);
+				if (currentTrackFilter === 'prog') trackName = 'Programação & Web';
+				if (currentTrackFilter === 'sec') trackName = 'Cibersegurança & Hacking';
+				if (currentTrackFilter === 'hard') trackName = 'Hardware & Baixo Nível';
+			}
+
+			const allNodes = visibleUnits.flatMap(u => u.nodes);
+			const total = allNodes.length;
+			const done = allNodes.filter(n => userState.completed.includes(n.id)).length;
+			const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+			document.getElementById('track-stats-text').textContent = `Trilha ${trackName}: ${done} de ${total} fases concluídas (${pct}%)`;
+			document.getElementById('track-progress-fill').style.width = `${pct}%`;
 		}
 
 		async function initJornada() {
@@ -846,60 +1273,52 @@
 
 		function renderPath() {
 			const wrapper = document.getElementById('path-tree-wrapper');
-			const units = [
-				{ id: 1, title: 'Unidade 1: Fundamentos & Lógica', theme: '', nodes: [
-					{ id: 'u1-1', label: 'Variáveis', cat: 'Fundamentos', icon: '🌱' },
-					{ id: 'u1-2', label: 'Condicionais', cat: 'Lógica', icon: '🔀' },
-					{ id: 'u1-3', label: 'Funções', cat: 'Fundamentos', icon: '📦' },
-					{ id: 'u1-4', label: 'Chefe Unidade 1', cat: 'Fundamentos', icon: '🏆' }
-				]},
-				{ id: 2, title: 'Unidade 2: JavaScript & TypeScript', theme: 'unit-2', nodes: [
-					{ id: 'u2-1', label: 'HTML & CSS', cat: 'HTML', icon: '🎨' },
-					{ id: 'u2-2', label: 'JavaScript ES6+', cat: 'JavaScript', icon: '⚡' },
-					{ id: 'u2-3', label: 'TypeScript', cat: 'TypeScript', icon: '🛡️' },
-					{ id: 'u2-4', label: 'Chefe Unidade 2', cat: 'JavaScript', icon: '👑' }
-				]},
-				{ id: 3, title: 'Unidade 3: Backend, SQL & APIs', theme: 'unit-3', nodes: [
-					{ id: 'u3-1', label: 'HTTP & APIs', cat: 'HTTP/APIs', icon: '🌐' },
-					{ id: 'u3-2', label: 'Python', cat: 'Python', icon: '🐍' },
-					{ id: 'u3-3', label: 'Banco SQL', cat: 'SQL', icon: '🗄️' },
-					{ id: 'u3-4', label: 'Chefe Unidade 3', cat: 'SQL', icon: '💎' }
-				]},
-				{ id: 4, title: 'Unidade 4: DevOps & Clean Code', theme: 'unit-4', nodes: [
-					{ id: 'u4-1', label: 'Git & GitHub', cat: 'Git/GitHub', icon: '🐙' },
-					{ id: 'u4-2', label: 'Docker & DevOps', cat: 'Docker/DevOps', icon: '🐳' },
-					{ id: 'u4-3', label: 'Testes & Clean Code', cat: 'Testes', icon: '🧪' },
-					{ id: 'u4-4', label: 'Mestre OmniVoid', cat: 'Clean Code', icon: '🌌' }
-				]}
-			];
+			let filteredUnits = allUnits;
+			if (currentTrackFilter !== 'all') {
+				filteredUnits = allUnits.filter(u => u.track === currentTrackFilter);
+			}
 
 			let html = '';
-			const positions = ['node-center', 'node-left', 'node-center', 'node-right'];
+			const positions = ['node-center', 'node-left', 'node-center', 'node-right', 'node-center'];
 
-			units.forEach((u, uIdx) => {
+			filteredUnits.forEach((u, uIdx) => {
 				html += `
 					<div class="unit-card ${u.theme}">
 						<div>
+							<div style="display:inline-block; font-size:11px; font-weight:800; background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:4px; margin-bottom:4px;">
+								${u.badge}
+							</div>
 							<h3 style="font-size:16px;">${u.title}</h3>
-							<p style="font-size:12px; opacity:0.85;">Domine os desafios sequenciais</p>
+							<p style="font-size:12px; opacity:0.85;">Domine os desafios sequenciais da unidade</p>
 						</div>
-						<span style="font-size:24px;">🚀</span>
+						<span style="font-size:28px;">🚀</span>
 					</div>
 					<div class="path-nodes">
 				`;
 
 				u.nodes.forEach((n, nIdx) => {
 					const isDone = userState.completed.includes(n.id);
-					const isPrevDone = (uIdx === 0 && nIdx === 0) || (nIdx > 0 && userState.completed.includes(u.nodes[nIdx - 1].id)) || (nIdx === 0 && userState.completed.includes(units[uIdx - 1]?.nodes.slice(-1)[0]?.id));
-					const isLocked = !isDone && !isPrevDone;
+					
+					// Progressive unlock: first node is unlocked if it's the first unit, or if the previous unit's boss is done
+					let isPrevDone = false;
+					if (uIdx === 0 && nIdx === 0) {
+						isPrevDone = true;
+					} else if (nIdx > 0) {
+						isPrevDone = userState.completed.includes(u.nodes[nIdx - 1].id);
+					} else if (nIdx === 0 && uIdx > 0) {
+						const prevUnit = filteredUnits[uIdx - 1];
+						const prevLastNode = prevUnit.nodes[prevUnit.nodes.length - 1];
+						isPrevDone = userState.completed.includes(prevLastNode.id);
+					}
 
+					const isLocked = !isDone && !isPrevDone;
 					const pos = positions[nIdx % positions.length];
 					const stateClass = isDone ? 'completed' : (isLocked ? 'locked' : '');
 
 					html += `
 						<button class="path-node-btn ${pos} ${stateClass}" onclick="startLesson('${n.id}', '${n.cat}', ${isLocked})">
 							<span class="node-tooltip">${n.label}</span>
-							<span>${isLocked ? '🔒' : n.icon}</span>
+							<span>${isLocked ? '🔒' : (isDone ? '⭐' : n.icon)}</span>
 						</button>
 					`;
 				});
@@ -923,7 +1342,7 @@
 					<div class="cat-card" onclick="startLesson(null, '${cat}', false)">
 						<div>
 							<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-								<span style="font-weight:700; font-size:16px;">${cat}</span>
+								<span style="font-weight:700; font-size:15px;">${cat}</span>
 								<span style="background:rgba(255,255,255,0.08); padding:2px 8px; border-radius:10px; font-size:11px;">${counts[cat]} Qs</span>
 							</div>
 							<p style="font-size:12px; opacity:0.75;">Pratique agora questões deste tópico.</p>
@@ -939,21 +1358,21 @@
 			const grid = document.getElementById('profile-grid');
 			const solvedCount = Object.keys(userState.solved).length;
 			grid.innerHTML = `
-				<div class="card" style="text-align:center;">
+				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
 					<div style="font-size:32px; color:#ffd60a !important;">🔥 ${userState.streak}</div>
 					<div style="font-size:12px; opacity:0.8;">Dias Seguidos</div>
 				</div>
-				<div class="card" style="text-align:center;">
+				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
 					<div style="font-size:32px; color:#00f0ff !important;">💎 ${userState.xp}</div>
 					<div style="font-size:12px; opacity:0.8;">JXP Total</div>
 				</div>
-				<div class="card" style="text-align:center;">
+				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
 					<div style="font-size:32px; color:#00ff88 !important;">🎯 ${solvedCount}</div>
 					<div style="font-size:12px; opacity:0.8;">Questões Dominadas</div>
 				</div>
-				<div class="card" style="text-align:center;">
-					<div style="font-size:32px; color:#9d4edd !important;">⭐ ${userState.completed.length}</div>
-					<div style="font-size:12px; opacity:0.8;">Fases Concluídas</div>
+				<div class="card" style="text-align:center; background:var(--bg-card); border:1px solid var(--border-color); border-radius:12px; padding:20px;">
+					<div style="font-size:32px; color:#ff9e00 !important;">⭐ ${userState.completed.length} / 52</div>
+					<div style="font-size:12px; opacity:0.8;">Fases da Trilha Concluídas</div>
 				</div>
 			`;
 		}
@@ -970,7 +1389,7 @@
 		function startLesson(nodeId, cat, isLocked) {
 			if (isLocked) {
 				if (window.soundEngine) window.soundEngine.playIncorrect();
-				alert('Conclua as fases anteriores para desbloquear esta!');
+				alert('Conclua as fases anteriores para desbloquear esta fase da trilha!');
 				return;
 			}
 			if (userState.hearts <= 0) {
@@ -1013,8 +1432,8 @@
 			document.getElementById('quiz-bar').style.width = `${(s.idx / s.questions.length) * 100}%`;
 			document.getElementById('quiz-hearts').textContent = userState.hearts;
 			document.getElementById('quiz-cat-tag').textContent = q.category;
-			document.getElementById('quiz-level-tag').textContent = `Nível: ${q.level}`;
-			document.getElementById('quiz-xp-tag').textContent = `+${q.xp || 10} JXP`;
+			document.getElementById('quiz-level-tag').textContent = `Nível: ${q.level || 'intermediário'}`;
+			document.getElementById('quiz-xp-tag').textContent = `+${q.xp || 15} JXP`;
 			document.getElementById('quiz-question').textContent = q.question;
 
 			const codeEl = document.getElementById('quiz-code');
@@ -1068,7 +1487,7 @@
 				sel.classList.add('correct-state');
 				dock.className = 'quiz-dock dock-correct';
 				s.correct++;
-				const earned = q.xp || 10;
+				const earned = q.xp || 15;
 				s.earnedXp += earned;
 				userState.xp += earned;
 				userState.solved[q.id] = true;
@@ -1108,7 +1527,7 @@
 				`;
 			}
 
-			// Synchronize answered category stats directly to logged-in user profile
+			// Synchronize answered stats to logged-in user profile
 			try {
 				let currUser = JSON.parse(localStorage.getItem('omnivoid_current_user') || 'null');
 				if (currUser) {
@@ -1157,7 +1576,7 @@
 			closeQuiz();
 
 			if (window.soundEngine) window.soundEngine.playVictory();
-			if (typeof confetti === 'function') confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+			if (typeof confetti === 'function') confetti({ particleCount: 120, spread: 85, origin: { y: 0.6 } });
 
 			document.getElementById('vic-xp').textContent = `+${s.earnedXp} JXP`;
 			document.getElementById('vic-acc').textContent = `${Math.round((s.correct / s.questions.length) * 100)}%`;
@@ -1165,6 +1584,7 @@
 
 			renderPath();
 			renderProfile();
+			updateTrackProgress();
 		}
 
 		function closeVictory() {
