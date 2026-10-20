@@ -464,8 +464,8 @@ function getNavbar(activeTab) {
 				<li><a href="pentest.html" class="nav-link ${activeTab === 'pentest' ? 'active' : ''}">🛡️ Pentest &amp; Hacking</a></li>
 				<li><a href="aula.html" class="nav-link ${activeTab === 'aula' ? 'active' : ''}">🎓 Aulas</a></li>
 				<li><a href="perfil.html" class="nav-link ${activeTab === 'perfil' ? 'active' : ''}">👤 Meu Perfil</a></li>
-				<li><a href="kairo.html" class="nav-link ${activeTab === 'kairo' ? 'active' : ''}">✨ Kairo Lang</a></li>
 				<li><a href="orcamento.html" class="nav-link ${activeTab === 'orcamento' ? 'active' : ''}">Serviços & Orçamento</a></li>
+				<li><a href="plantaoti.html" class="nav-link ${activeTab === 'plantaoti' ? 'active' : ''}">🛠️ Plantão TI</a></li>
 				<li><a href="jogos.html" class="nav-link ${activeTab === 'jogos' ? 'active' : ''}">Jogos</a></li>
 				<li><a href="quiz.html" class="nav-link ${activeTab === 'quiz' ? 'active' : ''}">Teste Dev</a></li>
 				<li><a href="projetos.html" class="nav-link ${activeTab === 'projetos' ? 'active' : ''}">Projetos</a></li>
@@ -790,8 +790,8 @@ const COMMON_FOOTER = `
 			<a href="pentest.html">Pentest &amp; Hacking</a>
 			<a href="aula.html">Aulas</a>
 			<a href="perfil.html">Meu Perfil</a>
-			<a href="kairo.html">Kairo Lang</a>
 			<a href="orcamento.html">Serviços & Orçamento</a>
+			<a href="plantaoti.html">Plantão TI</a>
 			<a href="jogos.html">Jogos</a>
 			<a href="quiz.html">Teste Dev</a>
 			<a href="projetos.html">Projetos</a>
@@ -849,8 +849,8 @@ const indexHtml = `<!DOCTYPE html>
 				<a href="jogos.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px;">
 					🎮 Jogar Nossos Jogos
 				</a>
-				<a href="kairo.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px; border-color: rgba(157,78,221,0.5); color: #c4b5fd !important; background: rgba(157,78,221,0.12);">
-					✨ Conhecer Kairo Lang
+				<a href="plantaoti.html" class="btn-secondary" style="font-size: 14px; padding: 14px 24px; border-color: rgba(255,214,10,0.5); color: #ffd60a !important; background: rgba(255,214,10,0.12);">
+					🛠️ Plantão TI (Em Breve)
 				</a>
 			</div>
 		</section>
@@ -1477,6 +1477,39 @@ const jogosHtml = `<!DOCTYPE html>
 					</a>
 				</div>
 			</div>
+
+			<!-- Jogo 3: Plantão TI -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(255, 214, 10, 0.4); background: linear-gradient(180deg, #151522 0%, #1c180d 100%);">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+						<span class="badge" style="background: rgba(255, 214, 10, 0.2); color: #ffd60a !important; border-color: #ffd60a;">
+							🛠️ Em Desenvolvimento
+						</span>
+						<span class="badge" style="color: #00ff88 !important;">⭐ Godot 4 &amp; Web</span>
+					</div>
+
+					<h2 style="font-size: 24px; margin-bottom: 10px; color: #ffd60a !important;">
+						Plantão TI
+					</h2>
+
+					<p style="font-size: 14px; line-height: 1.6; opacity: 0.9; margin-bottom: 18px;">
+						Simulador imersivo de assistência técnica e reparo de computadores. Abra gabinetes, use multímetro, troque pasta térmica, decodifique bips de BIOS e resolva telas azuis (BSoD).
+					</p>
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+						<div>🪛 <b>Bancada:</b> Hardware Real</div>
+						<div>⚡ <b>Testes:</b> Multímetro &amp; Fontes</div>
+						<div>💻 <b>Software:</b> BSoD &amp; Vírus</div>
+						<div>🏢 <b>Carreira:</b> Loja de Informática</div>
+					</div>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<a href="plantaoti.html" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #ffd60a 0%, #ff8800 100%); color: #07070c !important; font-size: 14px; padding: 14px; font-weight: 700;">
+						🛠️ Ver Projeto &amp; Mini-Bancada
+					</a>
+				</div>
+			</div>
 		</div>
 
 		<!-- Hall da Fama / Leaderboard Unificado -->
@@ -1933,6 +1966,23 @@ const projetosHtml = `<!DOCTYPE html>
 		</div>
 
 		<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 35px;">
+			<!-- Projeto: Plantão TI -->
+			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(255, 214, 10, 0.4);">
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+						<span class="badge" style="background: rgba(255, 214, 10, 0.2); color: #ffd60a !important;">🛠️ Em Desenvolvimento</span>
+						<span class="badge">Godot 4 &amp; Web</span>
+					</div>
+					<h3 style="font-size: 20px; margin-bottom: 8px; color: #ffd60a !important;">Plantão TI</h3>
+					<p style="font-size: 13.5px; line-height: 1.5; opacity: 0.85; margin-bottom: 16px;">
+						Simulador imersivo de assistência técnica, hardware e reparo de computadores. Bancada interativa de diagnósticos elétricos, POST, bips de BIOS, troca de pasta térmica e solução de telas azuis (BSoD).
+					</p>
+				</div>
+				<a href="plantaoti.html" class="btn-primary" style="justify-content: center; font-size: 13px; background: linear-gradient(135deg, #ffd60a 0%, #ff8800 100%); color: #07070c !important; font-weight: 700;">
+					Conhecer o Jogo ➔
+				</a>
+			</div>
+
 			<!-- Projeto 1: Zombies Survive -->
 			<div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
 				<div>
@@ -2492,7 +2542,7 @@ const pages = {
 
 const SITE_SRC = 'C:/Users/Guilherme/Desktop/Site';
 
-for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
+for (const targetDir of [SITE_SRC, DOCS_DIR, PUBLIC_DIR]) {
 	fs.mkdirSync(targetDir, { recursive: true });
 	for (const [filename, content] of Object.entries(pages)) {
 		const filePath = path.join(targetDir, filename);
@@ -2500,22 +2550,31 @@ for (const targetDir of [DOCS_DIR, PUBLIC_DIR]) {
 		console.log(`[OK] Generated ${filePath}`);
 	}
 
-	// Copy jornada.html, kairo.html, perfil.html, pentest.html, aula.html, data and js
-	for (const extraFile of ['jornada.html', 'kairo.html', 'perfil.html', 'pentest.html', 'aula.html']) {
-		const srcPath = path.join(SITE_SRC, extraFile);
-		if (fs.existsSync(srcPath)) {
-			fs.copyFileSync(srcPath, path.join(targetDir, extraFile));
-			console.log(`[OK] Synced ${extraFile} to ${targetDir}`);
-		}
+	// Remove kairo.html if exists
+	const oldKairo = path.join(targetDir, 'kairo.html');
+	if (fs.existsSync(oldKairo)) {
+		fs.unlinkSync(oldKairo);
+		console.log(`[OK] Removed old ${oldKairo}`);
 	}
 
-	// Copy data/ and js/ directories
-	for (const extraDir of ['data', 'js']) {
-		const srcDirPath = path.join(SITE_SRC, extraDir);
-		const destDirPath = path.join(targetDir, extraDir);
-		if (fs.existsSync(srcDirPath)) {
-			fs.cpSync(srcDirPath, destDirPath, { recursive: true, force: true });
-			console.log(`[OK] Synced directory ${extraDir} to ${targetDir}`);
+	// Copy jornada.html, perfil.html, pentest.html, aula.html, plantaoti.html, data and js
+	if (targetDir !== SITE_SRC) {
+		for (const extraFile of ['jornada.html', 'perfil.html', 'pentest.html', 'aula.html', 'plantaoti.html']) {
+			const srcPath = path.join(SITE_SRC, extraFile);
+			if (fs.existsSync(srcPath)) {
+				fs.copyFileSync(srcPath, path.join(targetDir, extraFile));
+				console.log(`[OK] Synced ${extraFile} to ${targetDir}`);
+			}
+		}
+
+		// Copy data/ and js/ directories
+		for (const extraDir of ['data', 'js']) {
+			const srcDirPath = path.join(SITE_SRC, extraDir);
+			const destDirPath = path.join(targetDir, extraDir);
+			if (fs.existsSync(srcDirPath)) {
+				fs.cpSync(srcDirPath, destDirPath, { recursive: true, force: true });
+				console.log(`[OK] Synced directory ${extraDir} to ${targetDir}`);
+			}
 		}
 	}
 }
