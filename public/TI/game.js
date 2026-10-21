@@ -430,7 +430,7 @@ const state = {
   soloExpandedDuo: false,
   soloExpansionTier: 1,
   enlargedScreen: false,
-  roomCode: 'TI-' + Math.floor(1000 + Math.random() * 9000),
+  roomCode: String(Math.floor(1000 + Math.random() * 9000)),
   myPeerId: 'player_' + Math.random().toString(36).slice(2, 8),
   mySlotIndex: 0,
   perpetualSeconds: 0,
@@ -1868,21 +1868,10 @@ function buildOfflineMap(overrideCount) {
 // ==============================================================
 // SISTEMA DE REDE WEBRTC P2P MULTIJOGADOR (HOST + ATÉ 3 FUNCIONÁRIOS)
 // ==============================================================
-const PEER_CONFIG = {
-  debug: 1,
-  config: {
-    iceServers: [
-      { urls: 'stun:stun.l.google.com:19302' },
-      { urls: 'stun:stun1.l.google.com:19302' },
-      { urls: 'stun:stun2.l.google.com:19302' },
-      { urls: 'stun:stun.cloudflare.com:3478' }
-    ]
-  }
-};
-
 let bcChannel = null;
-let peerInstance = null;
-let peerConnections = [];
+let mqttClient = null;
+let currentMqttTopic = null;
+let isMqttConnected = false;
 
 function getPlayerLocalName() {
   try {
@@ -1897,15 +1886,8 @@ function getPlayerLocalName() {
 
 function normalizeRoomCode(code) {
   if (!code) return '';
-  let s = String(code).trim().toUpperCase().replace(/\s+/g, '');
-  if (!s.startsWith('TI-')) {
-    if (s.startsWith('TI')) {
-      s = 'TI-' + s.slice(2);
-    } else {
-      s = 'TI-' + s;
-    }
-  }
-  return s;
+  const digits = String(code).trim().replace(/[^0-9]/g, '');
+  return digits || String(Math.floor(1000 + Math.random() * 9000));
 }
 
 function setPeerStatus(type, text) {
@@ -1924,183 +1906,92 @@ function setPeerStatus(type, text) {
   }
 }
 
-function initMultiplayerRoom(code) {
-  state.roomCode = normalizeRoomCode(code || ('TI-' + Math.floor(1000 + Math.random() * 9000)));
-  setPeerStatus('connecting', '🟡 Conectando servidor...');
-  const displayCode = document.getElementById('display-room-code');
-  if (displayCode) displayCode.textContent = state.roomCode;
-  const sessionPill = document.getElementById('session-code-pill');
-  if (sessionPill) sessionPill.textContent = 'Sala: ' + state.roomCode;
-
-  // Local BroadcastChannel fallback
-  if (bcChannel) { try { bcChannel.close(); } catch (e) {} }
-  if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-    try {
-      bcChannel = new BroadcastChannel('plantao_ti_perpetual_' + state.roomCode);
-      bcChannel.onmessage = (ev) => handleNetworkMessage(ev.data);
-    } catch (e) {}
+function connectMqttRoom(roomCode, onConnectSuccess) {
+  const cleanCode = normalizeRoomCode(roomCode);
+  const topic = 'omnivoid/plantaoti/room/' + cleanCode;
+  
+  if (mqttClient) {
+    try { mqttClient.disconnect(); } catch (e) {}
+    mqttClient = null;
+    isMqttConnected = false;
   }
-
-  // Inicializa o Host via WebRTC (PeerJS)
-  if (typeof window !== 'undefined' && window.Peer) {
-    try {
-      if (peerInstance) {
-        try { peerInstance.destroy(); } catch (e) {}
-      }
-      peerConnections = [];
-
-      let hostKey = state.roomCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
-      if (!hostKey.startsWith('ti')) hostKey = 'ti' + hostKey;
-      const hostPeerId = 'plantaoti-v10-' + hostKey;
-      peerInstance = new Peer(hostPeerId, PEER_CONFIG);
-
-      peerInstance.on('open', (id) => {
-        state.mySlotIndex = 0; // Host é sempre Cabine #01 (Dono)
-        console.log('[Plantão TI] Host online na sala ' + state.roomCode + ' (PeerID: ' + id + ')');
-        setPeerStatus('online', '🟢 Sala Pronta (Host)');
-        updateHostNameInUI();
-      });
-
-      peerInstance.on('connection', (conn) => {
-        conn.on('open', () => {
-          if (!peerConnections.includes(conn)) {
-            peerConnections.push(conn);
-          }
-          console.log('[Plantão TI] Novo funcionário conectado ao Host.');
-        });
-
-        conn.on('data', (data) => {
-          handleNetworkMessage(data, conn);
-        });
-
-        conn.on('close', () => {
-          peerConnections = peerConnections.filter(c => c !== conn);
-          const p = state.players.find(pl => pl.peerConn === conn || (conn.metadata && pl.peerId === conn.metadata.peerId));
-          if (p && p.slot !== 0) {
-            p.connected = false;
-            p.peerId = null;
-            addChatMessage('Oficina', '🚪 ' + p.name + ' desconectou da sessão.');
-            showToast('🚪 Um funcionário desconectou.');
-            renderAllUI();
-          }
-        });
-
-        conn.on('error', (err) => {
-          console.warn('[Plantão TI] Erro na conexão com funcionário:', err);
-        });
-      });
-
-      peerInstance.on('error', (err) => {
-        console.warn('[Plantão TI] Aviso no Peer do Host:', err);
-        // Se o código já estava em uso por outro host, gera um novo código livre
-        if (err.type === 'unavailable-id') {
-          const newCode = 'TI-' + Math.floor(1000 + Math.random() * 9000);
-          console.log('[Plantão TI] Código ' + state.roomCode + ' em uso. Criando nova sala:', newCode);
-          initMultiplayerRoom(newCode);
-        }
-      });
-    } catch (e) {
-      console.error('[Plantão TI] Erro ao iniciar WebRTC:', e);
-    }
-  }
-}
-
-function joinRoomAsGuest(code) {
-  const cleanCode = normalizeRoomCode(code);
-  if (!cleanCode) {
-    showToast('⚠️ Digite o código da sala (ex: 1234 ou TI-1234)!');
+  
+  if (typeof Paho === 'undefined' || !Paho.MQTT) {
+    console.warn('[Plantão TI] Paho MQTT não carregado. Operando via canal local.');
+    if (onConnectSuccess) onConnectSuccess();
     return;
   }
-  state.roomCode = cleanCode;
-  const displayCode = document.getElementById('display-room-code');
-  if (displayCode) displayCode.textContent = state.roomCode;
-  setPeerStatus('connecting', '🟡 Conectando à sala...');
 
-  showToast('🔑 Conectando à sala ' + cleanCode + ' do Host...');
+  const clientId = 'omnivoid_ti_' + state.myPeerId + '_' + Math.random().toString(36).slice(2, 6);
+  // Conecta ao broker público gratuito HiveMQ sobre WebSockets seguros (TLS porta 8884)
+  const client = new Paho.MQTT.Client('broker.hivemq.com', 8884, '/mqtt', clientId);
+  mqttClient = client;
+  currentMqttTopic = topic;
 
-  if (bcChannel) { try { bcChannel.close(); } catch (e) {} }
-  if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+  client.onMessageArrived = (message) => {
     try {
-      bcChannel = new BroadcastChannel('plantao_ti_perpetual_' + state.roomCode);
-      bcChannel.onmessage = (ev) => handleNetworkMessage(ev.data);
-      bcChannel.postMessage({ type: 'join_request', peerId: state.myPeerId, name: getPlayerLocalName() });
-    } catch (e) {}
-  }
-
-  if (typeof window !== 'undefined' && window.Peer) {
-    try {
-      if (peerInstance) {
-        try { peerInstance.destroy(); } catch (e) {}
-      }
-      peerConnections = [];
-
-      const guestPeer = new Peer(null, PEER_CONFIG);
-      peerInstance = guestPeer;
-
-      guestPeer.on('open', (id) => {
-        let codeKey = cleanCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
-        if (!codeKey.startsWith('ti')) codeKey = 'ti' + codeKey;
-        const targetHostId = 'plantaoti-v10-' + codeKey;
-        console.log('[Plantão TI] Conectando ao Host ' + targetHostId + ' via Peer ' + id);
-        const conn = guestPeer.connect(targetHostId, {
-          reliable: true,
-          metadata: { name: getPlayerLocalName(), peerId: state.myPeerId }
-        });
-
-        conn.on('open', () => {
-          peerConnections = [conn];
-          showToast('🟢 Conectado ao Host da Sala ' + cleanCode + '! Solicitando cabine...');
-          conn.send({
-            type: 'join_request',
-            peerId: state.myPeerId,
-            name: getPlayerLocalName()
-          });
-        });
-
-        conn.on('data', (data) => {
-          handleNetworkMessage(data, conn);
-        });
-
-        conn.on('close', () => {
-          showToast('🚪 Conexão com o Host foi encerrada.');
-          setPeerStatus('error', '🔴 Desconectado');
-          peerConnections = [];
-        });
-
-        conn.on('error', (err) => {
-          console.warn('[Plantão TI] Erro ao conectar ao Host:', err);
-          showToast('⚠️ Erro ao conectar à sala do Host.');
-          setPeerStatus('error', '🔴 Erro na conexão');
-        });
-      });
-
-      guestPeer.on('error', (err) => {
-        console.warn('[Plantão TI] Erro no Peer de Convidado:', err);
-        showToast('⚠️ Sala não encontrada ou Host offline (' + cleanCode + ').');
-        setPeerStatus('error', '🔴 Sala não encontrada');
-      });
+      const data = JSON.parse(message.payloadString);
+      if (!data || data.peerId === state.myPeerId) return; // ignora mensagens do próprio remetente
+      handleNetworkMessage(data);
     } catch (e) {
-      console.error('[Plantão TI] Erro ao conectar como convidado:', e);
+      console.warn('[Plantão TI] Erro ao processar mensagem MQTT:', e);
     }
-  }
-}
-window.joinRoomAsGuest = joinRoomAsGuest;
+  };
 
-function broadcastNet(msg) {
-  if (bcChannel) {
-    try { bcChannel.postMessage(msg); } catch (e) {}
-  }
-  peerConnections.forEach(c => {
-    try { if (c && c.open) c.send(msg); } catch (e) {}
+  client.onConnectionLost = (responseObject) => {
+    isMqttConnected = false;
+    if (responseObject.errorCode !== 0) {
+      console.warn('[Plantão TI] Conexão com servidor caiu:', responseObject.errorMessage);
+      setPeerStatus('connecting', '🟡 Reconectando servidor...');
+      setTimeout(() => {
+        if (state.networkMode === 'online') {
+          connectMqttRoom(state.roomCode);
+        }
+      }, 3000);
+    }
+  };
+
+  client.connect({
+    useSSL: true,
+    timeout: 6,
+    keepAliveInterval: 30,
+    cleanSession: true,
+    onSuccess: () => {
+      isMqttConnected = true;
+      client.subscribe(topic, { qos: 0 });
+      console.log('[Plantão TI] Conectado com sucesso ao Servidor Nuvem na sala ' + cleanCode);
+      if (onConnectSuccess) onConnectSuccess();
+    },
+    onFailure: (err) => {
+      isMqttConnected = false;
+      console.warn('[Plantão TI] Falha ao conectar ao servidor HiveMQ:', err);
+      setPeerStatus('error', '🔴 Servidor Offline (Tente reconectar)');
+    }
   });
 }
 
-// Heartbeat a cada 8 segundos para manter conexões WebRTC ativas através de roteadores/NATs
-setInterval(() => {
-  if (peerConnections.length > 0) {
-    broadcastNet({ type: 'ping', peerId: state.myPeerId });
+function broadcastNet(msg) {
+  if (!msg) return;
+  if (!msg.peerId) msg.peerId = state.myPeerId;
+  const raw = JSON.stringify(msg);
+
+  // 1. Envia via BroadcastChannel local (0ms entre abas no mesmo PC)
+  if (bcChannel) {
+    try { bcChannel.postMessage(msg); } catch (e) {}
   }
-}, 8000);
+
+  // 2. Envia via HiveMQ Cloud WSS (Internet / Celular / Wi-Fi)
+  if (mqttClient && isMqttConnected && currentMqttTopic) {
+    try {
+      const mqttMsg = new Paho.MQTT.Message(raw);
+      mqttMsg.destinationName = currentMqttTopic;
+      mqttMsg.qos = 0;
+      mqttClient.send(mqttMsg);
+    } catch (e) {
+      console.warn('[Plantão TI] Erro ao enviar pacote via nuvem:', e);
+    }
+  }
+}
 
 function updateHostNameInUI() {
   const localName = getPlayerLocalName();
@@ -2110,28 +2001,85 @@ function updateHostNameInUI() {
   }
 }
 
-function handleNetworkMessage(data, conn) {
-  if (!data || data.peerId === state.myPeerId) return;
+function initMultiplayerRoom(code) {
+  state.roomCode = normalizeRoomCode(code || String(Math.floor(1000 + Math.random() * 9000)));
+  const displayCode = document.getElementById('display-room-code');
+  if (displayCode) displayCode.textContent = state.roomCode;
+  const sessionPill = document.getElementById('session-code-pill');
+  if (sessionPill) sessionPill.textContent = 'Sala: ' + state.roomCode;
+  const lobbyCurrentCode = document.getElementById('lobby-current-code');
+  if (lobbyCurrentCode) lobbyCurrentCode.textContent = state.roomCode;
 
-  // Ignora heartbeats
-  if (data.type === 'ping') return;
+  setPeerStatus('connecting', '🟡 Conectando servidor...');
 
-  // Se eu for o Host, retransmito mensagens recebidas de um convidado para todos os outros convidados (Topologia em Estrela)
-  if (state.mySlotIndex === 0 && conn) {
-    peerConnections.forEach(c => {
-      if (c !== conn && c.open) {
-        try { c.send(data); } catch (e) {}
-      }
-    });
+  // Canal local
+  if (bcChannel) { try { bcChannel.close(); } catch (e) {} }
+  if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+    try {
+      bcChannel = new BroadcastChannel('plantao_ti_perpetual_' + state.roomCode);
+      bcChannel.onmessage = (ev) => handleNetworkMessage(ev.data);
+    } catch (e) {}
   }
 
-  // 1. Demissão/Expulsão de funcionário pelo Host
+  // Host é sempre Cabine 1 (Dono)
+  state.mySlotIndex = 0;
+  state.players[0].isLocal = true;
+  updateHostNameInUI();
+
+  connectMqttRoom(state.roomCode, () => {
+    setPeerStatus('online', '🟢 Sala ' + state.roomCode + ' Aberta (Dono)');
+    showToast('🔑 Sala ' + state.roomCode + ' pronta! Compartilhe o número ' + state.roomCode + ' com seus amigos.');
+    renderAllUI();
+  });
+}
+
+function joinRoomAsGuest(code) {
+  const cleanCode = normalizeRoomCode(code);
+  if (!cleanCode) {
+    showToast('⚠️ Digite o código numérico da sala (ex: 4829)!');
+    return;
+  }
+  state.roomCode = cleanCode;
+  const displayCode = document.getElementById('display-room-code');
+  if (displayCode) displayCode.textContent = state.roomCode;
+  const sessionPill = document.getElementById('session-code-pill');
+  if (sessionPill) sessionPill.textContent = 'Sala: ' + state.roomCode;
+
+  setPeerStatus('connecting', '🟡 Entrando na sala ' + cleanCode + '...');
+  showToast('🔑 Conectando à sala ' + cleanCode + '...');
+
+  // Canal local
+  if (bcChannel) { try { bcChannel.close(); } catch (e) {} }
+  if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+    try {
+      bcChannel = new BroadcastChannel('plantao_ti_perpetual_' + state.roomCode);
+      bcChannel.onmessage = (ev) => handleNetworkMessage(ev.data);
+      bcChannel.postMessage({ type: 'join_request', peerId: state.myPeerId, name: getPlayerLocalName() });
+    } catch (e) {}
+  }
+
+  connectMqttRoom(cleanCode, () => {
+    setPeerStatus('connecting', '🟡 Solicitando cabine ao Dono...');
+    // Envia pedido de entrada para o Dono da sala
+    broadcastNet({
+      type: 'join_request',
+      peerId: state.myPeerId,
+      name: getPlayerLocalName()
+    });
+  });
+}
+window.joinRoomAsGuest = joinRoomAsGuest;
+
+function handleNetworkMessage(data) {
+  if (!data || data.peerId === state.myPeerId) return;
+
+  // 1. Demissão/Expulsão pelo Dono
   if (data.type === 'kick_player') {
     if (data.slot === state.mySlotIndex || (data.peerId && data.peerId === state.myPeerId)) {
-      alert('🚪 Você foi demitido e expulso da assistência técnica pelo Host!');
+      alert('🚪 Você foi demitido e expulso da assistência técnica pelo Dono da oficina!');
       state.mySlotIndex = 0;
       state.networkMode = 'offline';
-      try { if (peerInstance) peerInstance.destroy(); } catch(e){}
+      try { if (mqttClient) mqttClient.disconnect(); } catch (e) {}
       window.location.reload();
       return;
     } else {
@@ -2139,23 +2087,23 @@ function handleNetworkMessage(data, conn) {
       if (p) {
         p.connected = false;
         p.peerId = null;
-        addChatMessage('Oficina', '🚪 ' + p.name + ' foi demitido e expulso pelo Host.');
+        addChatMessage('Oficina', '🚪 ' + p.name + ' foi demitido e expulso pelo Dono.');
         renderAllUI();
       }
     }
     return;
   }
 
-  // 2. Pedido de entrada na oficina (recebido pelo Host)
+  // 2. Pedido de entrada na oficina (recebido pelo Dono / Host no slot 0)
   if (data.type === 'join_request') {
-    // Aloca apenas entre os slots de funcionários 1 a 3 (máximo 4 pessoas na oficina)
+    if (state.mySlotIndex !== 0) return; // Apenas o Dono gerencia as vagas
+
     let existing = state.players.find(p => p.peerId === data.peerId);
     if (!existing) {
       existing = state.players.slice(1, 4).find(p => !p.connected);
       if (existing) {
         existing.connected = true;
         existing.peerId = data.peerId;
-        existing.peerConn = conn;
         if (data.name) {
           existing.name = data.name + ' (Funcionário #' + String(existing.slot + 1).padStart(2, '0') + ')';
         }
@@ -2167,14 +2115,12 @@ function handleNetworkMessage(data, conn) {
         renderAllUI();
       } else {
         // Sala cheia (já tem 4 jogadores)
-        if (conn && conn.open) {
-          try { conn.send({ type: 'room_full', peerId: state.myPeerId }); } catch(e){}
-        }
+        broadcastNet({ type: 'room_full', targetPeerId: data.peerId });
         return;
       }
     }
 
-    // Host envia sincronização de sala completa para o novo funcionário
+    // Dono envia sincronização de sala completa para todos
     broadcastNet({
       type: 'room_sync',
       peerId: state.myPeerId,
@@ -2194,9 +2140,12 @@ function handleNetworkMessage(data, conn) {
     return;
   }
 
-  // 3. Aviso de sala cheia
+  // 3. Sala cheia
   if (data.type === 'room_full') {
-    alert('⚠️ Esta oficina já atingiu a capacidade máxima de 4 técnicos (Host + 3 funcionários)!');
+    if (data.targetPeerId === state.myPeerId) {
+      alert('⚠️ Esta oficina já atingiu a capacidade máxima de 4 técnicos (Dono + 3 funcionários)!');
+      setPeerStatus('error', '🔴 Oficina Lotada (4/4)');
+    }
     return;
   }
 
@@ -2210,8 +2159,10 @@ function handleNetworkMessage(data, conn) {
           p.connected = s.connected;
           p.peerId = s.peerId;
           if (s.name) p.name = s.name;
-          if (typeof s.x === 'number') p.x = s.x;
-          if (typeof s.y === 'number') p.y = s.y;
+          if (typeof s.x === 'number' && s.slot !== state.mySlotIndex) {
+            p.x = s.x;
+            p.y = s.y;
+          }
           changed = true;
         }
       });
@@ -2223,7 +2174,18 @@ function handleNetworkMessage(data, conn) {
       if (data.assignedName && state.players[state.mySlotIndex]) {
         state.players[state.mySlotIndex].name = data.assignedName;
       }
-      showToast('🎉 Bem-vindo! Você assumiu o posto na Cabine #' + String(state.mySlotIndex + 1).padStart(2, '0') + ' como funcionário do Host!');
+      const deskCoords = [
+        { x: 210, y: 340 },
+        { x: 380, y: 340 },
+        { x: 550, y: 340 },
+        { x: 720, y: 340 }
+      ];
+      if (deskCoords[state.mySlotIndex]) {
+        state.players[state.mySlotIndex].x = deskCoords[state.mySlotIndex].x;
+        state.players[state.mySlotIndex].y = deskCoords[state.mySlotIndex].y;
+      }
+      showToast('🎉 Bem-vindo! Você assumiu o posto na Cabine #' + String(state.mySlotIndex + 1).padStart(2, '0') + ' como funcionário do Dono!');
+      setPeerStatus('connected', '🟢 Conectado (Cabine #' + (state.mySlotIndex + 1) + ')');
       changed = true;
     }
 
@@ -2236,10 +2198,12 @@ function handleNetworkMessage(data, conn) {
   // 5. Movimento de outros jogadores na tela
   if (data.type === 'player_move') {
     const p = state.players[data.slot];
-    if (p && p.slot !== state.mySlotIndex) {
+    if (p && data.slot !== state.mySlotIndex) {
       p.connected = true;
       p.x = data.x;
       p.y = data.y;
+      if (typeof data.vx === 'number') p.vx = data.vx;
+      if (typeof data.vy === 'number') p.vy = data.vy;
       p.isMoving = data.isMoving;
       if (data.bubble) {
         p.bubble = data.bubble;
@@ -8968,13 +8932,13 @@ function setupEvents() {
 
   document.getElementById('btn-copy-code').addEventListener('click', () => {
     if (navigator.clipboard) navigator.clipboard.writeText(state.roomCode).catch(() => {});
-    showToast(`📋 Código da Sala "${state.roomCode}" copiado!`);
+    showToast(`📋 Código numérico da sala "${state.roomCode}" copiado!`);
   });
 
   document.getElementById('btn-join-room').addEventListener('click', () => {
     const code = document.getElementById('input-join-code').value.trim().toUpperCase();
     if (!code) {
-      showToast('⚠️ Digite um código de sala (ex: TI-4829)!');
+      showToast('⚠️ Digite o código numérico da sala (ex: 4829)!');
       return;
     }
     joinRoomAsGuest(code);
@@ -9068,7 +9032,7 @@ function setupEvents() {
   });
 
   document.getElementById('btn-lobby-new-code')?.addEventListener('click', () => {
-    const newCode = 'TI-' + Math.floor(1000 + Math.random() * 9000);
+    const newCode = String(Math.floor(1000 + Math.random() * 9000));
     initMultiplayerRoom(newCode);
     renderLobbyModal();
     showToast(`🔄 Nova Sala em Grupo criada: ${newCode}!`);
@@ -9078,7 +9042,7 @@ function setupEvents() {
     const input = document.getElementById('input-lobby-join-code');
     const code = input ? input.value.trim().toUpperCase() : '';
     if (!code) {
-      showToast('⚠️ Digite o código da sala (ex: TI-4829)!');
+      showToast('⚠️ Digite o código numérico da sala (ex: 4829)!');
       return;
     }
     joinRoomAsGuest(code);

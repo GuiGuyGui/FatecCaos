@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#1aa2b3">
   <title>Plantão TI: Sede Expansível (5➔10➔15➔20 Salas) & 18 Puzzles Co-op (2, 3 e 4p)</title>
   <link rel="stylesheet" href="style.css">
-  <!-- PeerJS para conexão P2P Online WebRTC sem dependência externa -->
+  <!-- Paho MQTT para conexão Online em Nuvem (100% livre de CGNAT/Firewall/NAT) -->
+  <script src="paho-mqtt.min.js"></script>
   <script src="peerjs.min.js"></script>
 </head>
 <body>
@@ -41,13 +42,13 @@
           </button>
         </div>
 
-        <!-- Painel de Código de Sala Online -->
+        <!-- Painel de Código de Sala Online (Numérico) -->
         <div class="room-code-bar" id="online-room-bar">
-          <span class="room-code-label">🔑 Código: <b id="display-room-code">TI-....</b> <span id="peer-status-badge" style="font-size:11px; padding:2px 7px; border-radius:99px; background:rgba(0,255,136,0.18); color:#00ff88; margin-left:4px; font-weight:700;">🟢 Online</span></span>
+          <span class="room-code-label">🔑 Sala: <b id="display-room-code">----</b> <span id="peer-status-badge" style="font-size:11px; padding:2px 7px; border-radius:99px; background:rgba(255,214,10,0.18); color:#ffd60a; margin-left:4px; font-weight:700;">🟡 Conectando...</span></span>
           <span class="room-code-label" title="Tempo da sessão">⏱️ <b id="perpetual-timer">00:00</b></span>
-          <button class="btn btn-amarelo btn-xs" id="btn-copy-code" title="Copiar código da sua sala para enviar ao grupo">📋 Copiar</button>
-          <input type="text" id="input-join-code" placeholder="Código (ex: 1234 ou TI-1234)" maxlength="12" />
-          <button class="btn btn-verde btn-xs" id="btn-join-room">Entrar c/ Código</button>
+          <button class="btn btn-amarelo btn-xs" id="btn-copy-code" title="Copiar código numérico para enviar aos amigos">📋 Copiar Código</button>
+          <input type="text" id="input-join-code" placeholder="Código (ex: 4829)" maxlength="6" inputmode="numeric" />
+          <button class="btn btn-verde btn-xs" id="btn-join-room">Entrar na Sala</button>
           <button class="btn btn-vidro btn-xs" id="btn-open-lobby-modal" title="Escolher Sala Solo, Sala em Grupo com Código ou ver a futura Sala Mundo 20p">🚪 Salas</button>
         </div>
 
@@ -57,7 +58,7 @@
             👥 Chamar +1 (Duo Solo)
           </button>
           <span id="solo-duo-code-badge" style="display:none; align-items:center; gap:5px; font-size:12px; font-weight:800; color:var(--teal-e);">
-            🔑 Código Duo: <b id="display-solo-duo-code">TI-....</b>
+            🔑 Código Duo: <b id="display-solo-duo-code">----</b>
             <button type="button" class="btn btn-amarelo btn-xs" id="btn-copy-solo-duo-code" title="Copiar código Duo para enviar ao amigo">📋 Copiar</button>
           </span>
           <button class="btn btn-azul btn-xs" id="btn-solo-simulate-partner" title="Testar/Simular imediatamente a expansão da sala com técnico parceiro">🤖 Testar Expansão</button>
@@ -335,11 +336,11 @@
           </p>
           <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:8px; margin-bottom:8px;">
             <div style="font-size:11.5px; font-weight:900; color:var(--tinta); margin-bottom:5px;">
-              Seu Código Atual: <b style="color:var(--teal-e);" id="lobby-current-code">TI-....</b>
+              Seu Código Atual: <b style="color:var(--teal-e);" id="lobby-current-code">----</b>
               <button type="button" class="btn btn-amarelo btn-xs" id="btn-lobby-new-code" style="margin-left:6px;">🔄 Gerar Nova Sala</button>
             </div>
             <div style="display:flex; gap:6px;">
-              <input type="text" id="input-lobby-join-code" placeholder="Digite o código ex: TI-4829" maxlength="10" style="flex:1; padding:6px 10px; border-radius:8px; border:1.5px solid #94a3b8; font-weight:800; font-size:12px; text-transform:uppercase;" />
+              <input type="text" id="input-lobby-join-code" placeholder="Código numérico ex: 4829" maxlength="6" inputmode="numeric" style="flex:1; padding:6px 10px; border-radius:8px; border:1.5px solid #94a3b8; font-weight:800; font-size:12px;" />
               <button type="button" class="btn btn-verde btn-xs" id="btn-lobby-join-code">🔑 Entrar</button>
             </div>
           </div>
