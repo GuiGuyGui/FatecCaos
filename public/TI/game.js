@@ -4705,6 +4705,10 @@ function initCanvasWorld() {
       toggleEnlargedScreen();
       return;
     }
+    if (k === 'r') {
+      callNextClientToRoom();
+      return;
+    }
     keys[k] = true;
     if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(k)) {
       e.preventDefault();
@@ -6392,16 +6396,22 @@ function interactWithMyWorkbench() {
 }
 
 function callNextClientToRoom() {
-  const nextIdx = cases.findIndex(c => !c.solved && !c.leavingState && !c.inMyRoom);
-  const fallbackIdx = cases.findIndex(c => !c.solved && !c.leavingState);
-  const chosenIdx = nextIdx !== -1 ? nextIdx : fallbackIdx;
-  if (chosenIdx === -1) {
+  let nextIdx = cases.findIndex(c => !c.solved && !c.leavingState && !c.inMyRoom);
+  if (nextIdx === -1) {
+    nextIdx = cases.findIndex(c => !c.solved && !c.leavingState);
+  }
+  if (nextIdx === -1) {
     rebuildQueueForCurrentMode();
     renderAllUI();
+    nextIdx = cases.findIndex(c => !c.solved && !c.leavingState);
+  }
+  if (nextIdx === -1) {
+    showToast('🛎️ Nenhum cliente na fila de espera no momento!');
     return;
   }
-  callClientToMyRoom(chosenIdx);
+  callClientToMyRoom(nextIdx);
 }
+window.callNextClientToRoom = callNextClientToRoom;
 
 function openWorkbenchModal(defaultTab = null, forceBypass = false) {
   if (!forceBypass && !isPlayerNearWorkbench()) {
