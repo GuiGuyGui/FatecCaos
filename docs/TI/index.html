@@ -43,10 +43,10 @@
 
         <!-- Painel de Código de Sala Online -->
         <div class="room-code-bar" id="online-room-bar">
-          <span class="room-code-label">🔑 Código: <b id="display-room-code">TI-....</b></span>
+          <span class="room-code-label">🔑 Código: <b id="display-room-code">TI-....</b> <span id="peer-status-badge" style="font-size:11px; padding:2px 7px; border-radius:99px; background:rgba(0,255,136,0.18); color:#00ff88; margin-left:4px; font-weight:700;">🟢 Online</span></span>
           <span class="room-code-label" title="Tempo da sessão">⏱️ <b id="perpetual-timer">00:00</b></span>
           <button class="btn btn-amarelo btn-xs" id="btn-copy-code" title="Copiar código da sua sala para enviar ao grupo">📋 Copiar</button>
-          <input type="text" id="input-join-code" placeholder="Código ex: TI-1234" maxlength="10" />
+          <input type="text" id="input-join-code" placeholder="Código (ex: 1234 ou TI-1234)" maxlength="12" />
           <button class="btn btn-verde btn-xs" id="btn-join-room">Entrar c/ Código</button>
           <button class="btn btn-vidro btn-xs" id="btn-open-lobby-modal" title="Escolher Sala Solo, Sala em Grupo com Código ou ver a futura Sala Mundo 20p">🚪 Salas</button>
         </div>

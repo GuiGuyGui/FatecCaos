@@ -1895,8 +1895,38 @@ function getPlayerLocalName() {
   return 'Técnico';
 }
 
+function normalizeRoomCode(code) {
+  if (!code) return '';
+  let s = String(code).trim().toUpperCase().replace(/\s+/g, '');
+  if (!s.startsWith('TI-')) {
+    if (s.startsWith('TI')) {
+      s = 'TI-' + s.slice(2);
+    } else {
+      s = 'TI-' + s;
+    }
+  }
+  return s;
+}
+
+function setPeerStatus(type, text) {
+  const badge = document.getElementById('peer-status-badge');
+  if (!badge) return;
+  badge.textContent = text;
+  if (type === 'online' || type === 'connected') {
+    badge.style.background = 'rgba(0, 255, 136, 0.18)';
+    badge.style.color = '#00ff88';
+  } else if (type === 'connecting') {
+    badge.style.background = 'rgba(255, 214, 10, 0.2)';
+    badge.style.color = '#ffd60a';
+  } else {
+    badge.style.background = 'rgba(255, 0, 85, 0.2)';
+    badge.style.color = '#ff4d6d';
+  }
+}
+
 function initMultiplayerRoom(code) {
-  state.roomCode = (code || 'TI-1000').toUpperCase().trim();
+  state.roomCode = normalizeRoomCode(code || ('TI-' + Math.floor(1000 + Math.random() * 9000)));
+  setPeerStatus('connecting', '🟡 Conectando servidor...');
   const displayCode = document.getElementById('display-room-code');
   if (displayCode) displayCode.textContent = state.roomCode;
   const sessionPill = document.getElementById('session-code-pill');
@@ -1919,12 +1949,15 @@ function initMultiplayerRoom(code) {
       }
       peerConnections = [];
 
-      const hostPeerId = 'plantaoti-v10-' + state.roomCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
+      let hostKey = state.roomCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
+      if (!hostKey.startsWith('ti')) hostKey = 'ti' + hostKey;
+      const hostPeerId = 'plantaoti-v10-' + hostKey;
       peerInstance = new Peer(hostPeerId, PEER_CONFIG);
 
       peerInstance.on('open', (id) => {
         state.mySlotIndex = 0; // Host é sempre Cabine #01 (Dono)
         console.log('[Plantão TI] Host online na sala ' + state.roomCode + ' (PeerID: ' + id + ')');
+        setPeerStatus('online', '🟢 Sala Pronta (Host)');
         updateHostNameInUI();
       });
 
@@ -1973,14 +2006,15 @@ function initMultiplayerRoom(code) {
 }
 
 function joinRoomAsGuest(code) {
-  const cleanCode = (code || '').toUpperCase().trim();
+  const cleanCode = normalizeRoomCode(code);
   if (!cleanCode) {
-    showToast('⚠️ Digite o código da sala!');
+    showToast('⚠️ Digite o código da sala (ex: 1234 ou TI-1234)!');
     return;
   }
   state.roomCode = cleanCode;
   const displayCode = document.getElementById('display-room-code');
   if (displayCode) displayCode.textContent = state.roomCode;
+  setPeerStatus('connecting', '🟡 Conectando à sala...');
 
   showToast('🔑 Conectando à sala ' + cleanCode + ' do Host...');
 
@@ -2004,9 +2038,10 @@ function joinRoomAsGuest(code) {
       peerInstance = guestPeer;
 
       guestPeer.on('open', (id) => {
-        const targetHostId = 'plantaoti-v10-' + cleanCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
+        let codeKey = cleanCode.replace(/[^A-Z0-9]/gi, '').toLowerCase();
+        if (!codeKey.startsWith('ti')) codeKey = 'ti' + codeKey;
+        const targetHostId = 'plantaoti-v10-' + codeKey;
         console.log('[Plantão TI] Conectando ao Host ' + targetHostId + ' via Peer ' + id);
-
         const conn = guestPeer.connect(targetHostId, {
           reliable: true,
           metadata: { name: getPlayerLocalName(), peerId: state.myPeerId }
@@ -2028,18 +2063,21 @@ function joinRoomAsGuest(code) {
 
         conn.on('close', () => {
           showToast('🚪 Conexão com o Host foi encerrada.');
+          setPeerStatus('error', '🔴 Desconectado');
           peerConnections = [];
         });
 
         conn.on('error', (err) => {
           console.warn('[Plantão TI] Erro ao conectar ao Host:', err);
           showToast('⚠️ Erro ao conectar à sala do Host.');
+          setPeerStatus('error', '🔴 Erro na conexão');
         });
       });
 
       guestPeer.on('error', (err) => {
         console.warn('[Plantão TI] Erro no Peer de Convidado:', err);
         showToast('⚠️ Sala não encontrada ou Host offline (' + cleanCode + ').');
+        setPeerStatus('error', '🔴 Sala não encontrada');
       });
     } catch (e) {
       console.error('[Plantão TI] Erro ao conectar como convidado:', e);
@@ -9043,7 +9081,7 @@ function setupEvents() {
       showToast('⚠️ Digite o código da sala (ex: TI-4829)!');
       return;
     }
-    initMultiplayerRoom(code);
+    joinRoomAsGuest(code);
     renderLobbyModal();
     roomLobbyModal?.classList.remove('open');
     showToast(`🔑 Conectado com sucesso à Sala em Grupo ${code}!`);
