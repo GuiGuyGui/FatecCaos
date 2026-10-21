@@ -502,6 +502,12 @@ function getCurrentHQTier() {
   return 1;
 }
 
+const HQ_TIER_COSTS = {
+  10: 15000,
+  15: 35000,
+  20: 75000
+};
+
 function setHQTierRooms(targetRooms, fromPlayerJoin = false) {
   if (state.networkMode === 'offline') {
     showToast('🏠 Na Sala Solo você joga apenas puzzles de 1 pessoa! Entre em uma Sala em Grupo com Código para expandir a sede.');
@@ -509,6 +515,19 @@ function setHQTierRooms(targetRooms, fromPlayerJoin = false) {
   }
   const prevRooms = getUnlockedRoomsCount();
   const prevGroupUnlocked = isGroupPuzzlesUnlocked();
+
+  if (!fromPlayerJoin && targetRooms > prevRooms) {
+    const cost = HQ_TIER_COSTS[targetRooms] || 15000;
+    if ((state.money || 0) < cost) {
+      showToast('❌ Dinheiro insuficiente! A expansão da Sede para ' + targetRooms + ' salas custa R$ ' + cost.toLocaleString('pt-BR') + ' (Você tem: R$ ' + (state.money || 0).toLocaleString('pt-BR') + ')');
+      playTechChime('alarm');
+      return;
+    }
+    state.money -= cost;
+    showToast('🏗️ Sede expandida para ' + targetRooms + ' salas! (-R$ ' + cost.toLocaleString('pt-BR') + ')');
+    playTechChime('success');
+  }
+
   state.hqMinRooms = targetRooms;
 
   // Se o jogador clicou no botão de porte da sede (5, 10, 15 ou 20 salas), conecta pelo menos 4 jogadores (ou o mínimo daquele porte):
@@ -968,17 +987,35 @@ function refillMyRackFree() {
     playTechChime('alarm');
     return;
   }
+  const cost = 1750;
+  if ((state.money || 0) < cost) {
+    showToast('❌ Dinheiro insuficiente! Reabastecer o Rack custa R$ ' + cost.toLocaleString('pt-BR') + ' (Você tem: R$ ' + (state.money || 0).toLocaleString('pt-BR') + ')');
+    playTechChime('alarm');
+    return;
+  }
+  if (state.rackParts >= state.rackCapacity) {
+    showToast('✅ O Rack da sua sala já está com a capacidade máxima (' + state.rackCapacity + '/' + state.rackCapacity + ' peças)!');
+    return;
+  }
+  state.money -= cost;
   state.rackParts = state.rackCapacity;
   playTechChime('success');
-  showToast('🗄️ Rack da sua sala abastecido gratuitamente com ' + state.rackCapacity + ' peças!');
+  showToast('🗄️ Rack abastecido com ' + state.rackCapacity + ' peças! (-R$ ' + cost.toLocaleString('pt-BR') + ')');
   refreshMapsWithUpgrades();
   updateHUD();
 }
 
 function collectAllStockParts() {
+  const cost = 2500;
+  if ((state.money || 0) < cost) {
+    showToast('❌ Dinheiro insuficiente! O Kit Completo p/ Mochila custa R$ ' + cost.toLocaleString('pt-BR') + ' (Você tem: R$ ' + (state.money || 0).toLocaleString('pt-BR') + ')');
+    playTechChime('alarm');
+    return;
+  }
+  state.money -= cost;
   STOCK_PARTS.forEach(p => { state.inventory[p.id] = true; });
   playTechChime('success');
-  showToast('🎒 Todas as peças do estoque foram guardadas na sua mochila!');
+  showToast('🎒 Kit Completo de Peças adquirido e guardado na mochila! (-R$ ' + cost.toLocaleString('pt-BR') + ')');
   renderStockModal();
   updateHUD();
 }
@@ -1209,7 +1246,7 @@ function buildOnlineWalledRoomsMap() {
     { id: 'reception_counter', x: 1060, y: 967, radius: 130, label: '🛎️ [E] Balcão de Recepção: Chamar Cliente', action: () => interactWithReceptionCounter() },
     { id: 'stock_1', x: 305, y: 1005, radius: 125, label: '📦 [E] Abrir Sala de Estoque Geral', action: () => openStockModalUI() },
     { id: 'stock_2', x: 615, y: 1005, radius: 125, label: '📦 [E] Abrir Sala de Estoque Geral', action: () => openStockModalUI() },
-    { id: 'stock_refill_rack', x: 305, y: 1230, radius: 130, label: '🗄️ [E] Encher o Rack da Sua Sala (Grátis Aqui!)', action: () => refillMyRackFree() },
+    { id: 'stock_refill_rack', x: 305, y: 1230, radius: 130, label: '🗄️ [E] Reabastecer Rack da Sala (R$ 1.750)', action: () => refillMyRackFree() },
     { id: 'stock_coop', x: 615, y: 1230, radius: 130, label: '🤝 [E] Pegar Kits Co-op (2P, 3P e 4P)', action: () => openStockModalUI() },
     { id: 'coop_bench_1', x: 2035, y: 1015, radius: 140, label: '🤝 [E] Abrir Central dos 18 Puzzles Co-op (2P, 3P e 4P)', action: () => openCoopHubModalUI() },
     { id: 'coop_bench_2', x: 2355, y: 1015, radius: 140, label: '🤝 [E] Abrir Desafio Co-op na Bancada', action: () => openCoopCaseOnBench() },
@@ -1769,7 +1806,7 @@ function buildOfflineMap(overrideCount) {
     { id: 'reception_counter', x: counterX + counterW / 2, y: counterY + counterH / 2, radius: 130, label: '🛎️ [E] Balcão de Recepção: Chamar Cliente', action: () => interactWithReceptionCounter() },
     { id: 'reception_sofa', x: sofaX + sofaW / 2, y: sofaY + sofaH / 2, radius: 110, label: '🛋️ Sofá da Área de Espera dos Clientes' },
     { id: 'stock_armario_1', x: stockX + 130, y: 545, radius: 135, label: '📦 [E] Abrir Estoque de Peças (Kits)', action: () => openStockModalUI() },
-    { id: 'stock_armario_2', x: stockX + 130, y: 915, radius: 135, label: '🗄️ [E] Encher o Rack da Sua Sala', action: () => refillMyRackFree() },
+    { id: 'stock_armario_2', x: stockX + 130, y: 915, radius: 135, label: '🗄️ [E] Reabastecer Rack da Sala (R$ 1.750)', action: () => refillMyRackFree() },
     { id: 'coffee_machine', x: coffeePos.x, y: coffeePos.y, radius: 105, label: coffeePos.label, action: () => drinkCoffee() }
   ];
 
@@ -8878,30 +8915,27 @@ function setupEvents() {
   document.getElementById('btn-lobby-preview-world')?.addEventListener('click', () => openFutureRoomsModalUI());
   document.getElementById('btn-mode-world-future')?.addEventListener('click', () => openFutureRoomsModalUI());
 
-  // Botões de Teste das Expansões da Loja Solo (1x a 5x)
+  // Expansões da Loja Solo (1x a 5x) - Requer compra legítima com dinheiro
   document.querySelectorAll('#solo-tier-bar [data-solo-tier]').forEach(btn => {
     btn.addEventListener('click', () => {
-      setSoloExpansionTier(Number(btn.dataset.soloTier), true);
+      const targetTier = Number(btn.dataset.soloTier);
+      const currentTier = state.soloExpansionTier || 1;
+      if (targetTier <= currentTier) {
+        showToast('✅ A Expansão ' + targetTier + 'x já está ativa na sua oficina!');
+        return;
+      }
+      const shopItemId = 'solo_expansion_' + targetTier;
+      const shopItem = SHOP_CATALOG.find(i => i.id === shopItemId);
+      if (shopItem) {
+        if ((state.money || 0) < shopItem.price) {
+          showToast('❌ Dinheiro insuficiente! ' + shopItem.name + ' custa R$ ' + shopItem.price.toLocaleString('pt-BR') + ' (Você tem: R$ ' + (state.money || 0).toLocaleString('pt-BR') + ')');
+          playTechChime('alarm');
+          openShopModalUI();
+          return;
+        }
+        buyShopItem(shopItemId);
+      }
     });
-  });
-  document.querySelectorAll('.btn-shop-test-tier').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setSoloExpansionTier(Number(btn.dataset.shopTier), true);
-    });
-  });
-  document.getElementById('btn-cheat-money')?.addEventListener('click', () => {
-    state.money += 10000;
-    playTechChime('success');
-    showToast('💰 +R$ 10.000 adicionados ao caixa para testes!');
-    renderAllUI();
-    if (document.getElementById('shop-modal')?.classList.contains('open')) renderShopModal();
-  });
-  document.getElementById('btn-cheat-rep')?.addEventListener('click', () => {
-    state.rep = 100;
-    playTechChime('success');
-    showToast('⭐ Reputação ajustada para 100% para testes!');
-    renderAllUI();
-    if (document.getElementById('shop-modal')?.classList.contains('open')) renderShopModal();
   });
 
   // Central dos 18 Puzzles Co-op (6x 2P, 6x 3P, 6x 4P)
