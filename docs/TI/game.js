@@ -354,6 +354,54 @@ function getSmallRoomRect(slotIdx) {
   };
 }
 
+function getEmployeeStationCoords(slot) {
+  let totalW = 1260;
+  try {
+    if (typeof currentMap === 'function') {
+      const m = currentMap();
+      if (m && m.width) totalW = m.width;
+    }
+  } catch (e) {}
+  const wStation = Math.floor((totalW - 200) / 3);
+  const yUpper = 25;
+  const x02 = 70;
+  const x03 = x02 + wStation + 30;
+  const x04 = x03 + wStation + 30;
+
+  if (slot === 1) return { x: x02 + 105, y: yUpper + 130 };
+  if (slot === 2) return { x: x03 + 105, y: yUpper + 130 };
+  if (slot === 3) return { x: x04 + 105, y: yUpper + 130 };
+  return { x: 230, y: 720 }; // Dono (slot 0) na Cabine #01
+}
+
+function getSlotClientStoolPos(slot) {
+  let totalW = 1260;
+  try {
+    if (typeof currentMap === 'function') {
+      const m = currentMap();
+      if (m && m.width) totalW = m.width;
+      if (slot === 0 && m && m.clientStoolPos) return m.clientStoolPos;
+    }
+  } catch (e) {}
+  const wStation = Math.floor((totalW - 200) / 3);
+  const yUpper = 25;
+  const x02 = 70;
+  const x03 = x02 + wStation + 30;
+  const x04 = x03 + wStation + 30;
+
+  if (slot === 1) return { x: x02 + 25 + 160 + 15 + 48 + 15 + 21, y: yUpper + 46 + 28 };
+  if (slot === 2) return { x: x03 + 25 + 160 + 15 + 48 + 15 + 21, y: yUpper + 46 + 28 };
+  if (slot === 3) return { x: x04 + 25 + 160 + 15 + 48 + 15 + 21, y: yUpper + 46 + 28 };
+  return { x: 305, y: 650 };
+}
+
+function getSlotRoomId(slot) {
+  if (slot === 1) return 'employee_station_02';
+  if (slot === 2) return 'employee_station_03';
+  if (slot === 3) return 'employee_station_04';
+  return 'my_room';
+}
+
 function createInitialPlayers20() {
   return Array.from({ length: 20 }).map((_, idx) => {
     const r = getSmallRoomRect(idx);
@@ -388,9 +436,9 @@ function createInitialPlayers20() {
     }
 
     const isOwner = (idx === 0);
-    const upperCol = (idx - 1) % 3;
-    const defaultX = isOwner ? 210 : (255 + upperCol * 370);
-    const defaultY = isOwner ? 720 : 220;
+    const coords = (idx < 4) ? getEmployeeStationCoords(idx) : { x: 255 + ((idx - 1) % 3) * 370, y: 220 };
+    const defaultX = coords.x;
+    const defaultY = coords.y;
 
     return {
       slot: idx,
@@ -1715,55 +1763,65 @@ function buildOfflineMap(overrideCount) {
     }
   ];
 
-  if (hasEmployees) {
-    rooms.push(
-      {
-        id: 'employee_station_02',
-        name: p2Active ? '👥 Estação #02 (Funcionário Ativo)' : '🔒 Estação #02 (Vaga p/ Funcionário)',
-        x: x02, y: yUpper, w: wStation, h: hUpper,
-        floorColor: p2Active ? '#fefce8' : '#f8fafc',
-        gridColor: p2Active ? '#fef08a' : '#e2e8f0',
-        borderColor: p2Active ? '#eab308' : '#94a3b8',
-        hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 100,
-        doorInside: { x: x02 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
-        doorOutside: { x: x02 + Math.floor(wStation / 2), y: yUpper + hUpper + 35 },
-        furniture: [
-          { type: 'workbench', x: x02 + 25, y: yUpper + 35, w: 160, h: 46, label: p2Active ? '🛠️ Bancada #02 [E]' : '🔒 Mesa #02 Vazia', color: '#eab308', solid: true },
-          { type: 'stool', x: x02 + 195, y: yUpper + 32, w: 42, h: 56, stoolVariant: stnStools[0], label: 'Banqueta C02', solid: false }
-        ]
-      },
-      {
-        id: 'employee_station_03',
-        name: p3Active ? '👥 Estação #03 (Funcionário Ativo)' : '🔒 Estação #03 (Vaga p/ Funcionário)',
-        x: x03, y: yUpper, w: wStation, h: hUpper,
-        floorColor: p3Active ? '#f5f3ff' : '#f8fafc',
-        gridColor: p3Active ? '#ddd6fe' : '#e2e8f0',
-        borderColor: p3Active ? '#8b5cf6' : '#94a3b8',
-        hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 100,
-        doorInside: { x: x03 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
-        doorOutside: { x: x03 + Math.floor(wStation / 2), y: yUpper + hUpper + 35 },
-        furniture: [
-          { type: 'workbench', x: x03 + 25, y: yUpper + 35, w: 160, h: 46, label: p3Active ? '🛠️ Bancada #03 [E]' : '🔒 Mesa #03 Vazia', color: '#8b5cf6', solid: true },
-          { type: 'stool', x: x03 + 195, y: yUpper + 32, w: 42, h: 56, stoolVariant: stnStools[1], label: 'Banqueta C03', solid: false }
-        ]
-      },
-      {
-        id: 'employee_station_04',
-        name: p4Active ? '👥 Estação #04 (Funcionário Ativo)' : '🔒 Estação #04 (Vaga p/ Funcionário)',
-        x: x04, y: yUpper, w: wStation, h: hUpper,
-        floorColor: p4Active ? '#fff1f2' : '#f8fafc',
-        gridColor: p4Active ? '#fecdd3' : '#e2e8f0',
-        borderColor: p4Active ? '#f43f5e' : '#94a3b8',
-        hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 100,
-        doorInside: { x: x04 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
-        doorOutside: { x: x04 + Math.floor(wStation / 2), y: yUpper + hUpper + 35 },
-        furniture: [
-          { type: 'workbench', x: x04 + 25, y: yUpper + 35, w: 160, h: 46, label: p4Active ? '🛠️ Bancada #04 [E]' : '🔒 Mesa #04 Vazia', color: '#f43f5e', solid: true },
-          { type: 'stool', x: x04 + 195, y: yUpper + 32, w: 42, h: 56, stoolVariant: stnStools[2], label: 'Banqueta C04', solid: false }
-        ]
-      }
-    );
-  }
+  // 3 Salas Básicas acima dos Racks de Infraestrutura (uma reservada para cada técnico convidado que entrar)
+  // Contêm APENAS: uma bancada de trabalho, uma cafeteira do lado e um banquinho para o cliente.
+  const benchWUpper = 160;
+  const benchHUpper = 58;
+  const coffeeWUpper = 48;
+  const coffeeHUpper = 50;
+  const stoolWUpper = 42;
+  const stoolHUpper = 56;
+
+  rooms.push(
+    {
+      id: 'employee_station_02',
+      name: p2Active ? ('👥 Cabine #02 (' + (state.players[1]?.name || 'Técnico Convidado') + ')') : '🏢 Cabine #02 (Técnico Convidado)',
+      x: x02, y: yUpper, w: wStation, h: hUpper,
+      floorColor: p2Active ? '#fefce8' : '#f8fafc',
+      gridColor: p2Active ? '#fef08a' : '#e2e8f0',
+      borderColor: p2Active ? '#eab308' : '#94a3b8',
+      hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 96,
+      doorInside: { x: x02 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
+      doorOutside: { x: x02 + Math.floor(wStation / 2), y: yUpper + hUpper + 25 },
+      furniture: [
+        { type: 'workbench', x: x02 + 25, y: yUpper + 42, w: benchWUpper, h: benchHUpper, label: p2Active ? '🛠️ Bancada #02 [E]' : '🏢 Bancada #02', color: p2Active ? '#eab308' : '#94a3b8', solid: true },
+        { type: 'coffee', x: x02 + 25 + benchWUpper + 14, y: yUpper + 46, w: coffeeWUpper, h: coffeeHUpper, label: '☕ Cafeteira #02 [E]', color: '#78350f', solid: true },
+        { type: 'stool', x: x02 + 25 + benchWUpper + 14 + coffeeWUpper + 14, y: yUpper + 46, w: stoolWUpper, h: stoolHUpper, stoolVariant: stnStools[0], label: 'Banqueta C02', solid: false }
+      ]
+    },
+    {
+      id: 'employee_station_03',
+      name: p3Active ? ('👥 Cabine #03 (' + (state.players[2]?.name || 'Técnico Convidado') + ')') : '🏢 Cabine #03 (Técnico Convidado)',
+      x: x03, y: yUpper, w: wStation, h: hUpper,
+      floorColor: p3Active ? '#f5f3ff' : '#f8fafc',
+      gridColor: p3Active ? '#ddd6fe' : '#e2e8f0',
+      borderColor: p3Active ? '#8b5cf6' : '#94a3b8',
+      hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 96,
+      doorInside: { x: x03 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
+      doorOutside: { x: x03 + Math.floor(wStation / 2), y: yUpper + hUpper + 25 },
+      furniture: [
+        { type: 'workbench', x: x03 + 25, y: yUpper + 42, w: benchWUpper, h: benchHUpper, label: p3Active ? '🛠️ Bancada #03 [E]' : '🏢 Bancada #03', color: p3Active ? '#8b5cf6' : '#94a3b8', solid: true },
+        { type: 'coffee', x: x03 + 25 + benchWUpper + 14, y: yUpper + 46, w: coffeeWUpper, h: coffeeHUpper, label: '☕ Cafeteira #03 [E]', color: '#78350f', solid: true },
+        { type: 'stool', x: x03 + 25 + benchWUpper + 14 + coffeeWUpper + 14, y: yUpper + 46, w: stoolWUpper, h: stoolHUpper, stoolVariant: stnStools[1], label: 'Banqueta C03', solid: false }
+      ]
+    },
+    {
+      id: 'employee_station_04',
+      name: p4Active ? ('👥 Cabine #04 (' + (state.players[3]?.name || 'Técnico Convidado') + ')') : '🏢 Cabine #04 (Técnico Convidado)',
+      x: x04, y: yUpper, w: wStation, h: hUpper,
+      floorColor: p4Active ? '#fff1f2' : '#f8fafc',
+      gridColor: p4Active ? '#fecdd3' : '#e2e8f0',
+      borderColor: p4Active ? '#f43f5e' : '#94a3b8',
+      hasWalls: true, doorSide: 'bottom', doorOffset: Math.floor(wStation / 2), doorWidth: 96,
+      doorInside: { x: x04 + Math.floor(wStation / 2), y: yUpper + hUpper - 35 },
+      doorOutside: { x: x04 + Math.floor(wStation / 2), y: yUpper + hUpper + 25 },
+      furniture: [
+        { type: 'workbench', x: x04 + 25, y: yUpper + 42, w: benchWUpper, h: benchHUpper, label: p4Active ? '🛠️ Bancada #04 [E]' : '🏢 Bancada #04', color: p4Active ? '#f43f5e' : '#94a3b8', solid: true },
+        { type: 'coffee', x: x04 + 25 + benchWUpper + 14, y: yUpper + 46, w: coffeeWUpper, h: coffeeHUpper, label: '☕ Cafeteira #04 [E]', color: '#78350f', solid: true },
+        { type: 'stool', x: x04 + 25 + benchWUpper + 14 + coffeeWUpper + 14, y: yUpper + 46, w: stoolWUpper, h: stoolHUpper, stoolVariant: stnStools[2], label: 'Banqueta C04', solid: false }
+      ]
+    }
+  );
 
   // Posições dos clientes espalhados naturalmente em frente ao balcão e pelo salão de espera (sem caixas!)
   // Posições dos clientes na Área Vermelha demarcada pelo usuário (Imagem 1):
@@ -1784,16 +1842,11 @@ function buildOfflineMap(overrideCount) {
 
   const connectors = [
     { from: 'my_room', to: 'main_store', x1: myRoomX + myRoomW - 45, y1: 720, x2: recX + 45, y2: 720 },
-    { from: 'main_store', to: 'stock_room', x1: recX + recW - 45, y1: 720, x2: stockX + 45, y2: 720 }
+    { from: 'main_store', to: 'stock_room', x1: recX + recW - 45, y1: 720, x2: stockX + 45, y2: 720 },
+    { from: 'employee_station_02', to: 'central_rack_plaza', x1: x02 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 305 },
+    { from: 'employee_station_03', to: 'central_rack_plaza', x1: x03 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 305 },
+    { from: 'employee_station_04', to: 'central_rack_plaza', x1: x04 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 305 }
   ];
-
-  if (hasEmployees) {
-    connectors.push(
-      { from: 'employee_station_02', to: 'central_rack_plaza', x1: x02 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 310 },
-      { from: 'employee_station_03', to: 'central_rack_plaza', x1: x03 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 310 },
-      { from: 'employee_station_04', to: 'central_rack_plaza', x1: x04 + Math.floor(wStation / 2), y1: yUpper + hUpper, x2: recX + recW / 2, y2: 310 }
-    );
-  }
 
   const coffeePos = (soloTier >= 2)
     ? { x: myRoomX + 80, y: 921, label: '☕ [E] Tomar Café Expresso na Sua Sala (+Velocidade)' }
@@ -1832,58 +1885,54 @@ function buildOfflineMap(overrideCount) {
     });
   }
 
-  if (hasEmployees) {
+  // Interações nas 3 Cabines Básicas dos Técnicos Convidados acima dos racks
+  const employeeStationsConfig = [
+    { slot: 1, num: '02', rx: x02, active: p2Active },
+    { slot: 2, num: '03', rx: x03, active: p3Active },
+    { slot: 3, num: '04', rx: x04, active: p4Active }
+  ];
+
+  employeeStationsConfig.forEach(stn => {
     interactables.push(
       {
-        id: 'partner_bench_2',
-        x: x02 + 105, y: yUpper + 40, radius: 115,
-        label: p2Active ? '🛠️ [E] Bancada #02 (Funcionário #02)' : '📋 [E] Mesa #02 (Copiar Convite p/ Funcionário)',
+        id: `employee_bench_${stn.num}`,
+        x: stn.rx + 105,
+        y: yUpper + 70,
+        radius: 120,
+        label: stn.active
+          ? (state.mySlotIndex === stn.slot ? `🛠️ [E] Sua Bancada de Trabalho (Cabine #${stn.num})` : `🛠️ [E] Bancada #${stn.num} (${state.players[stn.slot]?.name || 'Técnico Convidado'})`)
+          : `📋 [E] Cabine #${stn.num} (Copiar Código da Sala: ${state.roomCode})`,
         action: () => {
-          if (p2Active) openWorkbenchModal();
-          else {
+          if (state.mySlotIndex === stn.slot) {
+            interactWithMyWorkbench();
+          } else if (stn.active) {
+            openWorkbenchModal();
+          } else {
             navigator.clipboard?.writeText(state.roomCode);
-            showToast(`📋 Código de convite [${state.roomCode}] copiado! Passe para o Funcionário #02 entrar!`);
+            showToast(`📋 Código da sala [${state.roomCode}] copiado! Passe para o Técnico entrar na Cabine #${stn.num}!`);
           }
         }
       },
       {
-        id: 'partner_bench_3',
-        x: x03 + 105, y: yUpper + 40, radius: 115,
-        label: p3Active ? '🛠️ [E] Bancada #03 (Funcionário #03)' : '📋 [E] Mesa #03 (Copiar Convite p/ Funcionário)',
-        action: () => {
-          if (p3Active) openWorkbenchModal();
-          else {
-            navigator.clipboard?.writeText(state.roomCode);
-            showToast(`📋 Código de convite [${state.roomCode}] copiado! Passe para o Funcionário #03 entrar!`);
-          }
-        }
-      },
-      {
-        id: 'partner_bench_4',
-        x: x04 + 105, y: yUpper + 40, radius: 115,
-        label: p4Active ? '🛠️ [E] Bancada #04 (Funcionário #04)' : '📋 [E] Mesa #04 (Copiar Convite p/ Funcionário)',
-        action: () => {
-          if (p4Active) openWorkbenchModal();
-          else {
-            navigator.clipboard?.writeText(state.roomCode);
-            showToast(`📋 Código de convite [${state.roomCode}] copiado! Passe para o Funcionário #04 entrar!`);
-          }
-        }
+        id: `coffee_station_${stn.num}`,
+        x: stn.rx + 25 + benchWUpper + 14 + coffeeWUpper / 2,
+        y: yUpper + 70,
+        radius: 100,
+        label: `☕ [E] Tomar Café Expresso na Cabine #${stn.num} (+Turbo)`,
+        action: () => drinkCoffee()
       }
     );
-  }
+  });
 
   const teleports = [
     { label: '🛠️ Cabine #01', x: myRoomX + 160, y: 720 },
     { label: '🛎️ Recepção', x: recX + 140, y: 720 },
     { label: '📦 Estoque', x: stockX + 140, y: 720 },
-    { label: '🗄️ Rack Central', x: recX + recW / 2, y: 415 }
+    { label: '🗄️ Rack Central', x: recX + recW / 2, y: 415 },
+    { label: '👥 Cabine #02', x: x02 + 105, y: yUpper + 130 },
+    { label: '👥 Cabine #03', x: x03 + 105, y: yUpper + 130 },
+    { label: '👥 Cabine #04', x: x04 + 105, y: yUpper + 130 }
   ];
-  if (hasEmployees) {
-    teleports.push({ label: '👥 Mesa #02', x: x02 + 105, y: yUpper + 110 });
-    teleports.push({ label: '👥 Mesa #03', x: x03 + 105, y: yUpper + 110 });
-    teleports.push({ label: '👥 Mesa #04', x: x04 + 105, y: yUpper + 110 });
-  }
 
   return {
     width: totalW,
@@ -2141,14 +2190,18 @@ function handleNetworkMessage(data) {
       if (existing) {
         existing.connected = true;
         existing.peerId = data.peerId;
+        const coords = getEmployeeStationCoords(existing.slot);
+        existing.x = coords.x;
+        existing.y = coords.y;
         if (data.name) {
-          existing.name = data.name + ' (Funcionário #' + String(existing.slot + 1).padStart(2, '0') + ')';
+          existing.name = data.name + ' (Técnico Cabine #' + String(existing.slot + 1).padStart(2, '0') + ')';
         }
         existing.bubble = 'Cheguei para trabalhar! 🛠️';
         existing.bubbleTimer = 240;
 
-        addChatMessage('Oficina', '🎉 ' + existing.name + ' entrou como seu funcionário (' + getConnectedPlayerCount() + '/4 na equipe)!');
-        showToast('👥 ' + existing.name + ' entrou na oficina!');
+        addChatMessage('Oficina', '🎉 ' + existing.name + ' entrou e assumiu a Cabine #' + String(existing.slot + 1).padStart(2, '0') + ' acima dos racks (' + getConnectedPlayerCount() + '/4 na equipe)!');
+        showToast('👥 ' + existing.name + ' assumiu a Cabine #' + String(existing.slot + 1).padStart(2, '0') + ' acima dos racks!');
+        refreshMapsWithUpgrades();
         renderAllUI();
       } else {
         // Sala cheia (já tem 4 jogadores)
@@ -2211,17 +2264,11 @@ function handleNetworkMessage(data) {
       if (data.assignedName && state.players[state.mySlotIndex]) {
         state.players[state.mySlotIndex].name = data.assignedName;
       }
-      const deskCoords = [
-        { x: 210, y: 340 },
-        { x: 380, y: 340 },
-        { x: 550, y: 340 },
-        { x: 720, y: 340 }
-      ];
-      if (deskCoords[state.mySlotIndex]) {
-        state.players[state.mySlotIndex].x = deskCoords[state.mySlotIndex].x;
-        state.players[state.mySlotIndex].y = deskCoords[state.mySlotIndex].y;
-      }
-      showToast('🎉 Bem-vindo! Você assumiu o posto na Cabine #' + String(state.mySlotIndex + 1).padStart(2, '0') + ' como funcionário do Dono!');
+      const coords = getEmployeeStationCoords(state.mySlotIndex);
+      state.players[state.mySlotIndex].x = coords.x;
+      state.players[state.mySlotIndex].y = coords.y;
+      refreshMapsWithUpgrades();
+      showToast('🎉 Bem-vindo! Você assumiu a Cabine #' + String(state.mySlotIndex + 1).padStart(2, '0') + ' acima dos racks como técnico da oficina!');
       setPeerStatus('connected', '🟢 Conectado (Cabine #' + (state.mySlotIndex + 1) + ')');
       changed = true;
     }
@@ -6268,10 +6315,14 @@ function callClientToMyRoom(caseIdx) {
   });
 
   const you = state.players[state.mySlotIndex];
-  you.bubble = `📣 Próximo! ${c.clientName}, venha até minha mesa!`;
+  const slotIdx = state.mySlotIndex || 0;
+  const cabineNum = String(slotIdx + 1).padStart(2, '0');
+  you.bubble = `📣 Próximo! ${c.clientName}, venha até a Cabine #${cabineNum}!`;
   you.bubbleTimer = 180;
 
-  const targetPos = map.clientStoolPos || map.myChairPos || { x: 326, y: 650 };
+  const targetRoomId = getSlotRoomId(slotIdx);
+  const targetRoom = (map.rooms || []).find(r => r.id === targetRoomId);
+  const targetPos = getSlotClientStoolPos(slotIdx);
   const distToStool = Math.hypot(c.x - targetPos.x, c.y - targetPos.y);
 
   if (!c.inMyRoom || distToStool > 18) {
@@ -6279,31 +6330,35 @@ function callClientToMyRoom(caseIdx) {
     c.walkingToDesk = true;
     c.arrivedAtDesk = false;
 
-    // Rota segura e desobstruída direto da recepção para a banqueta da nossa sala:
-    const myRoom = (map.rooms || []).find(r => r.id === 'my_room');
-    const doorOut = (myRoom && myRoom.doorOutside) ? myRoom.doorOutside : { x: 425, y: 720 };
-    const doorIn = (myRoom && myRoom.doorInside) ? myRoom.doorInside : { x: 345, y: 720 };
+    if (slotIdx > 0 && targetRoom && targetRoom.doorOutside && targetRoom.doorInside) {
+      const recMidX = (map.rooms.find(r => r.id === 'main_store')?.x || 450) + 160;
+      c.waypoints = [
+        { x: recMidX, y: Math.max(480, Math.min(850, c.y)) },
+        { x: recMidX, y: targetRoom.doorOutside.y },
+        { x: targetRoom.doorOutside.x, y: targetRoom.doorOutside.y },
+        { x: targetRoom.doorInside.x, y: targetRoom.doorInside.y },
+        { x: targetPos.x, y: targetPos.y }
+      ];
+    } else {
+      const myRoom = (map.rooms || []).find(r => r.id === 'my_room');
+      const doorOut = (myRoom && myRoom.doorOutside) ? myRoom.doorOutside : { x: 425, y: 720 };
+      const doorIn = (myRoom && myRoom.doorInside) ? myRoom.doorInside : { x: 345, y: 720 };
+      c.waypoints = [
+        { x: doorOut.x, y: Math.max(500, Math.min(880, c.y)) },
+        { x: doorOut.x, y: doorOut.y },
+        { x: doorIn.x, y: doorIn.y },
+        { x: targetPos.x, y: targetPos.y }
+      ];
+    }
 
-    // Caminho em 4 passos garantidos sem colisões:
-    // 1. Alinha horizontalmente no corredor livre (x = 425)
-    // 2. Alinha na frente da porta da Cabine #01 (x = 425, y = 720)
-    // 3. Entra pela porta na Cabine #01 (x = 345, y = 720)
-    // 4. Caminha diretamente para a banqueta do cliente (x = targetPos.x, y = targetPos.y)
-    c.waypoints = [
-      { x: doorOut.x, y: Math.max(500, Math.min(880, c.y)) },
-      { x: doorOut.x, y: doorOut.y },
-      { x: doorIn.x, y: doorIn.y },
-      { x: targetPos.x, y: targetPos.y }
-    ];
-
-    showToast(`📣 Você chamou ${c.clientName} (${c.code})! Ele está a caminho do banquinho da sua mesa para sentar-se.`);
+    showToast(`📣 Você chamou ${c.clientName} (${c.code})! Ele está a caminho do banquinho da Cabine #${cabineNum}.`);
   } else {
     c.inMyRoom = true;
     c.walkingToDesk = false;
     c.arrivedAtDesk = true;
     c.x = targetPos.x;
     c.y = targetPos.y;
-    showToast(`🗣️ ${c.clientName} sentado na sua mesa: ${c.quote}`);
+    showToast(`🗣️ ${c.clientName} sentado na Cabine #${cabineNum}: ${c.quote}`);
     addChatMessage(`🗣️ ${c.clientName}`, `${c.quote} (${c.device})`);
   }
 
@@ -6323,8 +6378,7 @@ function interactWithMyWorkbench() {
 
   // Se o cliente ainda estiver caminhando, senta ele imediatamente na banqueta e abre a bancada!
   if (clientInRoom.walkingToDesk && !clientInRoom.arrivedAtDesk) {
-    const map = currentMap();
-    const targetPos = map.clientStoolPos || { x: 326, y: 650 };
+    const targetPos = getSlotClientStoolPos(state.mySlotIndex || 0);
     clientInRoom.x = targetPos.x;
     clientInRoom.y = targetPos.y;
     clientInRoom.waypoints = [];
