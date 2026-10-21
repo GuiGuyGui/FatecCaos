@@ -296,7 +296,7 @@
   // ==========================================
   // DISPARADORES DE EVENTOS DO JOGO
   // ==========================================
-  function recordRepair({ coopPlayers = 1, repGain = 1, wasBurntRecovery = false } = {}) {
+  function recordRepair({ coopPlayers = 1, repGain = 1, wasBurntRecovery = false, tier = 1, isHybrid = false } = {}) {
     const stats = loadStats();
     stats.repairedTotal++;
 
@@ -313,6 +313,14 @@
     } else {
       stats.repairedSolo++;
       stats.xp += 15; // Solo Padrão
+    }
+
+    // Bônus escalonado por Dificuldade / Tier do Chamado
+    const tierBonusXp = { 1: 0, 2: 8, 3: 18, 4: 32, 5: 55 };
+    stats.xp += (tierBonusXp[tier] || 0);
+
+    if (isHybrid) {
+      stats.xp += 45; // Mega bônus de caso Híbrido Multietapa
     }
 
     if (wasBurntRecovery) {
@@ -373,6 +381,7 @@
   return {
     TITLES,
     loadStats,
+    getStats: loadStats,
     saveStats,
     recordRepair,
     recordBurn,
