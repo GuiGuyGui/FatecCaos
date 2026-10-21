@@ -388,22 +388,116 @@
 			}
 		}
 
+		function getUsersDB() {
+			try {
+				return JSON.parse(localStorage.getItem("omnivoid_users_db") || "[]");
+			} catch (e) {
+				return [];
+			}
+		}
+
+		function saveUsersDB(users) {
+			localStorage.setItem("omnivoid_users_db", JSON.stringify(users));
+		}
+
+		function getCurrentUser() {
+			try {
+				const stored = localStorage.getItem("omnivoid_current_user");
+				if (stored) {
+					const parsed = JSON.parse(stored);
+					if (parsed && (parsed.nickname || parsed.name)) return parsed;
+				}
+			} catch (e) {}
+			return null;
+		}
+
+		function setCurrentUser(user) {
+			if (user) {
+				localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+				localStorage.setItem("omnivoid_user", JSON.stringify(user));
+				if (user.jornadaState) {
+					localStorage.setItem("omni_jornada_v2", JSON.stringify(user.jornadaState));
+				}
+				if (user.hackState) {
+					localStorage.setItem("omni_jornadahack_v1", JSON.stringify(user.hackState));
+				}
+				if (user.plantaoTI) {
+					localStorage.setItem("omnivoid_plantaoti_profile", JSON.stringify(user.plantaoTI));
+				}
+			} else {
+				localStorage.removeItem("omnivoid_current_user");
+				localStorage.removeItem("omnivoid_user");
+			}
+			updateNavUser();
+		}
+
 		function handleAuthLogin(e) {
 			e.preventDefault();
-			const u = document.getElementById('login-user').value.trim();
-			const user = { name: u, nickname: u, avatar: '🧑‍💻', level: 1 };
-			localStorage.setItem('omnivoid_user', JSON.stringify(user));
-			closeModal('modal-auth');
-			updateNavUser();
+			const ident = document.getElementById('login-user').value.trim().toLowerCase();
+			const pass = document.getElementById('login-pass').value.trim();
+			const db = getUsersDB();
+			const found = db.find(u => (u.email.toLowerCase() === ident || (u.nickname && u.nickname.toLowerCase() === ident)) && u.password === pass);
+
+			if (found) {
+				setCurrentUser(found);
+				closeModal('modal-auth');
+				alert("Bem-vindo de volta, " + (found.nickname || found.name) + "!");
+				// Recarrega o iframe para carregar os dados atualizados do usuário
+				const frame = document.getElementById('game-viewport');
+				if (frame) frame.src = frame.src;
+			} else {
+				alert("Usuário ou senha incorretos. Caso ainda não tenha conta, clique na aba 'Novo Cadastro'.");
+			}
 		}
 
 		function handleAuthRegister(e) {
 			e.preventDefault();
 			const name = document.getElementById('reg-name').value.trim();
-			const user = { name: name, nickname: name, avatar: '🧑‍💻', level: 1 };
-			localStorage.setItem('omnivoid_user', JSON.stringify(user));
+			const email = document.getElementById('reg-email').value.trim().toLowerCase();
+			const pass = document.getElementById('reg-pass').value.trim();
+			const db = getUsersDB();
+
+			if (db.some(u => u.email.toLowerCase() === email || (u.nickname && u.nickname.toLowerCase() === name.toLowerCase()))) {
+				alert("E-mail ou Nome de usuário já cadastrados!");
+				return;
+			}
+
+			const newUser = {
+				name: name,
+				nickname: name,
+				email: email,
+				password: pass,
+				avatar: '🧑‍💻',
+				level: 1,
+				xp: 0,
+				streak: 1,
+				completed: [],
+				hearts: 5,
+				plantaoTI: {
+					repairedTotal: 0,
+					repairedSolo: 0,
+					repairedDuo: 0,
+					repairedTrio: 0,
+					repairedSquad: 0,
+					burntCount: 0,
+					totalSecondsPlayed: 0,
+					currentReputation: 70,
+					repSum: 70,
+					repSamples: 1,
+					xp: 0,
+					level: 1,
+					unlockedTitles: [1],
+					equippedTitle: 'Estagiário de Bancada'
+				}
+			};
+
+			db.push(newUser);
+			saveUsersDB(db);
+			setCurrentUser(newUser);
 			closeModal('modal-auth');
-			updateNavUser();
+			alert("Conta criada com sucesso! Bom jogo, " + name + "!");
+			const frame = document.getElementById('game-viewport');
+			if (frame) frame.src = frame.src;
 		}
 
 		document.addEventListener('DOMContentLoaded', updateNavUser);

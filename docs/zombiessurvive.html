@@ -689,8 +689,19 @@ function getCurrentUser() {
 function setCurrentUser(user) {
 	if (user) {
 		localStorage.setItem("omnivoid_current_user", JSON.stringify(user));
+		localStorage.setItem("omnivoid_user", JSON.stringify(user));
+		if (user.jornadaState) {
+			localStorage.setItem("omni_jornada_v2", JSON.stringify(user.jornadaState));
+		}
+		if (user.hackState) {
+			localStorage.setItem("omni_jornadahack_v1", JSON.stringify(user.hackState));
+		}
+		if (user.plantaoTI) {
+			localStorage.setItem("omnivoid_plantaoti_profile", JSON.stringify(user.plantaoTI));
+		}
 	} else {
 		localStorage.removeItem("omnivoid_current_user");
+		localStorage.removeItem("omnivoid_user");
 	}
 	updateUIAfterAuth();
 }

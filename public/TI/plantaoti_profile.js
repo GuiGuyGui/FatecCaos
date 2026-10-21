@@ -131,7 +131,6 @@
   // ==========================================
   // PROGRESSÃO DE NÍVEL GERAL LENTA
   // ==========================================
-  // Nível N requer: floor(120 * (N ^ 1.65)) XP acumulado
   function getXpRequiredForLevel(lvl) {
     if (lvl <= 1) return 0;
     return Math.floor(120 * Math.pow(lvl - 1, 1.65));
@@ -165,13 +164,24 @@
   }
 
   // ==========================================
-  // CARREGAR E SALVAR ESTADO
+  // CARREGAR E SALVAR ESTADO VINCULADO AO USUÁRIO
   // ==========================================
   function loadStats() {
     let stats = null;
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) stats = JSON.parse(raw);
+      // Prioridade: dados salvos no usuário logado
+      const currUserRaw = localStorage.getItem('omnivoid_current_user') || localStorage.getItem('omnivoid_user');
+      if (currUserRaw) {
+        const u = JSON.parse(currUserRaw);
+        if (u && u.plantaoTI && typeof u.plantaoTI === 'object') {
+          stats = u.plantaoTI;
+        }
+      }
+
+      if (!stats) {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) stats = JSON.parse(raw);
+      }
     } catch (e) {}
 
     if (!stats || typeof stats !== 'object') {
@@ -195,7 +205,7 @@
       };
     }
 
-    // Garante tipos numéricos
+    // Normaliza tipos numéricos
     stats.repairedTotal = Number(stats.repairedTotal || 0);
     stats.repairedSolo = Number(stats.repairedSolo || 0);
     stats.repairedDuo = Number(stats.repairedDuo || 0);
@@ -232,6 +242,29 @@
 
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+
+      // Sincroniza diretamente na conta do usuário logado
+      const currUserRaw = localStorage.getItem('omnivoid_current_user') || localStorage.getItem('omnivoid_user');
+      if (currUserRaw) {
+        const u = JSON.parse(currUserRaw);
+        if (u) {
+          u.plantaoTI = stats;
+          localStorage.setItem('omnivoid_current_user', JSON.stringify(u));
+          localStorage.setItem('omnivoid_user', JSON.stringify(u));
+
+          // Atualiza banco de usuários registrados
+          const dbRaw = localStorage.getItem('omnivoid_users_db');
+          if (dbRaw) {
+            let db = JSON.parse(dbRaw);
+            let idx = db.findIndex(item => item.email === u.email || item.nickname === u.nickname);
+            if (idx !== -1) {
+              db[idx].plantaoTI = stats;
+              localStorage.setItem('omnivoid_users_db', JSON.stringify(db));
+            }
+          }
+        }
+      }
+
       // Dispara evento para telas ouvintes (perfil, jogo, iframe)
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('plantaoti_stats_changed', { detail: stats }));
@@ -309,7 +342,6 @@
   function recordSeconds(secs = 1) {
     const stats = loadStats();
     stats.totalSecondsPlayed += secs;
-    // A cada minuto na bancada ganha 1 XP lento
     if (stats.totalSecondsPlayed % 60 === 0) {
       stats.xp += 1;
     }
