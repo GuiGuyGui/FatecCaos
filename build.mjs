@@ -2567,8 +2567,8 @@ for (const targetDir of [SITE_SRC, DOCS_DIR, PUBLIC_DIR]) {
 			}
 		}
 
-		// Copy data/ and js/ directories
-		for (const extraDir of ['data', 'js']) {
+		// Copy data/, js/, and TI/ directories
+		for (const extraDir of ['data', 'js', 'TI']) {
 			const srcDirPath = path.join(SITE_SRC, extraDir);
 			const destDirPath = path.join(targetDir, extraDir);
 			if (fs.existsSync(srcDirPath)) {

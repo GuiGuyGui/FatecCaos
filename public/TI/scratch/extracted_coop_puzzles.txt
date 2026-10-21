@@ -1,0 +1,12 @@
+const COOP_PUZZLES_CATALOG = [
+  game.js:1707:  // ==========================================================================
+  game.js:1708:  // 6 PUZZLES PARA 2 JOGADORES SIMULT�NEOS (coop_2p_1 a coop_2p_6)
+  game.js:1709:  // ==========================================================================
+  game.js:1710:  {
+  game.js:1711:    id: 'coop_2p_1',
+  game.js:1712:    coopPlayers: 2,
+  game.js:1713:    hqTier: 1, // Liberado com 5 Salas
+  game.js:1714:    title: '2P #1 � Servidor Banc�rio Hot-Swap PSU & SAS',
+  game.js:1715:    device: '?? [2P #1] Servidor Banc�rio � Hot-Swap Duplo',
+
+

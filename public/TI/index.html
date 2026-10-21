@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1aa2b3">
+  <title>Plantão TI: Sede Expansível (5➔10➔15➔20 Salas) & 18 Puzzles Co-op (2, 3 e 4p)</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- PeerJS para conexão P2P Online entre até 20 jogadores com Código da Sala -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
+</head>
+<body>
+
+  <!-- TOPBAR / HUD -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26">
+            <rect x="4" y="6" width="24" height="16" rx="3" fill="#1fa6b8"/>
+            <rect x="7" y="9" width="18" height="10" rx="1.5" fill="#daf3f5"/>
+            <path d="M12 14h3v-3h2v3h3v2h-3v3h-2v-3h-3z" fill="#e5534b"/>
+            <path d="M10 25h12l2 2H8z" fill="#137482"/>
+          </svg>
+        </div>
+        <span>Plantão TI</span>
+        <span class="brand-badge">Sede 5➔20 Salas & 18 Puzzles Co-op v0.9</span>
+      </div>
+
+      <!-- SELETOR DE SALAS: SALA SOLO (1P), SALA EM GRUPO C/ CÓDIGO (CO-OP 4+P) E FUTURA SALA MUNDO (20P) -->
+      <div class="session-controls">
+        <div class="mode-switch-group" role="group" aria-label="Modo de Jogo">
+          <button class="mode-pill" id="btn-mode-offline" title="Jogar sozinho: Somente puzzles de 1 pessoa são permitidos!">
+            🏠 Sala Solo (Só 1P)
+          </button>
+          <button class="mode-pill active" id="btn-mode-online" title="Sala em Grupo com Código: Puzzles em grupo liberados a partir de 4 jogadores online!">
+            🔑 Sala em Grupo (Código)
+          </button>
+          <button class="mode-pill" id="btn-mode-world-future" title="Em Breve: Sala Mundo constante para até 20 pessoas simultâneas!">
+            🌍 Sala "Mundo" 20p <span style="font-size:10px; background:rgba(249,199,66,0.28); color:#fde047; padding:1px 6px; border-radius:99px; margin-left:3px;">Futuro</span>
+          </button>
+        </div>
+
+        <!-- Painel de Código de Sala Online -->
+        <div class="room-code-bar" id="online-room-bar">
+          <span class="room-code-label">🔑 Código: <b id="display-room-code">TI-....</b></span>
+          <span class="room-code-label" title="Tempo da sessão">⏱️ <b id="perpetual-timer">00:00</b></span>
+          <button class="btn btn-amarelo btn-xs" id="btn-copy-code" title="Copiar código da sua sala para enviar ao grupo">📋 Copiar</button>
+          <input type="text" id="input-join-code" placeholder="Código ex: TI-1234" maxlength="10" />
+          <button class="btn btn-verde btn-xs" id="btn-join-room">Entrar c/ Código</button>
+          <button class="btn btn-vidro btn-xs" id="btn-open-lobby-modal" title="Escolher Sala Solo, Sala em Grupo com Código ou ver a futura Sala Mundo 20p">🚪 Salas</button>
+        </div>
+
+        <!-- Painel de Sala Solo com Opção de Chamar +1 Amigo (Expansão Lateral Duo) -->
+        <div class="room-code-bar" id="solo-room-bar" style="display:none;">
+          <button class="btn btn-verde btn-xs" id="btn-solo-call-duo" title="Chamar mais um jogador para entrar com você na sua sala solo (expande a sede para os lados mantendo seu progresso!)">
+            👥 Chamar +1 (Duo Solo)
+          </button>
+          <span id="solo-duo-code-badge" style="display:none; align-items:center; gap:5px; font-size:12px; font-weight:800; color:var(--teal-e);">
+            🔑 Código Duo: <b id="display-solo-duo-code">TI-....</b>
+            <button type="button" class="btn btn-amarelo btn-xs" id="btn-copy-solo-duo-code" title="Copiar código Duo para enviar ao amigo">📋 Copiar</button>
+          </span>
+          <button class="btn btn-azul btn-xs" id="btn-solo-simulate-partner" title="Testar/Simular imediatamente a expansão da sala com técnico parceiro">🤖 Testar Expansão</button>
+          <button class="btn btn-vidro btn-xs" id="btn-solo-open-lobby" title="Escolher Sala Solo, Sala em Grupo com Código ou ver a futura Sala Mundo 20p">🚪 Salas</button>
+        </div>
+      </div>
+
+      <div class="hud-stats">
+        <div class="stat-pill" id="hud-rack-pill" title="Peças armazenadas no Rack da Sua Sala">
+          <span>🗄️ Rack Sala:</span>
+          <b id="hud-rack-count">Sem Rack</b>
+        </div>
+        <div class="stat-pill" title="Kits específicos na sua mochila">
+          <span>🎒 Mochila:</span>
+          <b id="hud-inventory-count">0/21</b>
+        </div>
+        <div class="stat-pill" id="hud-money-pill" title="Caixa da Operação">
+          <span>💰 Caixa:</span>
+          <b id="hud-money">R$ 2.500</b>
+        </div>
+        <div class="stat-pill" title="Equipamentos queimados por diagnóstico errado (-R$ 1.800 cada)">
+          <span>🔥 Queimados:</span>
+          <b id="hud-burnt-count">0</b>
+        </div>
+
+        <!-- BARRA VISUAL DE REPUTAÇÃO DA LOJA -->
+        <div class="rep-hud-box" id="rep-hud-box" title="Barra de Reputação: Sobe ao atender clientes, desce se demorar ou se queimar o PC!">
+          <div class="rep-hud-top">
+            <span>⭐ Reputação:</span>
+            <b id="hud-rep">70%</b>
+          </div>
+          <div class="rep-bar-track">
+            <div class="rep-bar-fill" id="hud-rep-fill" style="width: 70%;"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-roxo btn-sm" id="btn-open-coop-hub">
+          🤝 Puzzles Grupo (4+p)
+        </button>
+        <button class="btn btn-verde btn-sm" id="btn-open-shop">
+          🛒 Loja & Móveis
+        </button>
+        <button class="btn btn-vidro btn-sm" id="btn-open-manual">
+          📘 Livrinho TI
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER DE ALERTA QUANDO UM EQUIPAMENTO É QUEIMADO! -->
+  <div class="burnt-alert-banner" id="burnt-alert-banner">
+    <span style="font-size:24px;">🔥💥🤬</span>
+    <div style="flex:1;">
+      <b id="burnt-alert-title">EQUIPAMENTO QUEIMADO: INDENIZAÇÃO PAGA E O CLIENTE FOI EMBORA!</b>
+      <div id="burnt-alert-desc" style="font-size:13px;">A sua solução errada deu curto-circuito! Você pagou R$ 1.800 de indenização na hora e o cliente deixou a loja furioso!</div>
+    </div>
+    <button class="btn btn-amarelo btn-xs" id="btn-dismiss-burnt">Entendi</button>
+  </div>
+
+  <!-- BANNER DE INCIDENTE PERIÓDICO NO RACK CENTRAL DE INFRAESTRUTURA -->
+  <div class="rack-incident-banner" id="rack-incident-banner">
+    <span style="font-size:26px;">🚨🗄️⚡</span>
+    <div style="flex:1;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <b id="rack-incident-title">ALERTA NO RACK CENTRAL: QUEDA CRÍTICA DE ENERGIA & FIBRA ÓPTICA!</b>
+        <span id="rack-incident-time" style="background:#ef4444; color:#fff; font-weight:900; padding:4px 12px; border-radius:99px; font-size:12.5px; letter-spacing:0.5px; border:1.5px solid #fca5a5;">⏳ Tempo Restante: 03:00 (180s)</span>
+      </div>
+      <div id="rack-incident-desc" style="font-size:12.5px; margin-top:3px;">O Rack Central de Servidores sofreu uma anomalia! Se não for consertado a tempo (180s), ele <b>pegará fogo e causará Game Over</b>! Vá até o centro do mapa e resolva o puzzle interativo!</div>
+    </div>
+    <button class="btn btn-amarelo btn-sm" id="btn-goto-central-rack">⚡ Ir ao Rack Central [E]</button>
+  </div>
+
+  <!-- LAYOUT PRINCIPAL: PRÉDIO COM CABINES ESPAÇADAS + BARRA LATERAL -->
+  <main class="game-layout">
+
+    <!-- ESQUERDA: MAPA ONLINE EXPANSÍVEL (5 -> 10 -> 15 -> 20 SALAS ESPAÇADAS) -->
+    <section class="col-world">
+      <div class="card">
+        <div class="card-header">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <h2 id="world-header-title">🏢 Oficina de TI (1 a 4 Técnicos Simultâneos)</h2>
+            <div class="hq-tier-bar" id="session-players-bar">
+              <span class="hq-tier-label">👥 Equipe na Oficina:</span>
+              <span class="team-counter-badge" id="session-team-counter">👤 <b>1 Técnico</b> (Apenas Você)</span>
+              <button type="button" class="btn btn-azul btn-xs" id="btn-copy-invite-code" title="Copiar código de convite para amigos entrarem como funcionários">📋 Copiar Convite</button>
+              <button type="button" class="btn btn-roxo btn-xs" id="btn-open-future-rooms" title="Conhecer o projeto de Mega Salas (+5 a 20 jogadores no futuro)">🚀 +5 a 20 Jogadores (Futuro)</button>
+            </div>
+            <div class="hq-tier-bar" id="solo-tier-bar">
+              <span class="hq-tier-label">🧪 Testar Expansões da Loja:</span>
+              <button type="button" class="hq-tier-btn active" data-solo-tier="1" title="Loja Nível 1: Cabine #01 Básica + Estoque">1x (Básica)</button>
+              <button type="button" class="hq-tier-btn" data-solo-tier="2" title="Loja Nível 2: Cabine #01 Ampliada (+100px)">2x (Cabine #01)</button>
+              <button type="button" class="hq-tier-btn" data-solo-tier="3" title="Loja Nível 3: Mega Cabine #01 VIP Master (+190px)">3x (Cabine #01 VIP)</button>
+              <button type="button" class="hq-tier-btn" data-solo-tier="4" title="Loja Nível 4: Estoque Lateral Ampliado (+100px)">4x (Estoque Ampliado)</button>
+              <button type="button" class="hq-tier-btn" data-solo-tier="5" title="Loja Nível 5: Mega Almoxarifado Industrial (+190px)">5x (Mega Almoxarifado)</button>
+            </div>
+          </div>
+          <div style="display:flex; gap:7px; align-items:center; flex-wrap:wrap;">
+            <span class="queue-status-badge" id="world-queue-badge">👥 1/5 Técnicos · Só Puzzles 1P</span>
+            <button class="btn btn-amarelo btn-sm" id="btn-open-central-rack" title="Abrir painel interativo do Rack Central de Infraestrutura (10 puzzles)">🗄️ Rack Central</button>
+            <button class="btn btn-roxo btn-sm" id="btn-open-coop-hub-2">🤝 Puzzles Grupo (4+p)</button>
+            <button class="btn btn-verde btn-sm" id="btn-open-shop-2">🛒 Loja & Rack</button>
+            <button class="btn btn-teal btn-sm" id="btn-call-next">📣 Chamar Próximo</button>
+            <button class="btn btn-vidro btn-sm" id="btn-toggle-enlarged-screen" title="Alternar Modo de Tela Aumentada / Panorama Amplo">🖥️ Tela Aumentada</button>
+          </div>
+        </div>
+
+        <div class="world-wrapper">
+          <canvas id="world-canvas" width="1060" height="660"></canvas>
+
+          <!-- Overlay Superior: Localização atual + Atalhos de Salas -->
+          <div class="world-overlay-top">
+            <div style="display:flex; align-items:center; gap:8px; pointer-events:auto; flex-wrap:wrap;">
+              <div class="location-pill" id="current-room-pill">
+                📍 Local: <span>Sua Cabine #01</span>
+              </div>
+              <button type="button" class="btn btn-vidro btn-xs" id="btn-overlay-enlarged" style="font-weight:900;" title="Alternar Tela Aumentada">🖥️ Tela Aumentada</button>
+            </div>
+            <div class="quick-teleport-bar" id="teleport-bar"></div>
+          </div>
+
+          <!-- Barra de Mochila de Peças e Status de Desbloqueio da Sede -->
+          <div class="inventory-hud-strip" id="inventory-hud-strip"></div>
+
+          <!-- Overlay Inferior: Controles + Botão de Interação [E] -->
+          <div class="world-overlay-bottom">
+            <div class="controls-hint" id="world-bottom-hint">
+              🚶‍♂️ <b>Corredores largos entre todas as cabines!</b> À medida que entram jogadores (5 ➔ 10 ➔ 15 ➔ 20 salas), a sede cresce e libera mais Mini-Games e Puzzles Co-op!
+            </div>
+            <button class="btn btn-amarelo interact-prompt" id="btn-interact-world">
+              ⚡ [E] Interagir
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIREITA: PROGRESSÃO DA SEDE, REPUTAÇÃO, FILA, JOGADORES E RÁDIO -->
+    <aside class="col-sidebar" style="display:flex; flex-direction:column; gap:12px;">
+
+      <!-- Card de Expansão da Sede & Desbloqueios -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🏗️ Expansão da Sede & Desbloqueios</h3>
+          <span style="font-size:11.5px; font-weight:900; color:var(--teal-e);" id="sidebar-hq-badge">Nível 1 · 5 Salas</span>
+        </div>
+        <div class="card-body" style="padding:10px 14px;">
+          <div id="sidebar-hq-progress-text" style="font-size:11.5px; font-weight:800; color:var(--tinta); margin-bottom:6px;">
+            Salas abertas: <b>5/20</b> · Puzzles Co-op: <b>6/18</b> · Solo: <b>4/9</b>
+          </div>
+          <div class="sidebar-rep-track" style="height:10px; margin-bottom:6px;">
+            <div class="sidebar-rep-fill" id="sidebar-hq-fill" style="width:25%; background:linear-gradient(90deg, #1fa6b8, #6366f1);"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; font-size:11px; font-weight:800; color:var(--suave);">
+            <span id="sidebar-next-unlock-hint">Espaço para até 4 técnicos na oficina!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card da Barra de Reputação da Assistência -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⭐ Reputação da Operação</h3>
+          <span style="font-size:12px; font-weight:900;" id="sidebar-rep-status">🌟 Bem Avaliada (70%)</span>
+        </div>
+        <div class="card-body" style="padding:10px 14px;">
+          <div class="sidebar-rep-track">
+            <div class="sidebar-rep-fill" id="sidebar-rep-fill" style="width:70%;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:10.5px; font-weight:800; color:var(--suave); margin-top:6px;">
+            <span>✅ Reparo: <b style="color:var(--verde);">+12%</b></span>
+            <span>🤝 Co-op 2-4p: <b style="color:var(--teal-e);">+20%</b></span>
+            <span>🔥 Queimou: <b style="color:var(--vermelho);">-30%</b></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fila de Clientes (Inclui Chamados Solo e os 18 Puzzles Co-op 2p, 3p e 4p!) -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📋 Fila Perpétua (Solo & Co-op)</h3>
+          <span style="font-size:12px; font-weight:900; color:var(--vermelho);" id="queue-counter">10 aguardando</span>
+        </div>
+        <div class="card-body">
+          <p style="margin:0 0 8px; font-size:11.5px; font-weight:800; color:var(--suave);">
+            Clique em um chamado ou abra a <b>🤝 Central Co-op (6 de 2P, 6 de 3P, 6 de 4P)</b>:
+          </p>
+          <div class="queue-list" id="queue-list"></div>
+        </div>
+      </div>
+
+      <!-- Jogadores Conectados na Sala Perpétua (5 -> 10 -> 15 -> 20 Salas) -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🌐 Técnicos nas Cabines</h3>
+          <span style="font-size:11.5px; font-weight:900; color:var(--teal-e);" id="session-code-pill">Sala: TI-....</span>
+        </div>
+        <div class="card-body">
+          <p style="margin:0 0 8px; font-size:11.5px; font-weight:700; color:var(--suave);">
+            A sede começa com <b>5 salas</b> e expande para <b>10, 15 e 20 salas</b> conforme entram jogadores:
+          </p>
+          <div class="team-list" id="team-list" style="max-height:130px; overflow-y:auto; padding-right:4px;"></div>
+        </div>
+      </div>
+
+      <!-- Chat e Figurinhas -->
+      <div class="card">
+        <div class="card-header">
+          <h3>💬 Rádio & Figurinhas</h3>
+          <span style="font-size:11px; font-weight:900; color:var(--verde);">● Perpétuo 24/7</span>
+        </div>
+        <div class="card-body">
+          <div class="chat-feed" id="chat-feed"></div>
+          <div class="sticker-bar">
+            <button class="sticker-btn" data-sticker="🤝 Ajuda no Puzzle Co-op!">
+              <span style="font-size:18px;">🤝</span>
+              <span>Co-op!</span>
+            </button>
+            <button class="sticker-btn" data-sticker="🏗️ Sede Expandida!">
+              <span style="font-size:18px;">🏗️</span>
+              <span>Sede!</span>
+            </button>
+            <button class="sticker-btn" data-sticker="🔥 Queimei um PC!">
+              <span style="font-size:18px;">🔥</span>
+              <span>Queimou!</span>
+            </button>
+            <button class="sticker-btn" data-sticker="☕ Café na minha cabine!">
+              <span style="font-size:18px;">☕</span>
+              <span>Café!</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- MODAL: SELETOR DE SALAS (SOLO 1P, SALA EM GRUPO COM CÓDIGO & FUTURA SALA "MUNDO" 20P) -->
+  <div class="modal-backdrop" id="room-lobby-modal">
+    <div class="modal-card" style="max-width:920px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0; font-size:22px; font-weight:900;">🚪 Central de Salas: Solo, Grupo c/ Código & Sala "Mundo"</h2>
+          <p style="margin:4px 0 0; font-size:13px; font-weight:700; color:var(--suave);">
+            Escolha como deseja jogar seu turno técnico no <b>Plantão TI</b>:
+          </p>
+        </div>
+        <button class="btn btn-coral btn-sm" id="btn-close-lobby-modal">Fechar ✕</button>
+      </div>
+
+      <div class="stock-grid" style="grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));">
+        <!-- OPÇÃO 1: SALA SOLO (1 JOGADOR / EXPANSÍVEL DUO) -->
+        <div class="stock-item-card" id="lobby-card-solo" style="border-width:2.5px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:16px; font-weight:900; color:var(--tinta);">🏠 1. Sala Solo (1P / Duo Expandido)</span>
+            <span class="ticket-tag tag-normal">1P ou Duo 2P</span>
+          </div>
+          <p style="margin:6px 0; font-size:12.5px; font-weight:700; color:var(--suave); flex:1;">
+            Jogue sozinho na sua Lojinha Compacta ou <b>chame +1 amigo (Duo Solo)</b> para expandir a sala para os lados, mantendo todo o dinheiro, móveis e upgrades da sua conta solo!
+          </p>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-teal btn-sm" id="btn-lobby-enter-solo">🏠 Entrar na Sala Solo (1 Pessoa)</button>
+            <button type="button" class="btn btn-verde btn-sm" id="btn-lobby-enter-duo">👥 Chamar +1 (Modo Duo Solo)</button>
+          </div>
+        </div>
+
+        <!-- OPÇÃO 2: SALA EM GRUPO COM CÓDIGO -->
+        <div class="stock-item-card owned" id="lobby-card-group" style="border-width:2.5px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:16px; font-weight:900; color:var(--tinta);">🔑 2. Sala em Grupo c/ Código</span>
+            <span class="ticket-tag tag-coop">4+p = Puzzles Grupo</span>
+          </div>
+          <p style="margin:6px 0; font-size:12.5px; font-weight:700; color:var(--suave); flex:1;">
+            Crie sua sala ou entre com o <b>Código da Sala</b> dos seus amigos! De 1 a 3 jogadores há apenas puzzles de 1 pessoa. <b>A partir de 4 jogadores online</b>, os <b>Puzzles em Grupo (Co-op)</b> são liberados!
+          </p>
+          <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:8px; margin-bottom:8px;">
+            <div style="font-size:11.5px; font-weight:900; color:var(--tinta); margin-bottom:5px;">
+              Seu Código Atual: <b style="color:var(--teal-e);" id="lobby-current-code">TI-....</b>
+              <button type="button" class="btn btn-amarelo btn-xs" id="btn-lobby-new-code" style="margin-left:6px;">🔄 Gerar Nova Sala</button>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="input-lobby-join-code" placeholder="Digite o código ex: TI-4829" maxlength="10" style="flex:1; padding:6px 10px; border-radius:8px; border:1.5px solid #94a3b8; font-weight:800; font-size:12px; text-transform:uppercase;" />
+              <button type="button" class="btn btn-verde btn-xs" id="btn-lobby-join-code">🔑 Entrar</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-roxo btn-sm" id="btn-lobby-enter-group">👥 Jogar na Sala em Grupo Atual</button>
+        </div>
+
+        <!-- OPÇÃO 3: SALA "MUNDO" (ATÉ 20 PESSOAS SIMULTÂNEAS - NO FUTURO) -->
+        <div class="stock-item-card" style="border:2.5px dashed #f59e0b; background:linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:16px; font-weight:900; color:#92400e;">🌍 3. Sala "Mundo" (20p)</span>
+            <span class="ticket-tag" style="background:#f59e0b; color:#fff; font-weight:900;">🚧 NO FUTURO</span>
+          </div>
+          <p style="margin:6px 0; font-size:12.5px; font-weight:700; color:#78350f; flex:1;">
+            <b>Em desenvolvimento para o futuro:</b> Uma <b>Sala "Mundo" constante e perpétua para até 20 pessoas simultâneas</b>, sempre aberta 24/7 sem precisar de código, onde técnicos do mundo inteiro entram e resolvem incidentes massivos juntos!
+          </p>
+          <div style="background:rgba(255,255,255,0.75); border:1.5px solid #fcd34d; border-radius:10px; padding:7px 10px; font-size:11.5px; font-weight:800; color:#92400e; margin-bottom:8px;">
+            ✨ Capacidade: <b>Até 20 jogadores simultâneos</b> · Servidor dedicado constante · Eventos globais de Data Center.
+          </div>
+          <button type="button" class="btn btn-amarelo btn-sm" id="btn-lobby-preview-world">🌍 Ver Prévia / Avisar Quando Lançar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CENTRAL DOS 18 PUZZLES COOPERATIVOS (LIBERADOS A PARTIR DE 4 JOGADORES ONLINE!) -->
+  <div class="modal-backdrop" id="coop-hub-modal">
+    <div class="modal-card" style="max-width:940px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0; font-size:22px; font-weight:900;">🤝 Central de Puzzles em Grupo (Requer 4+ Jogadores Online)</h2>
+          <p style="margin:4px 0 0; font-size:13px; font-weight:700; color:var(--suave);" id="coop-hub-subtitle">
+            No Modo Solo jogamos apenas puzzles de 1 pessoa. Na Sala em Grupo, os Puzzles em Grupo são liberados <b>a partir de 4 jogadores online</b>!
+          </p>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="btn btn-roxo btn-sm" id="btn-coop-hub-reach-4p">👥 Conectar 4 Jogadores (Liberar Grupo)</button>
+          <button class="btn btn-amarelo btn-sm" id="btn-coop-hub-expand">🏗️ Expandir Sede (+Salas & Puzzles)</button>
+          <button class="btn btn-coral btn-sm" id="btn-close-coop-hub">Fechar ✕</button>
+        </div>
+      </div>
+
+      <!-- Aviso de bloqueio caso esteja no Modo Solo ou com menos de 4 jogadores online -->
+      <div id="coop-lock-banner" style="display:none; background:#fffbeb; border:2px solid #f59e0b; color:#92400e; padding:10px 14px; border-radius:12px; font-size:13px; font-weight:800; margin-bottom:10px;"></div>
+
+      <!-- Filtro 2P / 3P / 4P -->
+      <div class="mg-switcher-bar" id="coop-hub-filter-bar">
+        <button type="button" class="mg-switch-btn active" data-coop-filter="all">🌟 Todos os 18 Puzzles em Grupo</button>
+        <button type="button" class="mg-switch-btn" data-coop-filter="2">👥 Duplas (6 Puzzles)</button>
+        <button type="button" class="mg-switch-btn" data-coop-filter="3">👥 Trios (6 Puzzles)</button>
+        <button type="button" class="mg-switch-btn" data-coop-filter="4">👥 Quartetos (6 Puzzles)</button>
+      </div>
+
+      <div class="stock-grid" id="coop-hub-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: LOJA DE UPGRADES, RACKS DE PEÇAS, CAFETEIRA E MÓVEIS -->
+  <div class="modal-backdrop" id="shop-modal">
+    <div class="modal-card" style="max-width:880px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0; font-size:22px; font-weight:900;">🛒 Loja de Equipamentos, Racks & Móveis da Assistência</h2>
+          <p style="margin:4px 0 0; font-size:13px; font-weight:700; color:var(--suave);">
+            Invista o dinheiro dos consertos para instalar um <b>Rack de Peças</b>, <b>Cafeteira</b> e <b>Móveis</b> dentro da sua <b>Cabine #01</b>!
+          </p>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span style="background:var(--amarelo); color:#4f3905; font-weight:900; padding:6px 14px; border-radius:99px; font-size:14px;" id="shop-money-display">💰 R$ 2.500</span>
+          <button class="btn btn-coral btn-sm" id="btn-close-shop">Fechar ✕</button>
+        </div>
+      </div>
+      <div style="background:#f1f8f8; border:1.5px solid var(--linha); border-radius:10px; padding:8px 12px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:12px; font-weight:800; color:var(--suave);">🧪 <b>Testar Expansões Diretamente em Jogo:</b></span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <button type="button" class="btn btn-vidro btn-xs btn-shop-test-tier" data-shop-tier="1">1x (Cabine #01)</button>
+          <button type="button" class="btn btn-vidro btn-xs btn-shop-test-tier" data-shop-tier="2">2x (Cabine #02)</button>
+          <button type="button" class="btn btn-vidro btn-xs btn-shop-test-tier" data-shop-tier="3">3x (Cabine #03)</button>
+          <button type="button" class="btn btn-vidro btn-xs btn-shop-test-tier" data-shop-tier="4">4x (Cabine #04)</button>
+          <button type="button" class="btn btn-vidro btn-xs btn-shop-test-tier" data-shop-tier="5">5x (Mega Almoxarifado)</button>
+        </div>
+      </div>
+      <div class="stock-grid" id="shop-items-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: SALA DE ESTOQUE DE PEÇAS -->
+  <div class="modal-backdrop" id="stock-modal">
+    <div class="modal-card" style="max-width:880px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+        <h2 style="margin:0; font-size:22px; font-weight:900;">📦 Sala de Estoque Geral (Peças Específicas)</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-verde btn-sm" id="btn-refill-rack-from-stock">🗄️ Encher Rack da Minha Sala (Grátis no Estoque)</button>
+          <button class="btn btn-amarelo btn-sm" id="btn-grab-all-stock">🎒 Pegar Todas na Mochila</button>
+          <button class="btn btn-coral btn-sm" id="btn-close-stock">Fechar ✕</button>
+        </div>
+      </div>
+      <p style="margin:0 0 12px; font-size:13px; font-weight:700; color:var(--suave);">
+        Pegue a peça específica do chamado atual ou encha o <b>Rack de Peças da Sua Sala</b> para não precisar caminhar até aqui a cada conserto!
+      </p>
+      <div class="stock-grid" id="stock-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: BANCADA DE ATENDIMENTO (MINI-GAME COMO ÚLTIMA OPÇÃO E ESPECÍFICO DO PROBLEMA!) -->
+  <div class="modal-backdrop" id="workbench-modal">
+    <div class="modal-card" style="max-width:920px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2 style="margin:0; font-size:21px; font-weight:900;" id="active-ticket-title">🛠️ Bancada da Sua Sala</h2>
+          <span class="ticket-tag tag-urgente" id="active-ticket-badge">Chamado #01</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button type="button" class="btn btn-coral btn-sm" id="btn-deliver-as-is" style="font-weight:900;" title="Entregar o computador ou equipamento no estado em que está (seja consertado ou não)">📦 Entregar Equipamento Como Está</button>
+          <button class="btn btn-roxo btn-xs" id="btn-wb-open-coop-hub">🤝 Trocar Puzzle Co-op (18)</button>
+          <button class="btn btn-coral btn-sm" id="btn-close-workbench">Voltar ao Mapa ✕</button>
+        </div>
+      </div>
+
+      <!-- Banner do Cliente Atual -->
+      <div class="case-banner" id="workbench-case-banner">
+        <div id="client-chibi-slot"></div>
+        <div class="client-complaint-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+            <div class="device-badge" id="client-device-badge" style="margin:0;">💻 Workstation Extrema</div>
+            <div id="workbench-part-status"></div>
+          </div>
+          <p class="client-quote" id="client-quote-text">"..."</p>
+        </div>
+      </div>
+
+      <!-- Barra de Dica -->
+      <div class="mentor-bar" id="mentor-bar">
+        <div id="mentor-chibi-slot"></div>
+        <div class="mentor-text">
+          <strong>📘 Fluxo de Reparo:</strong>
+          <span id="mentor-hint-text">1. Converse ➔ 2. Teste ➔ 3. Acerte o Diagnóstico ➔ 4. Conclua o Mini-Game / Puzzle específico do problema!</span>
+        </div>
+      </div>
+
+      <!-- Navegação de Etapas: O MINI-GAME AGORA É A ÚLTIMA OPÇÃO (ETAPA 4) APÓS O DIAGNÓSTICO! -->
+      <div class="step-tabs">
+        <button class="step-tab active" data-tab="triagem">
+          <span class="num">1</span> Conversar
+        </button>
+        <button class="step-tab" data-tab="testes">
+          <span class="num">2</span> Testes de TI
+        </button>
+        <button class="step-tab" data-tab="conduta">
+          <span class="num">3</span> Diagnóstico ⚠️
+        </button>
+        <button class="step-tab" data-tab="minigame" id="tab-btn-minigame">
+          <span class="num">4</span> 🕹️ Mini-Game / Puzzle (Última Etapa)
+        </button>
+      </div>
+
+      <!-- ABA 1: TRIAGEM -->
+      <div class="tab-panel active" id="panel-triagem">
+        <p style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--suave);">
+          Etapa 1/4 — Escolha entre as <b>4 perguntas</b> abaixo para investigar os sintomas com o cliente:
+        </p>
+        <div class="questions-grid" id="questions-grid"></div>
+      </div>
+
+      <!-- ABA 2: TESTES DE BANCADA -->
+      <div class="tab-panel" id="panel-testes">
+        <p style="margin:0 0 10px; font-size:13.5px; font-weight:800; color:var(--suave);">
+          Etapa 2/4 — Execute os <b>Testes de TI (de 2 a 6 opções de bancada)</b> para encontrar a falha exata:
+        </p>
+        <div class="tools-grid" id="tools-grid"></div>
+      </div>
+
+      <!-- ABA 3: DIAGNÓSTICO (DESTRAVA O MINI-GAME ESPECÍFICO NA ABA 4 OU QUEIMA O PC SE ERRAR!) -->
+      <div class="tab-panel" id="panel-conduta">
+        <div style="background:#fff1f0; border:2px solid #fca5a5; color:#991b1b; padding:8px 12px; border-radius:12px; font-size:12.5px; font-weight:800; margin-bottom:10px;">
+          ⚠️ <b>ETAPA 3/4 (DIAGNÓSTICO — 2 a 4 Possibilidades):</b> Acertar o diagnóstico libera o <b>Mini-Game / Puzzle Específico na Etapa 4</b>! Escolher uma opção errada <b>QUEIMA o PC do cliente: você paga a indenização na hora (-R$ 1.800) e o cliente vai embora furioso</b>!
+        </div>
+        <div class="diagnosis-grid" id="diagnosis-grid"></div>
+      </div>
+
+      <!-- ABA 4: MINI-GAME ESPECÍFICO DO PROBLEMA (ÚLTIMA ETAPA P/ FINALIZAR O CONSERTO!) -->
+      <div class="tab-panel" id="panel-minigame">
+        <div id="minigame-container"></div>
+      </div>
+
+      <!-- RODAPÉ DA BANCADA: OPÇÃO DE ENTREGA NO ESTADO ATUAL -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:10px; border-top:1.5px solid #cbd5e1;">
+        <span style="font-size:12px; font-weight:800; color:var(--suave);">
+          📦 Deseja liberar a bancada? Você pode entregar o equipamento ao cliente no estado atual (reparado, em andamento ou sem conserto).
+        </span>
+        <button type="button" class="btn btn-coral btn-sm" id="btn-deliver-as-is-bottom" style="font-weight:900;" title="Devolver o equipamento ao cliente no estado atual">
+          📦 Entregar Equipamento Como Está
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RACK CENTRAL DE INFRAESTRUTURA & 10 PUZZLES INTERATIVOS C/ MOUSE -->
+  <div class="modal-backdrop" id="central-rack-modal">
+    <div class="modal-card" style="max-width:960px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2 style="margin:0; font-size:22px; font-weight:900;">🗄️⚡ Rack Central de Infraestrutura & Telecom</h2>
+          <span class="ticket-tag tag-coop" id="central-rack-status-pill">🟢 100% Operacional</span>
+          <span class="ticket-tag tag-urgente" id="central-rack-countdown-pill" style="display:none; font-weight:900;">⏳ Tempo: 180s</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button type="button" class="btn btn-amarelo btn-xs" id="btn-rack-sim-incident" title="Forçar um incidente aleatório no Rack Central para testar!">⚡ Simular Incidente</button>
+          <button class="btn btn-coral btn-sm" id="btn-close-central-rack">Fechar ✕</button>
+        </div>
+      </div>
+
+      <div class="rack-puzzle-cabinet">
+        <!-- Cabeçalho do Chassi do Rack com LEDs de Telemetria -->
+        <div class="rack-cabinet-header">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="rack-led-strip">
+              <span class="rack-led led-green" id="rack-led-pwr" title="Alimentação Principal"></span>
+              <span class="rack-led led-green" id="rack-led-net" title="Backbone Fibra Óptica"></span>
+              <span class="rack-led led-green" id="rack-led-fan" title="Climatização & Fans"></span>
+              <span class="rack-led led-green" id="rack-led-raid" title="Storage RAID"></span>
+            </div>
+            <div>
+              <div style="font-size:14px; font-weight:900; color:#f8fafc;" id="central-rack-title-text">
+                RACK CENTRAL DE DADOS & ENERGIA
+              </div>
+              <div style="font-size:12px; font-weight:700; color:#94a3b8;" id="central-rack-desc-text">
+                O Rack Central alimenta todos os computadores da loja e cabines. Resolva o puzzle interativo abaixo para manter a operação online!
+              </div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:11px; font-weight:900; color:#38bdf8;" id="central-rack-fixed-count">0 Incidentes Resolvidos</span>
+          </div>
+        </div>
+
+        <!-- Seletor dos 10 Puzzles Próprios do Rack Central (usando mouse) -->
+        <div class="mg-switcher-bar" id="central-rack-selector-bar" style="overflow-x:auto; padding-bottom:4px;">
+          <button type="button" class="mg-switch-btn active" data-rack-puzzle="0">🔌 1. Patch Panel</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="1">⚡ 2. Disjuntores</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="2">🔄 3. Fans Hot-Swap</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="3">💽 4. RAID Storage</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="4">💎 5. SFP+ Óptico</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="5">🎛️ 6. Força DC -48V</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="6">🌡️ 7. Climatização</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="7">🔘 8. Reset Switch</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="8">🔋 9. Baterias UPS</button>
+          <button type="button" class="mg-switch-btn" data-rack-puzzle="9">🧮 10. Chaves DIP</button>
+        </div>
+
+        <!-- Estágio Interativo do Puzzle Atual -->
+        <div class="rack-puzzle-stage" id="central-rack-stage"></div>
+
+        <!-- Barra Inferior de Ação do Rack -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:6px;">
+          <div style="font-size:12px; font-weight:800; color:#cbd5e1;" id="central-rack-hint-msg">
+            💡 Use o mouse para conectar fios, trocar componentes e reestabelecer o Rack Central.
+          </div>
+          <button type="button" class="btn btn-verde btn-sm" id="btn-complete-rack-puzzle">
+            ✅ Reestabelecer Rack Central (+R$ 500 & +10% Reputação)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LIVRINHO DO TÉCNICO DE TI -->
+  <div class="modal-backdrop" id="manual-modal">
+    <div class="modal-card" style="max-width:920px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <h2 style="margin:0; font-size:22px; font-weight:900;">📘 Manual de Engenharia de TI (Solo & 18 Puzzles Co-op 2, 3 e 4p)</h2>
+        <button class="btn btn-coral btn-sm" id="btn-close-manual">Fechar ✕</button>
+      </div>
+      <p style="margin:6px 0 0; color:var(--suave); font-weight:700; font-size:13.5px;">
+        Consulte a teoria dos reparos individuais e dos 18 desafios cooperativos de equipe:
+      </p>
+      <div class="manual-grid" id="manual-topics-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: GAME OVER - INCÊNDIO NO RACK CENTRAL OU FALÊNCIA -->
+  <div class="modal-backdrop" id="game-over-modal">
+    <div class="modal-card game-over-card" style="max-width:620px; text-align:center; padding:28px 24px;">
+      <div style="font-size:54px; margin-bottom:10px;" class="fire-flicker-text" id="game-over-icon">🔥💥🚨</div>
+      <h2 style="margin:0 0 10px; font-size:26px; font-weight:900; color:#ef4444;" class="fire-flicker-text" id="game-over-title">
+        FIM DE JOGO — O RACK CENTRAL PEGOU FOGO!
+      </h2>
+      <p style="margin:0 auto 16px; max-width:520px; font-size:14px; font-weight:700; color:#cbd5e1; line-height:1.5;" id="game-over-desc">
+        O tempo de <b>180 segundos (3 minutos)</b> para resolver a pane de infraestrutura esgotou! O Rack Central superaqueceu violentamente, explodiu em chamas e a sede técnica foi <b>evacuada às pressas pelo Corpo de Bombeiros</b>!
+      </p>
+
+      <div style="background:#090d16; border:2px solid #334155; border-radius:14px; padding:14px 18px; margin-bottom:20px; text-align:left;">
+        <h4 style="margin:0 0 10px; font-size:13.5px; color:#38bdf8; text-transform:uppercase; letter-spacing:1px; font-weight:900;">
+          📊 Relatório Final do Expediente:
+        </h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px; font-weight:800; color:#f8fafc;">
+          <div>💰 Saldo do Dia: <span id="game-over-money" style="color:#22c55e;">R$ 0</span></div>
+          <div>⭐ Reputação Final: <span id="game-over-rep" style="color:#f59e0b;">0%</span></div>
+          <div>🗄️ Incidentes do Rack Resolvidos: <span id="game-over-rack-fixed" style="color:#38bdf8;">0</span></div>
+          <div>🔥 Equipamentos Queimados: <span id="game-over-burnt-count" style="color:#ef4444;">0</span></div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-verde" id="btn-restart-game" style="font-size:16px; padding:12px 28px; width:100%; font-weight:900; cursor:pointer;">
+        🔄 Recomeçar Novo Expediente (Reiniciar Jogo)
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: PREVIEW DE EXPANSÃO FUTURA (SALAS MASSIVAS 5 A 20 JOGADORES) -->
+  <div class="modal-backdrop" id="future-rooms-modal">
+    <div class="modal-card" style="max-width:680px; border:3px solid #6366f1;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:28px;">🚀</span>
+          <div>
+            <h2 style="margin:0; font-size:22px; font-weight:900; color:var(--tinta);">Futuro: Salas Massivas (5 a 20 Jogadores)</h2>
+            <span style="font-size:12px; font-weight:800; color:#6366f1;">ROADMAP DE EXPANSÃO MULTIJOGADOR</span>
+          </div>
+        </div>
+        <button class="btn btn-coral btn-sm" id="btn-close-future-rooms">Fechar ✕</button>
+      </div>
+
+      <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:14px; margin-bottom:14px; font-size:13.5px; font-weight:700; color:var(--tinta); line-height:1.6;">
+        <p style="margin:0 0 10px;">
+          O jogo está <b>100% focado no modelo modular solo & cooperativo para até 4 jogadores simultâneos</b>, onde cada técnico possui sua cabine própria interligada por portas e corredores abertos.
+        </p>
+        <p style="margin:0 0 10px;">
+          <b>O que está planejado para o futuro (5 a 20 jogadores):</b>
+        </p>
+        <ul style="margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px;">
+          <li>🌐 <b>Servidores Dedicados 24/7:</b> Mundos persistentes sem precisar de código de sala.</li>
+          <li>🏢 <b>Mega Sede Multinível:</b> 20 cabines técnicas completas, Data Center NOC 100G e salas de descanso.</li>
+          <li>⚡ <b>Grandes Incidentes Globais:</b> Panes massivas de infraestrutura corporativa que exigem esquadrões de 5 a 20 técnicos coordenados.</li>
+          <li>💼 <b>Divisão de Especialidades:</b> Suporte N1, Micro-Solda N2, Redes/DevOps N3 e Segurança NOC N4.</li>
+        </ul>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <span style="font-size:12px; font-weight:800; color:var(--suave);">Sua sessão atual: <b>Modelo Modular de 1 a 4 Jogadores</b></span>
+        <button type="button" class="btn btn-teal btn-sm" id="btn-close-future-rooms-2">Entendido, Voltar ao Jogo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-feedback" id="toast-feedback"></div>
+
+  <script src="plantaoti_profile.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
