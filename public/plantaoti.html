@@ -191,10 +191,136 @@
 		#game-viewport {
 			flex: 1;
 			width: 100%;
-			height: calc(100vh - 73px);
+			height: calc(100vh - 128px);
 			border: none;
 			background: #111119;
 			display: block;
+		}
+
+		
+		/* Hub Switcher Plantão TI / Plantão Dev */
+		.plantao-hub-header {
+			background: rgba(16, 16, 24, 0.95);
+			backdrop-filter: blur(12px);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 8px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 12px;
+			z-index: 999;
+			flex-shrink: 0;
+		}
+
+		.hub-tabs {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.hub-tab-btn {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			background: rgba(255, 255, 255, 0.04);
+			border: 1.5px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			padding: 7px 16px;
+			cursor: pointer;
+			transition: all 0.25s ease;
+			text-align: left;
+			position: relative;
+		}
+
+		.hub-tab-btn:hover {
+			background: rgba(255, 255, 255, 0.08);
+			border-color: rgba(255, 255, 255, 0.25);
+			transform: translateY(-1px);
+		}
+
+		.hub-tab-btn.active#tab-game-ti {
+			background: linear-gradient(135deg, rgba(255, 214, 10, 0.15) 0%, rgba(255, 136, 0, 0.1) 100%);
+			border-color: var(--accent-gold);
+			box-shadow: 0 0 15px rgba(255, 214, 10, 0.25);
+		}
+
+		.hub-tab-btn.active#tab-game-dev {
+			background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+			border-color: var(--accent-primary);
+			box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+		}
+
+		.hub-tab-icon {
+			font-size: 20px;
+			line-height: 1;
+		}
+
+		.hub-tab-info {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.hub-tab-title {
+			font-family: var(--font-title);
+			font-size: 13.5px;
+			font-weight: 800;
+			letter-spacing: 0.5px;
+		}
+
+		.hub-tab-desc {
+			font-size: 10.5px;
+			color: #94a3b8 !important;
+			font-weight: 500;
+		}
+
+		.hub-badge-new {
+			font-size: 9px;
+			font-weight: 900;
+			background: #00f0ff;
+			color: #07070c !important;
+			padding: 2px 6px;
+			border-radius: 99px;
+			letter-spacing: 0.5px;
+			position: absolute;
+			top: -6px;
+			right: -6px;
+			box-shadow: 0 0 8px #00f0ff;
+		}
+
+		.hub-actions {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		.hub-game-label {
+			font-size: 12px;
+			font-weight: 700;
+			color: #cbd5e1 !important;
+			padding: 5px 12px;
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 8px;
+		}
+
+		.hub-profile-btn {
+			font-size: 12px;
+			font-weight: 700;
+			background: rgba(168, 85, 247, 0.15);
+			border: 1px solid rgba(168, 85, 247, 0.4);
+			padding: 6px 14px;
+			border-radius: 8px;
+			color: #e9d5ff !important;
+			transition: all 0.2s ease;
+		}
+
+		.hub-profile-btn:hover {
+			background: rgba(168, 85, 247, 0.3);
+			border-color: #a855f7;
+			transform: translateY(-1px);
 		}
 
 		/* Modal Auth */
@@ -286,6 +412,33 @@
 			</div>
 		</div>
 	</nav>
+
+	<!-- SELETOR OFICIAL DE JOGOS: PLANTÃO TI & PLANTÃO DEV -->
+	<div class="plantao-hub-header">
+		<div class="hub-tabs">
+			<button class="hub-tab-btn active" id="tab-game-ti" onclick="switchGameMode('ti')" title="Jogar Plantão TI: Assistência Técnica & Reparo de Computadores">
+				<span class="hub-tab-icon">🛠️</span>
+				<div class="hub-tab-info">
+					<span class="hub-tab-title">Plantão TI</span>
+					<span class="hub-tab-desc">Assistência Técnica & Hardware</span>
+				</div>
+			</button>
+			<button class="hub-tab-btn" id="tab-game-dev" onclick="switchGameMode('dev')" title="Jogar Plantão Dev: Software House & Sprints Tech Co-op">
+				<span class="hub-tab-icon">💻</span>
+				<div class="hub-tab-info">
+					<span class="hub-tab-title">Plantão Dev</span>
+					<span class="hub-tab-desc">Software House & Sprints Tech</span>
+				</div>
+				<span class="hub-badge-new">NOVO</span>
+			</button>
+		</div>
+		<div class="hub-actions">
+			<span id="active-game-label" class="hub-game-label">🛠️ Oficina de Hardware Ativa</span>
+			<a href="perfil.html" class="hub-profile-btn" title="Ver Carreira, Estatísticas e Títulos no Meu Perfil">
+				👤 Meu Perfil Dev & TI
+			</a>
+		</div>
+	</div>
 
 	<!-- JOGO COMPLETO PLANTÃO TI (EXECUTADO DIRETAMENTE DA PASTA TI) -->
 	<iframe id="game-viewport" src="TI/index.html" allow="autoplay; fullscreen; clipboard-read; clipboard-write;"></iframe>
@@ -424,6 +577,9 @@
 				if (user.plantaoTI) {
 					localStorage.setItem("omnivoid_plantaoti_profile", JSON.stringify(user.plantaoTI));
 				}
+				if (user.plantaoDev) {
+					localStorage.setItem("omnivoid_plantaodev_profile", JSON.stringify(user.plantaoDev));
+				}
 			} else {
 				localStorage.removeItem("omnivoid_current_user");
 				localStorage.removeItem("omnivoid_user");
@@ -473,6 +629,22 @@
 				streak: 1,
 				completed: [],
 				hearts: 5,
+								plantaoDev: {
+					developedTotal: 0,
+					developedSolo: 0,
+					developedDuo: 0,
+					developedTrio: 0,
+					developedSquad: 0,
+					crashCount: 0,
+					totalSecondsPlayed: 0,
+					currentReputation: 70,
+					repSum: 70,
+					repSamples: 1,
+					xp: 0,
+					level: 1,
+					unlockedTitles: [1],
+					equippedTitle: 'Estagiário Dev'
+				},
 				plantaoTI: {
 					repairedTotal: 0,
 					repairedSolo: 0,
@@ -500,7 +672,43 @@
 			if (frame) frame.src = frame.src;
 		}
 
-		document.addEventListener('DOMContentLoaded', updateNavUser);
+		
+		function switchGameMode(mode) {
+			const frame = document.getElementById('game-viewport');
+			const btnTI = document.getElementById('tab-game-ti');
+			const btnDev = document.getElementById('tab-game-dev');
+			const label = document.getElementById('active-game-label');
+
+			if (mode === 'dev') {
+				if (btnDev) btnDev.classList.add('active');
+				if (btnTI) btnTI.classList.remove('active');
+				if (label) label.innerHTML = '💻 Software House Ativa';
+				if (frame) frame.src = 'DEV/software.html';
+				try {
+					const url = new URL(window.location.href);
+					url.searchParams.set('game', 'dev');
+					window.history.replaceState({}, '', url.toString());
+				} catch(e) {}
+			} else {
+				if (btnTI) btnTI.classList.add('active');
+				if (btnDev) btnDev.classList.remove('active');
+				if (label) label.innerHTML = '🛠️ Oficina de Hardware Ativa';
+				if (frame) frame.src = 'TI/index.html';
+				try {
+					const url = new URL(window.location.href);
+					url.searchParams.set('game', 'ti');
+					window.history.replaceState({}, '', url.toString());
+				} catch(e) {}
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			updateNavUser();
+			const params = new URLSearchParams(window.location.search);
+			if (params.get('game') === 'dev') {
+				switchGameMode('dev');
+			}
+		});
 	</script>
 </body>
 </html>
